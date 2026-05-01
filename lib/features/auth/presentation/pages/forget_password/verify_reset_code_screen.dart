@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../../../core/widgets/auth/auth_shell.dart';
-import '../../../../core/widgets/auth/primary_app_button.dart';
+import '../../../../../core/routing/app_routes.dart';
+import '../../../../../core/widgets/auth/auth_shell.dart';
+import '../../../../../core/widgets/auth/primary_app_button.dart';
+import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
 
-class VerifyScreen extends StatefulWidget {
+class VerifyResetCodeScreen extends StatefulWidget {
   final String email;
 
-  const VerifyScreen({
+  const VerifyResetCodeScreen({
     super.key,
     required this.email,
   });
 
   @override
-  State<VerifyScreen> createState() => _VerifyScreenState();
+  State<VerifyResetCodeScreen> createState() => _VerifyResetCodeScreenState();
 }
 
-class _VerifyScreenState extends State<VerifyScreen> {
+class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
   final _pinController = TextEditingController();
 
   @override
@@ -26,28 +28,41 @@ class _VerifyScreenState extends State<VerifyScreen> {
     super.dispose();
   }
 
-  void _verify() {
+  Future<void> _submit() async {
     if (_pinController.text.trim().length == 6) {
-      // TODO: call verify usecase
+      await showSuccessBottomSheet(
+        context,
+        title: 'تم التحقق من الرمز',
+        message: 'يمكنك الآن إعادة تعيين كلمة المرور.',
+        buttonText: 'متابعة',
+        onPressed: () {
+          context.push(
+            AppRoutes.resetPassword,
+            extra: widget.email,
+          );
+        },
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     final defaultPinTheme = PinTheme(
-      width: 58,
+      width: 56,
       height: 62,
-      textStyle: Theme.of(context).textTheme.titleLarge,
+      textStyle: theme.textTheme.titleLarge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Theme.of(context).colorScheme.outline),
-        color: Theme.of(context).colorScheme.surface,
+        border: Border.all(color: theme.colorScheme.outline),
+        color: theme.colorScheme.surface.withValues(alpha: 0.82),
       ),
     );
 
     return AuthShell(
-      title: 'تأكيد الحساب',
-      subtitle: 'أدخل رمز التحقق المرسل إلى ${widget.email}',
+      title: 'التحقق من الرمز',
+      subtitle: 'أدخل الرمز المرسل إلى ${widget.email}',
       child: Column(
         children: [
           Directionality(
@@ -59,8 +74,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
               focusedPinTheme: defaultPinTheme.copyWith(
                 decoration: defaultPinTheme.decoration?.copyWith(
                   border: Border.all(
-                    color: Theme.of(context).colorScheme.primary,
-                    width: 1.6,
+                    color: theme.colorScheme.primary,
+                    width: 1.5,
                   ),
                 ),
               ),
@@ -70,7 +85,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
           PrimaryAppButton(
             text: 'تأكيد الرمز',
             icon: Icons.verified_user_outlined,
-            onPressed: _verify,
+            onPressed: _submit,
           ),
           const SizedBox(height: 12),
           TextButton(

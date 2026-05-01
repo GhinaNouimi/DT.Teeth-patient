@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/routing/app_routes.dart';
-import '../../../../core/utils/validators.dart';
-import '../../../../core/widgets/auth/app_text_field.dart';
-import '../../../../core/widgets/auth/auth_shell.dart';
-import '../../../../core/widgets/auth/primary_app_button.dart';
+import '../../../../../core/routing/app_routes.dart';
+import '../../../../../core/utils/validators.dart';
+import '../../../../../core/widgets/auth/app_text_field.dart';
+import '../../../../../core/widgets/auth/auth_shell.dart';
+import '../../../../../core/widgets/auth/primary_app_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
-      // TODO: call login usecase
+      context.go(AppRoutes.home);
     }
   }
 

@@ -6,4 +6,7 @@ class AppRoutes {
   static const forgotPassword = '/forgot-password';
   static const verifyResetCode = '/verify-reset-code';
   static const resetPassword = '/reset-password';
+  static const home = '/home';
+  static const appointmentDetails = '/appointment-details';
+  static const rescheduleAppointment = '/reschedule-appointment';
 }

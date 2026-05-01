@@ -1,12 +1,15 @@
+import 'package:dt_teeth/features/appointments/presentation/pages/reschedule_appointment_screen.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/auth/presentation/pages/forgot_password_screen.dart';
-import '../../features/auth/presentation/pages/login_screen.dart';
-import '../../features/auth/presentation/pages/reset_password_screen.dart';
-import '../../features/auth/presentation/pages/signup_screen.dart';
-import '../../features/auth/presentation/pages/splash_screen.dart';
-import '../../features/auth/presentation/pages/verify_reset_code_screen.dart';
-import '../../features/auth/presentation/pages/verify_screen.dart';
+import '../../features/appointments/presentation/pages/appointment_details_screen.dart';
+import '../../features/auth/presentation/pages/forget_password/forgot_password_screen.dart';
+import '../../features/auth/presentation/pages/forget_password/reset_password_screen.dart';
+import '../../features/auth/presentation/pages/forget_password/verify_reset_code_screen.dart';
+import '../../features/auth/presentation/pages/login/login_screen.dart';
+import '../../features/auth/presentation/pages/on_boarding/splash_screen.dart';
+import '../../features/auth/presentation/pages/signup/signup_screen.dart';
+import '../../features/auth/presentation/pages/verify_account/verify_screen.dart';
+import '../../features/home/pages/patient_home_screen.dart';
 import 'app_routes.dart';
 
 class AppRouter {
@@ -57,6 +60,27 @@ class AppRouter {
           return ResetPasswordScreen(email: email);
         },
       ),
+      GoRoute(
+        path: AppRoutes.home,
+        name: 'home',
+        builder: (context, state) => const PatientHomeScreen(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.appointmentDetails,
+        name: 'appointment-details',
+        builder: (context, state) => const AppointmentDetailsScreen(),
+      ),
+
+
+      GoRoute(
+        path: AppRoutes.rescheduleAppointment,
+        name: 'reschedule-appointment',
+        builder: (context, state) => const RescheduleAppointmentScreen(),
+      ),
+
+
+
     ],
   );
 }

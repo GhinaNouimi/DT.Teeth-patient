@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/routing/app_routes.dart';
-import '../../../../core/utils/validators.dart';
-import '../../../../core/widgets/auth/app_text_field.dart';
-import '../../../../core/widgets/auth/auth_shell.dart';
-import '../../../../core/widgets/auth/password_strength_card.dart';
-import '../../../../core/widgets/auth/primary_app_button.dart';
-import '../../../../core/widgets/feedback/success_bottom_sheet.dart';
+import '../../../../../core/routing/app_routes.dart';
+import '../../../../../core/utils/validators.dart';
+import '../../../../../core/widgets/auth/app_text_field.dart';
+import '../../../../../core/widgets/auth/auth_shell.dart';
+import '../../../../../core/widgets/auth/password_strength_card.dart';
+import '../../../../../core/widgets/auth/primary_app_button.dart';
+import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});

@@ -1,14 +1,14 @@
-import 'package:dt_teeth/features/auth/presentation/pages/password_match_card.dart';
+import 'package:dt_teeth/features/auth/presentation/pages/forget_password/password_match_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/routing/app_routes.dart';
-import '../../../../core/utils/validators.dart';
-import '../../../../core/widgets/auth/app_text_field.dart';
-import '../../../../core/widgets/auth/auth_shell.dart';
-import '../../../../core/widgets/auth/password_strength_card.dart';
-import '../../../../core/widgets/auth/primary_app_button.dart';
-import '../../../../core/widgets/feedback/success_bottom_sheet.dart';
+import '../../../../../core/routing/app_routes.dart';
+import '../../../../../core/utils/validators.dart';
+import '../../../../../core/widgets/auth/app_text_field.dart';
+import '../../../../../core/widgets/auth/auth_shell.dart';
+import '../../../../../core/widgets/auth/password_strength_card.dart';
+import '../../../../../core/widgets/auth/primary_app_button.dart';
+import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   final String email;

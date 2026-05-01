@@ -14,7 +14,7 @@ Future<void> showSuccessBottomSheet(
     context: context,
     backgroundColor: Colors.black.withValues(alpha: 0.18),
     isScrollControlled: true,
-    builder: (_) {
+    builder: (sheetContext) {
       return SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
@@ -90,7 +90,7 @@ Future<void> showSuccessBottomSheet(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(sheetContext).pop();
                       onPressed?.call();
                     },
                     child: Text(buttonText),
