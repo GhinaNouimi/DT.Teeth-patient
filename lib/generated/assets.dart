@@ -2,6 +2,12 @@
 class Assets {
   Assets._();
 
+  static const String accountsFacebookSvgrepoCom = 'assets/icons/accounts/facebook-svgrepo-com.svg';
+  static const String accountsGithub = 'assets/icons/accounts/github.svg';
+  static const String accountsGmailSvgrepoCom = 'assets/icons/accounts/gmail-svgrepo-com.svg';
+  static const String accountsInstagram167SvgrepoCom = 'assets/icons/accounts/instagram-167-svgrepo-com.svg';
+  static const String accountsLinkedinSvgrepoCom = 'assets/icons/accounts/linkedin-svgrepo-com.svg';
+  static const String accountsTelegramLogoThinSvgrepoCom = 'assets/icons/accounts/telegram-logo-thin-svgrepo-com.svg';
   static const String imagesDtTeethLogo = 'assets/images/dt_teeth_logo.png';
 
 }

@@ -43,7 +43,7 @@ class CancelAppointmentDialog extends StatelessWidget {
                 context,
                 title: 'تم إرسال طلب الإلغاء',
                 message: 'سيتم إشعارك فور تأكيد إلغاء الموعد من قبل العيادة.',
-                buttonText: 'العودة للرئيسية',
+                buttonText: 'العودة',
                 onPressed: () {
                   context.go(AppRoutes.home);
                 },

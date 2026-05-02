@@ -5,17 +5,24 @@ import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../../../core/widgets/feedback/success_bottom_sheet.dart';
 import '../../../../core/widgets/navigation/app_top_bar.dart';
+import '../models/doctor_ui_model.dart';
+import '../widgets/doctor_time_slot_chip.dart';
 
-class RescheduleAppointmentScreen extends StatefulWidget {
-  const RescheduleAppointmentScreen({super.key});
+class BookDoctorAppointmentScreen extends StatefulWidget {
+  final DoctorUiModel doctor;
+
+  const BookDoctorAppointmentScreen({
+    super.key,
+    required this.doctor,
+  });
 
   @override
-  State<RescheduleAppointmentScreen> createState() =>
-      _RescheduleAppointmentScreenState();
+  State<BookDoctorAppointmentScreen> createState() =>
+      _BookDoctorAppointmentScreenState();
 }
 
-class _RescheduleAppointmentScreenState
-    extends State<RescheduleAppointmentScreen> {
+class _BookDoctorAppointmentScreenState
+    extends State<BookDoctorAppointmentScreen> {
   int? _selectedDateIndex;
   int? _selectedTimeIndex;
 
@@ -45,7 +52,7 @@ class _RescheduleAppointmentScreenState
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
           children: [
-            const AppTopBar(title: 'تعديل الموعد'),
+            const AppTopBar(title: 'حجز موعد'),
             const SizedBox(height: 18),
             Container(
               padding: const EdgeInsets.all(18),
@@ -54,30 +61,18 @@ class _RescheduleAppointmentScreenState
                 borderRadius: BorderRadius.circular(28),
                 border: Border.all(color: colors.borderSoft),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'الموعد الحالي',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: colors.textPrimary,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'الاثنين 29 أبريل 2026 - 05:30 مساءً',
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: colors.textSecondary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
+              child: Text(
+                'اختر موعدًا مناسبًا مع ${widget.doctor.name}',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: colors.textPrimary,
+                  fontWeight: FontWeight.w800,
+                  height: 1.5,
+                ),
               ),
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 20),
             Text(
-              'اختر تاريخًا جديدًا',
+              'اختر التاريخ',
               style: theme.textTheme.titleMedium?.copyWith(
                 color: colors.textPrimary,
                 fontWeight: FontWeight.w800,
@@ -100,7 +95,7 @@ class _RescheduleAppointmentScreenState
             ),
             const SizedBox(height: 22),
             Text(
-              'اختر وقتًا متاحًا',
+              'اختر الوقت',
               style: theme.textTheme.titleMedium?.copyWith(
                 color: colors.textPrimary,
                 fontWeight: FontWeight.w800,
@@ -112,28 +107,12 @@ class _RescheduleAppointmentScreenState
               runSpacing: 10,
               children: List.generate(
                 _availableTimes.length,
-                    (index) => ChoiceChip(
-                  label: Text(_availableTimes[index]),
+                    (index) => DoctorTimeSlotChip(
+                  label: _availableTimes[index],
                   selected: _selectedTimeIndex == index,
-                  onSelected: (_) {
+                  onTap: () {
                     setState(() => _selectedTimeIndex = index);
                   },
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: colors.surfaceSecondary,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                'سيتم إرسال طلب تعديل الموعد إلى العيادة، وستتلقى إشعارًا عند تأكيد الموعد الجديد.',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: colors.textSecondary,
-                  height: 1.5,
-                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
@@ -145,8 +124,8 @@ class _RescheduleAppointmentScreenState
                     ? () async {
                   await showSuccessBottomSheet(
                     context,
-                    title: 'تم إرسال طلب التعديل',
-                    message: 'سيتم إشعارك بعد مراجعة الموعد الجديد وتأكيده من قبل العيادة.',
+                    title: 'تم إرسال طلب الحجز',
+                    message: 'سيتم إشعارك بعد تأكيد الموعد من قبل العيادة.',
                     buttonText: 'العودة',
                     onPressed: () {
                       context.go(AppRoutes.home);
@@ -154,11 +133,11 @@ class _RescheduleAppointmentScreenState
                   );
                 }
                     : null,
-
-                child: const Text('إرسال طلب التعديل'),
+                child: const Text('إرسال طلب الحجز'),
               ),
             ),
           ],
+
         ),
       ),
     );

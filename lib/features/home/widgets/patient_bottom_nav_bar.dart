@@ -16,6 +16,7 @@ class PatientBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final colors = context.colors;
 
     return SafeArea(
@@ -29,7 +30,17 @@ class PatientBottomNavBar extends StatelessWidget {
             onDestinationSelected: onTap,
             backgroundColor: colors.surfacePrimary,
             indicatorColor: colors.surfaceMuted,
+            elevation: 0,
             height: 74,
+            labelTextStyle: WidgetStateProperty.resolveWith(
+                  (states) {
+                final isSelected = states.contains(WidgetState.selected);
+                return theme.textTheme.bodySmall?.copyWith(
+                  color: isSelected ? colors.navBarItem : colors.textSecondary,
+                  fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+                );
+              },
+            ),
             destinations: const [
               NavigationDestination(
                 icon: Icon(Icons.home_outlined),
