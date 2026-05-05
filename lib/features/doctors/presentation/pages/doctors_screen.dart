@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/routing/app_routes.dart';
-import '../../../../core/theme/theme_extensions.dart';
 import '../models/doctor_ui_model.dart';
 import '../sections/doctors_header_section.dart';
-import '../widgets/doctor_list_item.dart';
+import '../widgets/doctor_list_tile.dart';
 import '../widgets/doctor_search_field.dart';
 import '../widgets/specialty_filter_chip.dart';
 
@@ -33,55 +32,69 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
 
   final List<DoctorUiModel> _doctors = const [
     DoctorUiModel(
+      id: '1',
       name: 'د. سارة جابر',
       specialty: 'تقويم الأسنان',
       yearsOfExperience: 8,
       treatedPatients: 420,
-      imageUrl: '',
-      graduation: 'خريجة جامعة دمشق - كلية طب الأسنان',
+      imageUrl: '👩‍⚕️',
+      graduation: 'خريجة جامعة دمشق - كلية طب الأسنان - 2016',
       bio: 'متخصصة في تقويم الأسنان وتعمل على تصميم خطط علاجية دقيقة لتحسين الإطباق والمظهر الجمالي للأسنان.',
       phone: '+963 944 000 111',
-      email: 'sara.jaber@dtteeth.com',
-      instagram: '@dr.sara.jaber',
-      linkedin: 'linkedin.com/in/dr-sara-jaber',
+      rating: 4.8,
+      reviewsCount: 156,
+      certificates: [
+        'شهادة تقويم الأسنان من جامعة دمشق',
+        'دورة متقدمة في التقويم الشفاف',
+        'عضو في الجمعية السورية لتقويم الأسنان',
+      ],
     ),
     DoctorUiModel(
+      id: '2',
       name: 'د. محمد ياسين',
       specialty: 'زراعة الأسنان',
       yearsOfExperience: 11,
       treatedPatients: 610,
-      imageUrl: '',
-      graduation: 'خريج جامعة حلب - كلية طب الأسنان',
+      imageUrl: '👨‍⚕️',
+      graduation: 'خريج جامعة حلب - كلية طب الأسنان - 2013',
       bio: 'يمتلك خبرة واسعة في زراعة الأسنان والحلول التعويضية الحديثة مع اهتمام كبير براحة المريض وجودة النتائج.',
       phone: '+963 944 000 222',
-      email: 'mohammad.yaseen@dtteeth.com',
-      instagram: '@dr.mohammad.yaseen',
-      linkedin: 'linkedin.com/in/dr-mohammad-yaseen',
+      rating: 4.9,
+      reviewsCount: 203,
+      certificates: [
+        'شهادة الزراعة من الجامعة الألمانية',
+        'دبلوم في التصميم الرقمي للزراعات',
+        'عضو في منظمة الزراعات العالمية',
+      ],
     ),
     DoctorUiModel(
+      id: '3',
       name: 'د. ريم الحسن',
       specialty: 'طب أسنان الأطفال',
       yearsOfExperience: 6,
       treatedPatients: 350,
-      imageUrl: '',
-      graduation: 'خريجة الجامعة السورية الخاصة - كلية طب الأسنان',
+      imageUrl: '👩‍⚕️',
+      graduation: 'خريجة الجامعة السورية الخاصة - كلية طب الأسنان - 2018',
       bio: 'تهتم بعلاج الأطفال وتقديم تجربة علاجية مريحة وهادئة تساعد الطفل على بناء علاقة إيجابية مع طبيب الأسنان.',
       phone: '+963 944 000 333',
-      email: 'reem.alhassan@dtteeth.com',
-      instagram: '@dr.reem.alhassan',
-      linkedin: 'linkedin.com/in/dr-reem-alhassan',
+      rating: 4.7,
+      reviewsCount: 128,
+      certificates: [
+        'شهادة طب أسنان الأطفال',
+        'دورة في إدارة خوف الأطفال',
+        'معتمدة من منظمة صحة الطفل',
+      ],
     ),
   ];
 
   List<DoctorUiModel> get _filteredDoctors {
     return _doctors.where((doctor) {
-      final matchesSpecialty = _selectedSpecialty == 'الكل' ||
-          doctor.specialty.contains(_selectedSpecialty);
+      final matchesSpecialty =
+          _selectedSpecialty == 'الكل' || doctor.specialty.contains(_selectedSpecialty);
 
       final query = _searchQuery.trim();
-      final matchesSearch = query.isEmpty ||
-          doctor.name.contains(query) ||
-          doctor.specialty.contains(query);
+      final matchesSearch =
+          query.isEmpty || doctor.name.contains(query) || doctor.specialty.contains(query);
 
       return matchesSpecialty && matchesSearch;
     }).toList();
@@ -95,8 +108,6 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -108,9 +119,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
             const SizedBox(height: 18),
             DoctorSearchField(
               controller: _searchController,
-              onChanged: (value) {
-                setState(() => _searchQuery = value);
-              },
+              onChanged: (value) => setState(() => _searchQuery = value),
             ),
             const SizedBox(height: 16),
             SizedBox(
@@ -124,9 +133,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                   return SpecialtyFilterChip(
                     label: specialty,
                     selected: _selectedSpecialty == specialty,
-                    onTap: () {
-                      setState(() => _selectedSpecialty = specialty);
-                    },
+                    onTap: () => setState(() => _selectedSpecialty = specialty),
                   );
                 },
               ),
@@ -135,17 +142,11 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
             ..._filteredDoctors.map(
                   (doctor) => Padding(
                 padding: const EdgeInsets.only(bottom: 14),
-                child: DoctorListItem(
+                child: DoctorListTile(
                   doctor: doctor,
-                  onViewProfile: () {
+                  onTap: () {
                     context.push(
-                      AppRoutes.doctorProfile,
-                      extra: doctor,
-                    );
-                  },
-                  onBookAppointment: () {
-                    context.push(
-                      AppRoutes.bookDoctorAppointment,
+                      AppRoutes.doctorDetails,  // ✅ هذا صحيح
                       extra: doctor,
                     );
                   },

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-Future<void> showSuccessBottomSheet(
+Future<void> showRatingBottomSheet(
     BuildContext context, {
-      required String title,
-      required String message,
+      required String doctorName,
+      required double rating,
       required String buttonText,
       VoidCallback? onPressed,
     }) {
@@ -33,7 +33,7 @@ Future<void> showSuccessBottomSheet(
                   offset: const Offset(0, 14),
                 ),
                 BoxShadow(
-                  color: theme.colorScheme.primary.withValues(alpha: 0.08),
+                  color: const Color(0xFFFFC107).withValues(alpha: 0.08),
                   blurRadius: 18,
                   offset: const Offset(0, 8),
                 ),
@@ -42,6 +42,7 @@ Future<void> showSuccessBottomSheet(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                /// أيقونة التقييم
                 Container(
                   width: 74,
                   height: 74,
@@ -49,27 +50,27 @@ Future<void> showSuccessBottomSheet(
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
                       colors: [
-                        const Color(0xFF34B67A),
-                        theme.colorScheme.secondary,
+                        const Color(0xFFFFC107),
+                        const Color(0xFFFFD54F),
                       ],
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF34B67A).withValues(alpha: 0.24),
+                        color: const Color(0xFFFFC107).withValues(alpha: 0.24),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
                     ],
                   ),
                   child: const Icon(
-                    Icons.check_rounded,
+                    Icons.star_rounded,
                     color: Colors.white,
                     size: 34,
                   ),
                 ).animate().scale(duration: 350.ms, curve: Curves.easeOutBack),
                 const SizedBox(height: 18),
                 Text(
-                  title,
+                  'شكراً لتقييمك!',
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w800,
                     color: theme.colorScheme.onSurface,
@@ -77,13 +78,37 @@ Future<void> showSuccessBottomSheet(
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  message,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.78),
-                    height: 1.5,
-                  ),
-                  textAlign: TextAlign.center,
+                Column(
+                  children: [
+                    Text(
+                      'قيّمت الدكتور',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.78),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      doctorName,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        color: theme.colorScheme.primary,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(5, (index) {
+                        final isFilled = index < rating.toInt();
+                        return Icon(
+                          isFilled ? Icons.star_rounded : Icons.star_outline_rounded,
+                          color: isFilled ? const Color(0xFFFFC107) : Colors.grey,
+                          size: 24,
+                        );
+                      }),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 22),
                 SizedBox(

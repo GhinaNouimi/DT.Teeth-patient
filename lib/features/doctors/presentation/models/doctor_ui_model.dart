@@ -1,4 +1,5 @@
 class DoctorUiModel {
+  final String id;
   final String name;
   final String specialty;
   final int yearsOfExperience;
@@ -7,11 +8,13 @@ class DoctorUiModel {
   final String graduation;
   final String bio;
   final String phone;
-  final String email;
-  final String instagram;
-  final String linkedin;
+
+  final double rating;
+  final int reviewsCount;
+  final List<String> certificates;
 
   const DoctorUiModel({
+    required this.id,
     required this.name,
     required this.specialty,
     required this.yearsOfExperience,
@@ -20,8 +23,9 @@ class DoctorUiModel {
     required this.graduation,
     required this.bio,
     required this.phone,
-    required this.email,
-    required this.instagram,
-    required this.linkedin,
+
+    required this.rating,
+    required this.reviewsCount,
+    required this.certificates,
   });
 }

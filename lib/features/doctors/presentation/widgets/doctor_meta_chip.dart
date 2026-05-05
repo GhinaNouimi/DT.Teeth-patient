@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/theme_extensions.dart';
 
-class DoctorProfileStatChip extends StatelessWidget {
+class DoctorMetaChip extends StatelessWidget {
   final String label;
 
-  const DoctorProfileStatChip({
+  const DoctorMetaChip({
     super.key,
     required this.label,
   });

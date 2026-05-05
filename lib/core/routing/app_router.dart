@@ -1,4 +1,6 @@
 import 'package:dt_teeth/features/appointments/presentation/pages/reschedule_appointment_screen.dart';
+import 'package:dt_teeth/features/doctors/presentation/pages/BookingScreen.dart';
+import 'package:dt_teeth/features/doctors/presentation/pages/DoctorProfileScreen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/appointments/presentation/pages/appointment_details_screen.dart';
@@ -10,8 +12,7 @@ import '../../features/auth/presentation/pages/on_boarding/splash_screen.dart';
 import '../../features/auth/presentation/pages/signup/signup_screen.dart';
 import '../../features/auth/presentation/pages/verify_account/verify_screen.dart';
 import '../../features/doctors/presentation/models/doctor_ui_model.dart';
-import '../../features/doctors/presentation/pages/DoctorProfileScreen.dart';
-import '../../features/doctors/presentation/pages/book_doctor_appointment_screen.dart';
+import '../../features/doctors/presentation/pages/doctor_details_booking_screen.dart';
 import '../../features/doctors/presentation/pages/doctors_screen.dart';
 import '../../features/main_shell/pages/patient_main_shell_screen.dart';
 import 'app_routes.dart';
@@ -84,22 +85,26 @@ class AppRouter {
         name: 'doctors',
         builder: (context, state) => const DoctorsScreen(),
       ),
+
+
       GoRoute(
-        path: AppRoutes.doctorProfile,
-        name: 'doctor-profile',
+        path: AppRoutes.doctorDetails,
+        name: 'doctor-details',
         builder: (context, state) {
           final doctor = state.extra as DoctorUiModel;
-          return DoctorProfileScreen(doctor: doctor);
+          return DoctorProfileScreen(doctor: doctor);  // ✅ يروح للبروفايل
         },
       ),
+
       GoRoute(
-        path: AppRoutes.bookDoctorAppointment,
-        name: 'book-doctor-appointment',
+        path: AppRoutes.booking,
+        name: 'booking',
         builder: (context, state) {
           final doctor = state.extra as DoctorUiModel;
-          return BookDoctorAppointmentScreen(doctor: doctor);
+          return BookingScreen(doctor: doctor);
         },
       ),
+
     ],
   );
 }

@@ -40,7 +40,7 @@ class CenterAddressSection extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  'دمشق - المزة - بناء المركز الطبي - الطابق الثاني',
+                  'دمشق - جرمانا - بناء المركز الطبي - الطابق الثاني',
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: colors.textPrimary,
                     height: 1.5,

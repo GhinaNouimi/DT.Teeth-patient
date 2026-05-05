@@ -10,6 +10,9 @@ class AppRoutes {
   static const doctors = '/doctors';
   static const appointmentDetails = '/appointment-details';
   static const rescheduleAppointment = '/reschedule-appointment';
-  static const doctorProfile = '/doctor-profile';
-  static const bookDoctorAppointment = '/book-doctor-appointment';
+
+  static const doctorDetails = '/doctor-details';
+  static const booking = '/booking';
+
+
 }

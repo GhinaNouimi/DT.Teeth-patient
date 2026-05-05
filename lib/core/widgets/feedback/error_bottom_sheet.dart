@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-Future<void> showSuccessBottomSheet(
+Future<void> showErrorBottomSheet(
     BuildContext context, {
       required String title,
       required String message,
@@ -24,7 +24,7 @@ Future<void> showSuccessBottomSheet(
               borderRadius: BorderRadius.circular(30),
               color: theme.colorScheme.surface,
               border: Border.all(
-                color: theme.colorScheme.primary.withValues(alpha: 0.22),
+                color: theme.colorScheme.error.withValues(alpha: 0.22),
               ),
               boxShadow: [
                 BoxShadow(
@@ -33,7 +33,7 @@ Future<void> showSuccessBottomSheet(
                   offset: const Offset(0, 14),
                 ),
                 BoxShadow(
-                  color: theme.colorScheme.primary.withValues(alpha: 0.08),
+                  color: theme.colorScheme.error.withValues(alpha: 0.08),
                   blurRadius: 18,
                   offset: const Offset(0, 8),
                 ),
@@ -49,20 +49,20 @@ Future<void> showSuccessBottomSheet(
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
                       colors: [
-                        const Color(0xFF34B67A),
-                        theme.colorScheme.secondary,
+                        theme.colorScheme.error,
+                        theme.colorScheme.error.withValues(alpha: 0.8),
                       ],
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF34B67A).withValues(alpha: 0.24),
+                        color: theme.colorScheme.error.withValues(alpha: 0.24),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
                     ],
                   ),
                   child: const Icon(
-                    Icons.check_rounded,
+                    Icons.close_rounded,
                     color: Colors.white,
                     size: 34,
                   ),
