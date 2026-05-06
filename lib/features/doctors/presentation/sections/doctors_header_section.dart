@@ -14,15 +14,15 @@ class DoctorsHeaderSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'أطباء المركز',
-          style: theme.textTheme.headlineMedium?.copyWith(
-            color: colors.textPrimary,
+          'الأطباء المتاحون',
+          style: theme.textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.w800,
+            color: colors.textPrimary,
           ),
         ),
         const SizedBox(height: 8),
         Text(
-          'اختر الطبيب المناسب لك حسب التخصص والخبرة، ثم احجز موعدك بسهولة.',
+          'اختر طبيبك المفضل وحجز موعدك بسهولة',
           style: theme.textTheme.bodyMedium?.copyWith(
             color: colors.textSecondary,
             height: 1.5,

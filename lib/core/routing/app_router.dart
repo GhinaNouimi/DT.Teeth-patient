@@ -1,9 +1,9 @@
-import 'package:dt_teeth/features/appointments/presentation/pages/reschedule_appointment_screen.dart';
-import 'package:dt_teeth/features/doctors/presentation/pages/BookingScreen.dart';
-import 'package:dt_teeth/features/doctors/presentation/pages/DoctorProfileScreen.dart';
+
+import 'package:dt_teeth/core/routing/app_routes.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/appointments/presentation/pages/appointment_details_screen.dart';
+import '../../features/appointments/presentation/pages/reschedule_appointment_screen.dart';
 import '../../features/auth/presentation/pages/forget_password/forgot_password_screen.dart';
 import '../../features/auth/presentation/pages/forget_password/reset_password_screen.dart';
 import '../../features/auth/presentation/pages/forget_password/verify_reset_code_screen.dart';
@@ -12,10 +12,10 @@ import '../../features/auth/presentation/pages/on_boarding/splash_screen.dart';
 import '../../features/auth/presentation/pages/signup/signup_screen.dart';
 import '../../features/auth/presentation/pages/verify_account/verify_screen.dart';
 import '../../features/doctors/presentation/models/doctor_ui_model.dart';
-import '../../features/doctors/presentation/pages/doctor_details_booking_screen.dart';
+import '../../features/doctors/presentation/pages/booking_screen.dart';
+import '../../features/doctors/presentation/pages/doctor_profile_screen.dart';
 import '../../features/doctors/presentation/pages/doctors_screen.dart';
 import '../../features/main_shell/pages/patient_main_shell_screen.dart';
-import 'app_routes.dart';
 
 class AppRouter {
   static final router = GoRouter(
