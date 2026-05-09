@@ -4,9 +4,15 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../../../core/widgets/feedback/success_bottom_sheet.dart';
+import '../models/appointments_store.dart';
 
 class CancelAppointmentDialog extends StatelessWidget {
-  const CancelAppointmentDialog({super.key});
+  final String appointmentId;
+
+  const CancelAppointmentDialog({
+    super.key,
+    required this.appointmentId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,7 @@ class CancelAppointmentDialog extends StatelessWidget {
         ),
       ),
       content: Text(
-        'هل تريد إرسال طلب إلغاء هذا الموعد؟\nسيصلك إشعار عند تأكيد الإلغاء من قبل العيادة.',
+        'هل تريد إلغاء هذا الموعد؟ سيتم تحديث حالة الموعد مباشرة.',
         style: theme.textTheme.bodyMedium?.copyWith(
           color: colors.textSecondary,
           height: 1.6,
@@ -39,13 +45,15 @@ class CancelAppointmentDialog extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () async {
 
+              AppointmentsStore.instance.cancelAppointment(appointmentId);
+
               await showSuccessBottomSheet(
                 context,
-                title: 'تم إرسال طلب الإلغاء',
-                message: 'سيتم إشعارك فور تأكيد إلغاء الموعد من قبل العيادة.',
-                buttonText: 'العودة',
+                title: 'تم إلغاء الموعد',
+                message: 'تم تحديث حالة الموعد بنجاح.',
+                buttonText: 'العودة للمواعيد',
                 onPressed: () {
-                  context.go(AppRoutes.home);
+                  context.go('${AppRoutes.home}?tab=2');
                 },
               );
             },
@@ -56,18 +64,7 @@ class CancelAppointmentDialog extends StatelessWidget {
             child: const Text('تأكيد الإلغاء'),
           ),
         ),
-        const SizedBox(height: 10),
-        SizedBox(
-          width: double.infinity,
-          child: OutlinedButton(
-            onPressed: () => Navigator.of(context).pop(),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: colors.navBarItem,
-              side: BorderSide(color: colors.borderSoft),
-            ),
-            child: const Text('رجوع'),
-          ),
-        ),
+
       ],
     );
   }

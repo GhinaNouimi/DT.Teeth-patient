@@ -5,6 +5,11 @@ import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../../../core/widgets/feedback/booking_bottom_sheet.dart';
 import '../../../../core/widgets/navigation/app_top_bar.dart';
+import '../../../appointments/presentaion/models/appointment_status.dart';
+import '../../../appointments/presentaion/models/appointment_type.dart';
+import '../../../appointments/presentaion/models/appointment_ui_model.dart';
+import '../../../appointments/presentaion/models/appointments_store.dart';
+import '../../../appointments/presentaion/models/service_type.dart';
 import '../data/booking_slots_data.dart';
 import '../models/doctor_ui_model.dart';
 import '../sections/booking_date_step_section.dart';
@@ -86,16 +91,62 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   void _showConfirmation() {
-    final formattedDate = BookingDateUtils.formatReviewDate(_state.selectedDate!);
+    final appointment = AppointmentUiModel(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+
+      doctor: widget.doctor,
+
+      appointmentDate: _state.selectedDate!,
+
+      appointmentTime: _state.selectedTime!,
+
+      type: AppointmentType.regular,
+
+      service: ServiceType.cleaning,
+
+      status: AppointmentStatus.confirmed,
+
+      patientNotes: _state.notesController.text.trim().isEmpty
+          ? null
+          : _state.notesController.text.trim(),
+
+      doctorNotes: null,
+
+      emergencyDescription: null,
+
+      requiresCall: false,
+
+      location: 'عيادة DT.Teeth',
+
+      durationMinutes: 30,
+
+      createdAt: DateTime.now(),
+    );
+
+    AppointmentsStore.instance.addAppointment(
+      appointment,
+    );
+
+    final formattedDate =
+    BookingDateUtils.formatReviewDate(
+      _state.selectedDate!,
+    );
 
     showBookingBottomSheet(
       context,
+
       doctorName: widget.doctor.name,
+
       date: formattedDate,
+
       time: _state.selectedTime!,
-      buttonText: 'العودة للأطباء',
+
+      buttonText: 'حسناً',
+
       onPressed: () {
-        context.go(AppRoutes.doctors);
+        context.go(
+          '${AppRoutes.home}?tab=2',
+        );
       },
     );
   }

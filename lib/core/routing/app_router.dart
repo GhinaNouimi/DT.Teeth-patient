@@ -1,9 +1,11 @@
-
 import 'package:dt_teeth/core/routing/app_routes.dart';
+import 'package:dt_teeth/features/appointments/presentaion/pages/emergency_appointment_screen.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/appointments/presentation/pages/appointment_details_screen.dart';
-import '../../features/appointments/presentation/pages/reschedule_appointment_screen.dart';
+import '../../features/appointments/presentaion/models/appointment_ui_model.dart';
+import '../../features/appointments/presentaion/pages/appointment_details_screen.dart';
+import '../../features/appointments/presentaion/pages/appointments_management_screen.dart';
+import '../../features/appointments/presentaion/pages/new_appointment_screen.dart';
 import '../../features/auth/presentation/pages/forget_password/forgot_password_screen.dart';
 import '../../features/auth/presentation/pages/forget_password/reset_password_screen.dart';
 import '../../features/auth/presentation/pages/forget_password/verify_reset_code_screen.dart';
@@ -14,7 +16,7 @@ import '../../features/auth/presentation/pages/verify_account/verify_screen.dart
 import '../../features/doctors/presentation/models/doctor_ui_model.dart';
 import '../../features/doctors/presentation/pages/booking_screen.dart';
 import '../../features/doctors/presentation/pages/doctor_profile_screen.dart';
-import '../../features/doctors/presentation/pages/doctors_screen.dart';
+import '../../features/appointments/presentaion/pages/reschedule_appointment_screen.dart';
 import '../../features/main_shell/pages/patient_main_shell_screen.dart';
 
 class AppRouter {
@@ -73,29 +75,46 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.appointmentDetails,
         name: 'appointment-details',
-        builder: (context, state) => const AppointmentDetailsScreen(),
+        builder: (context, state) {
+          final appointment = state.extra as AppointmentUiModel;
+          return AppointmentDetailsScreen(appointment: appointment);
+        },
       ),
+
+      GoRoute(
+        path: AppRoutes.appointmentsManagement,
+        name: 'appointments-management',
+        builder: (context, state) => const AppointmentsManagementScreen(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.newAppointment,
+        name: 'new-appointment',
+        builder: (context, state) => const NewAppointmentScreen(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.emergencyAppointment,
+        name: 'emergency_appointment',
+        builder: (context, state) => const EmergencyAppointmentScreen(),
+      ),
+
       GoRoute(
         path: AppRoutes.rescheduleAppointment,
         name: 'reschedule-appointment',
-        builder: (context, state) => const RescheduleAppointmentScreen(),
+        builder: (context, state) {
+          final appointment = state.extra as AppointmentUiModel;
+          return RescheduleAppointmentScreen(appointment: appointment);
+        },
       ),
-      GoRoute(
-        path: AppRoutes.doctors,
-        name: 'doctors',
-        builder: (context, state) => const DoctorsScreen(),
-      ),
-
-
       GoRoute(
         path: AppRoutes.doctorDetails,
         name: 'doctor-details',
         builder: (context, state) {
           final doctor = state.extra as DoctorUiModel;
-          return DoctorProfileScreen(doctor: doctor);  // ✅ يروح للبروفايل
+          return DoctorProfileScreen(doctor: doctor);
         },
       ),
-
       GoRoute(
         path: AppRoutes.booking,
         name: 'booking',
@@ -104,7 +123,6 @@ class AppRouter {
           return BookingScreen(doctor: doctor);
         },
       ),
-
     ],
   );
 }
