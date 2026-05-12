@@ -10,6 +10,9 @@ class AppTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final TextInputAction textInputAction;
   final ValueChanged<String>? onChanged;
+  final bool readOnly;
+  final VoidCallback? onTap;
+  final int maxLines;
 
   const AppTextField({
     super.key,
@@ -22,6 +25,9 @@ class AppTextField extends StatefulWidget {
     this.validator,
     this.textInputAction = TextInputAction.next,
     this.onChanged,
+    this.readOnly = false,
+    this.onTap,
+    this.maxLines = 1,
   });
 
   @override
@@ -41,6 +47,10 @@ class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isMultiline = !widget.obscureText && widget.maxLines > 1;
+    final effectiveKeyboardType = isMultiline
+        ? TextInputType.multiline
+        : widget.keyboardType;
 
     return Focus(
       onFocusChange: (value) => setState(() => _isFocused = value),
@@ -51,8 +61,12 @@ class _AppTextFieldState extends State<AppTextField> {
           borderRadius: BorderRadius.circular(22),
           gradient: LinearGradient(
             colors: [
-              theme.colorScheme.primary.withValues(alpha: _isFocused ? 0.16 : 0.08),
-              theme.colorScheme.secondary.withValues(alpha: _isFocused ? 0.14 : 0.06),
+              theme.colorScheme.primary.withValues(
+                alpha: _isFocused ? 0.16 : 0.08,
+              ),
+              theme.colorScheme.secondary.withValues(
+                alpha: _isFocused ? 0.14 : 0.06,
+              ),
             ],
           ),
           border: Border.all(
@@ -75,9 +89,14 @@ class _AppTextFieldState extends State<AppTextField> {
           controller: widget.controller,
           validator: widget.validator,
           obscureText: _isObscure,
-          keyboardType: widget.keyboardType,
-          textInputAction: widget.textInputAction,
+          keyboardType: effectiveKeyboardType,
+          textInputAction: isMultiline
+              ? TextInputAction.newline
+              : widget.textInputAction,
           onChanged: widget.onChanged,
+          readOnly: widget.readOnly,
+          onTap: widget.onTap,
+          maxLines: widget.obscureText ? 1 : widget.maxLines,
           decoration: InputDecoration(
             labelText: widget.label,
             hintText: widget.hint,
@@ -98,6 +117,11 @@ class _AppTextFieldState extends State<AppTextField> {
                   key: ValueKey(_isObscure),
                 ),
               ),
+            )
+                : (widget.readOnly && widget.onTap != null)
+                ? Icon(
+              Icons.keyboard_arrow_down_rounded,
+              color: theme.colorScheme.primary.withValues(alpha: 0.8),
             )
                 : null,
           ),

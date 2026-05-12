@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-import '../../utils/validators.dart';
+import '../../../../../core/utils/validators.dart';
+
 
 class PasswordStrengthCard extends StatelessWidget {
   final String password;
@@ -37,6 +38,10 @@ class PasswordStrengthCard extends StatelessWidget {
     } else {
       accentColor = const Color(0xFF34B67A);
     }
+
+    final titleColor = password.isEmpty
+        ? theme.colorScheme.onSurface.withValues(alpha: 0.86)
+        : accentColor;
 
     final checks = [
       _RuleItem(
@@ -86,13 +91,17 @@ class PasswordStrengthCard extends StatelessWidget {
           if (showTitle) ...[
             Row(
               children: [
-                Icon(Icons.shield_rounded, color: accentColor, size: 18),
+                Icon(
+                  Icons.shield_rounded,
+                  color: titleColor,
+                  size: 18,
+                ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     'قوة كلمة المرور: $label',
                     style: theme.textTheme.titleMedium?.copyWith(
-                      color: theme.colorScheme.primary.withValues(alpha: 0.92),
+                      color: titleColor,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -135,7 +144,8 @@ class _RuleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final successColor = const Color(0xFF34B67A);
-    final idleColor = Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55);
+    final idleColor =
+    Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55);
     final textColor = passed
         ? successColor
         : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.78);

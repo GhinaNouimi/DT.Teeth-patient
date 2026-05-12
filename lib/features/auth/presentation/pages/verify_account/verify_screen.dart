@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../../../../core/widgets/auth/auth_shell.dart';
-import '../../../../../core/widgets/auth/primary_app_button.dart';
+import '../widgets/auth_shell.dart';
+import '../widgets/primary_app_button.dart';
+
+
 
 class VerifyScreen extends StatefulWidget {
   final String email;

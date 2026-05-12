@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../core/routing/app_routes.dart';
 import '../../../../../core/utils/validators.dart';
-import '../../../../../core/widgets/auth/app_text_field.dart';
-import '../../../../../core/widgets/auth/auth_shell.dart';
-import '../../../../../core/widgets/auth/password_strength_card.dart';
-import '../../../../../core/widgets/auth/primary_app_button.dart';
 import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
+import '../widgets/app_text_field.dart';
+import '../widgets/auth_shell.dart';
+import '../widgets/date_of_birth_field.dart';
+import '../widgets/gender_selector_card.dart';
+import '../widgets/password_strength_card.dart';
+import '../widgets/primary_app_button.dart';
+
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -22,7 +26,18 @@ class _SignupScreenState extends State<SignupScreen> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
+  final _birthDateController = TextEditingController();
+  final _addressController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  DateTime? _selectedBirthDate;
+  String? _selectedGender;
+  bool _showGenderError = false;
+
+  static const List<String> _genderOptions = [
+    'ذكر',
+    'أنثى',
+  ];
 
   @override
   void initState() {
@@ -37,23 +52,52 @@ class _SignupScreenState extends State<SignupScreen> {
     _nameController.dispose();
     _phoneController.dispose();
     _emailController.dispose();
+    _birthDateController.dispose();
+    _addressController.dispose();
     _passwordController.removeListener(_passwordListener);
     _passwordController.dispose();
     super.dispose();
   }
 
+  Future<void> _pickBirthDate() async {
+    final now = DateTime.now();
+    final initialDate = _selectedBirthDate ?? DateTime(now.year - 20, 1, 1);
+
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime(1940),
+      lastDate: DateTime(now.year - 5, now.month, now.day),
+    );
+
+    if (picked == null) return;
+
+    setState(() {
+      _selectedBirthDate = picked;
+      _birthDateController.text = DateFormat('yyyy/MM/dd').format(picked);
+    });
+  }
+
   Future<void> _submit() async {
-    if (_formKey.currentState!.validate()) {
-      await showSuccessBottomSheet(
-        context,
-        title: 'تم إنشاء الحساب',
-        message: 'تم إنشاء حسابك بنجاح، سننقلك الآن إلى شاشة التحقق من البريد الإلكتروني.',
-        buttonText: 'متابعة',
-        onPressed: () {
-          context.push(AppRoutes.verify, extra: _emailController.text.trim());
-        },
-      );
-    }
+    final isFormValid = _formKey.currentState!.validate();
+    final hasGender = _selectedGender != null;
+
+    setState(() {
+      _showGenderError = !hasGender;
+    });
+
+    if (!isFormValid || !hasGender) return;
+
+    await showSuccessBottomSheet(
+      context,
+      title: 'تم إنشاء الحساب',
+      message:
+      'تم إنشاء حسابك بنجاح، سننقلك الآن إلى شاشة التحقق من البريد الإلكتروني.',
+      buttonText: 'متابعة',
+      onPressed: () {
+        context.push(AppRoutes.verify, extra: _emailController.text.trim());
+      },
+    );
   }
 
   @override
@@ -101,6 +145,44 @@ class _SignupScreenState extends State<SignupScreen> {
 
             const SizedBox(height: 16),
 
+            BirthDateField(
+              controller: _birthDateController,
+              onTap: _pickBirthDate,
+              delay: 220.ms,
+            ),
+
+            const SizedBox(height: 16),
+
+            GenderSelectorCard(
+              selectedGender: _selectedGender,
+              options: _genderOptions,
+              showError: _showGenderError,
+              onSelected: (value) {
+                setState(() {
+                  _selectedGender = value;
+                  _showGenderError = false;
+                });
+              },
+              delay: 260.ms,
+            ),
+
+            const SizedBox(height: 16),
+
+            AppTextField(
+              controller: _addressController,
+              label: 'العنوان',
+              hint: 'أدخل عنوانك',
+              prefixIcon: Icons.location_on_outlined,
+              maxLines: 3,
+              textInputAction: TextInputAction.newline,
+              validator: (value) => AppValidators.requiredField(
+                value,
+                fieldName: 'العنوان',
+              ),
+            ).animate().fadeIn(delay: 300.ms).slideX(begin: 0.08, end: 0),
+
+            const SizedBox(height: 16),
+
             Align(
               alignment: Alignment.centerRight,
               child: Text(
@@ -115,7 +197,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
             PasswordStrengthCard(
               password: _passwordController.text,
-            ).animate().fadeIn(delay: 220.ms),
+            ).animate().fadeIn(delay: 340.ms),
 
             const SizedBox(height: 16),
 
@@ -127,8 +209,7 @@ class _SignupScreenState extends State<SignupScreen> {
               obscureText: true,
               validator: AppValidators.strongPassword,
               onChanged: (_) => setState(() {}),
-            ).animate().fadeIn(delay: 260.ms).slideX(begin: 0.08, end: 0),
-
+            ).animate().fadeIn(delay: 380.ms).slideX(begin: 0.08, end: 0),
 
             const SizedBox(height: 20),
 
@@ -136,7 +217,7 @@ class _SignupScreenState extends State<SignupScreen> {
               text: 'إنشاء الحساب',
               icon: Icons.person_add_alt_1_rounded,
               onPressed: _submit,
-            ).animate().fadeIn(delay: 360.ms).slideY(begin: 0.14, end: 0),
+            ).animate().fadeIn(delay: 460.ms).slideY(begin: 0.14, end: 0),
           ],
         ),
       ),

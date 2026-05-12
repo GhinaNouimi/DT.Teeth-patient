@@ -3,8 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-import '../branding/smile_divider.dart';
-import '../branding/tooth_glow_background.dart';
+import '../../../../../core/widgets/branding/smile_divider.dart';
+import '../../../../../core/widgets/branding/tooth_glow_background.dart';
+
+
 
 class AuthShell extends StatefulWidget {
   final String title;

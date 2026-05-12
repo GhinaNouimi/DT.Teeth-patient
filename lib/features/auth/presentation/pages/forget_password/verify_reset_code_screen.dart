@@ -3,9 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../../core/routing/app_routes.dart';
-import '../../../../../core/widgets/auth/auth_shell.dart';
-import '../../../../../core/widgets/auth/primary_app_button.dart';
 import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
+import '../widgets/auth_shell.dart';
+import '../widgets/primary_app_button.dart';
 
 class VerifyResetCodeScreen extends StatefulWidget {
   final String email;

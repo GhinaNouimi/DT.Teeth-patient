@@ -4,9 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../core/routing/app_routes.dart';
 import '../../../../../core/utils/validators.dart';
-import '../../../../../core/widgets/auth/app_text_field.dart';
-import '../../../../../core/widgets/auth/auth_shell.dart';
-import '../../../../../core/widgets/auth/primary_app_button.dart';
+import '../widgets/app_text_field.dart';
+import '../widgets/auth_shell.dart';
+import '../widgets/primary_app_button.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
