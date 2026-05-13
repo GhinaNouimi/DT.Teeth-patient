@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/theme_extensions.dart';
-import '../widgets/switch_tab_button.dart';
 
 class AppointmentsTabSection extends StatelessWidget {
   final int upcomingCount;
@@ -20,39 +19,101 @@ class AppointmentsTabSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final theme = Theme.of(context);
+
+    Widget buildTab({
+      required String label,
+      required int count,
+      required bool selected,
+      required VoidCallback onTap,
+    }) {
+      return Expanded(
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(18),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOut,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 14,
+            ),
+            decoration: BoxDecoration(
+              color: selected ? colors.navBarItem : Colors.transparent,
+              borderRadius: BorderRadius.circular(18),
+              boxShadow: selected
+                  ? [
+                BoxShadow(
+                  color: colors.navBarItem.withValues(alpha: 0.16),
+                  blurRadius: 14,
+                  offset: const Offset(0, 6),
+                ),
+              ]
+                  : null,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 28,
+                  height: 28,
+                  decoration: BoxDecoration(
+                    color: selected
+                        ? Colors.white.withValues(alpha: 0.14)
+                        : colors.background,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '$count',
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: selected ? Colors.white : colors.navBarItem,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                    label,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      color: selected ? Colors.white : colors.navBarItem,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
 
     return Container(
-      height: 62,
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
-        color: colors.surfaceSecondary,
-        borderRadius: BorderRadius.circular(20),
+        color: colors.surfaceMuted,
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: colors.borderSoft,
+          color: colors.borderSoft.withValues(alpha: 0.9),
         ),
       ),
       child: Row(
         children: [
-          Expanded(
-            child: SwitchTabButton(
-              label: 'القادمة',
-              icon: Icons.calendar_today_rounded,
-              count: upcomingCount,
-              isActive: currentTabIndex == 0,
-              onTap: () => onTabChanged(0),
-            ),
+          buildTab(
+            label: 'القادمة',
+            count: upcomingCount,
+            selected: currentTabIndex == 0,
+            onTap: () => onTabChanged(0),
           ),
-
-          const SizedBox(width: 6),
-
-          Expanded(
-            child: SwitchTabButton(
-              label: 'السابقة',
-              icon: Icons.history_rounded,
-              count: pastCount,
-              isActive: currentTabIndex == 1,
-              onTap: () => onTabChanged(1),
-            ),
+          const SizedBox(width: 8),
+          buildTab(
+            label: 'السابقة',
+            count: pastCount,
+            selected: currentTabIndex == 1,
+            onTap: () => onTabChanged(1),
           ),
         ],
       ),

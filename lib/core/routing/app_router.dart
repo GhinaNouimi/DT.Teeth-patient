@@ -18,6 +18,13 @@ import '../../features/doctors/presentation/pages/booking_screen.dart';
 import '../../features/doctors/presentation/pages/doctor_profile_screen.dart';
 import '../../features/appointments/presentaion/pages/reschedule_appointment_screen.dart';
 import '../../features/main_shell/pages/patient_main_shell_screen.dart';
+import '../../features/medical_record/presentation/pages/attachments_screen.dart';
+import '../../features/medical_record/presentation/pages/payment_plan_details_screen.dart';
+import '../../features/medical_record/presentation/pages/payments_screen.dart';
+import '../../features/medical_record/presentation/pages/prescription_details_screen.dart';
+import '../../features/medical_record/presentation/pages/prescriptions_screen.dart';
+import '../../features/medical_record/presentation/pages/treatment_details_screen.dart';
+import '../../features/medical_record/presentation/pages/treatments_screen.dart';
 
 class AppRouter {
   static final router = GoRouter(
@@ -122,6 +129,51 @@ class AppRouter {
           final doctor = state.extra as DoctorUiModel;
           return BookingScreen(doctor: doctor);
         },
+      ),
+
+      GoRoute(
+        path: AppRoutes.medicalRecordTreatments,
+        name: 'medical-record-treatments',
+        builder: (context, state) => const TreatmentsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.medicalRecordTreatmentDetails,
+        name: 'medical-record-treatment-details',
+        builder: (context, state) {
+          final treatmentId = state.extra as String;
+          return TreatmentDetailsScreen(treatmentId: treatmentId);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.medicalRecordAttachments,
+        name: 'medical-record-attachments',
+        builder: (context, state) {
+          final treatmentId = state.extra as String;
+          return AttachmentsScreen(treatmentId: treatmentId);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.medicalRecordPrescriptions,
+        name: 'medical-record-prescriptions',
+        builder: (context, state) => const PrescriptionsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.medicalRecordPrescriptionDetails,
+        name: 'medical-record-prescription-details',
+        builder: (context, state) {
+          final prescriptionId = state.extra as String;
+          return PrescriptionDetailsScreen(prescriptionId: prescriptionId);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.medicalRecordPayments,
+        name: 'medical-record-payments',
+        builder: (context, state) => const PaymentsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.medicalRecordPaymentPlanDetails,
+        name: 'medical-record-payment-plan-details',
+        builder: (context, state) => const PaymentPlanDetailsScreen(),
       ),
     ],
   );

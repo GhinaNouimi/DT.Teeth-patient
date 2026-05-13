@@ -17,4 +17,12 @@ class AppRoutes {
   static const appointmentDetails = '/appointment-details';
   static const rescheduleAppointment = '/reschedule-appointment';
   static const emergencyAppointment= '/emergency_appointment';
+
+  static const medicalRecordTreatments = '/medical-record-treatments';
+  static const medicalRecordTreatmentDetails = '/medical-record-treatment-details';
+  static const medicalRecordAttachments = '/medical-record-attachments';
+  static const medicalRecordPrescriptions = '/medical-record-prescriptions';
+  static const medicalRecordPrescriptionDetails = '/medical-record-prescription-details';
+  static const medicalRecordPayments = '/medical-record-payments';
+  static const medicalRecordPaymentPlanDetails = '/medical-record-payment-plan-details';
 }
