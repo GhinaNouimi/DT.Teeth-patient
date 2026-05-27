@@ -1,16 +1,27 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dt_teeth/core/routing/app_routes.dart';
 import 'package:dt_teeth/features/appointments/presentaion/pages/emergency_appointment_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/appointments/presentaion/models/appointment_ui_model.dart';
 import '../../features/appointments/presentaion/pages/appointment_details_screen.dart';
 import '../../features/appointments/presentaion/pages/appointments_management_screen.dart';
 import '../../features/appointments/presentaion/pages/new_appointment_screen.dart';
+import '../../features/auth/data/datasources/auth_remote_data_source.dart';
+import '../../features/auth/data/repositories/auth_repository_impl.dart';
+import '../../features/auth/domain/usecases/login_patient_usecase.dart';
+import '../../features/auth/domain/usecases/register_patient_usecase.dart';
+import '../../features/auth/domain/usecases/verify_email_usecase.dart';
+import '../../features/auth/presentation/bloc/login/login_bloc.dart';
+import '../../features/auth/presentation/bloc/register/register_bloc.dart';
+import '../../features/auth/presentation/bloc/verify_email/verify_email_bloc.dart';
 import '../../features/auth/presentation/pages/forget_password/forgot_password_screen.dart';
 import '../../features/auth/presentation/pages/forget_password/reset_password_screen.dart';
 import '../../features/auth/presentation/pages/forget_password/verify_reset_code_screen.dart';
 import '../../features/auth/presentation/pages/login/login_screen.dart';
 import '../../features/auth/presentation/pages/on_boarding/splash_screen.dart';
+import '../../features/auth/presentation/pages/signup/patient_health_questions_screen.dart';
 import '../../features/auth/presentation/pages/signup/signup_screen.dart';
 import '../../features/auth/presentation/pages/verify_account/verify_screen.dart';
 import '../../features/doctors/presentation/models/doctor_ui_model.dart';
@@ -25,6 +36,7 @@ import '../../features/medical_record/presentation/pages/prescription_details_sc
 import '../../features/medical_record/presentation/pages/prescriptions_screen.dart';
 import '../../features/medical_record/presentation/pages/treatment_details_screen.dart';
 import '../../features/medical_record/presentation/pages/treatments_screen.dart';
+import '../network/network_info.dart';
 
 class AppRouter {
   static final router = GoRouter(
@@ -38,19 +50,70 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.login,
         name: 'login',
-        builder: (context, state) => const LoginScreen(),
+        builder: (context, state) {
+          return BlocProvider(
+            create: (_) => LoginBloc(
+              loginPatientUseCase: LoginPatientUseCase(
+                repository: AuthRepositoryImpl(
+                  remoteDataSource: AuthRemoteDataSourceImpl(),
+                ),
+              ),
+              networkInfo: NetworkInfo(
+                connectivity: Connectivity(),
+              ),
+            ),
+            child: const LoginScreen(),
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.signup,
         name: 'signup',
         builder: (context, state) => const SignupScreen(),
       ),
+
+      GoRoute(
+        path: AppRoutes.patientHealthQuestions,
+        name: 'patient-health-questions',
+        builder: (context, state) {
+          final basicRegisterData = state.extra as Map<String, dynamic>? ?? {};
+
+          return BlocProvider(
+            create: (_) => RegisterBloc(
+              registerPatientUseCase: RegisterPatientUseCase(
+                repository: AuthRepositoryImpl(
+                  remoteDataSource: AuthRemoteDataSourceImpl(),
+                ),
+              ),
+              networkInfo: NetworkInfo(
+                connectivity: Connectivity(),
+              ),
+            ),
+            child: PatientHealthQuestionsScreen(
+              basicRegisterData: basicRegisterData,
+            ),
+          );
+        },
+      ),
       GoRoute(
         path: AppRoutes.verify,
         name: 'verify',
         builder: (context, state) {
           final email = state.extra as String? ?? '';
-          return VerifyScreen(email: email);
+
+          return BlocProvider(
+            create: (_) => VerifyEmailBloc(
+              verifyEmailUseCase: VerifyEmailUseCase(
+                repository: AuthRepositoryImpl(
+                  remoteDataSource: AuthRemoteDataSourceImpl(),
+                ),
+              ),
+              networkInfo: NetworkInfo(
+                connectivity: Connectivity(),
+              ),
+            ),
+            child: VerifyScreen(email: email),
+          );
         },
       ),
       GoRoute(

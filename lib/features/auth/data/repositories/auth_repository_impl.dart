@@ -1,0 +1,39 @@
+import '../../data/datasources/auth_remote_data_source.dart';
+
+import '../../data/models/login_request_model.dart';
+import '../../data/models/login_response_model.dart';
+import '../../data/models/register_patient_request_model.dart';
+import '../../data/models/register_response_model.dart';
+import '../../data/models/verify_email_request_model.dart';
+import '../../data/models/verify_email_response_model.dart';
+
+import 'auth_repository.dart';
+
+class AuthRepositoryImpl implements AuthRepository {
+  final AuthRemoteDataSource remoteDataSource;
+
+  AuthRepositoryImpl({
+    required this.remoteDataSource,
+  });
+
+  @override
+  Future<RegisterResponseModel> registerPatient(
+      RegisterPatientRequestModel request,
+      ) {
+    return remoteDataSource.registerPatient(request);
+  }
+
+  @override
+  Future<VerifyEmailResponseModel> verifyEmail(
+      VerifyEmailRequestModel request,
+      ) {
+    return remoteDataSource.verifyEmail(request);
+  }
+
+  @override
+  Future<LoginResponseModel> loginPatient(
+      LoginRequestModel request,
+      ) {
+    return remoteDataSource.loginPatient(request);
+  }
+}

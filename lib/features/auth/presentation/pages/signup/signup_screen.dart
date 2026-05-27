@@ -5,14 +5,12 @@ import 'package:intl/intl.dart';
 
 import '../../../../../core/routing/app_routes.dart';
 import '../../../../../core/utils/validators.dart';
-import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/auth_shell.dart';
 import '../widgets/date_of_birth_field.dart';
 import '../widgets/gender_selector_card.dart';
 import '../widgets/password_strength_card.dart';
 import '../widgets/primary_app_button.dart';
-
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -23,12 +21,14 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
+
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _birthDateController = TextEditingController();
   final _addressController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   DateTime? _selectedBirthDate;
   String? _selectedGender;
@@ -56,6 +56,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _addressController.dispose();
     _passwordController.removeListener(_passwordListener);
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -88,15 +89,20 @@ class _SignupScreenState extends State<SignupScreen> {
 
     if (!isFormValid || !hasGender) return;
 
-    await showSuccessBottomSheet(
-      context,
-      title: 'تم إنشاء الحساب',
-      message:
-      'تم إنشاء حسابك بنجاح، سننقلك الآن إلى شاشة التحقق من البريد الإلكتروني.',
-      buttonText: 'متابعة',
-      onPressed: () {
-        context.push(AppRoutes.verify, extra: _emailController.text.trim());
-      },
+    final basicRegisterData = {
+      'name': _nameController.text.trim(),
+      'email': _emailController.text.trim(),
+      'phone': _phoneController.text.trim(),
+      'password': _passwordController.text,
+      'password_confirmation': _confirmPasswordController.text,
+      'date_of_birth': _birthDateController.text.trim(),
+      'gender': _selectedGender == 'ذكر' ? 1 : 2,
+      'address': _addressController.text.trim(),
+    };
+
+    context.push(
+      AppRoutes.patientHealthQuestions,
+      extra: basicRegisterData,
     );
   }
 
@@ -117,8 +123,10 @@ class _SignupScreenState extends State<SignupScreen> {
               label: 'الاسم الكامل',
               hint: 'أدخل اسمك الكامل',
               prefixIcon: Icons.person_outline_rounded,
-              validator: (value) =>
-                  AppValidators.requiredField(value, fieldName: 'الاسم'),
+              validator: (value) => AppValidators.requiredField(
+                value,
+                fieldName: 'الاسم',
+              ),
             ).animate().fadeIn(delay: 60.ms).slideX(begin: 0.08, end: 0),
 
             const SizedBox(height: 16),
@@ -211,13 +219,34 @@ class _SignupScreenState extends State<SignupScreen> {
               onChanged: (_) => setState(() {}),
             ).animate().fadeIn(delay: 380.ms).slideX(begin: 0.08, end: 0),
 
+            const SizedBox(height: 16),
+
+            AppTextField(
+              controller: _confirmPasswordController,
+              label: 'تأكيد كلمة المرور',
+              hint: '********',
+              prefixIcon: Icons.lock_reset_rounded,
+              obscureText: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'يرجى تأكيد كلمة المرور';
+                }
+
+                if (value != _passwordController.text) {
+                  return 'كلمة المرور غير متطابقة';
+                }
+
+                return null;
+              },
+            ).animate().fadeIn(delay: 420.ms).slideX(begin: 0.08, end: 0),
+
             const SizedBox(height: 20),
 
             PrimaryAppButton(
-              text: 'إنشاء الحساب',
-              icon: Icons.person_add_alt_1_rounded,
+              text: 'متابعة',
+              icon: Icons.arrow_forward_rounded,
               onPressed: _submit,
-            ).animate().fadeIn(delay: 460.ms).slideY(begin: 0.14, end: 0),
+            ).animate().fadeIn(delay: 500.ms).slideY(begin: 0.14, end: 0),
           ],
         ),
       ),
