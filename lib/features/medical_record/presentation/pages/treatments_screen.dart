@@ -40,12 +40,15 @@ class _TreatmentsScreenState extends State<TreatmentsScreen> {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final activeTreatments =
-    _treatments.where((treatment) => treatment.isActive).toList();
-    final completedTreatments =
-    _treatments.where((treatment) => treatment.isCompleted).toList();
-    final displayedTreatments =
-    _currentTabIndex == 0 ? activeTreatments : completedTreatments;
+    final activeTreatments = _treatments
+        .where((treatment) => treatment.isActive)
+        .toList();
+    final completedTreatments = _treatments
+        .where((treatment) => treatment.isCompleted)
+        .toList();
+    final displayedTreatments = _currentTabIndex == 0
+        ? activeTreatments
+        : completedTreatments;
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -55,55 +58,53 @@ class _TreatmentsScreenState extends State<TreatmentsScreen> {
           children: [
             const Padding(
               padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
-              child: AppTopBar(
-                title: 'علاجاتي',
-              ),
+              child: AppTopBar(title: 'علاجاتي'),
             ),
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                children: [
-                  MedicalRecordTabBar(
-                    labels: const ['الحالية', 'المكتملة'],
-                    counts: [
-                      activeTreatments.length,
-                      completedTreatments.length,
-                    ],
-                    currentIndex: _currentTabIndex,
-                    onChanged: (index) {
-                      setState(() {
-                        _currentTabIndex = index;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 18),
-                  if (displayedTreatments.isEmpty)
-                    const MedicalRecordEmptyState(
-                      title: 'لا توجد عناصر هنا بعد',
-                      subtitle:
-                      'بمجرد بدء خطة علاجية جديدة، ستظهر في هذا القسم.',
-                      icon: Icons.medical_services_outlined,
-                    )
-                  else
-                    ...displayedTreatments.map(
-                          (treatment) => Padding(
-                        padding: const EdgeInsets.only(bottom: 14),
-                        child: TreatmentCard(
-                          treatment: treatment,
-                          onTap: () {
-                            context.push(
-                              AppRoutes.medicalRecordTreatmentDetails,
-                              extra: treatment.id,
-                            );
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                      children: [
+                        MedicalRecordTabBar(
+                          labels: const ['الحالية', 'المكتملة'],
+                          counts: [
+                            activeTreatments.length,
+                            completedTreatments.length,
+                          ],
+                          currentIndex: _currentTabIndex,
+                          onChanged: (index) {
+                            setState(() {
+                              _currentTabIndex = index;
+                            });
                           },
                         ),
-                      ),
+                        const SizedBox(height: 18),
+                        if (displayedTreatments.isEmpty)
+                          const MedicalRecordEmptyState(
+                            title: 'لا توجد عناصر هنا بعد',
+                            subtitle:
+                                'بمجرد بدء خطة علاجية جديدة، ستظهر في هذا القسم.',
+                            icon: Icons.medical_services_outlined,
+                          )
+                        else
+                          ...displayedTreatments.map(
+                            (treatment) => Padding(
+                              padding: const EdgeInsets.only(bottom: 14),
+                              child: TreatmentCard(
+                                treatment: treatment,
+                                onTap: () {
+                                  context.push(
+                                    AppRoutes.medicalRecordTreatmentDetails,
+                                    extra: treatment.id,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
-                ],
-              ),
             ),
           ],
         ),

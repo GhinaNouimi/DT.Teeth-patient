@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 Future<void> showBookingBottomSheet(
-    BuildContext context, {
-      required String doctorName,
-      required String date,
-      required String time,
-      required String buttonText,
-      VoidCallback? onPressed,
-    }) {
+  BuildContext context, {
+  required String doctorName,
+  required String date,
+  required String time,
+  required String buttonText,
+  VoidCallback? onPressed,
+}) {
   final theme = Theme.of(context);
 
   return showModalBottomSheet<void>(
@@ -53,7 +53,9 @@ Future<void> showBookingBottomSheet(
 
                     boxShadow: [
                       BoxShadow(
-                        color: theme.colorScheme.primary.withValues(alpha: 0.24),
+                        color: theme.colorScheme.primary.withValues(
+                          alpha: 0.24,
+                        ),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
@@ -75,6 +77,7 @@ Future<void> showBookingBottomSheet(
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 18),
+
                 /// تفاصيل الحجز
                 Container(
                   padding: const EdgeInsets.all(16),
@@ -159,11 +162,7 @@ class _BookingDetailRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(
-          icon,
-          color: theme.colorScheme.primary,
-          size: 20,
-        ),
+        Icon(icon, color: theme.colorScheme.primary, size: 20),
         const SizedBox(width: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

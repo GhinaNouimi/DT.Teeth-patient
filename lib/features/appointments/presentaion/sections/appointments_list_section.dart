@@ -8,10 +8,7 @@ import '../widgets/appointment_card_widget.dart';
 class AppointmentsListSection extends StatelessWidget {
   final List<AppointmentUiModel> appointments;
 
-  const AppointmentsListSection({
-    super.key,
-    required this.appointments,
-  });
+  const AppointmentsListSection({super.key, required this.appointments});
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +20,7 @@ class AppointmentsListSection extends StatelessWidget {
             appointment: appointment,
             isUpcoming: appointment.isUpcoming,
             onTap: () {
-              context.push(
-                AppRoutes.appointmentDetails,
-                extra: appointment,
-              );
+              context.push(AppRoutes.appointmentDetails, extra: appointment);
             },
           ),
         );

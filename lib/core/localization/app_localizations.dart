@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
-class AppLocalizations {
-  static const supportedLocales = [
-    Locale('ar'),
-    Locale('en'),
-  ];
+import 'generated/app_localizations.g.dart';
 
+abstract final class AppLocalizations {
   static const defaultLocale = Locale('ar');
 
-  static const localizationsDelegates = [
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-  ];
+  static const supportedLocales = GeneratedAppLocalizations.supportedLocales;
 
-  /// 👉 تحديد الاتجاه بناءً على اللغة
+  static const localizationsDelegates =
+      GeneratedAppLocalizations.localizationsDelegates;
+
   static TextDirection getDirection(Locale locale) {
-    return locale.languageCode == 'ar'
-        ? TextDirection.rtl
-        : TextDirection.ltr;
+    return locale.languageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr;
   }
+}
+
+extension AppLocalizationsX on BuildContext {
+  GeneratedAppLocalizations get l10n => GeneratedAppLocalizations.of(this);
 }

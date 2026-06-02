@@ -33,10 +33,7 @@ class _PatientMainShellScreenState extends State<PatientMainShellScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
-      ),
+      body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: PatientBottomNavBar(
         currentIndex: _currentIndex,
         onTap: _onTap,
@@ -48,14 +45,10 @@ class _PatientMainShellScreenState extends State<PatientMainShellScreen> {
 class _ComingSoonScreen extends StatelessWidget {
   final String title;
 
-  const _ComingSoonScreen({
-    required this.title,
-  });
+  const _ComingSoonScreen({required this.title});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(title),
-    );
+    return Center(child: Text(title));
   }
 }

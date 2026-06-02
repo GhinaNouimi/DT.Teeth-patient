@@ -79,76 +79,80 @@ class _PaymentPlanDetailsScreenState extends State<PaymentPlanDetailsScreen> {
                   ? const Center(child: CircularProgressIndicator())
                   : (_plan == null)
                   ? const Padding(
-                padding: EdgeInsets.all(20),
-                child: MedicalRecordEmptyState(
-                  title: 'تعذر تحميل الخطة',
-                  subtitle: 'يرجى المحاولة لاحقًا.',
-                  icon: Icons.wallet_rounded,
-                ),
-              )
-                  : ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(18),
-                    decoration: BoxDecoration(
-                      color: colors.surfaceMuted,
-                      borderRadius: BorderRadius.circular(24),
-                      border: Border.all(
-                        color: colors.borderSoft,
+                      padding: EdgeInsets.all(20),
+                      child: MedicalRecordEmptyState(
+                        title: 'تعذر تحميل الخطة',
+                        subtitle: 'يرجى المحاولة لاحقًا.',
+                        icon: Icons.wallet_rounded,
                       ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    )
+                  : ListView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
                       children: [
-                        Text(
-                          _plan!.treatmentName,
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            color: colors.textPrimary,
-                            fontWeight: FontWeight.w800,
+                        Container(
+                          padding: const EdgeInsets.all(18),
+                          decoration: BoxDecoration(
+                            color: colors.surfaceMuted,
+                            borderRadius: BorderRadius.circular(24),
+                            border: Border.all(color: colors.borderSoft),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _plan!.treatmentName,
+                                style: theme.textTheme.titleLarge?.copyWith(
+                                  color: colors.textPrimary,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                _plan!.doctorName,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: colors.textSecondary,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          _plan!.doctorName,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: colors.textSecondary,
-                            fontWeight: FontWeight.w700,
+                        const SizedBox(height: 18),
+                        Container(
+                          padding: const EdgeInsets.all(18),
+                          decoration: BoxDecoration(
+                            color: colors.surfacePrimary,
+                            borderRadius: BorderRadius.circular(24),
+                            border: Border.all(color: colors.borderSoft),
+                          ),
+                          child: Column(
+                            children: [
+                              detailRow(
+                                'إجمالي التكلفة',
+                                _plan!.totalCostLabel,
+                              ),
+                              const Divider(height: 1),
+                              detailRow(
+                                'عدد الجلسات',
+                                _plan!.expectedSessionsLabel,
+                              ),
+                              const Divider(height: 1),
+                              detailRow('مدة الخطة', _plan!.durationLabel),
+                              const Divider(height: 1),
+                              detailRow('المتبقي', _plan!.remainingAmountLabel),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        ..._plan!.records.map(
+                          (record) => Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: PaymentRecordCard(record: record),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 18),
-                  Container(
-                    padding: const EdgeInsets.all(18),
-                    decoration: BoxDecoration(
-                      color: colors.surfacePrimary,
-                      borderRadius: BorderRadius.circular(24),
-                      border: Border.all(color: colors.borderSoft),
-                    ),
-                    child: Column(
-                      children: [
-                        detailRow('إجمالي التكلفة', _plan!.totalCostLabel),
-                        const Divider(height: 1),
-                        detailRow('عدد الجلسات', _plan!.expectedSessionsLabel),
-                        const Divider(height: 1),
-                        detailRow('مدة الخطة', _plan!.durationLabel),
-                        const Divider(height: 1),
-                        detailRow('المتبقي', _plan!.remainingAmountLabel),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 18),
-                  ..._plan!.records.map(
-                        (record) => Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: PaymentRecordCard(record: record),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ],
         ),

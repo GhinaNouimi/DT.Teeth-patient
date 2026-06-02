@@ -7,10 +7,7 @@ import '../utils/medical_record_accent.dart';
 class PaymentRecordCard extends StatelessWidget {
   final PaymentRecordEntity record;
 
-  const PaymentRecordCard({
-    super.key,
-    required this.record,
-  });
+  const PaymentRecordCard({super.key, required this.record});
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +33,7 @@ class PaymentRecordCard extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: Icon(
-              record.isCompleted
-                  ? Icons.check_rounded
-                  : Icons.schedule_rounded,
+              record.isCompleted ? Icons.check_rounded : Icons.schedule_rounded,
               color: record.isCompleted
                   ? colors.success
                   : context.medicalAccent,

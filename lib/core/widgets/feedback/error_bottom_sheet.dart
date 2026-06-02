@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 Future<void> showErrorBottomSheet(
-    BuildContext context, {
-      required String title,
-      required String message,
-      required String buttonText,
-      VoidCallback? onPressed,
-    }) {
+  BuildContext context, {
+  required String title,
+  required String message,
+  required String buttonText,
+  VoidCallback? onPressed,
+}) {
   final theme = Theme.of(context);
 
   return showModalBottomSheet<void>(

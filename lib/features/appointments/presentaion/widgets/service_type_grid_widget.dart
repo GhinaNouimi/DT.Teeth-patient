@@ -74,7 +74,6 @@ class _ServiceTypeCard extends StatelessWidget {
     required this.theme,
   });
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -90,19 +89,17 @@ class _ServiceTypeCard extends StatelessWidget {
           ),
           boxShadow: isSelected
               ? [
-            BoxShadow(
-              color: colors.buttonPrimary.withValues(alpha: 0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
-            ),
-          ]
+                  BoxShadow(
+                    color: colors.buttonPrimary.withValues(alpha: 0.3),
+                    blurRadius: 12,
+                    offset: const Offset(0, 6),
+                  ),
+                ]
               : null,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(

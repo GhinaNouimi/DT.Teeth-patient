@@ -7,7 +7,5 @@ abstract class RegisterEvent {
 class RegisterPatientSubmitted extends RegisterEvent {
   final RegisterPatientRequestModel request;
 
-  const RegisterPatientSubmitted({
-    required this.request,
-  });
+  const RegisterPatientSubmitted({required this.request});
 }

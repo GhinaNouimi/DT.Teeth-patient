@@ -5,13 +5,9 @@ import '../../data/repositories/auth_repository.dart';
 class RegisterPatientUseCase {
   final AuthRepository repository;
 
-  RegisterPatientUseCase({
-    required this.repository,
-  });
+  RegisterPatientUseCase({required this.repository});
 
-  Future<RegisterResponseModel> call(
-      RegisterPatientRequestModel request,
-      ) {
+  Future<RegisterResponseModel> call(RegisterPatientRequestModel request) {
     return repository.registerPatient(request);
   }
 }

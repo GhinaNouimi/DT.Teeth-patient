@@ -1,7 +1,4 @@
-enum PrescriptionStatus {
-  active,
-  completed,
-}
+enum PrescriptionStatus { active, completed }
 
 class PrescriptionEntity {
   final String id;

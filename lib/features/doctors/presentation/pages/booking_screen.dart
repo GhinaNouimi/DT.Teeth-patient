@@ -20,10 +20,7 @@ import '../utils/booking_date_utils.dart';
 class BookingScreen extends StatefulWidget {
   final DoctorUiModel doctor;
 
-  const BookingScreen({
-    super.key,
-    required this.doctor,
-  });
+  const BookingScreen({super.key, required this.doctor});
 
   @override
   State<BookingScreen> createState() => _BookingScreenState();
@@ -59,10 +56,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
   void _selectDate(DateTime date) {
     setState(() {
-      _state = _state.copyWith(
-        selectedDate: date,
-        clearSelectedTime: true,
-      );
+      _state = _state.copyWith(selectedDate: date, clearSelectedTime: true);
     });
   }
 
@@ -123,12 +117,9 @@ class _BookingScreenState extends State<BookingScreen> {
       createdAt: DateTime.now(),
     );
 
-    AppointmentsStore.instance.addAppointment(
-      appointment,
-    );
+    AppointmentsStore.instance.addAppointment(appointment);
 
-    final formattedDate =
-    BookingDateUtils.formatReviewDate(
+    final formattedDate = BookingDateUtils.formatReviewDate(
       _state.selectedDate!,
     );
 
@@ -144,9 +135,7 @@ class _BookingScreenState extends State<BookingScreen> {
       buttonText: 'حسناً',
 
       onPressed: () {
-        context.go(
-          '${AppRoutes.home}?tab=2',
-        );
+        context.go('${AppRoutes.home}?tab=2');
       },
     );
   }
@@ -165,36 +154,40 @@ class _BookingScreenState extends State<BookingScreen> {
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: AppTopBar(
                 title: _state.currentStep == 0 ? 'حجز موعد' : 'مراجعة الحجز',
-                onBackTap: _state.currentStep == 0 ? () => context.pop() : _goBackToSelection,
+                onBackTap: _state.currentStep == 0
+                    ? () => context.pop()
+                    : _goBackToSelection,
               ),
             ),
             Expanded(
               child: _state.currentStep == 0
                   ? BookingDateStepSection(
-                doctor: widget.doctor,
-                colors: colors,
-                theme: theme,
-                focusedDay: _state.focusedDay,
-                selectedDate: _state.selectedDate,
-                selectedTime: _state.selectedTime,
-                times: BookingSlotsData.times,
-                isDateAvailable: _isDateAvailable,
-                onDaySelected: _selectDate,
-                onPageChanged: _changeFocusedDay,
-                onTimeSelected: _selectTime,
-                onContinue: _goToReviewStep,
-              )
+                      doctor: widget.doctor,
+                      colors: colors,
+                      theme: theme,
+                      focusedDay: _state.focusedDay,
+                      selectedDate: _state.selectedDate,
+                      selectedTime: _state.selectedTime,
+                      times: BookingSlotsData.times,
+                      isDateAvailable: _isDateAvailable,
+                      onDaySelected: _selectDate,
+                      onPageChanged: _changeFocusedDay,
+                      onTimeSelected: _selectTime,
+                      onContinue: _goToReviewStep,
+                    )
                   : BookingReviewStepSection(
-                doctor: widget.doctor,
-                colors: colors,
-                theme: theme,
-                selectedDate: _state.selectedDate!,
-                selectedTime: _state.selectedTime!,
-                notesController: _state.notesController,
-                formattedDate: BookingDateUtils.formatReviewDate(_state.selectedDate!),
-                onBack: _goBackToSelection,
-                onConfirm: _showConfirmation,
-              ),
+                      doctor: widget.doctor,
+                      colors: colors,
+                      theme: theme,
+                      selectedDate: _state.selectedDate!,
+                      selectedTime: _state.selectedTime!,
+                      notesController: _state.notesController,
+                      formattedDate: BookingDateUtils.formatReviewDate(
+                        _state.selectedDate!,
+                      ),
+                      onBack: _goBackToSelection,
+                      onConfirm: _showConfirmation,
+                    ),
             ),
           ],
         ),

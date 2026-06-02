@@ -12,6 +12,7 @@ import '../../features/auth/data/datasources/auth_remote_data_source.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/domain/usecases/login_patient_usecase.dart';
 import '../../features/auth/domain/usecases/register_patient_usecase.dart';
+import '../../features/auth/domain/usecases/send_verification_usecase.dart';
 import '../../features/auth/domain/usecases/verify_email_usecase.dart';
 import '../../features/auth/presentation/bloc/login/login_bloc.dart';
 import '../../features/auth/presentation/bloc/register/register_bloc.dart';
@@ -51,12 +52,14 @@ class AppRouter {
         path: AppRoutes.login,
         name: 'login',
         builder: (context, state) {
+          final repository = AuthRepositoryImpl(
+            remoteDataSource: AuthRemoteDataSourceImpl(),
+          );
+
           return BlocProvider(
             create: (_) => LoginBloc(
               loginPatientUseCase: LoginPatientUseCase(
-                repository: AuthRepositoryImpl(
-                  remoteDataSource: AuthRemoteDataSourceImpl(),
-                ),
+                repository: repository,
               ),
               networkInfo: NetworkInfo(
                 connectivity: Connectivity(),
@@ -78,12 +81,14 @@ class AppRouter {
         builder: (context, state) {
           final basicRegisterData = state.extra as Map<String, dynamic>? ?? {};
 
+          final repository = AuthRepositoryImpl(
+            remoteDataSource: AuthRemoteDataSourceImpl(),
+          );
+
           return BlocProvider(
             create: (_) => RegisterBloc(
               registerPatientUseCase: RegisterPatientUseCase(
-                repository: AuthRepositoryImpl(
-                  remoteDataSource: AuthRemoteDataSourceImpl(),
-                ),
+                repository: repository,
               ),
               networkInfo: NetworkInfo(
                 connectivity: Connectivity(),
@@ -102,21 +107,27 @@ class AppRouter {
           final email = state.extra as String? ?? '';
 
           return BlocProvider(
-            create: (_) => VerifyEmailBloc(
-              verifyEmailUseCase: VerifyEmailUseCase(
-                repository: AuthRepositoryImpl(
-                  remoteDataSource: AuthRemoteDataSourceImpl(),
+            create: (_) {
+              final repository = AuthRepositoryImpl(
+                remoteDataSource: AuthRemoteDataSourceImpl(),
+              );
+
+              return VerifyEmailBloc(
+                verifyEmailUseCase: VerifyEmailUseCase(
+                  repository: repository,
                 ),
-              ),
-              networkInfo: NetworkInfo(
-                connectivity: Connectivity(),
-              ),
-            ),
+                sendVerificationUseCase: SendVerificationUseCase(
+                  repository: repository,
+                ),
+                networkInfo: NetworkInfo(
+                  connectivity: Connectivity(),
+                ),
+              );
+            },
             child: VerifyScreen(email: email),
           );
         },
-      ),
-      GoRoute(
+      ),      GoRoute(
         path: AppRoutes.forgotPassword,
         name: 'forgot-password',
         builder: (context, state) => const ForgotPasswordScreen(),

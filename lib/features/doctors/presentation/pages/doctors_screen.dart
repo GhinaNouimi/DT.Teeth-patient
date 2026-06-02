@@ -53,9 +53,11 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
     await Future.delayed(const Duration(milliseconds: 400)); // simulate API
 
     final allDoctors = MockDoctorsData.filterBySpecialty(_selectedSpecialty)
-        .where((doctor) =>
-    doctor.name.contains(_searchQuery) ||
-        doctor.specialty.contains(_searchQuery))
+        .where(
+          (doctor) =>
+              doctor.name.contains(_searchQuery) ||
+              doctor.specialty.contains(_searchQuery),
+        )
         .toList();
 
     final start = (_page - 1) * _limit;
@@ -135,8 +137,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: specialties.length,
-                      separatorBuilder: (_, __) =>
-                      const SizedBox(width: 10),
+                      separatorBuilder: (_, __) => const SizedBox(width: 10),
                       itemBuilder: (context, index) {
                         final specialty = specialties[index];
 
@@ -144,8 +145,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                           label: specialty,
                           selected: _selectedSpecialty == specialty,
                           onTap: () {
-                            setState(
-                                    () => _selectedSpecialty = specialty);
+                            setState(() => _selectedSpecialty = specialty);
                             _resetAndFetch();
                           },
                         );
@@ -163,41 +163,38 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
               child: _doctors.isEmpty && _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ListView.builder(
-                controller: _scrollController,
-                padding:
-                const EdgeInsets.fromLTRB(20, 8, 20, 20),
-                itemCount: _doctors.length + 1,
-                itemBuilder: (context, index) {
-                  if (index < _doctors.length) {
-                    final doctor = _doctors[index];
+                      controller: _scrollController,
+                      padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+                      itemCount: _doctors.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index < _doctors.length) {
+                          final doctor = _doctors[index];
 
-                    return Padding(
-                      padding:
-                      const EdgeInsets.only(bottom: 14),
-                      child: DoctorCardWidget(
-                        doctor: doctor,
-                        onTap: () {
-                          context.push(
-                            AppRoutes.doctorDetails,
-                            extra: doctor,
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 14),
+                            child: DoctorCardWidget(
+                              doctor: doctor,
+                              onTap: () {
+                                context.push(
+                                  AppRoutes.doctorDetails,
+                                  extra: doctor,
+                                );
+                              },
+                            ),
                           );
-                        },
-                      ),
-                    );
-                  }
+                        }
 
-                  /// 🔹 Loader أسفل القائمة
-                  return _isLoading
-                      ? const Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Center(
-                      child:
-                      CircularProgressIndicator(),
+                        /// 🔹 Loader أسفل القائمة
+                        return _isLoading
+                            ? const Padding(
+                                padding: EdgeInsets.all(16),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              )
+                            : const SizedBox();
+                      },
                     ),
-                  )
-                      : const SizedBox();
-                },
-              ),
             ),
           ],
         ),

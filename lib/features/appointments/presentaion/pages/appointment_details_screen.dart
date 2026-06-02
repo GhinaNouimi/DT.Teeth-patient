@@ -11,17 +11,16 @@ import '../models/appointment_ui_model.dart';
 class AppointmentDetailsScreen extends StatelessWidget {
   final AppointmentUiModel appointment;
 
-  const AppointmentDetailsScreen({
-    super.key,
-    required this.appointment,
-  });
+  const AppointmentDetailsScreen({super.key, required this.appointment});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
-    final formattedDate =
-    DateFormat('EEEE d MMMM y', 'ar_SA').format(appointment.appointmentDate);
+    final formattedDate = DateFormat(
+      'EEEE d MMMM y',
+      'ar_SA',
+    ).format(appointment.appointmentDate);
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -122,13 +121,11 @@ class AppointmentDetailsScreen extends StatelessWidget {
 
                       Expanded(
                         child: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               appointment.doctor.name,
-                              style: theme.textTheme.bodyLarge
-                                  ?.copyWith(
+                              style: theme.textTheme.bodyLarge?.copyWith(
                                 color: colors.textPrimary,
                                 fontWeight: FontWeight.w800,
                               ),
@@ -138,8 +135,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
 
                             Text(
                               appointment.doctor.specialty,
-                              style: theme.textTheme.bodyMedium
-                                  ?.copyWith(
+                              style: theme.textTheme.bodyMedium?.copyWith(
                                 color: colors.textSecondary,
                               ),
                             ),
@@ -156,9 +152,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                   const SizedBox(height: 22),
 
                   // المدة التقريبية
-                  _SectionTitle(
-                    title: 'المدة التقريبية للموعد',
-                  ),
+                  _SectionTitle(title: 'المدة التقريبية للموعد'),
 
                   const SizedBox(height: 14),
 
@@ -170,18 +164,14 @@ class AppointmentDetailsScreen extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.timer_outlined,
-                          color: colors.buttonPrimary,
-                        ),
+                        Icon(Icons.timer_outlined, color: colors.buttonPrimary),
 
                         const SizedBox(width: 12),
 
                         Expanded(
                           child: Text(
                             '${appointment.durationMinutes} دقيقة تقريبًا',
-                            style: theme.textTheme.bodyLarge
-                                ?.copyWith(
+                            style: theme.textTheme.bodyLarge?.copyWith(
                               color: colors.textPrimary,
                               fontWeight: FontWeight.w700,
                             ),
@@ -210,10 +200,8 @@ class AppointmentDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      appointment.doctorNotes ??
-                          'لا توجد تعليمات حالياً.',
-                      style: theme.textTheme.bodyMedium
-                          ?.copyWith(
+                      appointment.doctorNotes ?? 'لا توجد تعليمات حالياً.',
+                      style: theme.textTheme.bodyMedium?.copyWith(
                         color: colors.textPrimary,
                         height: 1.7,
                         fontWeight: FontWeight.w600,
@@ -243,8 +231,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                       ),
                       child: Text(
                         appointment.patientNotes!,
-                        style: theme.textTheme.bodyMedium
-                            ?.copyWith(
+                        style: theme.textTheme.bodyMedium?.copyWith(
                           color: colors.textSecondary,
                           height: 1.7,
                           fontWeight: FontWeight.w600,
@@ -253,11 +240,9 @@ class AppointmentDetailsScreen extends StatelessWidget {
                     ),
                   ],
 
-
                   const SizedBox(height: 24),
 
-                  if (appointment.canReschedule ||
-                      appointment.canCancel)
+                  if (appointment.canReschedule || appointment.canCancel)
                     Row(
                       children: [
                         if (appointment.canReschedule)
@@ -271,22 +256,18 @@ class AppointmentDetailsScreen extends StatelessWidget {
                               },
 
                               style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                colors.buttonPrimary,
+                                backgroundColor: colors.buttonPrimary,
 
-                                foregroundColor:
-                                colors.textPrimary,
+                                foregroundColor: colors.textPrimary,
 
                                 elevation: 0,
 
-                                padding:
-                                const EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                   vertical: 14,
                                 ),
 
                                 shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.circular(16),
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
                               ),
 
@@ -295,14 +276,11 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                 size: 18,
                               ),
 
-                              label: const Text(
-                                'تعديل الموعد',
-                              ),
+                              label: const Text('تعديل الموعد'),
                             ),
                           ),
 
-                        if (appointment.canReschedule &&
-                            appointment.canCancel)
+                        if (appointment.canReschedule && appointment.canCancel)
                           const SizedBox(width: 12),
 
                         if (appointment.canCancel)
@@ -311,47 +289,35 @@ class AppointmentDetailsScreen extends StatelessWidget {
                               onPressed: () async {
                                 await showDialog<void>(
                                   context: context,
-                                  builder: (_) =>
-                                      CancelAppointmentDialog(
-                                        appointmentId:
-                                        appointment.id,
-                                      ),
+                                  builder: (_) => CancelAppointmentDialog(
+                                    appointmentId: appointment.id,
+                                  ),
                                 );
                               },
 
                               style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                colors.danger,
+                                backgroundColor: colors.danger,
 
-                                foregroundColor:
-                                colors.textInverse,
+                                foregroundColor: colors.textInverse,
 
-                                padding:
-                                const EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                   vertical: 14,
                                 ),
 
                                 shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.circular(16),
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
                               ),
 
-                              icon: const Icon(
-                                Icons.close_rounded,
-                                size: 18,
-                              ),
+                              icon: const Icon(Icons.close_rounded, size: 18),
 
-                              label: const Text(
-                                'إلغاء الموعد',
-                              ),
+                              label: const Text('إلغاء الموعد'),
                             ),
                           ),
                       ],
                     ),
-                ],              ),
-
-
+                ],
+              ),
             ),
           ],
         ),
@@ -363,9 +329,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
 class _SectionTitle extends StatelessWidget {
   final String title;
 
-  const _SectionTitle({
-    required this.title,
-  });
+  const _SectionTitle({required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -408,11 +372,7 @@ class _InfoRow extends StatelessWidget {
             color: colors.surfaceMuted,
             borderRadius: BorderRadius.circular(14),
           ),
-          child: Icon(
-            icon,
-            size: 20,
-            color: colors.buttonPrimary,
-          ),
+          child: Icon(icon, size: 20, color: colors.buttonPrimary),
         ),
         const SizedBox(width: 12),
         Expanded(

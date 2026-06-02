@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 
+import '../../../../../core/network/api_error_handler.dart';
 import '../../../../../core/network/network_info.dart';
 import '../../../domain/usecases/register_patient_usecase.dart';
 import 'register_event.dart';
@@ -36,44 +36,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
     try {
       final response = await registerPatientUseCase(event.request);
-
       emit(RegisterSuccess(response: response));
-    } on DioException catch (error) {
-      emit(
-        RegisterFailure(
-          message: _extractDioErrorMessage(error),
-        ),
-      );
-    } catch (_) {
-      emit(
-        const RegisterFailure(
-          message: 'حدث خطأ غير متوقع، يرجى المحاولة لاحقًا',
-        ),
-      );
+    } catch (error) {
+      emit(RegisterFailure(message: ApiErrorHandler.handle(error)));
     }
-  }
-
-  String _extractDioErrorMessage(DioException error) {
-    final responseData = error.response?.data;
-
-    if (responseData is Map<String, dynamic>) {
-      final message = responseData['message'];
-
-      if (message != null) {
-        return message.toString();
-      }
-
-      final errors = responseData['errors'];
-
-      if (errors is Map<String, dynamic> && errors.isNotEmpty) {
-        final firstError = errors.values.first;
-
-        if (firstError is List && firstError.isNotEmpty) {
-          return firstError.first.toString();
-        }
-      }
-    }
-
-    return 'تعذر الاتصال بالخادم، تحقق من الاتصال وحاول مجددًا';
   }
 }

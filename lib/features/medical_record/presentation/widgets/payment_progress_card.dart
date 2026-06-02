@@ -7,10 +7,7 @@ import 'treatment_progress_ring.dart';
 class PaymentProgressCard extends StatelessWidget {
   final PaymentPlanEntity plan;
 
-  const PaymentProgressCard({
-    super.key,
-    required this.plan,
-  });
+  const PaymentProgressCard({super.key, required this.plan});
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +46,7 @@ class PaymentProgressCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          TreatmentProgressRing(
-            percent: plan.progressPercent,
-            size: 104,
-          ),
+          TreatmentProgressRing(percent: plan.progressPercent, size: 104),
           const SizedBox(width: 18),
           Expanded(
             child: Column(
@@ -72,17 +66,9 @@ class PaymentProgressCard extends StatelessWidget {
                   colors.textPrimary,
                 ),
                 const SizedBox(height: 8),
-                amountRow(
-                  'المدفوع',
-                  plan.paidAmountLabel,
-                  colors.success,
-                ),
+                amountRow('المدفوع', plan.paidAmountLabel, colors.success),
                 const SizedBox(height: 8),
-                amountRow(
-                  'المتبقي',
-                  plan.remainingAmountLabel,
-                  colors.danger,
-                ),
+                amountRow('المتبقي', plan.remainingAmountLabel, colors.danger),
               ],
             ),
           ),

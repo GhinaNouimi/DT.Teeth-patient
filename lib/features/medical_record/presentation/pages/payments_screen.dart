@@ -48,46 +48,43 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
           children: [
             const Padding(
               padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
-              child: AppTopBar(
-                title: 'الدفعات المالية',
-              ),
+              child: AppTopBar(title: 'الدفعات المالية'),
             ),
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : (_plan == null)
                   ? const Padding(
-                padding: EdgeInsets.all(20),
-                child: MedicalRecordEmptyState(
-                  title: 'لا توجد بيانات مالية حاليًا',
-                  subtitle:
-                  'ستظهر تفاصيل الخطة العلاجية والدفعات هنا.',
-                  icon: Icons.wallet_rounded,
-                ),
-              )
+                      padding: EdgeInsets.all(20),
+                      child: MedicalRecordEmptyState(
+                        title: 'لا توجد بيانات مالية حاليًا',
+                        subtitle: 'ستظهر تفاصيل الخطة العلاجية والدفعات هنا.',
+                        icon: Icons.wallet_rounded,
+                      ),
+                    )
                   : ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                children: [
-                  PaymentProgressCard(plan: _plan!),
-                  const SizedBox(height: 18),
-                  TextButton(
-                    onPressed: () {
-                      context.push(
-                        AppRoutes.medicalRecordPaymentPlanDetails,
-                      );
-                    },
-                    child: const Text('عرض تفاصيل الخطة'),
-                  ),
-                  const SizedBox(height: 10),
-                  ..._plan!.records.map(
-                        (record) => Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: PaymentRecordCard(record: record),
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                      children: [
+                        PaymentProgressCard(plan: _plan!),
+                        const SizedBox(height: 18),
+                        TextButton(
+                          onPressed: () {
+                            context.push(
+                              AppRoutes.medicalRecordPaymentPlanDetails,
+                            );
+                          },
+                          child: const Text('عرض تفاصيل الخطة'),
+                        ),
+                        const SizedBox(height: 10),
+                        ..._plan!.records.map(
+                          (record) => Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: PaymentRecordCard(record: record),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
             ),
           ],
         ),

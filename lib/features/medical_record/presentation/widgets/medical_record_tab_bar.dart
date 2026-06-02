@@ -26,9 +26,7 @@ class MedicalRecordTabBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.surfaceMuted,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: colors.borderSoft.withValues(alpha: 0.9),
-        ),
+        border: Border.all(color: colors.borderSoft.withValues(alpha: 0.9)),
       ),
       child: Row(
         children: List.generate(labels.length, (index) {
@@ -51,12 +49,12 @@ class MedicalRecordTabBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(18),
                   boxShadow: selected
                       ? [
-                    BoxShadow(
-                      color: colors.navBarItem.withValues(alpha: 0.16),
-                      blurRadius: 14,
-                      offset: const Offset(0, 6),
-                    ),
-                  ]
+                          BoxShadow(
+                            color: colors.navBarItem.withValues(alpha: 0.16),
+                            blurRadius: 14,
+                            offset: const Offset(0, 6),
+                          ),
+                        ]
                       : null,
                 ),
                 child: Row(
@@ -91,9 +89,7 @@ class MedicalRecordTabBar extends StatelessWidget {
                         labels[index],
                         overflow: TextOverflow.ellipsis,
                         style: theme.textTheme.titleSmall?.copyWith(
-                          color: selected
-                              ? Colors.white
-                              : colors.navBarItem,
+                          color: selected ? Colors.white : colors.navBarItem,
                           fontWeight: FontWeight.w800,
                         ),
                       ),

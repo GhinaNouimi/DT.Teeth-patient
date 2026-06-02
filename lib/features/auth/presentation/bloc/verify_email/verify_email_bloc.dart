@@ -1,20 +1,24 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 
+import '../../../../../core/network/api_error_handler.dart';
 import '../../../../../core/network/network_info.dart';
+import '../../../domain/usecases/send_verification_usecase.dart';
 import '../../../domain/usecases/verify_email_usecase.dart';
 import 'verify_email_event.dart';
 import 'verify_email_state.dart';
 
 class VerifyEmailBloc extends Bloc<VerifyEmailEvent, VerifyEmailState> {
   final VerifyEmailUseCase verifyEmailUseCase;
+  final SendVerificationUseCase sendVerificationUseCase;
   final NetworkInfo networkInfo;
 
   VerifyEmailBloc({
     required this.verifyEmailUseCase,
+    required this.sendVerificationUseCase,
     required this.networkInfo,
   }) : super(const VerifyEmailInitial()) {
     on<VerifyEmailSubmitted>(_onVerifyEmailSubmitted);
+    on<ResendVerificationSubmitted>(_onResendVerificationSubmitted);
   }
 
   Future<void> _onVerifyEmailSubmitted(
@@ -36,44 +40,34 @@ class VerifyEmailBloc extends Bloc<VerifyEmailEvent, VerifyEmailState> {
 
     try {
       final response = await verifyEmailUseCase(event.request);
-
       emit(VerifyEmailSuccess(response: response));
-    } on DioException catch (error) {
-      emit(
-        VerifyEmailFailure(
-          message: _extractDioErrorMessage(error),
-        ),
-      );
-    } catch (_) {
-      emit(
-        const VerifyEmailFailure(
-          message: 'حدث خطأ غير متوقع، يرجى المحاولة لاحقًا',
-        ),
-      );
+    } catch (error) {
+      emit(VerifyEmailFailure(message: ApiErrorHandler.handle(error)));
     }
   }
 
-  String _extractDioErrorMessage(DioException error) {
-    final data = error.response?.data;
+  Future<void> _onResendVerificationSubmitted(
+      ResendVerificationSubmitted event,
+      Emitter<VerifyEmailState> emit,
+      ) async {
+    emit(const ResendVerificationLoading());
 
-    if (data is Map<String, dynamic>) {
-      final message = data['message'];
+    final isConnected = await networkInfo.isConnected;
 
-      if (message != null) {
-        return message.toString();
-      }
-
-      final errors = data['errors'];
-
-      if (errors is Map<String, dynamic> && errors.isNotEmpty) {
-        final firstError = errors.values.first;
-
-        if (firstError is List && firstError.isNotEmpty) {
-          return firstError.first.toString();
-        }
-      }
+    if (!isConnected) {
+      emit(
+        const ResendVerificationFailure(
+          message: 'لا يوجد اتصال بالإنترنت، يرجى المحاولة لاحقًا',
+        ),
+      );
+      return;
     }
 
-    return 'فشل التحقق من الرمز';
+    try {
+      final response = await sendVerificationUseCase(event.request);
+      emit(ResendVerificationSuccess(response: response));
+    } catch (error) {
+      emit(ResendVerificationFailure(message: ApiErrorHandler.handle(error)));
+    }
   }
 }

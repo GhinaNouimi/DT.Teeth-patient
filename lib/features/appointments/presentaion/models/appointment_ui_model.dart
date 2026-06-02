@@ -57,17 +57,12 @@ class AppointmentUiModel {
     return status == AppointmentStatus.completed;
   }
 
-  bool get isEmergency =>
-      type.isEmergency;
+  bool get isEmergency => type.isEmergency;
 
   bool get canReschedule =>
-      isUpcoming &&
-          status == AppointmentStatus.confirmed &&
-          !isEmergency;
+      isUpcoming && status == AppointmentStatus.confirmed && !isEmergency;
 
-  bool get canCancel =>
-      isUpcoming &&
-          status != AppointmentStatus.cancelled;
+  bool get canCancel => isUpcoming && status != AppointmentStatus.cancelled;
 
   AppointmentUiModel copyWith({
     String? id,
@@ -88,27 +83,18 @@ class AppointmentUiModel {
     return AppointmentUiModel(
       id: id ?? this.id,
       doctor: doctor ?? this.doctor,
-      appointmentDate:
-      appointmentDate ?? this.appointmentDate,
-      appointmentTime:
-      appointmentTime ?? this.appointmentTime,
+      appointmentDate: appointmentDate ?? this.appointmentDate,
+      appointmentTime: appointmentTime ?? this.appointmentTime,
       type: type ?? this.type,
       service: service ?? this.service,
       status: status ?? this.status,
-      patientNotes:
-      patientNotes ?? this.patientNotes,
-      doctorNotes:
-      doctorNotes ?? this.doctorNotes,
-      emergencyDescription:
-      emergencyDescription ??
-          this.emergencyDescription,
-      requiresCall:
-      requiresCall ?? this.requiresCall,
+      patientNotes: patientNotes ?? this.patientNotes,
+      doctorNotes: doctorNotes ?? this.doctorNotes,
+      emergencyDescription: emergencyDescription ?? this.emergencyDescription,
+      requiresCall: requiresCall ?? this.requiresCall,
       location: location ?? this.location,
-      durationMinutes:
-      durationMinutes ?? this.durationMinutes,
-      createdAt:
-      createdAt ?? this.createdAt,
+      durationMinutes: durationMinutes ?? this.durationMinutes,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }

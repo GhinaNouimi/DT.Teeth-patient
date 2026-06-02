@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 class ToothGlowBackground extends StatefulWidget {
   final Widget child;
 
-  const ToothGlowBackground({
-    super.key,
-    required this.child,
-  });
+  const ToothGlowBackground({super.key, required this.child});
 
   @override
   State<ToothGlowBackground> createState() => _ToothGlowBackgroundState();
@@ -105,10 +102,7 @@ class _GlowOrb extends StatelessWidget {
   final double size;
   final Color color;
 
-  const _GlowOrb({
-    required this.size,
-    required this.color,
-  });
+  const _GlowOrb({required this.size, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -117,13 +111,7 @@ class _GlowOrb extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: color,
-            blurRadius: 95,
-            spreadRadius: 18,
-          ),
-        ],
+        boxShadow: [BoxShadow(color: color, blurRadius: 95, spreadRadius: 18)],
       ),
     );
   }
@@ -132,9 +120,7 @@ class _GlowOrb extends StatelessWidget {
 class _DentalRingsPainter extends CustomPainter {
   final Color color;
 
-  const _DentalRingsPainter({
-    required this.color,
-  });
+  const _DentalRingsPainter({required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {

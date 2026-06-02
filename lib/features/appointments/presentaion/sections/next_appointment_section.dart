@@ -9,10 +9,7 @@ import '../models/appointment_ui_model.dart';
 class NextAppointmentSection extends StatelessWidget {
   final AppointmentUiModel appointment;
 
-  const NextAppointmentSection({
-    super.key,
-    required this.appointment,
-  });
+  const NextAppointmentSection({super.key, required this.appointment});
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +26,7 @@ class NextAppointmentSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.surfacePrimary,
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(
-          color: colors.borderSoft,
-        ),
+        border: Border.all(color: colors.borderSoft),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,10 +42,7 @@ class NextAppointmentSection extends StatelessWidget {
           const SizedBox(height: 16),
 
           Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 10,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
               color: colors.surfaceSecondary,
               borderRadius: BorderRadius.circular(18),
@@ -118,10 +110,7 @@ class NextAppointmentSection extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                context.push(
-                  AppRoutes.appointmentDetails,
-                  extra: appointment,
-                );
+                context.push(AppRoutes.appointmentDetails, extra: appointment);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: colors.buttonSecondary,
@@ -134,7 +123,8 @@ class NextAppointmentSection extends StatelessWidget {
               ),
               child: const Text('عرض التفاصيل'),
             ),
-          ),        ],
+          ),
+        ],
       ),
     );
   }

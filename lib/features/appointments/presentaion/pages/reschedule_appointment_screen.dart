@@ -14,10 +14,7 @@ import '../widgets/appointment/appointment_time_chip.dart';
 class RescheduleAppointmentScreen extends StatefulWidget {
   final AppointmentUiModel appointment;
 
-  const RescheduleAppointmentScreen({
-    super.key,
-    required this.appointment,
-  });
+  const RescheduleAppointmentScreen({super.key, required this.appointment});
 
   @override
   State<RescheduleAppointmentScreen> createState() =>
@@ -251,27 +248,28 @@ class _RescheduleAppointmentScreenState
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed:
-                      (_selectedDate != null && _selectedTime != null)
+                          (_selectedDate != null && _selectedTime != null)
                           ? () async {
-                        await showSuccessBottomSheet(
-                          context,
-                          title: 'تم إرسال طلب التعديل',
-                          message:
-                          'سيتم إشعارك بعد مراجعة الموعد الجديد وتأكيده من قبل العيادة.',
-                          buttonText: 'العودة',
-                          onPressed: () {
-                            final updatedAppointment = widget.appointment.copyWith(
-                              appointmentDate: _selectedDate!,
-                              appointmentTime: _selectedTime!,
-                            );
+                              await showSuccessBottomSheet(
+                                context,
+                                title: 'تم إرسال طلب التعديل',
+                                message:
+                                    'سيتم إشعارك بعد مراجعة الموعد الجديد وتأكيده من قبل العيادة.',
+                                buttonText: 'العودة',
+                                onPressed: () {
+                                  final updatedAppointment = widget.appointment
+                                      .copyWith(
+                                        appointmentDate: _selectedDate!,
+                                        appointmentTime: _selectedTime!,
+                                      );
 
-                            AppointmentsStore.instance.updateAppointment(updatedAppointment);
-                            context.go('${AppRoutes.home}?tab=2');
-                          },
-
-
-                        );
-                      }
+                                  AppointmentsStore.instance.updateAppointment(
+                                    updatedAppointment,
+                                  );
+                                  context.go('${AppRoutes.home}?tab=2');
+                                },
+                              );
+                            }
                           : null,
                       child: const Text('إرسال طلب التعديل'),
                     ),

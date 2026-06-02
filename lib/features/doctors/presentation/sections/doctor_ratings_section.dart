@@ -51,11 +51,7 @@ class DoctorRatingsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DoctorSectionTitle(
-            title: 'التقييمات',
-            theme: theme,
-            colors: colors,
-          ),
+          DoctorSectionTitle(title: 'التقييمات', theme: theme, colors: colors),
           const SizedBox(height: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,9 +68,7 @@ class DoctorRatingsSection extends StatelessWidget {
                 children: List.generate(5, (index) {
                   final isFilled = index < doctor.rating.toInt();
                   return Icon(
-                    isFilled
-                        ? Icons.star_rounded
-                        : Icons.star_outline_rounded,
+                    isFilled ? Icons.star_rounded : Icons.star_outline_rounded,
                     color: isFilled
                         ? const Color(0xFFFFC107)
                         : colors.textPrimary,

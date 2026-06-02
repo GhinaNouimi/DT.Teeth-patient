@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../core/constants/app_assets.dart';
+import '../../../../../core/localization/app_localizations.dart';
 import '../../../../../core/routing/app_routes.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -43,6 +44,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Scaffold(
       body: AnimatedBuilder(
@@ -107,7 +109,9 @@ class _SplashScreenState extends State<SplashScreen>
                                 gradient: RadialGradient(
                                   colors: [
                                     Colors.white.withValues(alpha: 0.78),
-                                    theme.colorScheme.primary.withValues(alpha: 0.08),
+                                    theme.colorScheme.primary.withValues(
+                                      alpha: 0.08,
+                                    ),
                                     Colors.transparent,
                                   ],
                                 ),
@@ -116,32 +120,40 @@ class _SplashScreenState extends State<SplashScreen>
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(48),
                                   child: BackdropFilter(
-                                    filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                                    filter: ImageFilter.blur(
+                                      sigmaX: 8,
+                                      sigmaY: 8,
+                                    ),
                                     child: Container(
                                       width: 160,
                                       height: 160,
                                       padding: const EdgeInsets.all(16),
                                       decoration: BoxDecoration(
-                                        color: Colors.white.withValues(alpha: 0.32),
+                                        color: Colors.white.withValues(
+                                          alpha: 0.32,
+                                        ),
                                         borderRadius: BorderRadius.circular(38),
                                         border: Border.all(
-                                          color: Colors.white.withValues(alpha: 0.35),
+                                          color: Colors.white.withValues(
+                                            alpha: 0.35,
+                                          ),
                                         ),
                                       ),
-                                      child: Image.asset(
-                                        AppAssets.logo,
-                                        fit: BoxFit.contain,
-                                      )
-                                          .animate()
-                                          .fadeIn(duration: 450.ms)
-                                          .scale(
-                                        duration: 900.ms,
-                                        curve: Curves.easeOutBack,
-                                      )
-                                          .shimmer(
-                                        duration: 1300.ms,
-                                        delay: 500.ms,
-                                      ),
+                                      child:
+                                          Image.asset(
+                                                AppAssets.logo,
+                                                fit: BoxFit.contain,
+                                              )
+                                              .animate()
+                                              .fadeIn(duration: 450.ms)
+                                              .scale(
+                                                duration: 900.ms,
+                                                curve: Curves.easeOutBack,
+                                              )
+                                              .shimmer(
+                                                duration: 1300.ms,
+                                                delay: 500.ms,
+                                              ),
                                     ),
                                   ),
                                 ),
@@ -151,21 +163,21 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                         const SizedBox(height: 30),
                         Text(
-                          'DT.Teeth',
-                          style: theme.textTheme.headlineLarge?.copyWith(
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 1,
-                          ),
-                        )
+                              'DT.Teeth',
+                              style: theme.textTheme.headlineLarge?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 1,
+                              ),
+                            )
                             .animate()
                             .fadeIn(delay: 500.ms, duration: 500.ms)
                             .slideY(begin: 0.25, end: 0),
                         const SizedBox(height: 10),
                         Text(
-                          'رعاية أسنان حديثة تبدأ بتجربة رقمية أنيقة',
-                          style: theme.textTheme.bodyLarge,
-                          textAlign: TextAlign.center,
-                        )
+                              l10n.splashTagline,
+                              style: theme.textTheme.bodyLarge,
+                              textAlign: TextAlign.center,
+                            )
                             .animate()
                             .fadeIn(delay: 820.ms, duration: 500.ms)
                             .slideY(begin: 0.18, end: 0),
@@ -198,10 +210,7 @@ class _GlowSphere extends StatelessWidget {
   final double size;
   final Color color;
 
-  const _GlowSphere({
-    required this.size,
-    required this.color,
-  });
+  const _GlowSphere({required this.size, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -212,11 +221,7 @@ class _GlowSphere extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           boxShadow: [
-            BoxShadow(
-              color: color,
-              blurRadius: 100,
-              spreadRadius: 20,
-            ),
+            BoxShadow(color: color, blurRadius: 100, spreadRadius: 20),
           ],
         ),
       ),

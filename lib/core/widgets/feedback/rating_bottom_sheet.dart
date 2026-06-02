@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 Future<void> showRatingBottomSheet(
-    BuildContext context, {
-      required String doctorName,
-      required double rating,
-      required String buttonText,
-      VoidCallback? onPressed,
-    }) {
+  BuildContext context, {
+  required String doctorName,
+  required double rating,
+  required String buttonText,
+  VoidCallback? onPressed,
+}) {
   final theme = Theme.of(context);
 
   return showModalBottomSheet<void>(
@@ -83,7 +83,9 @@ Future<void> showRatingBottomSheet(
                     Text(
                       'قيّمت الدكتور',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.78),
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: 0.78,
+                        ),
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -102,8 +104,12 @@ Future<void> showRatingBottomSheet(
                       children: List.generate(5, (index) {
                         final isFilled = index < rating.toInt();
                         return Icon(
-                          isFilled ? Icons.star_rounded : Icons.star_outline_rounded,
-                          color: isFilled ? const Color(0xFFFFC107) : Colors.grey,
+                          isFilled
+                              ? Icons.star_rounded
+                              : Icons.star_outline_rounded,
+                          color: isFilled
+                              ? const Color(0xFFFFC107)
+                              : Colors.grey,
                           size: 24,
                         );
                       }),

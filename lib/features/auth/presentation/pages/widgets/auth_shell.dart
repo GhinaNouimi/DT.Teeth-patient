@@ -6,8 +6,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../../core/widgets/branding/smile_divider.dart';
 import '../../../../../core/widgets/branding/tooth_glow_background.dart';
 
-
-
 class AuthShell extends StatefulWidget {
   final String title;
   final String subtitle;
@@ -65,94 +63,113 @@ class _AuthShellState extends State<AuthShell>
                   animation: _borderController,
                   builder: (context, _) {
                     return Container(
-                      padding: const EdgeInsets.all(1.4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(34),
-                        gradient: SweepGradient(
-                          transform: GradientRotation(
-                            _borderController.value * 6.28,
-                          ),
-                          colors: [
-                            theme.colorScheme.primary.withValues(alpha: 0.95),
-                            theme.colorScheme.secondary.withValues(alpha: 0.75),
-                            const Color(0xFF63D7C1).withValues(alpha: 0.75),
-                            theme.colorScheme.primary.withValues(alpha: 0.95),
-                          ],
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: theme.colorScheme.primary.withValues(alpha: 0.12),
-                            blurRadius: 26,
-                            spreadRadius: 1,
-                            offset: const Offset(0, 12),
-                          ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(33),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                          child: Container(
-                            padding: const EdgeInsets.all(22),
-                            decoration: BoxDecoration(
-                              color: theme.colorScheme.surface.withValues(alpha: 0.95),
-                              borderRadius: BorderRadius.circular(33),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.title,
-                                  style: theme.textTheme.headlineMedium?.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                  ),
+                          padding: const EdgeInsets.all(1.4),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(34),
+                            gradient: SweepGradient(
+                              transform: GradientRotation(
+                                _borderController.value * 6.28,
+                              ),
+                              colors: [
+                                theme.colorScheme.primary.withValues(
+                                  alpha: 0.95,
                                 ),
-                                const SizedBox(height: 10),
-                                const SmileDivider(),
-                                const SizedBox(height: 12),
-                                Text(
-                                  widget.subtitle,
-                                  style: theme.textTheme.bodyMedium?.copyWith(
-                                    color: theme.colorScheme.onSurface
-                                        .withValues(alpha: 0.75),
-                                    height: 1.5,
-                                  ),
+                                theme.colorScheme.secondary.withValues(
+                                  alpha: 0.75,
                                 ),
-                                const SizedBox(height: 24),
-                                widget.child,
-                                if (widget.bottomText != null &&
-                                    widget.bottomActionText != null) ...[
-                                  const SizedBox(height: 18),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        widget.bottomText!,
-                                        style: theme.textTheme.bodyMedium?.copyWith(
-                                          color: theme.colorScheme.onSurface
-                                              .withValues(alpha: 0.75),
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: widget.onBottomTap,
-                                        child: Text(widget.bottomActionText!),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                const Color(0xFF63D7C1).withValues(alpha: 0.75),
+                                theme.colorScheme.primary.withValues(
+                                  alpha: 0.95,
+                                ),
                               ],
                             ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: theme.colorScheme.primary.withValues(
+                                  alpha: 0.12,
+                                ),
+                                blurRadius: 26,
+                                spreadRadius: 1,
+                                offset: const Offset(0, 12),
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                    ).animate().fadeIn(
-                      duration: 320.ms,
-                    ).slideY(
-                      begin: 0.03,
-                      end: 0,
-                      duration: 320.ms,
-                      curve: Curves.easeOutCubic,
-                    );
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(33),
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                              child: Container(
+                                padding: const EdgeInsets.all(22),
+                                decoration: BoxDecoration(
+                                  color: theme.colorScheme.surface.withValues(
+                                    alpha: 0.95,
+                                  ),
+                                  borderRadius: BorderRadius.circular(33),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.title,
+                                      style: theme.textTheme.headlineMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const SmileDivider(),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      widget.subtitle,
+                                      style: theme.textTheme.bodyMedium
+                                          ?.copyWith(
+                                            color: theme.colorScheme.onSurface
+                                                .withValues(alpha: 0.75),
+                                            height: 1.5,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 24),
+                                    widget.child,
+                                    if (widget.bottomText != null &&
+                                        widget.bottomActionText != null) ...[
+                                      const SizedBox(height: 18),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            widget.bottomText!,
+                                            style: theme.textTheme.bodyMedium
+                                                ?.copyWith(
+                                                  color: theme
+                                                      .colorScheme
+                                                      .onSurface
+                                                      .withValues(alpha: 0.75),
+                                                ),
+                                          ),
+                                          TextButton(
+                                            onPressed: widget.onBottomTap,
+                                            child: Text(
+                                              widget.bottomActionText!,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                        .animate()
+                        .fadeIn(duration: 320.ms)
+                        .slideY(
+                          begin: 0.03,
+                          end: 0,
+                          duration: 320.ms,
+                          curve: Curves.easeOutCubic,
+                        );
                   },
                 ),
               ),

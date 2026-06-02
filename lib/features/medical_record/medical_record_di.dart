@@ -14,14 +14,17 @@ abstract final class MedicalRecordDi {
   static final MedicalRecordRepositoryImpl _repository =
       MedicalRecordRepositoryImpl(_mockDataSource);
 
-  static final GetTreatmentsUseCase getTreatmentsUseCase =
-      GetTreatmentsUseCase(_repository);
+  static final GetTreatmentsUseCase getTreatmentsUseCase = GetTreatmentsUseCase(
+    _repository,
+  );
 
   static final GetTreatmentByIdUseCase getTreatmentByIdUseCase =
       GetTreatmentByIdUseCase(_repository);
 
-  static final GetAttachmentsByTreatmentUseCase getAttachmentsByTreatmentUseCase =
-      GetAttachmentsByTreatmentUseCase(_repository);
+  static final GetAttachmentsByTreatmentUseCase
+  getAttachmentsByTreatmentUseCase = GetAttachmentsByTreatmentUseCase(
+    _repository,
+  );
 
   static final GetPrescriptionsUseCase getPrescriptionsUseCase =
       GetPrescriptionsUseCase(_repository);

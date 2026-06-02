@@ -6,11 +6,7 @@ class SpecialtyTile extends StatelessWidget {
   final String label;
   final IconData icon;
 
-  const SpecialtyTile({
-    super.key,
-    required this.label,
-    required this.icon,
-  });
+  const SpecialtyTile({super.key, required this.label, required this.icon});
 
   @override
   Widget build(BuildContext context) {

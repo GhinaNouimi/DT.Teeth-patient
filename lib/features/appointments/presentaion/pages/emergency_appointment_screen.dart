@@ -22,8 +22,7 @@ class EmergencyAppointmentScreen extends StatefulWidget {
 
 class _EmergencyAppointmentScreenState
     extends State<EmergencyAppointmentScreen> {
-  final TextEditingController _problemController =
-  TextEditingController();
+  final TextEditingController _problemController = TextEditingController();
 
   bool _requiresCall = false;
 
@@ -34,10 +33,7 @@ class _EmergencyAppointmentScreenState
   }
 
   Future<void> _callClinic() async {
-    final Uri uri = Uri(
-      scheme: 'tel',
-      path: '+31234567890',
-    );
+    final Uri uri = Uri(scheme: 'tel', path: '+31234567890');
 
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
@@ -45,14 +41,12 @@ class _EmergencyAppointmentScreenState
   }
 
   void _submitEmergencyRequest() {
-    final doctor = MockAppointmentsData
-        .getDoctorsByService(ServiceType.emergency)
-        .first;
+    final doctor = MockAppointmentsData.getDoctorsByService(
+      ServiceType.emergency,
+    ).first;
 
     final appointment = AppointmentUiModel(
-      id: DateTime.now()
-          .millisecondsSinceEpoch
-          .toString(),
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
 
       doctor: doctor,
 
@@ -66,14 +60,11 @@ class _EmergencyAppointmentScreenState
 
       status: AppointmentStatus.pending,
 
-      patientNotes:
-      _problemController.text.trim(),
+      patientNotes: _problemController.text.trim(),
 
-      doctorNotes:
-      'سيتم التواصل معك وتحديد أقرب موعد متاح.',
+      doctorNotes: 'سيتم التواصل معك وتحديد أقرب موعد متاح.',
 
-      emergencyDescription:
-      _problemController.text.trim(),
+      emergencyDescription: _problemController.text.trim(),
 
       requiresCall: _requiresCall,
 
@@ -84,26 +75,17 @@ class _EmergencyAppointmentScreenState
       createdAt: DateTime.now(),
     );
 
-    AppointmentsStore.instance.addAppointment(
-      appointment,
-    );
+    AppointmentsStore.instance.addAppointment(appointment);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'تم إرسال طلب الطوارئ بنجاح.',
-        ),
-      ),
+      const SnackBar(content: Text('تم إرسال طلب الطوارئ بنجاح.')),
     );
 
     context.pop();
   }
 
   bool get _canSubmit {
-    return _problemController
-        .text
-        .trim()
-        .isNotEmpty;
+    return _problemController.text.trim().isNotEmpty;
   }
 
   @override
@@ -116,17 +98,10 @@ class _EmergencyAppointmentScreenState
 
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(
-            20,
-            16,
-            20,
-            24,
-          ),
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
 
           children: [
-            const AppTopBar(
-              title: 'حالة طارئة',
-            ),
+            const AppTopBar(title: 'حالة طارئة'),
 
             const SizedBox(height: 24),
 
@@ -134,26 +109,19 @@ class _EmergencyAppointmentScreenState
               padding: const EdgeInsets.all(18),
 
               decoration: BoxDecoration(
-                color: colors.danger.withValues(
-                  alpha: 0.08,
-                ),
+                color: colors.danger.withValues(alpha: 0.08),
 
-                borderRadius:
-                BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(20),
 
                 border: Border.all(
-                  color: colors.danger.withValues(
-                    alpha: 0.18,
-                  ),
+                  color: colors.danger.withValues(alpha: 0.18),
                 ),
               ),
 
               child: Text(
                 'إذا كان هناك نزيف شديد أو تورم خطير يرجى التواصل مباشرة مع العيادة.',
 
-                style: theme
-                    .textTheme.bodyMedium
-                    ?.copyWith(
+                style: theme.textTheme.bodyMedium?.copyWith(
                   color: colors.textPrimary,
                   height: 1.6,
                   fontWeight: FontWeight.w600,
@@ -166,9 +134,7 @@ class _EmergencyAppointmentScreenState
             Text(
               'ما المشكلة؟',
 
-              style: theme
-                  .textTheme.titleMedium
-                  ?.copyWith(
+              style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w800,
                 color: colors.textPrimary,
               ),
@@ -182,12 +148,10 @@ class _EmergencyAppointmentScreenState
               maxLines: 5,
 
               decoration: InputDecoration(
-                hintText:
-                'اشرح الحالة أو الألم الذي تعاني منه',
+                hintText: 'اشرح الحالة أو الألم الذي تعاني منه',
 
                 border: OutlineInputBorder(
-                  borderRadius:
-                  BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(18),
                 ),
               ),
             ),
@@ -203,9 +167,7 @@ class _EmergencyAppointmentScreenState
                 });
               },
 
-              title: const Text(
-                'أحتاج اتصال مباشر من العيادة',
-              ),
+              title: const Text('أحتاج اتصال مباشر من العيادة'),
 
               contentPadding: EdgeInsets.zero,
             ),
@@ -218,13 +180,9 @@ class _EmergencyAppointmentScreenState
               child: OutlinedButton.icon(
                 onPressed: _callClinic,
 
-                icon: const Icon(
-                  Icons.call_rounded,
-                ),
+                icon: const Icon(Icons.call_rounded),
 
-                label: const Text(
-                  'اتصال مباشر بالعيادة',
-                ),
+                label: const Text('اتصال مباشر بالعيادة'),
               ),
             ),
 
@@ -234,18 +192,11 @@ class _EmergencyAppointmentScreenState
               width: double.infinity,
 
               child: ElevatedButton.icon(
-                onPressed:
-                _canSubmit
-                    ? _submitEmergencyRequest
-                    : null,
+                onPressed: _canSubmit ? _submitEmergencyRequest : null,
 
-                icon: const Icon(
-                  Icons.emergency_rounded,
-                ),
+                icon: const Icon(Icons.emergency_rounded),
 
-                label: const Text(
-                  'طلب أقرب موعد فوري',
-                ),
+                label: const Text('طلب أقرب موعد فوري'),
               ),
             ),
           ],

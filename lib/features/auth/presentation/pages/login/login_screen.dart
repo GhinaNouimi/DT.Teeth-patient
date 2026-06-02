@@ -44,14 +44,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final request = LoginRequestModel(
       email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
+      password: _passwordController.text,
     );
 
-    context.read<LoginBloc>().add(
-      LoginPatientSubmitted(request: request),
-    );
+    context.read<LoginBloc>().add(LoginPatientSubmitted(request: request));
   }
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
@@ -67,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
           await showSuccessBottomSheet(
             context,
             title: 'تم تسجيل الدخول',
-            message: state.response.message,
+            message: 'تم تسجيل دخولك بنجاح. يمكنك الآن متابعة استخدام التطبيق.',
             buttonText: 'متابعة',
             onPressed: () {
               context.go(AppRoutes.home);
@@ -83,7 +80,8 @@ class _LoginScreenState extends State<LoginScreen> {
             buttonText: 'حسنًا',
           );
         }
-      },      child: AuthShell(
+      },
+      child: AuthShell(
         title: 'تسجيل الدخول',
         subtitle: 'أدخل بياناتك للوصول إلى حسابك بسهولة وأمان',
         bottomText: 'ليس لديك حساب؟',

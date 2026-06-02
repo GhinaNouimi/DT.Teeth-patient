@@ -31,10 +31,7 @@ class HomeSectionTitle extends StatelessWidget {
           ),
         ),
         if (actionText != null)
-          TextButton(
-            onPressed: onActionTap,
-            child: Text(actionText!),
-          ),
+          TextButton(onPressed: onActionTap, child: Text(actionText!)),
       ],
     );
   }

@@ -61,7 +61,6 @@ class AppTopBar extends StatelessWidget {
             ),
           ),
           if (trailing != null) trailing!,
-
         ],
       ),
     );

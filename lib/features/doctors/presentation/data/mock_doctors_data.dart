@@ -11,7 +11,7 @@ class MockDoctorsData {
       imageUrl: '👩‍⚕️',
       graduation: 'خريجة جامعة دمشق - كلية طب الأسنان - 2016',
       bio:
-      'متخصصة في تقويم الأسنان وتعمل على تصميم خطط علاجية دقيقة لتحسين الإطباق والمظهر الجمالي للأسنان.',
+          'متخصصة في تقويم الأسنان وتعمل على تصميم خطط علاجية دقيقة لتحسين الإطباق والمظهر الجمالي للأسنان.',
       phone: '+963 944 000 111',
       rating: 4.8,
       reviewsCount: 156,
@@ -30,7 +30,7 @@ class MockDoctorsData {
       imageUrl: '👨‍⚕️',
       graduation: 'خريج جامعة حلب - كلية طب الأسنان - 2013',
       bio:
-      'يمتلك خبرة واسعة في زراعة الأسنان والحلول التعويضية الحديثة مع اهتمام كبير براحة المريض وجودة النتائج.',
+          'يمتلك خبرة واسعة في زراعة الأسنان والحلول التعويضية الحديثة مع اهتمام كبير براحة المريض وجودة النتائج.',
       phone: '+963 944 000 222',
       rating: 4.9,
       reviewsCount: 203,
@@ -49,7 +49,7 @@ class MockDoctorsData {
       imageUrl: '👩‍⚕️',
       graduation: 'خريجة الجامعة السورية الخاصة - كلية طب الأسنان - 2018',
       bio:
-      'تهتم بعلاج الأطفال وتقديم تجربة علاجية مريحة وهادئة تساعد الطفل على بناء علاقة إيجابية مع طبيب الأسنان.',
+          'تهتم بعلاج الأطفال وتقديم تجربة علاجية مريحة وهادئة تساعد الطفل على بناء علاقة إيجابية مع طبيب الأسنان.',
       phone: '+963 944 000 333',
       rating: 4.7,
       reviewsCount: 128,
@@ -76,9 +76,11 @@ class MockDoctorsData {
     }
     final lowerQuery = query.toLowerCase();
     return doctors
-        .where((doctor) =>
-    doctor.name.toLowerCase().contains(lowerQuery) ||
-        doctor.specialty.toLowerCase().contains(lowerQuery))
+        .where(
+          (doctor) =>
+              doctor.name.toLowerCase().contains(lowerQuery) ||
+              doctor.specialty.toLowerCase().contains(lowerQuery),
+        )
         .toList();
   }
 

@@ -8,9 +8,6 @@ class VerifyEmailRequestModel {
   });
 
   Map<String, dynamic> toJson() {
-    return {
-      'email': email,
-      'verification_code': verificationCode,
-    };
+    return {'email': email, 'verification_code': verificationCode};
   }
 }

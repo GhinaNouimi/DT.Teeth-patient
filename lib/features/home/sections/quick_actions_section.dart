@@ -12,14 +12,13 @@ class QuickActionsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children:  [
+      children: [
         HomeSectionTitle(title: 'إجراءات سريعة'),
         SizedBox(height: 14),
         Wrap(
           spacing: 12,
           runSpacing: 12,
           children: [
-
             QuickActionTile(
               icon: Icons.emergency_outlined,
               label: 'موعد طارئ',
@@ -35,10 +34,7 @@ class QuickActionsSection extends StatelessWidget {
                 context.push(AppRoutes.newAppointment);
               },
             ),
-            QuickActionTile(
-              icon: Icons.call_outlined,
-              label: 'التواصل',
-            ),
+            QuickActionTile(icon: Icons.call_outlined, label: 'التواصل'),
             QuickActionTile(
               icon: Icons.smart_toy_outlined,
               label: 'المساعد الذكي',

@@ -34,21 +34,18 @@ class AppointmentsTabSection extends StatelessWidget {
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 220),
             curve: Curves.easeOut,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 14,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
             decoration: BoxDecoration(
               color: selected ? colors.navBarItem : Colors.transparent,
               borderRadius: BorderRadius.circular(18),
               boxShadow: selected
                   ? [
-                BoxShadow(
-                  color: colors.navBarItem.withValues(alpha: 0.16),
-                  blurRadius: 14,
-                  offset: const Offset(0, 6),
-                ),
-              ]
+                      BoxShadow(
+                        color: colors.navBarItem.withValues(alpha: 0.16),
+                        blurRadius: 14,
+                        offset: const Offset(0, 6),
+                      ),
+                    ]
                   : null,
             ),
             child: Row(
@@ -96,9 +93,7 @@ class AppointmentsTabSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.surfaceMuted,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: colors.borderSoft.withValues(alpha: 0.9),
-        ),
+        border: Border.all(color: colors.borderSoft.withValues(alpha: 0.9)),
       ),
       child: Row(
         children: [

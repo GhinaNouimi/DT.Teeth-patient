@@ -25,10 +25,8 @@ class BirthDateField extends StatelessWidget {
       prefixIcon: Icons.calendar_today_outlined,
       readOnly: true,
       onTap: onTap,
-      validator: (value) => AppValidators.requiredField(
-        value,
-        fieldName: 'تاريخ الميلاد',
-      ),
+      validator: (value) =>
+          AppValidators.requiredField(value, fieldName: 'تاريخ الميلاد'),
     ).animate().fadeIn(delay: delay).slideX(begin: 0.08, end: 0);
   }
 }

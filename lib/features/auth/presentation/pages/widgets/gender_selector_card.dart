@@ -79,12 +79,12 @@ class GenderSelectorCard extends StatelessWidget {
                       ),
                       boxShadow: isSelected
                           ? [
-                        BoxShadow(
-                          color: accentColor.withValues(alpha: 0.18),
-                          blurRadius: 16,
-                          offset: const Offset(0, 8),
-                        ),
-                      ]
+                              BoxShadow(
+                                color: accentColor.withValues(alpha: 0.18),
+                                blurRadius: 16,
+                                offset: const Offset(0, 8),
+                              ),
+                            ]
                           : null,
                     ),
                     child: Stack(

@@ -28,10 +28,7 @@ class TreatmentStatusChip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: style?.copyWith(
-          color: foreground,
-          fontWeight: FontWeight.w800,
-        ),
+        style: style?.copyWith(color: foreground, fontWeight: FontWeight.w800),
       ),
     );
   }

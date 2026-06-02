@@ -7,7 +7,5 @@ abstract class LoginEvent {
 class LoginPatientSubmitted extends LoginEvent {
   final LoginRequestModel request;
 
-  const LoginPatientSubmitted({
-    required this.request,
-  });
+  const LoginPatientSubmitted({required this.request});
 }

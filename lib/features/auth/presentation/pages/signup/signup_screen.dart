@@ -34,10 +34,7 @@ class _SignupScreenState extends State<SignupScreen> {
   String? _selectedGender;
   bool _showGenderError = false;
 
-  static const List<String> _genderOptions = [
-    'ذكر',
-    'أنثى',
-  ];
+  static const List<String> _genderOptions = ['ذكر', 'أنثى'];
 
   @override
   void initState() {
@@ -75,7 +72,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
     setState(() {
       _selectedBirthDate = picked;
-      _birthDateController.text = DateFormat('yyyy/MM/dd').format(picked);
+      _birthDateController.text =
+          DateFormat('yyyy-MM-dd').format(picked);
     });
   }
 
@@ -100,10 +98,7 @@ class _SignupScreenState extends State<SignupScreen> {
       'address': _addressController.text.trim(),
     };
 
-    context.push(
-      AppRoutes.patientHealthQuestions,
-      extra: basicRegisterData,
-    );
+    context.push(AppRoutes.patientHealthQuestions, extra: basicRegisterData);
   }
 
   @override
@@ -123,10 +118,8 @@ class _SignupScreenState extends State<SignupScreen> {
               label: 'الاسم الكامل',
               hint: 'أدخل اسمك الكامل',
               prefixIcon: Icons.person_outline_rounded,
-              validator: (value) => AppValidators.requiredField(
-                value,
-                fieldName: 'الاسم',
-              ),
+              validator: (value) =>
+                  AppValidators.requiredField(value, fieldName: 'الاسم'),
             ).animate().fadeIn(delay: 60.ms).slideX(begin: 0.08, end: 0),
 
             const SizedBox(height: 16),
@@ -183,10 +176,8 @@ class _SignupScreenState extends State<SignupScreen> {
               prefixIcon: Icons.location_on_outlined,
               maxLines: 3,
               textInputAction: TextInputAction.newline,
-              validator: (value) => AppValidators.requiredField(
-                value,
-                fieldName: 'العنوان',
-              ),
+              validator: (value) =>
+                  AppValidators.requiredField(value, fieldName: 'العنوان'),
             ).animate().fadeIn(delay: 300.ms).slideX(begin: 0.08, end: 0),
 
             const SizedBox(height: 16),
@@ -195,9 +186,9 @@ class _SignupScreenState extends State<SignupScreen> {
               alignment: Alignment.centerRight,
               child: Text(
                 'شروط كلمة المرور',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
               ),
             ),
 

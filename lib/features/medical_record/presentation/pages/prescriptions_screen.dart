@@ -52,55 +52,50 @@ class _PrescriptionsScreenState extends State<PrescriptionsScreen> {
           children: [
             const Padding(
               padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
-              child: AppTopBar(
-                title: 'الوصفات الطبية',
-              ),
+              child: AppTopBar(title: 'الوصفات الطبية'),
             ),
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                children: [
-                  MedicalRecordTabBar(
-                    labels: const ['الحالية', 'السابقة'],
-                    counts: [
-                      active.length,
-                      previous.length,
-                    ],
-                    currentIndex: _currentTabIndex,
-                    onChanged: (index) {
-                      setState(() {
-                        _currentTabIndex = index;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 18),
-                  if (displayed.isEmpty)
-                    const MedicalRecordEmptyState(
-                      title: 'لا توجد وصفات هنا',
-                      subtitle:
-                      'ستظهر الوصفات الحالية والسابقة في هذا القسم.',
-                      icon: Icons.receipt_long_rounded,
-                    )
-                  else
-                    ...displayed.map(
-                          (prescription) => Padding(
-                        padding: const EdgeInsets.only(bottom: 14),
-                        child: PrescriptionCard(
-                          prescription: prescription,
-                          onTap: () {
-                            context.push(
-                              AppRoutes.medicalRecordPrescriptionDetails,
-                              extra: prescription.id,
-                            );
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                      children: [
+                        MedicalRecordTabBar(
+                          labels: const ['الحالية', 'السابقة'],
+                          counts: [active.length, previous.length],
+                          currentIndex: _currentTabIndex,
+                          onChanged: (index) {
+                            setState(() {
+                              _currentTabIndex = index;
+                            });
                           },
                         ),
-                      ),
+                        const SizedBox(height: 18),
+                        if (displayed.isEmpty)
+                          const MedicalRecordEmptyState(
+                            title: 'لا توجد وصفات هنا',
+                            subtitle:
+                                'ستظهر الوصفات الحالية والسابقة في هذا القسم.',
+                            icon: Icons.receipt_long_rounded,
+                          )
+                        else
+                          ...displayed.map(
+                            (prescription) => Padding(
+                              padding: const EdgeInsets.only(bottom: 14),
+                              child: PrescriptionCard(
+                                prescription: prescription,
+                                onTap: () {
+                                  context.push(
+                                    AppRoutes.medicalRecordPrescriptionDetails,
+                                    extra: prescription.id,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
-                ],
-              ),
             ),
           ],
         ),

@@ -16,10 +16,7 @@ import '../sections/doctor_ratings_section.dart';
 class DoctorProfileScreen extends StatefulWidget {
   final DoctorUiModel doctor;
 
-  const DoctorProfileScreen({
-    super.key,
-    required this.doctor,
-  });
+  const DoctorProfileScreen({super.key, required this.doctor});
 
   @override
   State<DoctorProfileScreen> createState() => _DoctorProfileScreenState();
@@ -41,9 +38,9 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
   }
 
   void _showPhoneSnackBar(String phone) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('الرقم: $phone')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('الرقم: $phone')));
   }
 
   void _showRatingSheet(String doctorName) {
@@ -57,10 +54,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
   }
 
   void _goToBooking(DoctorUiModel doctor) {
-    context.push(
-      AppRoutes.booking,
-      extra: doctor,
-    );
+    context.push(AppRoutes.booking, extra: doctor);
   }
 
   @override
@@ -70,25 +64,17 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
     final doctor = widget.doctor;
 
     return Scaffold(
-
       backgroundColor: colors.background,
       body: SafeArea(
         child: ListView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(20),
           children: [
-            AppTopBar(
-              title: 'ملف الطبيب',
-              onBackTap: () => context.pop(),
-            ),
+            AppTopBar(title: 'ملف الطبيب', onBackTap: () => context.pop()),
             const SizedBox(height: 20),
             DoctorProfileHeaderSection(doctor: doctor),
             const SizedBox(height: 24),
-            DoctorAboutSection(
-              bio: doctor.bio,
-              colors: colors,
-              theme: theme,
-            ),
+            DoctorAboutSection(bio: doctor.bio, colors: colors, theme: theme),
             const SizedBox(height: 24),
             DoctorInfoCardsSection(
               yearsOfExperience: doctor.yearsOfExperience,

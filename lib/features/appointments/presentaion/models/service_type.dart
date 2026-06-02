@@ -11,14 +11,11 @@ enum ServiceType {
   final String displayName;
   final String value;
 
-  const ServiceType(
-      this.displayName,
-      this.value,
-      );
+  const ServiceType(this.displayName, this.value);
 
   static ServiceType fromValue(String value) {
     return ServiceType.values.firstWhere(
-          (service) => service.value == value,
+      (service) => service.value == value,
       orElse: () => ServiceType.cleaning,
     );
   }

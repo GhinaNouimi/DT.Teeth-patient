@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 class AuthAnimatedBackground extends StatefulWidget {
   final Widget child;
 
-  const AuthAnimatedBackground({
-    super.key,
-    required this.child,
-  });
+  const AuthAnimatedBackground({super.key, required this.child});
 
   @override
   State<AuthAnimatedBackground> createState() => _AuthAnimatedBackgroundState();
@@ -96,10 +93,7 @@ class _Orb extends StatelessWidget {
   final double size;
   final Color color;
 
-  const _Orb({
-    required this.size,
-    required this.color,
-  });
+  const _Orb({required this.size, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -110,11 +104,7 @@ class _Orb extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           boxShadow: [
-            BoxShadow(
-              color: color,
-              blurRadius: 90,
-              spreadRadius: 18,
-            ),
+            BoxShadow(color: color, blurRadius: 90, spreadRadius: 18),
           ],
         ),
       ),

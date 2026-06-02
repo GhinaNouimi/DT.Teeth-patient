@@ -6,10 +6,7 @@ import '../../../../core/theme/theme_extensions.dart';
 class DoctorProfileHeaderSection extends StatelessWidget {
   final DoctorUiModel doctor;
 
-  const DoctorProfileHeaderSection({
-    super.key,
-    required this.doctor,
-  });
+  const DoctorProfileHeaderSection({super.key, required this.doctor});
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +23,7 @@ class DoctorProfileHeaderSection extends StatelessWidget {
             decoration: BoxDecoration(
               color: colors.surfaceSecondary,
               borderRadius: BorderRadius.circular(40),
-              border: Border.all(
-                color: colors.buttonPrimary,
-                width: 3,
-              ),
+              border: Border.all(color: colors.buttonPrimary, width: 3),
               boxShadow: [
                 BoxShadow(
                   color: colors.buttonPrimary.withValues(alpha: 0.2),

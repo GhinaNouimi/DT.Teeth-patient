@@ -11,10 +11,7 @@ import '../widgets/medical_record_tab_bar.dart';
 class AttachmentsScreen extends StatefulWidget {
   final String treatmentId;
 
-  const AttachmentsScreen({
-    super.key,
-    required this.treatmentId,
-  });
+  const AttachmentsScreen({super.key, required this.treatmentId});
 
   @override
   State<AttachmentsScreen> createState() => _AttachmentsScreenState();
@@ -70,57 +67,65 @@ class _AttachmentsScreenState extends State<AttachmentsScreen> {
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ListView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                children: [
-                  MedicalRecordTabBar(
-                    labels: const ['الصور', 'الأشعة', 'التقارير'],
-                    counts: [
-                      _attachments
-                          .where((e) => e.category == AttachmentCategory.images)
-                          .length,
-                      _attachments
-                          .where((e) => e.category == AttachmentCategory.xray)
-                          .length,
-                      _attachments
-                          .where((e) => e.category == AttachmentCategory.reports)
-                          .length,
-                    ],
-                    currentIndex: _currentTabIndex,
-                    onChanged: (index) {
-                      setState(() {
-                        _currentTabIndex = index;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 18),
-                  if (filtered.isEmpty)
-                    const MedicalRecordEmptyState(
-                      title: 'لا توجد ملفات ضمن هذا القسم',
-                      subtitle:
-                      'ستظهر الصور والتقارير هنا فور إضافتها للملف الطبي.',
-                      icon: Icons.folder_open_rounded,
-                    )
-                  else
-                    GridView.builder(
-                      itemCount: filtered.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 14,
-                        mainAxisSpacing: 14,
-                        childAspectRatio: 0.82,
-                      ),
-                      itemBuilder: (context, index) {
-                        return AttachmentCard(
-                          attachment: filtered[index],
-                        );
-                      },
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                      children: [
+                        MedicalRecordTabBar(
+                          labels: const ['الصور', 'الأشعة', 'التقارير'],
+                          counts: [
+                            _attachments
+                                .where(
+                                  (e) =>
+                                      e.category == AttachmentCategory.images,
+                                )
+                                .length,
+                            _attachments
+                                .where(
+                                  (e) => e.category == AttachmentCategory.xray,
+                                )
+                                .length,
+                            _attachments
+                                .where(
+                                  (e) =>
+                                      e.category == AttachmentCategory.reports,
+                                )
+                                .length,
+                          ],
+                          currentIndex: _currentTabIndex,
+                          onChanged: (index) {
+                            setState(() {
+                              _currentTabIndex = index;
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 18),
+                        if (filtered.isEmpty)
+                          const MedicalRecordEmptyState(
+                            title: 'لا توجد ملفات ضمن هذا القسم',
+                            subtitle:
+                                'ستظهر الصور والتقارير هنا فور إضافتها للملف الطبي.',
+                            icon: Icons.folder_open_rounded,
+                          )
+                        else
+                          GridView.builder(
+                            itemCount: filtered.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 14,
+                                  mainAxisSpacing: 14,
+                                  childAspectRatio: 0.82,
+                                ),
+                            itemBuilder: (context, index) {
+                              return AttachmentCard(
+                                attachment: filtered[index],
+                              );
+                            },
+                          ),
+                      ],
                     ),
-                ],
-              ),
             ),
           ],
         ),

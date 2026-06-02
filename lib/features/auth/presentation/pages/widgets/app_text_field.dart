@@ -107,22 +107,22 @@ class _AppTextFieldState extends State<AppTextField> {
             prefixIconConstraints: const BoxConstraints(minWidth: 44),
             suffixIcon: widget.obscureText
                 ? IconButton(
-              onPressed: () => setState(() => _isObscure = !_isObscure),
-              icon: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 180),
-                child: Icon(
-                  _isObscure
-                      ? Icons.visibility_rounded
-                      : Icons.visibility_off_rounded,
-                  key: ValueKey(_isObscure),
-                ),
-              ),
-            )
+                    onPressed: () => setState(() => _isObscure = !_isObscure),
+                    icon: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 180),
+                      child: Icon(
+                        _isObscure
+                            ? Icons.visibility_rounded
+                            : Icons.visibility_off_rounded,
+                        key: ValueKey(_isObscure),
+                      ),
+                    ),
+                  )
                 : (widget.readOnly && widget.onTap != null)
                 ? Icon(
-              Icons.keyboard_arrow_down_rounded,
-              color: theme.colorScheme.primary.withValues(alpha: 0.8),
-            )
+                    Icons.keyboard_arrow_down_rounded,
+                    color: theme.colorScheme.primary.withValues(alpha: 0.8),
+                  )
                 : null,
           ),
         ),

@@ -27,23 +27,19 @@ class SwitchTabButton extends StatelessWidget {
       duration: const Duration(milliseconds: 220),
       curve: Curves.easeOutCubic,
       decoration: BoxDecoration(
-        color: isActive
-            ? colors.textPrimary
-            : Colors.transparent,
+        color: isActive ? colors.textPrimary : Colors.transparent,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isActive
-              ? colors.textPrimary
-              : colors.borderSoft,
+          color: isActive ? colors.textPrimary : colors.borderSoft,
         ),
         boxShadow: isActive
             ? [
-          BoxShadow(
-            color: colors.shadow.withValues(alpha: 0.12),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ]
+                BoxShadow(
+                  color: colors.shadow.withValues(alpha: 0.12),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                ),
+              ]
             : [],
       ),
       child: Material(
@@ -54,19 +50,14 @@ class SwitchTabButton extends StatelessWidget {
           onTap: onTap,
           highlightColor: Colors.transparent,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 10,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   icon,
                   size: 18,
-                  color: isActive
-                      ? Colors.white
-                      : colors.textSecondary,
+                  color: isActive ? Colors.white : colors.textSecondary,
                 ),
 
                 const SizedBox(width: 8),
@@ -74,9 +65,7 @@ class SwitchTabButton extends StatelessWidget {
                 Text(
                   label,
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: isActive
-                        ? Colors.white
-                        : colors.textPrimary,
+                    color: isActive ? Colors.white : colors.textPrimary,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -98,9 +87,7 @@ class SwitchTabButton extends StatelessWidget {
                   child: Text(
                     '$count',
                     style: theme.textTheme.labelSmall?.copyWith(
-                      color: isActive
-                          ? Colors.white
-                          : colors.textSecondary,
+                      color: isActive ? Colors.white : colors.textSecondary,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

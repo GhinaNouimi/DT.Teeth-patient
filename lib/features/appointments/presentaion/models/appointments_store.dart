@@ -6,9 +6,9 @@ import 'appointment_status.dart';
 
 class AppointmentsStore extends ChangeNotifier {
   AppointmentsStore._internal()
-      : _appointments = List<AppointmentUiModel>.from(
-    MockAppointmentsData.getAppointments(),
-  );
+    : _appointments = List<AppointmentUiModel>.from(
+        MockAppointmentsData.getAppointments(),
+      );
 
   static final AppointmentsStore instance = AppointmentsStore._internal();
 

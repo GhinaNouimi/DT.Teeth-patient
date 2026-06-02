@@ -15,7 +15,8 @@ class MedicalRecordHomeScreen extends StatefulWidget {
   const MedicalRecordHomeScreen({super.key});
 
   @override
-  State<MedicalRecordHomeScreen> createState() => _MedicalRecordHomeScreenState();
+  State<MedicalRecordHomeScreen> createState() =>
+      _MedicalRecordHomeScreenState();
 }
 
 class _MedicalRecordHomeScreenState extends State<MedicalRecordHomeScreen> {
@@ -54,10 +55,12 @@ class _MedicalRecordHomeScreenState extends State<MedicalRecordHomeScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
-    final activeTreatments =
-        _treatments.where((treatment) => treatment.isActive).toList();
-    final completedTreatments =
-        _treatments.where((treatment) => treatment.isCompleted).toList();
+    final activeTreatments = _treatments
+        .where((treatment) => treatment.isActive)
+        .toList();
+    final completedTreatments = _treatments
+        .where((treatment) => treatment.isCompleted)
+        .toList();
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -69,7 +72,8 @@ class _MedicalRecordHomeScreenState extends State<MedicalRecordHomeScreen> {
               padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
               child: MedicalRecordHeaderSection(
                 title: 'الملف الطبي',
-                subtitle: 'تابع رحلة علاجك، مواعيد الجلسات، والملاحظات الطبية من مكان واحد.',
+                subtitle:
+                    'تابع رحلة علاجك، مواعيد الجلسات، والملاحظات الطبية من مكان واحد.',
               ),
             ),
 
@@ -87,9 +91,8 @@ class _MedicalRecordHomeScreenState extends State<MedicalRecordHomeScreen> {
                           subtitle: '${activeTreatments.length} حالات نشطة',
                           icon: Icons.medical_information_outlined,
                           isPrimary: true,
-                          onTap: () => context.push(
-                            AppRoutes.medicalRecordTreatments,
-                          ),
+                          onTap: () =>
+                              context.push(AppRoutes.medicalRecordTreatments),
                         ),
                         const SizedBox(height: 12),
                         Row(
@@ -97,7 +100,8 @@ class _MedicalRecordHomeScreenState extends State<MedicalRecordHomeScreen> {
                             Expanded(
                               child: MedicalRecordCategoryCard(
                                 title: 'وصفات',
-                                subtitle: '${_prescriptions.where((item) => item.isActive).length} حالية',
+                                subtitle:
+                                    '${_prescriptions.where((item) => item.isActive).length} حالية',
                                 icon: Icons.receipt_long_rounded,
                                 onTap: () => context.push(
                                   AppRoutes.medicalRecordPrescriptions,
@@ -108,7 +112,9 @@ class _MedicalRecordHomeScreenState extends State<MedicalRecordHomeScreen> {
                             Expanded(
                               child: MedicalRecordCategoryCard(
                                 title: 'دفعات',
-                                subtitle: _paymentPlan?.remainingAmountLabel ?? 'بدون بيانات',
+                                subtitle:
+                                    _paymentPlan?.remainingAmountLabel ??
+                                    'بدون بيانات',
                                 icon: Icons.wallet_rounded,
                                 onTap: () => context.push(
                                   AppRoutes.medicalRecordPayments,
@@ -147,20 +153,22 @@ class _MedicalRecordHomeScreenState extends State<MedicalRecordHomeScreen> {
                           ],
                         ),
                         const SizedBox(height: 14),
-                        ...activeTreatments.take(2).map(
-                          (treatment) => Padding(
-                            padding: const EdgeInsets.only(bottom: 14),
-                            child: TreatmentCard(
-                              treatment: treatment,
-                              onTap: () {
-                                context.push(
-                                  AppRoutes.medicalRecordTreatmentDetails,
-                                  extra: treatment.id,
-                                );
-                              },
+                        ...activeTreatments
+                            .take(2)
+                            .map(
+                              (treatment) => Padding(
+                                padding: const EdgeInsets.only(bottom: 14),
+                                child: TreatmentCard(
+                                  treatment: treatment,
+                                  onTap: () {
+                                    context.push(
+                                      AppRoutes.medicalRecordTreatmentDetails,
+                                      extra: treatment.id,
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
                       ],
                     ),
             ),
@@ -243,11 +251,7 @@ class _OverviewStat extends StatelessWidget {
 
     return Column(
       children: [
-        Icon(
-          icon,
-          size: 20,
-          color: Theme.of(context).colorScheme.primary,
-        ),
+        Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
         const SizedBox(height: 10),
         Text(
           value,

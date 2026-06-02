@@ -61,8 +61,9 @@ class TreatmentModel {
       careInstructions: careInstructions,
       doctorNotes: doctorNotes,
       timeline: timeline.map((step) => step.toEntity()).toList(),
-      relatedAppointments:
-          relatedAppointments.map((appointment) => appointment.toEntity()).toList(),
+      relatedAppointments: relatedAppointments
+          .map((appointment) => appointment.toEntity())
+          .toList(),
       attachmentsCount: attachmentsCount,
     );
   }

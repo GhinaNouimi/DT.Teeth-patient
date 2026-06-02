@@ -15,10 +15,7 @@ import '../widgets/treatment_timeline_tile.dart';
 class TreatmentDetailsScreen extends StatefulWidget {
   final String treatmentId;
 
-  const TreatmentDetailsScreen({
-    super.key,
-    required this.treatmentId,
-  });
+  const TreatmentDetailsScreen({super.key, required this.treatmentId});
 
   @override
   State<TreatmentDetailsScreen> createState() => _TreatmentDetailsScreenState();
@@ -65,14 +62,14 @@ class _TreatmentDetailsScreenState extends State<TreatmentDetailsScreen> {
                   ? const Center(child: CircularProgressIndicator())
                   : (_treatment == null)
                   ? const Padding(
-                padding: EdgeInsets.all(20),
-                child: MedicalRecordEmptyState(
-                  title: 'لم نعثر على تفاصيل العلاج',
-                  subtitle:
-                  'قد تكون البيانات غير متاحة حاليًا، حاول مرة أخرى لاحقًا.',
-                  icon: Icons.error_outline_rounded,
-                ),
-              )
+                      padding: EdgeInsets.all(20),
+                      child: MedicalRecordEmptyState(
+                        title: 'لم نعثر على تفاصيل العلاج',
+                        subtitle:
+                            'قد تكون البيانات غير متاحة حاليًا، حاول مرة أخرى لاحقًا.',
+                        icon: Icons.error_outline_rounded,
+                      ),
+                    )
                   : _TreatmentDetailsBody(treatment: _treatment!),
             ),
           ],
@@ -85,9 +82,7 @@ class _TreatmentDetailsScreenState extends State<TreatmentDetailsScreen> {
 class _TreatmentDetailsBody extends StatelessWidget {
   final TreatmentEntity treatment;
 
-  const _TreatmentDetailsBody({
-    required this.treatment,
-  });
+  const _TreatmentDetailsBody({required this.treatment});
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +100,7 @@ class _TreatmentDetailsBody extends StatelessWidget {
           decoration: BoxDecoration(
             color: colors.surfaceMuted,
             borderRadius: BorderRadius.circular(30),
-            border: Border.all(
-              color: colors.borderSoft,
-            ),
+            border: Border.all(color: colors.borderSoft),
             boxShadow: [
               BoxShadow(
                 color: colors.shadow.withValues(alpha: 0.08),
@@ -169,7 +162,7 @@ class _TreatmentDetailsBody extends StatelessWidget {
           child: Column(
             children: List.generate(
               treatment.timeline.length,
-                  (index) => TreatmentTimelineTile(
+              (index) => TreatmentTimelineTile(
                 step: treatment.timeline[index],
                 isLast: index == treatment.timeline.length - 1,
               ),
@@ -188,9 +181,7 @@ class _TreatmentDetailsBody extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: pinkSoft.withValues(alpha: 0.45),
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.all(
-                    color: colors.borderSoft,
-                  ),
+                  border: Border.all(color: colors.borderSoft),
                 ),
                 child: Row(
                   children: [
@@ -259,10 +250,7 @@ class _TreatmentDetailsBody extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.attach_file_rounded,
-                    color: blue,
-                  ),
+                  Icon(Icons.attach_file_rounded, color: blue),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
@@ -293,9 +281,7 @@ class _TreatmentDetailsBody extends StatelessWidget {
 class _InfoGrid extends StatelessWidget {
   final TreatmentEntity treatment;
 
-  const _InfoGrid({
-    required this.treatment,
-  });
+  const _InfoGrid({required this.treatment});
 
   @override
   Widget build(BuildContext context) {
@@ -425,7 +411,7 @@ class _TextListSection extends StatelessWidget {
       child: Column(
         children: [
           ...items.map(
-                (item) => Padding(
+            (item) => Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -450,10 +436,7 @@ class _TextListSection extends StatelessWidget {
               ),
             ),
           ),
-          if (footer != null) ...[
-            const SizedBox(height: 4),
-            footer!,
-          ],
+          if (footer != null) ...[const SizedBox(height: 4), footer!],
         ],
       ),
     );

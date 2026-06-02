@@ -34,28 +34,22 @@ class NewAppointmentFormModel {
     this.requiresCall = false,
   });
 
-  bool get isAppointmentTypeSelected =>
-      appointmentType != null;
+  bool get isAppointmentTypeSelected => appointmentType != null;
 
-  bool get isServiceSelected =>
-      serviceType != null;
+  bool get isServiceSelected => serviceType != null;
 
-  bool get isDoctorSelected =>
-      selectedDoctor != null;
+  bool get isDoctorSelected => selectedDoctor != null;
 
-  bool get isScheduleSelected =>
-      selectedDate != null &&
-          selectedTime != null;
+  bool get isScheduleSelected => selectedDate != null && selectedTime != null;
 
   bool get isEmergencyDataValid =>
       emergencyDescription != null &&
-          emergencyDescription!.trim().isNotEmpty &&
-          painLevel != null;
+      emergencyDescription!.trim().isNotEmpty &&
+      painLevel != null;
 
   bool get isComplete {
     if (appointmentType?.isEmergency ?? false) {
-      return isAppointmentTypeSelected &&
-          isEmergencyDataValid;
+      return isAppointmentTypeSelected && isEmergencyDataValid;
     }
 
     return isAppointmentTypeSelected &&
@@ -109,36 +103,25 @@ class NewAppointmentFormModel {
     bool clearSchedule = false,
   }) {
     return NewAppointmentFormModel(
-      appointmentType:
-      appointmentType ?? this.appointmentType,
+      appointmentType: appointmentType ?? this.appointmentType,
 
-      serviceType:
-      serviceType ?? this.serviceType,
+      serviceType: serviceType ?? this.serviceType,
 
       selectedDoctor: clearDoctor
           ? null
           : (selectedDoctor ?? this.selectedDoctor),
 
-      selectedDate: clearSchedule
-          ? null
-          : (selectedDate ?? this.selectedDate),
+      selectedDate: clearSchedule ? null : (selectedDate ?? this.selectedDate),
 
-      selectedTime: clearSchedule
-          ? null
-          : (selectedTime ?? this.selectedTime),
+      selectedTime: clearSchedule ? null : (selectedTime ?? this.selectedTime),
 
-      patientNotes:
-      patientNotes ?? this.patientNotes,
+      patientNotes: patientNotes ?? this.patientNotes,
 
-      emergencyDescription:
-      emergencyDescription ??
-          this.emergencyDescription,
+      emergencyDescription: emergencyDescription ?? this.emergencyDescription,
 
-      painLevel:
-      painLevel ?? this.painLevel,
+      painLevel: painLevel ?? this.painLevel,
 
-      requiresCall:
-      requiresCall ?? this.requiresCall,
+      requiresCall: requiresCall ?? this.requiresCall,
     );
   }
 

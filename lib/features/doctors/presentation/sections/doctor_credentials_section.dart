@@ -31,11 +31,7 @@ class DoctorCredentialsSection extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                Icons.school_rounded,
-                color: colors.buttonPrimary,
-                size: 24,
-              ),
+              Icon(Icons.school_rounded, color: colors.buttonPrimary, size: 24),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(

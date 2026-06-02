@@ -40,8 +40,7 @@ class AppointmentCardWidget extends StatelessWidget {
             ),
           ],
         ),
-        child:
-        Row(
+        child: Row(
           children: [
             // صورة الطبيب
             CircleAvatar(
@@ -92,8 +91,10 @@ class AppointmentCardWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        DateFormat('d MMM', 'ar_SA')
-                            .format(appointment.appointmentDate),
+                        DateFormat(
+                          'd MMM',
+                          'ar_SA',
+                        ).format(appointment.appointmentDate),
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: colors.textPrimary,
                           fontWeight: FontWeight.w600,
@@ -121,10 +122,7 @@ class AppointmentCardWidget extends StatelessWidget {
             // نوع الموعد
             if (appointment.type == AppointmentType.emergency)
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 4,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: const Color(0xFFE74C3C).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),

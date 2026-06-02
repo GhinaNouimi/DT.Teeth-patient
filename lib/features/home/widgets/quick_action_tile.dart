@@ -21,23 +21,17 @@ class QuickActionTile extends StatelessWidget {
     final theme = Theme.of(context);
     final colors = context.colors;
 
-    final backgroundColor =
-    isEmergency
+    final backgroundColor = isEmergency
         ? colors.danger.withValues(alpha: 0.10)
         : colors.surfacePrimary;
 
-    final iconBackgroundColor =
-    isEmergency
+    final iconBackgroundColor = isEmergency
         ? colors.danger.withValues(alpha: 0.16)
         : colors.surfaceMuted;
 
-    final iconColor =
-    isEmergency
-        ? colors.danger
-        : colors.navBarItem;
+    final iconColor = isEmergency ? colors.danger : colors.navBarItem;
 
-    final borderColor =
-    isEmergency
+    final borderColor = isEmergency
         ? colors.danger.withValues(alpha: 0.22)
         : colors.borderSoft;
 
@@ -49,10 +43,7 @@ class QuickActionTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(22),
         child: Container(
           width: 158,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 14,
-            vertical: 16,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
           decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: BorderRadius.circular(22),
@@ -67,11 +58,7 @@ class QuickActionTile extends StatelessWidget {
                   color: iconBackgroundColor,
                   borderRadius: BorderRadius.circular(14),
                 ),
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: 20,
-                ),
+                child: Icon(icon, color: iconColor, size: 20),
               ),
 
               const SizedBox(width: 10),

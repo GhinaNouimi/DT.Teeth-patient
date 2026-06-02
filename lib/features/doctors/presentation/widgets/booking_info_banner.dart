@@ -28,11 +28,7 @@ class BookingInfoBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(
-            icon,
-            color: iconColor ?? colors.textSecondary,
-            size: 20,
-          ),
+          Icon(icon, color: iconColor ?? colors.textSecondary, size: 20),
           const SizedBox(width: 12),
           Expanded(
             child: Text(

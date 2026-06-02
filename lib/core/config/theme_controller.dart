@@ -16,8 +16,7 @@ class ThemeController extends ChangeNotifier {
   Future<void> toggleTheme() async {
     final prefs = await SharedPreferences.getInstance();
 
-    _themeMode =
-    _themeMode == ThemeMode.light
+    _themeMode = _themeMode == ThemeMode.light
         ? ThemeMode.dark
         : ThemeMode.light;
 

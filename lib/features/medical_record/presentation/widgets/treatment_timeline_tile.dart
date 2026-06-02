@@ -42,11 +42,7 @@ class TreatmentTimelineTile extends StatelessWidget {
                   border: Border.all(color: dotColor, width: 2.6),
                 ),
                 child: step.state == TreatmentTimelineStepState.completed
-                    ? Icon(
-                        Icons.check_rounded,
-                        size: 13,
-                        color: colors.success,
-                      )
+                    ? Icon(Icons.check_rounded, size: 13, color: colors.success)
                     : null,
               ),
               if (!isLast)

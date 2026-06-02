@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/theme/theme_extensions.dart';
 
 class PatientBottomNavBar extends StatelessWidget {
@@ -18,6 +19,7 @@ class PatientBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
+    final l10n = context.l10n;
 
     return SafeArea(
       minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
@@ -32,40 +34,38 @@ class PatientBottomNavBar extends StatelessWidget {
             indicatorColor: colors.surfaceMuted,
             elevation: 0,
             height: 74,
-            labelTextStyle: WidgetStateProperty.resolveWith(
-                  (states) {
-                final isSelected = states.contains(WidgetState.selected);
-                return theme.textTheme.bodySmall?.copyWith(
-                  color: isSelected ? colors.navBarItem : colors.textSecondary,
-                  fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                );
-              },
-            ),
-            destinations: const [
+            labelTextStyle: WidgetStateProperty.resolveWith((states) {
+              final isSelected = states.contains(WidgetState.selected);
+              return theme.textTheme.bodySmall?.copyWith(
+                color: isSelected ? colors.navBarItem : colors.textSecondary,
+                fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+              );
+            }),
+            destinations: [
               NavigationDestination(
-                icon: Icon(Icons.home_outlined),
-                selectedIcon: Icon(Icons.home_rounded),
-                label: 'الرئيسية',
+                icon: const Icon(Icons.home_outlined),
+                selectedIcon: const Icon(Icons.home_rounded),
+                label: l10n.bottomNavHome,
               ),
               NavigationDestination(
-                icon: Icon(Icons.medical_services_outlined),
-                selectedIcon: Icon(Icons.medical_services_rounded),
-                label: 'الأطباء',
+                icon: const Icon(Icons.medical_services_outlined),
+                selectedIcon: const Icon(Icons.medical_services_rounded),
+                label: l10n.bottomNavDoctors,
               ),
               NavigationDestination(
-                icon: Icon(Icons.calendar_month_outlined),
-                selectedIcon: Icon(Icons.calendar_month_rounded),
-                label: 'مواعيدي',
+                icon: const Icon(Icons.calendar_month_outlined),
+                selectedIcon: const Icon(Icons.calendar_month_rounded),
+                label: l10n.bottomNavAppointments,
               ),
               NavigationDestination(
-                icon: Icon(Icons.folder_open_outlined),
-                selectedIcon: Icon(Icons.folder_rounded),
-                label: 'ملفي الطبي',
+                icon: const Icon(Icons.folder_open_outlined),
+                selectedIcon: const Icon(Icons.folder_rounded),
+                label: l10n.bottomNavMedicalRecord,
               ),
               NavigationDestination(
-                icon: Icon(Icons.person_outline_rounded),
-                selectedIcon: Icon(Icons.person_rounded),
-                label: 'حسابي',
+                icon: const Icon(Icons.person_outline_rounded),
+                selectedIcon: const Icon(Icons.person_rounded),
+                label: l10n.bottomNavAccount,
               ),
             ],
           ),

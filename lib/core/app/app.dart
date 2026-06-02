@@ -36,13 +36,14 @@ class MyApp extends StatelessWidget {
 
             final overlayStyle = SystemUiOverlayStyle(
               statusBarColor: Colors.transparent,
-              statusBarIconBrightness:
-              isDark ? Brightness.light : Brightness.dark,
-              statusBarBrightness:
-              isDark ? Brightness.dark : Brightness.light,
+              statusBarIconBrightness: isDark
+                  ? Brightness.light
+                  : Brightness.dark,
+              statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
               systemNavigationBarColor: colors.background,
-              systemNavigationBarIconBrightness:
-              isDark ? Brightness.light : Brightness.dark,
+              systemNavigationBarIconBrightness: isDark
+                  ? Brightness.light
+                  : Brightness.dark,
               systemNavigationBarDividerColor: colors.background,
             );
 
@@ -52,10 +53,7 @@ class MyApp extends StatelessWidget {
                 textDirection: AppLocalizations.getDirection(
                   localeController.locale,
                 ),
-                child: ColoredBox(
-                  color: colors.background,
-                  child: child!,
-                ),
+                child: ColoredBox(color: colors.background, child: child!),
               ),
             );
           },

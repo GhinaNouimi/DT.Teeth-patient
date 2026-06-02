@@ -21,11 +21,11 @@ class BookingTimeTile extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: isSelected
             ? LinearGradient(
-          colors: [
-            colors.buttonPrimary,
-            colors.buttonPrimary.withValues(alpha: 0.8),
-          ],
-        )
+                colors: [
+                  colors.buttonPrimary,
+                  colors.buttonPrimary.withValues(alpha: 0.8),
+                ],
+              )
             : null,
         color: isSelected ? null : colors.surfaceMuted,
         borderRadius: BorderRadius.circular(16),
@@ -35,12 +35,12 @@ class BookingTimeTile extends StatelessWidget {
         ),
         boxShadow: isSelected
             ? [
-          BoxShadow(
-            color: colors.buttonPrimary.withValues(alpha: 0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
-          ),
-        ]
+                BoxShadow(
+                  color: colors.buttonPrimary.withValues(alpha: 0.3),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
+                ),
+              ]
             : null,
       ),
       child: Column(

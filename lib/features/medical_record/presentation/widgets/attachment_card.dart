@@ -7,10 +7,7 @@ import '../utils/medical_record_accent.dart';
 class AttachmentCard extends StatelessWidget {
   final AttachmentEntity attachment;
 
-  const AttachmentCard({
-    super.key,
-    required this.attachment,
-  });
+  const AttachmentCard({super.key, required this.attachment});
 
   @override
   Widget build(BuildContext context) {
@@ -45,30 +42,30 @@ class AttachmentCard extends StatelessWidget {
               child: Center(
                 child: attachment.type == AttachmentType.pdf
                     ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.picture_as_pdf_rounded,
-                      color: blue,
-                      size: 34,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      attachment.previewLabel,
-                      style: theme.textTheme.labelLarge?.copyWith(
-                        color: blue,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ],
-                )
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.picture_as_pdf_rounded,
+                            color: blue,
+                            size: 34,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            attachment.previewLabel,
+                            style: theme.textTheme.labelLarge?.copyWith(
+                              color: blue,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
+                      )
                     : Text(
-                  attachment.previewLabel,
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    color: colors.textPrimary,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
+                        attachment.previewLabel,
+                        style: theme.textTheme.headlineMedium?.copyWith(
+                          color: colors.textPrimary,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
               ),
             ),
           ),

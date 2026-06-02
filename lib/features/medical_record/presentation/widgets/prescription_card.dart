@@ -109,9 +109,7 @@ class PrescriptionCard extends StatelessWidget {
 class _PrescriptionStatusBadge extends StatelessWidget {
   final PrescriptionStatus status;
 
-  const _PrescriptionStatusBadge({
-    required this.status,
-  });
+  const _PrescriptionStatusBadge({required this.status});
 
   @override
   Widget build(BuildContext context) {

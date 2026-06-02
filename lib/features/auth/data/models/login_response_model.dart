@@ -13,10 +13,10 @@ class LoginResponseModel {
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
     return LoginResponseModel(
-      message: json['message'] ?? '',
+      message: json['message']?.toString() ?? '',
       user: LoginUserModel.fromJson(json['user'] ?? {}),
-      token: json['token'] ?? '',
-      tokenType: json['token_type'] ?? '',
+      token: json['token']?.toString() ?? '',
+      tokenType: json['token_type']?.toString() ?? 'Bearer',
     );
   }
 }

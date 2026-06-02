@@ -15,15 +15,11 @@ class RegisterLoading extends RegisterState {
 class RegisterSuccess extends RegisterState {
   final RegisterResponseModel response;
 
-  const RegisterSuccess({
-    required this.response,
-  });
+  const RegisterSuccess({required this.response});
 }
 
 class RegisterFailure extends RegisterState {
   final String message;
 
-  const RegisterFailure({
-    required this.message,
-  });
+  const RegisterFailure({required this.message});
 }

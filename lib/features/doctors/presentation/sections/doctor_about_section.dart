@@ -20,11 +20,7 @@ class DoctorAboutSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DoctorSectionTitle(
-          title: 'عن الطبيب',
-          theme: theme,
-          colors: colors,
-        ),
+        DoctorSectionTitle(title: 'عن الطبيب', theme: theme, colors: colors),
         const SizedBox(height: 12),
         Container(
           padding: const EdgeInsets.all(16),

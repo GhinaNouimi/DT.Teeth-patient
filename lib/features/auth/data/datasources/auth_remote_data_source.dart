@@ -5,6 +5,8 @@ import '../models/login_request_model.dart';
 import '../models/login_response_model.dart';
 import '../models/register_patient_request_model.dart';
 import '../models/register_response_model.dart';
+import '../models/send_verification_request_model.dart';
+import '../models/send_verification_response_model.dart';
 import '../models/verify_email_request_model.dart';
 import '../models/verify_email_response_model.dart';
 
@@ -17,9 +19,11 @@ abstract class AuthRemoteDataSource {
       VerifyEmailRequestModel request,
       );
 
-  Future<LoginResponseModel> loginPatient(
-      LoginRequestModel request,
+  Future<SendVerificationResponseModel> sendVerification(
+      SendVerificationRequestModel request,
       );
+
+  Future<LoginResponseModel> loginPatient(LoginRequestModel request);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -48,9 +52,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<LoginResponseModel> loginPatient(
-      LoginRequestModel request,
+  Future<SendVerificationResponseModel> sendVerification(
+      SendVerificationRequestModel request,
       ) async {
+    final response = await DioClient.dio.post(
+      ApiConstants.patientSendVerification,
+      data: request.toJson(),
+    );
+
+    return SendVerificationResponseModel.fromJson(response.data);
+  }
+
+  @override
+  Future<LoginResponseModel> loginPatient(LoginRequestModel request) async {
     final response = await DioClient.dio.post(
       ApiConstants.patientLogin,
       data: request.toJson(),

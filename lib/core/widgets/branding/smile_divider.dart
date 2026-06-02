@@ -35,10 +35,7 @@ class _SmileDividerPainter extends CustomPainter {
   final Color color;
   final double strokeWidth;
 
-  const _SmileDividerPainter({
-    required this.color,
-    required this.strokeWidth,
-  });
+  const _SmileDividerPainter({required this.color, required this.strokeWidth});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -70,7 +67,6 @@ class _SmileDividerPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SmileDividerPainter oldDelegate) {
-    return oldDelegate.color != color ||
-        oldDelegate.strokeWidth != strokeWidth;
+    return oldDelegate.color != color || oldDelegate.strokeWidth != strokeWidth;
   }
 }

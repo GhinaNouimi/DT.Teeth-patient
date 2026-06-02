@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 
+import '../../../../../core/network/api_error_handler.dart';
 import '../../../../../core/network/network_info.dart';
 import '../../../domain/usecases/login_patient_usecase.dart';
 import 'login_event.dart';
@@ -36,44 +36,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     try {
       final response = await loginPatientUseCase(event.request);
-
       emit(LoginSuccess(response: response));
-    } on DioException catch (error) {
-      emit(
-        LoginFailure(
-          message: _extractDioErrorMessage(error),
-        ),
-      );
-    } catch (_) {
-      emit(
-        const LoginFailure(
-          message: 'حدث خطأ غير متوقع، يرجى المحاولة لاحقًا',
-        ),
-      );
+    } catch (error) {
+      emit(LoginFailure(message: ApiErrorHandler.handle(error)));
     }
-  }
-
-  String _extractDioErrorMessage(DioException error) {
-    final data = error.response?.data;
-
-    if (data is Map<String, dynamic>) {
-      final message = data['message'];
-
-      if (message != null) {
-        return message.toString();
-      }
-
-      final errors = data['errors'];
-
-      if (errors is Map<String, dynamic> && errors.isNotEmpty) {
-        final firstError = errors.values.first;
-
-        if (firstError is List && firstError.isNotEmpty) {
-          return firstError.first.toString();
-        }
-      }
-    }
-
-    return 'فشل تسجيل الدخول';
   }
 }

@@ -29,8 +29,8 @@ class MedicalRecordMockDataSource {
   }
 
   Future<List<AttachmentModel>> getAttachmentsByTreatment(
-      String treatmentId,
-      ) async {
+    String treatmentId,
+  ) async {
     await Future<void>.delayed(const Duration(milliseconds: 150));
     return _attachments
         .where((attachment) => attachment.treatmentId == treatmentId)
@@ -46,7 +46,7 @@ class MedicalRecordMockDataSource {
     await Future<void>.delayed(const Duration(milliseconds: 160));
     try {
       return _prescriptions.firstWhere(
-            (prescription) => prescription.id == prescriptionId,
+        (prescription) => prescription.id == prescriptionId,
       );
     } catch (_) {
       return null;
@@ -73,7 +73,7 @@ const List<TreatmentModel> _treatments = [
     startedAtLabel: '12 مارس 2026',
     nextSessionLabel: '20 مايو 2026 - 05:00 م',
     summary:
-    'خطة علاج تقويمية لتحسين الاصطفاف وإغلاق الفراغات الأمامية بشكل تدريجي.',
+        'خطة علاج تقويمية لتحسين الاصطفاف وإغلاق الفراغات الأمامية بشكل تدريجي.',
     completedProcedures: [
       'الفحص الأولي والتقييم',
       'الصور الشعاعية والفوتوغرافية',
@@ -157,7 +157,7 @@ const List<TreatmentModel> _treatments = [
     startedAtLabel: '5 مايو 2026',
     nextSessionLabel: '28 مايو 2026 - 04:30 م',
     summary:
-    'استكمال علاج العصب مع إعادة بناء التاج المؤقت قبل الإغلاق النهائي.',
+        'استكمال علاج العصب مع إعادة بناء التاج المؤقت قبل الإغلاق النهائي.',
     completedProcedures: [
       'تشخيص الألم وأخذ صورة ذروية',
       'تنظيف القنوات وتعقيمها',
@@ -166,9 +166,7 @@ const List<TreatmentModel> _treatments = [
       'تجنب المضغ على الجهة المعالجة حتى الجلسة القادمة.',
       'الالتزام بالمسكن الموصوف عند الحاجة.',
     ],
-    doctorNotes: [
-      'الاستجابة للعلاج ممتازة، لا توجد علامات التهاب حاد.',
-    ],
+    doctorNotes: ['الاستجابة للعلاج ممتازة، لا توجد علامات التهاب حاد.'],
     attachmentsCount: 3,
     timeline: [
       TreatmentTimelineStepModel(
@@ -216,17 +214,12 @@ const List<TreatmentModel> _treatments = [
     startedAtLabel: '10 يناير 2026',
     nextSessionLabel: null,
     summary: 'جلسة تبييض احترافية داخل العيادة مع تعليمات عناية بعد الإجراء.',
-    completedProcedures: [
-      'جلسة تبييض احترافية',
-      'التقاط صور قبل وبعد',
-    ],
+    completedProcedures: ['جلسة تبييض احترافية', 'التقاط صور قبل وبعد'],
     careInstructions: [
       'تجنب المشروبات الملونة لمدة 48 ساعة.',
       'استخدم معجون الأسنان الخاص بالحساسية عند الحاجة.',
     ],
-    doctorNotes: [
-      'نتيجة ممتازة ودرجة التبييض مناسبة للون الطبيعي للأسنان.',
-    ],
+    doctorNotes: ['نتيجة ممتازة ودرجة التبييض مناسبة للون الطبيعي للأسنان.'],
     attachmentsCount: 4,
     timeline: [
       TreatmentTimelineStepModel(
@@ -329,7 +322,7 @@ const List<PrescriptionModel> _prescriptions = [
     doctorName: 'د. أحمد علي',
     status: PrescriptionStatus.active,
     notes:
-    'تناول الدواء بعد الأكل، وفي حال استمرار الألم يرجى التواصل مع العيادة.',
+        'تناول الدواء بعد الأكل، وفي حال استمرار الألم يرجى التواصل مع العيادة.',
     visualEmoji: '💊',
   ),
   PrescriptionModel(

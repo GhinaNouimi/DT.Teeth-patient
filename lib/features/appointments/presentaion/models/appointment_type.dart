@@ -6,17 +6,13 @@ enum AppointmentType {
   final String displayName;
   final String value;
 
-  const AppointmentType(
-      this.displayName,
-      this.value,
-      );
+  const AppointmentType(this.displayName, this.value);
 
-  bool get isEmergency =>
-      this == AppointmentType.emergency;
+  bool get isEmergency => this == AppointmentType.emergency;
 
   static AppointmentType fromValue(String value) {
     return AppointmentType.values.firstWhere(
-          (type) => type.value == value,
+      (type) => type.value == value,
       orElse: () => AppointmentType.regular,
     );
   }

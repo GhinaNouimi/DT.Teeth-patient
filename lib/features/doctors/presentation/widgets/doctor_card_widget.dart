@@ -62,10 +62,12 @@ class DoctorCardWidget extends StatelessWidget {
                     spacing: 8,
                     runSpacing: 6,
                     children: [
-                      _MiniMetaWidget(text: '${doctor.yearsOfExperience} سنوات'),
+                      _MiniMetaWidget(
+                        text: '${doctor.yearsOfExperience} سنوات',
+                      ),
                       _MiniMetaWidget(text: '${doctor.treatedPatients}+ مريض'),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -146,9 +148,7 @@ class _RatingBadgeWidget extends StatelessWidget {
                 final isFilled = index < rating.toInt();
                 return Icon(
                   isFilled ? Icons.star_rounded : Icons.star_outline_rounded,
-                  color: isFilled
-                      ? const Color(0xFFFFC107)
-                      : colors.borderSoft,
+                  color: isFilled ? const Color(0xFFFFC107) : colors.borderSoft,
                   size: 14,
                 );
               }),

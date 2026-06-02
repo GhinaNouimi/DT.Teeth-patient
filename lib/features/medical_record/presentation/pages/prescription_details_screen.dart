@@ -10,10 +10,7 @@ import '../widgets/medical_record_empty_state.dart';
 class PrescriptionDetailsScreen extends StatefulWidget {
   final String prescriptionId;
 
-  const PrescriptionDetailsScreen({
-    super.key,
-    required this.prescriptionId,
-  });
+  const PrescriptionDetailsScreen({super.key, required this.prescriptionId});
 
   @override
   State<PrescriptionDetailsScreen> createState() =>
@@ -59,13 +56,13 @@ class _PrescriptionDetailsScreenState extends State<PrescriptionDetailsScreen> {
                   ? const Center(child: CircularProgressIndicator())
                   : (_prescription == null)
                   ? const Padding(
-                padding: EdgeInsets.all(20),
-                child: MedicalRecordEmptyState(
-                  title: 'تعذر تحميل تفاصيل الوصفة',
-                  subtitle: 'حاولي مرة أخرى بعد قليل.',
-                  icon: Icons.medication_outlined,
-                ),
-              )
+                      padding: EdgeInsets.all(20),
+                      child: MedicalRecordEmptyState(
+                        title: 'تعذر تحميل تفاصيل الوصفة',
+                        subtitle: 'حاولي مرة أخرى بعد قليل.',
+                        icon: Icons.medication_outlined,
+                      ),
+                    )
                   : _PrescriptionDetailsBody(prescription: _prescription!),
             ),
           ],
@@ -78,9 +75,7 @@ class _PrescriptionDetailsScreenState extends State<PrescriptionDetailsScreen> {
 class _PrescriptionDetailsBody extends StatelessWidget {
   final PrescriptionEntity prescription;
 
-  const _PrescriptionDetailsBody({
-    required this.prescription,
-  });
+  const _PrescriptionDetailsBody({required this.prescription});
 
   @override
   Widget build(BuildContext context) {
@@ -126,9 +121,7 @@ class _PrescriptionDetailsBody extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(28),
             color: colors.surfaceMuted,
-            border: Border.all(
-              color: colors.borderSoft,
-            ),
+            border: Border.all(color: colors.borderSoft),
           ),
           child: Column(
             children: [
@@ -183,9 +176,7 @@ class _PrescriptionDetailsBody extends StatelessWidget {
           decoration: BoxDecoration(
             color: colors.surfaceSecondary,
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(
-              color: colors.borderSoft,
-            ),
+            border: Border.all(color: colors.borderSoft),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

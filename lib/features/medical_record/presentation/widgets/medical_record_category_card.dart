@@ -39,9 +39,7 @@ class MedicalRecordCategoryCard extends StatelessWidget {
           color: isPrimary ? colors.surfaceMuted : colors.surfacePrimary,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: isPrimary
-                ? blue.withValues(alpha: 0.32)
-                : colors.borderSoft,
+            color: isPrimary ? blue.withValues(alpha: 0.32) : colors.borderSoft,
           ),
           boxShadow: [
             BoxShadow(
@@ -63,10 +61,7 @@ class MedicalRecordCategoryCard extends StatelessWidget {
                 color: isPrimary ? colors.surfacePrimary : pinkSoft,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Icon(
-                icon,
-                color: ink,
-              ),
+              child: Icon(icon, color: ink),
             ),
             const SizedBox(height: 16),
             Text(

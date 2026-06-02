@@ -27,8 +27,9 @@ class BookingScreenState {
   }) {
     return BookingScreenState(
       selectedDate: selectedDate ?? this.selectedDate,
-      selectedTime:
-      clearSelectedTime ? null : (selectedTime ?? this.selectedTime),
+      selectedTime: clearSelectedTime
+          ? null
+          : (selectedTime ?? this.selectedTime),
       currentStep: currentStep ?? this.currentStep,
       focusedDay: focusedDay ?? this.focusedDay,
       notesController: notesController ?? this.notesController,

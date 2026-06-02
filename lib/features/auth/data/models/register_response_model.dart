@@ -2,10 +2,7 @@ class RegisterResponseModel {
   final String message;
   final RegisteredUserModel user;
 
-  const RegisterResponseModel({
-    required this.message,
-    required this.user,
-  });
+  const RegisterResponseModel({required this.message, required this.user});
 
   factory RegisterResponseModel.fromJson(Map<String, dynamic> json) {
     return RegisterResponseModel(

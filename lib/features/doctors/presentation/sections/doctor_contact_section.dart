@@ -22,11 +22,7 @@ class DoctorContactSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DoctorSectionTitle(
-          title: 'التواصل',
-          theme: theme,
-          colors: colors,
-        ),
+        DoctorSectionTitle(title: 'التواصل', theme: theme, colors: colors),
         const SizedBox(height: 12),
         Container(
           padding: const EdgeInsets.all(14),
@@ -36,11 +32,7 @@ class DoctorContactSection extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(
-                Icons.phone_rounded,
-                color: colors.buttonPrimary,
-                size: 24,
-              ),
+              Icon(Icons.phone_rounded, color: colors.buttonPrimary, size: 24),
               const SizedBox(width: 12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

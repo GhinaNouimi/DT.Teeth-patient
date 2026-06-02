@@ -15,43 +15,31 @@ class MockAppointmentsData {
       AppointmentUiModel(
         id: '1',
         doctor: doctors[0],
-        appointmentDate:
-        DateTime.now().add(
-          const Duration(days: 2),
-        ),
+        appointmentDate: DateTime.now().add(const Duration(days: 2)),
         appointmentTime: '10:30',
 
         type: AppointmentType.regular,
         service: ServiceType.cleaning,
         status: AppointmentStatus.confirmed,
 
-        patientNotes:
-        'أشعر ببعض الألم في الجانب الأيسر',
+        patientNotes: 'أشعر ببعض الألم في الجانب الأيسر',
 
-        doctorNotes:
-        'يرجى تنظيف الأسنان قبل الزيارة',
+        doctorNotes: 'يرجى تنظيف الأسنان قبل الزيارة',
 
         emergencyDescription: null,
         requiresCall: false,
 
-        location:
-        'عيادة DT.Teeth - الطابق الثاني',
+        location: 'عيادة DT.Teeth - الطابق الثاني',
 
         durationMinutes: 45,
 
-        createdAt:
-        DateTime.now().subtract(
-          const Duration(days: 3),
-        ),
+        createdAt: DateTime.now().subtract(const Duration(days: 3)),
       ),
 
       AppointmentUiModel(
         id: '2',
         doctor: doctors[1],
-        appointmentDate:
-        DateTime.now().add(
-          const Duration(days: 5),
-        ),
+        appointmentDate: DateTime.now().add(const Duration(days: 5)),
         appointmentTime: '14:00',
 
         type: AppointmentType.followUp,
@@ -60,63 +48,46 @@ class MockAppointmentsData {
 
         patientNotes: null,
 
-        doctorNotes:
-        'متابعة تقدم التقويم',
+        doctorNotes: 'متابعة تقدم التقويم',
 
         emergencyDescription: null,
         requiresCall: false,
 
-        location:
-        'عيادة DT.Teeth - الطابق الثاني',
+        location: 'عيادة DT.Teeth - الطابق الثاني',
 
         durationMinutes: 60,
 
-        createdAt:
-        DateTime.now().subtract(
-          const Duration(days: 10),
-        ),
+        createdAt: DateTime.now().subtract(const Duration(days: 10)),
       ),
 
       AppointmentUiModel(
         id: '3',
         doctor: doctors[0],
-        appointmentDate:
-        DateTime.now().subtract(
-          const Duration(days: 7),
-        ),
+        appointmentDate: DateTime.now().subtract(const Duration(days: 7)),
         appointmentTime: '09:00',
 
         type: AppointmentType.regular,
         service: ServiceType.filling,
         status: AppointmentStatus.completed,
 
-        patientNotes:
-        'ألم بسيط في السن الأمامي',
+        patientNotes: 'ألم بسيط في السن الأمامي',
 
-        doctorNotes:
-        'تم ملء السن بنجاح، لا توجد مضاعفات',
+        doctorNotes: 'تم ملء السن بنجاح، لا توجد مضاعفات',
 
         emergencyDescription: null,
         requiresCall: false,
 
-        location:
-        'عيادة DT.Teeth - الطابق الثاني',
+        location: 'عيادة DT.Teeth - الطابق الثاني',
 
         durationMinutes: 50,
 
-        createdAt:
-        DateTime.now().subtract(
-          const Duration(days: 10),
-        ),
+        createdAt: DateTime.now().subtract(const Duration(days: 10)),
       ),
 
       AppointmentUiModel(
         id: '4',
         doctor: doctors[1],
-        appointmentDate:
-        DateTime.now().subtract(
-          const Duration(days: 14),
-        ),
+        appointmentDate: DateTime.now().subtract(const Duration(days: 14)),
         appointmentTime: '11:00',
 
         type: AppointmentType.regular,
@@ -125,54 +96,40 @@ class MockAppointmentsData {
 
         patientNotes: null,
 
-        doctorNotes:
-        'ألغاه المريض قبل 24 ساعة',
+        doctorNotes: 'ألغاه المريض قبل 24 ساعة',
 
         emergencyDescription: null,
         requiresCall: false,
 
-        location:
-        'عيادة DT.Teeth - الطابق الثاني',
+        location: 'عيادة DT.Teeth - الطابق الثاني',
 
         durationMinutes: 90,
 
-        createdAt:
-        DateTime.now().subtract(
-          const Duration(days: 20),
-        ),
+        createdAt: DateTime.now().subtract(const Duration(days: 20)),
       ),
 
       AppointmentUiModel(
         id: '5',
         doctor: doctors[2],
 
-        appointmentDate:
-        DateTime.now().add(
-          const Duration(hours: 1),
-        ),
+        appointmentDate: DateTime.now().add(const Duration(hours: 1)),
 
-        appointmentTime:
-        'سيتم تحديد أقرب وقت',
+        appointmentTime: 'سيتم تحديد أقرب وقت',
 
         type: AppointmentType.emergency,
         service: ServiceType.emergency,
 
         status: AppointmentStatus.pending,
 
-        patientNotes:
-        'ألم حاد ومفاجئ',
+        patientNotes: 'ألم حاد ومفاجئ',
 
-        doctorNotes:
-        'تم استلام الحالة وسيتم التواصل معك',
+        doctorNotes: 'تم استلام الحالة وسيتم التواصل معك',
 
-        emergencyDescription:
-        'نزيف حاد وألم قوي في الضرس',
-
+        emergencyDescription: 'نزيف حاد وألم قوي في الضرس',
 
         requiresCall: true,
 
-        location:
-        'عيادة DT.Teeth - الطابق الثاني',
+        location: 'عيادة DT.Teeth - الطابق الثاني',
 
         durationMinutes: 30,
 
@@ -181,149 +138,73 @@ class MockAppointmentsData {
     ];
   }
 
-  static List<AppointmentUiModel>
-  getUpcomingAppointments() {
+  static List<AppointmentUiModel> getUpcomingAppointments() {
     return getAppointments()
-        .where(
-          (appointment) =>
-      appointment.isUpcoming,
-    )
+        .where((appointment) => appointment.isUpcoming)
         .toList();
   }
 
-  static List<AppointmentUiModel>
-  getPastAppointments() {
+  static List<AppointmentUiModel> getPastAppointments() {
     return getAppointments()
-        .where(
-          (appointment) =>
-      appointment.isPast,
-    )
+        .where((appointment) => appointment.isPast)
         .toList();
   }
 
-  static List<AppointmentUiModel>
-  getAppointmentsByStatus(
-      AppointmentStatus status,
-      ) {
+  static List<AppointmentUiModel> getAppointmentsByStatus(
+    AppointmentStatus status,
+  ) {
     return getAppointments()
-        .where(
-          (appointment) =>
-      appointment.status == status,
-    )
+        .where((appointment) => appointment.status == status)
         .toList();
   }
 
-  static AppointmentUiModel?
-  getNextAppointment() {
-    final upcomingAppointments =
-    getUpcomingAppointments();
+  static AppointmentUiModel? getNextAppointment() {
+    final upcomingAppointments = getUpcomingAppointments();
 
     if (upcomingAppointments.isEmpty) {
       return null;
     }
 
     upcomingAppointments.sort(
-          (a, b) => a.appointmentDate.compareTo(
-        b.appointmentDate,
-      ),
+      (a, b) => a.appointmentDate.compareTo(b.appointmentDate),
     );
 
     return upcomingAppointments.first;
   }
 
-  static List<DoctorUiModel>
-  getDoctorsByService(
-      ServiceType service,
-      ) {
-    if (service ==
-        ServiceType.emergency) {
-      return MockDoctorsData.doctors
-          .take(2)
-          .toList();
+  static List<DoctorUiModel> getDoctorsByService(ServiceType service) {
+    if (service == ServiceType.emergency) {
+      return MockDoctorsData.doctors.take(2).toList();
     }
 
-    return MockDoctorsData.doctors
-        .where(
-          (doctor) {
-        return doctor.specialty
-            .contains(
-          service.relatedSpecialty,
-        );
-      },
-    ).toList();
+    return MockDoctorsData.doctors.where((doctor) {
+      return doctor.specialty.contains(service.relatedSpecialty);
+    }).toList();
   }
 
-  static List<String>
-  getAvailableTimesForDoctor(
-      String doctorId,
-      ) {
+  static List<String> getAvailableTimesForDoctor(String doctorId) {
     switch (doctorId) {
       case '1':
-        return [
-          '09:00',
-          '09:30',
-          '10:30',
-          '11:30',
-          '01:00',
-          '02:30',
-        ];
+        return ['09:00', '09:30', '10:30', '11:30', '01:00', '02:30'];
 
       case '2':
-        return [
-          '10:00',
-          '11:00',
-          '12:30',
-          '02:00',
-          '03:30',
-        ];
+        return ['10:00', '11:00', '12:30', '02:00', '03:30'];
 
       default:
-        return [
-          '09:30',
-          '10:30',
-          '01:30',
-          '04:00',
-        ];
+        return ['09:30', '10:30', '01:30', '04:00'];
     }
   }
 
-  static List<int>
-  getAvailableDaysForDoctor(
-      String doctorId,
-      ) {
+  static List<int> getAvailableDaysForDoctor(String doctorId) {
     switch (doctorId) {
       case '1':
-        return [
-          8,
-          9,
-          10,
-          12,
-          13,
-          15,
-          16,
-          18,
-        ];
+        return [8, 9, 10, 12, 13, 15, 16, 18];
 
       case '2':
-        return [
-          7,
-          8,
-          11,
-          12,
-          14,
-          17,
-          19,
-        ];
+        return [7, 8, 11, 12, 14, 17, 19];
 
       default:
-        return [
-          8,
-          10,
-          11,
-          13,
-          15,
-          18,
-        ];
+        return [8, 10, 11, 13, 15, 18];
     }
   }
 }

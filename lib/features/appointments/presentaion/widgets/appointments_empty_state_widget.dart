@@ -5,10 +5,7 @@ import '../../../../core/theme/theme_extensions.dart';
 class AppointmentsEmptyStateWidget extends StatelessWidget {
   final bool isUpcoming;
 
-  const AppointmentsEmptyStateWidget({
-    super.key,
-    required this.isUpcoming,
-  });
+  const AppointmentsEmptyStateWidget({super.key, required this.isUpcoming});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +19,7 @@ class AppointmentsEmptyStateWidget extends StatelessWidget {
           const SizedBox(height: 40),
 
           Icon(
-            isUpcoming
-                ? Icons.calendar_today_rounded
-                : Icons.history_rounded,
+            isUpcoming ? Icons.calendar_today_rounded : Icons.history_rounded,
             size: 64,
             color: colors.buttonPrimary.withValues(alpha: 0.2),
           ),
@@ -32,9 +27,7 @@ class AppointmentsEmptyStateWidget extends StatelessWidget {
           const SizedBox(height: 16),
 
           Text(
-            isUpcoming
-                ? 'لا توجد مواعيد قادمة'
-                : 'لا توجد مواعيد سابقة',
+            isUpcoming ? 'لا توجد مواعيد قادمة' : 'لا توجد مواعيد سابقة',
             style: theme.textTheme.titleMedium?.copyWith(
               color: colors.textPrimary,
               fontWeight: FontWeight.w700,

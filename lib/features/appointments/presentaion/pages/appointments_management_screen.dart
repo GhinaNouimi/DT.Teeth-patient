@@ -29,11 +29,9 @@ class _AppointmentsManagementScreenState
         final upcomingAppointments =
             AppointmentsStore.instance.upcomingAppointments;
 
-        final pastAppointments =
-            AppointmentsStore.instance.pastAppointments;
+        final pastAppointments = AppointmentsStore.instance.pastAppointments;
 
-        final displayedAppointments =
-        _currentTabIndex == 0
+        final displayedAppointments = _currentTabIndex == 0
             ? upcomingAppointments
             : pastAppointments;
 
@@ -43,12 +41,7 @@ class _AppointmentsManagementScreenState
             bottom: false,
             child: ListView(
               physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(
-                20,
-                16,
-                20,
-                120,
-              ),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 120),
               children: [
                 const AppointmentsHeaderSection(),
 
@@ -72,9 +65,7 @@ class _AppointmentsManagementScreenState
                     isUpcoming: _currentTabIndex == 0,
                   )
                 else
-                  AppointmentsListSection(
-                    appointments: displayedAppointments,
-                  ),
+                  AppointmentsListSection(appointments: displayedAppointments),
               ],
             ),
           ),

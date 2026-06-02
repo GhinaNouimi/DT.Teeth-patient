@@ -117,28 +117,24 @@ class _AppointmentTypeCard extends StatelessWidget {
           border: Border.all(
             color: isSelected
                 ? (type == AppointmentType.emergency
-                ? const Color(0xFFE74C3C)
-                : colors.buttonPrimary)
+                      ? const Color(0xFFE74C3C)
+                      : colors.buttonPrimary)
                 : colors.borderSoft,
             width: isSelected ? 2 : 1,
           ),
           boxShadow: isSelected
               ? [
-            BoxShadow(
-              color: _getCardColor().withValues(alpha: 0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
-            ),
-          ]
+                  BoxShadow(
+                    color: _getCardColor().withValues(alpha: 0.3),
+                    blurRadius: 12,
+                    offset: const Offset(0, 6),
+                  ),
+                ]
               : null,
         ),
         child: Row(
           children: [
-            Icon(
-              _getIcon(),
-              color: _getTextColor(),
-              size: 24,
-            ),
+            Icon(_getIcon(), color: _getTextColor(), size: 24),
             const SizedBox(width: 12),
             Expanded(
               child: Column(

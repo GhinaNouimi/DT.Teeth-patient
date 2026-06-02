@@ -5,13 +5,9 @@ import '../../data/repositories/auth_repository.dart';
 class VerifyEmailUseCase {
   final AuthRepository repository;
 
-  VerifyEmailUseCase({
-    required this.repository,
-  });
+  VerifyEmailUseCase({required this.repository});
 
-  Future<VerifyEmailResponseModel> call(
-      VerifyEmailRequestModel request,
-      ) {
+  Future<VerifyEmailResponseModel> call(VerifyEmailRequestModel request) {
     return repository.verifyEmail(request);
   }
 }

@@ -5,10 +5,7 @@ import '../../../../core/theme/theme_extensions.dart';
 class ServiceChip extends StatelessWidget {
   final String label;
 
-  const ServiceChip({
-    super.key,
-    required this.label,
-  });
+  const ServiceChip({super.key, required this.label});
 
   @override
   Widget build(BuildContext context) {

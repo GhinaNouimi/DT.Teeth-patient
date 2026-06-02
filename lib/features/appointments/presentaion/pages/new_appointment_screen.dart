@@ -20,21 +20,17 @@ class NewAppointmentScreen extends StatefulWidget {
   const NewAppointmentScreen({super.key});
 
   @override
-  State<NewAppointmentScreen> createState() =>
-      _NewAppointmentScreenState();
+  State<NewAppointmentScreen> createState() => _NewAppointmentScreenState();
 }
 
-class _NewAppointmentScreenState
-    extends State<NewAppointmentScreen> {
+class _NewAppointmentScreenState extends State<NewAppointmentScreen> {
   int _currentStep = 0;
 
   DateTime _focusedDay = DateTime.now();
 
-  NewAppointmentFormModel _form =
-  const NewAppointmentFormModel();
+  NewAppointmentFormModel _form = const NewAppointmentFormModel();
 
-  final TextEditingController _notesController =
-  TextEditingController();
+  final TextEditingController _notesController = TextEditingController();
 
   @override
   void dispose() {
@@ -49,10 +45,7 @@ class _NewAppointmentScreenState
       return [];
     }
 
-    return MockAppointmentsData
-        .getAvailableTimesForDoctor(
-      doctor.id,
-    );
+    return MockAppointmentsData.getAvailableTimesForDoctor(doctor.id);
   }
 
   List<int> get _availableDays {
@@ -62,32 +55,21 @@ class _NewAppointmentScreenState
       return [];
     }
 
-    return MockAppointmentsData
-        .getAvailableDaysForDoctor(
-      doctor.id,
-    );
+    return MockAppointmentsData.getAvailableDaysForDoctor(doctor.id);
   }
 
   bool _isDateAvailable(DateTime date) {
     final now = DateTime.now();
 
     return _availableDays.contains(date.day) &&
-        date.isAfter(
-          now.subtract(const Duration(days: 1)),
-        ) &&
-        date.isBefore(
-          now.add(const Duration(days: 30)),
-        );
+        date.isAfter(now.subtract(const Duration(days: 1))) &&
+        date.isBefore(now.add(const Duration(days: 30)));
   }
 
   void _goNext() {
     // تحويل مباشر لشاشة الطوارئ
-    if (_currentStep == 0 &&
-        _form.appointmentType?.isEmergency ==
-            true) {
-      context.push(
-        AppRoutes.emergencyAppointment,
-      );
+    if (_currentStep == 0 && _form.appointmentType?.isEmergency == true) {
+      context.push(AppRoutes.emergencyAppointment);
 
       return;
     }
@@ -112,41 +94,31 @@ class _NewAppointmentScreenState
 
   void _submitAppointment() {
     final appointment = _form.copyWith(
-      patientNotes:
-      _notesController.text.trim().isEmpty
+      patientNotes: _notesController.text.trim().isEmpty
           ? null
           : _notesController.text.trim(),
     );
 
-    final builtAppointment =
-    appointment.buildAppointment(
-      id: DateTime.now()
-          .millisecondsSinceEpoch
-          .toString(),
+    final builtAppointment = appointment.buildAppointment(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
 
-      location:
-      'عيادة DT.Teeth - الطابق الثاني',
+      location: 'عيادة DT.Teeth - الطابق الثاني',
     );
-    AppointmentsStore.instance.addAppointment(
-      builtAppointment,
-    );
+    AppointmentsStore.instance.addAppointment(builtAppointment);
     showBookingBottomSheet(
       context,
 
-      doctorName:
-      builtAppointment.doctor.name,
+      doctorName: builtAppointment.doctor.name,
 
       date:
-      '${builtAppointment.appointmentDate.day}/${builtAppointment.appointmentDate.month}/${builtAppointment.appointmentDate.year}',
+          '${builtAppointment.appointmentDate.day}/${builtAppointment.appointmentDate.month}/${builtAppointment.appointmentDate.year}',
 
       time: builtAppointment.appointmentTime,
 
       buttonText: 'العودة للمواعيد',
 
       onPressed: () {
-        context.go(
-          '${AppRoutes.home}?tab=2',
-        );
+        context.go('${AppRoutes.home}?tab=2');
       },
     );
   }
@@ -154,8 +126,7 @@ class _NewAppointmentScreenState
   bool _canContinueCurrentStep() {
     switch (_currentStep) {
       case 0:
-        return _form
-            .isAppointmentTypeSelected;
+        return _form.isAppointmentTypeSelected;
 
       case 1:
         return _form.isServiceSelected;
@@ -185,72 +156,45 @@ class _NewAppointmentScreenState
         child: Column(
           children: [
             Padding(
-              padding:
-              const EdgeInsets.fromLTRB(
-                20,
-                16,
-                20,
-                0,
-              ),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
 
-              child: AppTopBar(
-                title: 'حجز موعد جديد',
-                onBackTap: _goBack,
-              ),
+              child: AppTopBar(title: 'حجز موعد جديد', onBackTap: _goBack),
             ),
 
             Expanded(
               child: ListView(
-                physics:
-                const BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
 
-                padding:
-                const EdgeInsets.fromLTRB(
-                  20,
-                  16,
-                  20,
-                  24,
-                ),
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
 
                 children: [
-                  _StepIndicator(
-                    currentStep: _currentStep,
-                  ),
+                  _StepIndicator(currentStep: _currentStep),
 
                   const SizedBox(height: 20),
 
                   if (_currentStep == 0)
                     AppointmentTypeSelectorWidget(
-                      selectedType:
-                      _form.appointmentType,
+                      selectedType: _form.appointmentType,
 
                       onTypeSelected: (type) {
                         setState(() {
-                          _form = _form.copyWith(
-                            appointmentType:
-                            type,
-                          );
+                          _form = _form.copyWith(appointmentType: type);
                         });
                       },
                     ),
 
                   if (_currentStep == 1)
                     ServiceTypeGridWidget(
-                      selectedService:
-                      _form.serviceType,
+                      selectedService: _form.serviceType,
 
-                      onServiceSelected:
-                          (service) {
+                      onServiceSelected: (service) {
                         setState(() {
                           _form = _form.copyWith(
-                            serviceType:
-                            service,
+                            serviceType: service,
 
-                            clearDoctor:
-                            true,
+                            clearDoctor: true,
 
-                            clearSchedule:
-                            true,
+                            clearSchedule: true,
                           );
                         });
                       },
@@ -258,28 +202,20 @@ class _NewAppointmentScreenState
 
                   if (_currentStep == 2)
                     DoctorSelectorWidget(
-                      doctors:
-                      _form.serviceType ==
-                          null
+                      doctors: _form.serviceType == null
                           ? []
-                          : MockAppointmentsData
-                          .getDoctorsByService(
-                        _form
-                            .serviceType!,
-                      ),
+                          : MockAppointmentsData.getDoctorsByService(
+                              _form.serviceType!,
+                            ),
 
-                      selectedDoctor:
-                      _form.selectedDoctor,
+                      selectedDoctor: _form.selectedDoctor,
 
-                      onDoctorSelected:
-                          (doctor) {
+                      onDoctorSelected: (doctor) {
                         setState(() {
                           _form = _form.copyWith(
-                            selectedDoctor:
-                            doctor,
+                            selectedDoctor: doctor,
 
-                            clearSchedule:
-                            true,
+                            clearSchedule: true,
                           );
                         });
                       },
@@ -287,60 +223,39 @@ class _NewAppointmentScreenState
 
                   if (_currentStep == 3)
                     _ScheduleAndReviewStep(
-                      focusedDay:
-                      _focusedDay,
+                      focusedDay: _focusedDay,
 
-                      selectedDate:
-                      _form.selectedDate,
+                      selectedDate: _form.selectedDate,
 
-                      selectedTime:
-                      _form.selectedTime,
+                      selectedTime: _form.selectedTime,
 
-                      availableTimes:
-                      _availableTimes,
+                      availableTimes: _availableTimes,
 
-                      isDateAvailable:
-                      _isDateAvailable,
+                      isDateAvailable: _isDateAvailable,
 
-                      notesController:
-                      _notesController,
+                      notesController: _notesController,
 
-                      onDateSelected:
-                          (
-                          selectedDay,
-                          focusedDay,
-                          ) {
+                      onDateSelected: (selectedDay, focusedDay) {
                         setState(() {
-                          _focusedDay =
-                              focusedDay;
+                          _focusedDay = focusedDay;
 
-                          _form =
-                              _form.copyWith(
-                                selectedDate:
-                                selectedDay,
+                          _form = _form.copyWith(
+                            selectedDate: selectedDay,
 
-                                selectedTime:
-                                null,
-                              );
+                            selectedTime: null,
+                          );
                         });
                       },
 
-                      onPageChanged:
-                          (focusedDay) {
+                      onPageChanged: (focusedDay) {
                         setState(() {
-                          _focusedDay =
-                              focusedDay;
+                          _focusedDay = focusedDay;
                         });
                       },
 
-                      onTimeSelected:
-                          (time) {
+                      onTimeSelected: (time) {
                         setState(() {
-                          _form =
-                              _form.copyWith(
-                                selectedTime:
-                                time,
-                              );
+                          _form = _form.copyWith(selectedTime: time);
                         });
                       },
                     ),
@@ -352,14 +267,9 @@ class _NewAppointmentScreenState
                       width: double.infinity,
 
                       child: ElevatedButton(
-                        onPressed:
-                        _canContinueCurrentStep()
-                            ? _goNext
-                            : null,
+                        onPressed: _canContinueCurrentStep() ? _goNext : null,
 
-                        child: const Text(
-                          'المتابعة',
-                        ),
+                        child: const Text('المتابعة'),
                       ),
                     ),
 
@@ -368,14 +278,9 @@ class _NewAppointmentScreenState
                       width: double.infinity,
 
                       child: ElevatedButton(
-                        onPressed:
-                        _canSubmit()
-                            ? _submitAppointment
-                            : null,
+                        onPressed: _canSubmit() ? _submitAppointment : null,
 
-                        child: const Text(
-                          'تأكيد الموعد',
-                        ),
+                        child: const Text('تأكيد الموعد'),
                       ),
                     ),
                 ],
@@ -391,9 +296,7 @@ class _NewAppointmentScreenState
 class _StepIndicator extends StatelessWidget {
   final int currentStep;
 
-  const _StepIndicator({
-    required this.currentStep,
-  });
+  const _StepIndicator({required this.currentStep});
 
   static const List<String> _titles = [
     'نوع الموعد',
@@ -408,16 +311,13 @@ class _StepIndicator extends StatelessWidget {
     final colors = context.colors;
 
     return Column(
-      crossAxisAlignment:
-      CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
 
       children: [
         Text(
           'الخطوة ${currentStep + 1} من 4',
 
-          style:
-          theme.textTheme.bodyMedium
-              ?.copyWith(
+          style: theme.textTheme.bodyMedium?.copyWith(
             color: colors.textSecondary,
             fontWeight: FontWeight.w600,
           ),
@@ -428,9 +328,7 @@ class _StepIndicator extends StatelessWidget {
         Text(
           _titles[currentStep],
 
-          style:
-          theme.textTheme.titleLarge
-              ?.copyWith(
+          style: theme.textTheme.titleLarge?.copyWith(
             color: colors.textPrimary,
             fontWeight: FontWeight.w800,
           ),
@@ -439,48 +337,30 @@ class _StepIndicator extends StatelessWidget {
         const SizedBox(height: 14),
 
         Row(
-          children: List.generate(
-            4,
-                (index) {
-              final isActive =
-                  index <= currentStep;
+          children: List.generate(4, (index) {
+            final isActive = index <= currentStep;
 
-              return Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(
-                    left:
-                    index == 3
-                        ? 0
-                        : 8,
-                  ),
+            return Expanded(
+              child: Container(
+                margin: EdgeInsets.only(left: index == 3 ? 0 : 8),
 
-                  height: 6,
+                height: 6,
 
-                  decoration: BoxDecoration(
-                    color:
-                    isActive
-                        ? colors
-                        .buttonPrimary
-                        : colors
-                        .surfaceMuted,
+                decoration: BoxDecoration(
+                  color: isActive ? colors.buttonPrimary : colors.surfaceMuted,
 
-                    borderRadius:
-                    BorderRadius.circular(
-                      99,
-                    ),
-                  ),
+                  borderRadius: BorderRadius.circular(99),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          }),
         ),
       ],
     );
   }
 }
 
-class _ScheduleAndReviewStep
-    extends StatelessWidget {
+class _ScheduleAndReviewStep extends StatelessWidget {
   final DateTime focusedDay;
 
   final DateTime? selectedDate;
@@ -489,22 +369,15 @@ class _ScheduleAndReviewStep
 
   final List<String> availableTimes;
 
-  final bool Function(DateTime)
-  isDateAvailable;
+  final bool Function(DateTime) isDateAvailable;
 
-  final TextEditingController
-  notesController;
+  final TextEditingController notesController;
 
-  final void Function(
-      DateTime,
-      DateTime,
-      ) onDateSelected;
+  final void Function(DateTime, DateTime) onDateSelected;
 
-  final ValueChanged<DateTime>
-  onPageChanged;
+  final ValueChanged<DateTime> onPageChanged;
 
-  final ValueChanged<String>
-  onTimeSelected;
+  final ValueChanged<String> onTimeSelected;
 
   const _ScheduleAndReviewStep({
     required this.focusedDay,
@@ -524,16 +397,13 @@ class _ScheduleAndReviewStep
     final colors = context.colors;
 
     return Column(
-      crossAxisAlignment:
-      CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
 
       children: [
         Text(
           'اختر الموعد المتاح',
 
-          style:
-          theme.textTheme.titleMedium
-              ?.copyWith(
+          style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w800,
             color: colors.textPrimary,
           ),
@@ -547,49 +417,29 @@ class _ScheduleAndReviewStep
           decoration: BoxDecoration(
             color: colors.surfacePrimary,
 
-            borderRadius:
-            BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(20),
 
-            border: Border.all(
-              color: colors.borderSoft,
-            ),
+            border: Border.all(color: colors.borderSoft),
           ),
 
           child: TableCalendar(
             firstDay: DateTime.now(),
 
-            lastDay: DateTime.now().add(
-              const Duration(days: 30),
-            ),
+            lastDay: DateTime.now().add(const Duration(days: 30)),
 
             focusedDay: focusedDay,
 
-            selectedDayPredicate:
-                (day) => isSameDay(
-              selectedDate,
-              day,
-            ),
+            selectedDayPredicate: (day) => isSameDay(selectedDate, day),
 
-            onDaySelected:
-                (
-                selectedDay,
-                focusedDay,
-                ) {
-              if (isDateAvailable(
-                selectedDay,
-              )) {
-                onDateSelected(
-                  selectedDay,
-                  focusedDay,
-                );
+            onDaySelected: (selectedDay, focusedDay) {
+              if (isDateAvailable(selectedDay)) {
+                onDateSelected(selectedDay, focusedDay);
               }
             },
 
-            onPageChanged:
-            onPageChanged,
+            onPageChanged: onPageChanged,
 
-            enabledDayPredicate:
-            isDateAvailable,
+            enabledDayPredicate: isDateAvailable,
           ),
         ),
 
@@ -598,9 +448,7 @@ class _ScheduleAndReviewStep
         Text(
           'الأوقات المتاحة',
 
-          style:
-          theme.textTheme.titleMedium
-              ?.copyWith(
+          style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w800,
             color: colors.textPrimary,
           ),
@@ -610,25 +458,19 @@ class _ScheduleAndReviewStep
 
         if (selectedDate == null)
           Container(
-            padding:
-            const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
 
             decoration: BoxDecoration(
-              color:
-              colors.surfaceSecondary,
+              color: colors.surfaceSecondary,
 
-              borderRadius:
-              BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16),
             ),
 
             child: Text(
               'اختر التاريخ أولًا لعرض الأوقات المتاحة.',
 
-              style: theme
-                  .textTheme.bodyMedium
-                  ?.copyWith(
-                color:
-                colors.textSecondary,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colors.textSecondary,
               ),
             ),
           )
@@ -637,18 +479,15 @@ class _ScheduleAndReviewStep
             spacing: 10,
             runSpacing: 10,
 
-            children:
-            availableTimes.map((time) {
+            children: availableTimes.map((time) {
               return AppointmentTimeChip(
                 label: time,
 
-                selected:
-                selectedTime == time,
+                selected: selectedTime == time,
 
                 available: true,
 
-                onTap: () =>
-                    onTimeSelected(time),
+                onTap: () => onTimeSelected(time),
               );
             }).toList(),
           ),
@@ -658,9 +497,7 @@ class _ScheduleAndReviewStep
         Text(
           'ملاحظتك للطبيب',
 
-          style:
-          theme.textTheme.titleMedium
-              ?.copyWith(
+          style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w800,
             color: colors.textPrimary,
           ),
@@ -674,13 +511,9 @@ class _ScheduleAndReviewStep
           maxLines: 4,
 
           decoration: InputDecoration(
-            hintText:
-            'اكتب أي ملاحظة أو وصف مختصر للحالة',
+            hintText: 'اكتب أي ملاحظة أو وصف مختصر للحالة',
 
-            border: OutlineInputBorder(
-              borderRadius:
-              BorderRadius.circular(16),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
           ),
         ),
       ],

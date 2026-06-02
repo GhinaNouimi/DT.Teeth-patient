@@ -1,8 +1,4 @@
-enum PaymentMethod {
-  cash,
-  bankTransfer,
-  card,
-}
+enum PaymentMethod { cash, bankTransfer, card }
 
 class PaymentRecordEntity {
   final String id;

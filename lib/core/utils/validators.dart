@@ -1,5 +1,8 @@
 abstract final class AppValidators {
-  static String? requiredField(String? value, {String fieldName = 'هذا الحقل'}) {
+  static String? requiredField(
+    String? value, {
+    String fieldName = 'هذا الحقل',
+  }) {
     if (value == null || value.trim().isEmpty) {
       return 'الرجاء إدخال $fieldName';
     }

@@ -94,17 +94,11 @@ class TreatmentCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: pink.withValues(alpha: 0.35),
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(
-                  color: pink.withValues(alpha: 0.55),
-                ),
+                border: Border.all(color: pink.withValues(alpha: 0.55)),
               ),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.event_available_rounded,
-                    color: accent,
-                    size: 20,
-                  ),
+                  Icon(Icons.event_available_rounded, color: accent, size: 20),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Column(
@@ -121,7 +115,8 @@ class TreatmentCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          treatment.nextSessionLabel ?? treatment.startedAtLabel,
+                          treatment.nextSessionLabel ??
+                              treatment.startedAtLabel,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: colors.textPrimary,
                             fontWeight: FontWeight.w700,

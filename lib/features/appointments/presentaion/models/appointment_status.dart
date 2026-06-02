@@ -7,14 +7,11 @@ enum AppointmentStatus {
   final String displayName;
   final String value;
 
-  const AppointmentStatus(
-      this.displayName,
-      this.value,
-      );
+  const AppointmentStatus(this.displayName, this.value);
 
   static AppointmentStatus fromValue(String value) {
     return AppointmentStatus.values.firstWhere(
-          (status) => status.value == value,
+      (status) => status.value == value,
       orElse: () => AppointmentStatus.pending,
     );
   }

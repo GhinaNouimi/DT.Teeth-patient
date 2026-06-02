@@ -1,18 +1,9 @@
 import 'treatment_appointment_entity.dart';
 import 'treatment_timeline_step_entity.dart';
 
-enum TreatmentStatus {
-  active,
-  completed,
-  planned,
-}
+enum TreatmentStatus { active, completed, planned }
 
-enum TreatmentType {
-  braces,
-  rootCanal,
-  whitening,
-  implant,
-}
+enum TreatmentType { braces, rootCanal, whitening, implant }
 
 class TreatmentEntity {
   final String id;

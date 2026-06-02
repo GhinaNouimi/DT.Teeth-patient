@@ -10,19 +10,26 @@ class AppInterceptor extends Interceptor {
     '/patient/sendVerification',
   ];
 
+  static const _sensitiveKeys = {
+    'password',
+    'password_confirmation',
+    'token',
+    'access_token',
+    'refresh_token',
+    'authorization',
+  };
+
   @override
   Future<void> onRequest(
       RequestOptions options,
       RequestInterceptorHandler handler,
       ) async {
-    final isPublicPath = _publicPaths.contains(options.path);
-
+    final isPublicPath = _publicPaths.any(
+          (path) => options.path.endsWith(path),
+    );
     if (!isPublicPath) {
       final token = await SecureStorageService.getToken();
       final tokenType = await SecureStorageService.getTokenType();
-
-      debugPrint('SAVED TOKEN: $token');
-      debugPrint('SAVED TOKEN TYPE: $tokenType');
 
       if (token != null && token.isNotEmpty) {
         options.headers['Authorization'] = '${tokenType ?? 'Bearer'} $token';
@@ -31,10 +38,10 @@ class AppInterceptor extends Interceptor {
 
     if (kDebugMode) {
       debugPrint('➡️ REQUEST');
-      debugPrint('URL: ${options.baseUrl}${options.path}');
+      debugPrint('URL: ${options.uri}');
       debugPrint('METHOD: ${options.method}');
-      debugPrint('HEADERS: ${options.headers}');
-      debugPrint('DATA: ${options.data}');
+      debugPrint('HEADERS: ${_hideSensitiveData(options.headers)}');
+      debugPrint('DATA: ${_hideSensitiveData(options.data)}');
     }
 
     handler.next(options);
@@ -46,7 +53,7 @@ class AppInterceptor extends Interceptor {
       debugPrint('✅ RESPONSE');
       debugPrint('STATUS: ${response.statusCode}');
       debugPrint('URL: ${response.requestOptions.uri}');
-      debugPrint('DATA: ${response.data}');
+      debugPrint('DATA: ${_hideSensitiveData(response.data)}');
     }
 
     handler.next(response);
@@ -58,10 +65,31 @@ class AppInterceptor extends Interceptor {
       debugPrint('❌ ERROR');
       debugPrint('URL: ${err.requestOptions.uri}');
       debugPrint('STATUS: ${err.response?.statusCode}');
+      debugPrint('TYPE: ${err.type}');
       debugPrint('MESSAGE: ${err.message}');
-      debugPrint('RESPONSE: ${err.response?.data}');
+      debugPrint('RESPONSE: ${_hideSensitiveData(err.response?.data)}');
     }
 
     handler.next(err);
+  }
+
+  dynamic _hideSensitiveData(dynamic data) {
+    if (data is Map) {
+      return data.map((key, value) {
+        final normalizedKey = key.toString().toLowerCase();
+
+        if (_sensitiveKeys.contains(normalizedKey)) {
+          return MapEntry(key, '***');
+        }
+
+        return MapEntry(key, _hideSensitiveData(value));
+      });
+    }
+
+    if (data is List) {
+      return data.map(_hideSensitiveData).toList();
+    }
+
+    return data;
   }
 }

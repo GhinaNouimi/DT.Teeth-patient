@@ -3,7 +3,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../../../core/utils/validators.dart';
 
-
 class PasswordStrengthCard extends StatelessWidget {
   final String password;
   final bool showTitle;
@@ -23,7 +22,8 @@ class PasswordStrengthCard extends StatelessWidget {
         : AppValidators.passwordStrengthLabel(password);
 
     final hasMinLength = password.length >= 8;
-    final hasUpperAndLower = RegExp(r'[A-Z]').hasMatch(password) &&
+    final hasUpperAndLower =
+        RegExp(r'[A-Z]').hasMatch(password) &&
         RegExp(r'[a-z]').hasMatch(password);
     final hasNumber = RegExp(r'[0-9]').hasMatch(password);
     final hasSpecial = RegExp(r'[!@#$%^&*(),.?\":{}|<>]').hasMatch(password);
@@ -44,22 +44,10 @@ class PasswordStrengthCard extends StatelessWidget {
         : accentColor;
 
     final checks = [
-      _RuleItem(
-        text: '8 أحرف على الأقل',
-        passed: hasMinLength,
-      ),
-      _RuleItem(
-        text: 'حرف كبير وحرف صغير',
-        passed: hasUpperAndLower,
-      ),
-      _RuleItem(
-        text: 'رقم واحد على الأقل',
-        passed: hasNumber,
-      ),
-      _RuleItem(
-        text: 'رمز خاص مثل ! @ # \$ %',
-        passed: hasSpecial,
-      ),
+      _RuleItem(text: '8 أحرف على الأقل', passed: hasMinLength),
+      _RuleItem(text: 'حرف كبير وحرف صغير', passed: hasUpperAndLower),
+      _RuleItem(text: 'رقم واحد على الأقل', passed: hasNumber),
+      _RuleItem(text: 'رمز خاص مثل ! @ # \$ %', passed: hasSpecial),
     ];
 
     return AnimatedContainer(
@@ -69,9 +57,7 @@ class PasswordStrengthCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
         color: theme.colorScheme.surface,
-        border: Border.all(
-          color: accentColor.withValues(alpha: 0.28),
-        ),
+        border: Border.all(color: accentColor.withValues(alpha: 0.28)),
         boxShadow: [
           BoxShadow(
             color: accentColor.withValues(alpha: 0.08),
@@ -91,11 +77,7 @@ class PasswordStrengthCard extends StatelessWidget {
           if (showTitle) ...[
             Row(
               children: [
-                Icon(
-                  Icons.shield_rounded,
-                  color: titleColor,
-                  size: 18,
-                ),
+                Icon(Icons.shield_rounded, color: titleColor, size: 18),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -121,7 +103,7 @@ class PasswordStrengthCard extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           ...checks.map(
-                (item) => item
+            (item) => item
                 .animate(target: 1)
                 .fadeIn(duration: 250.ms)
                 .slideX(begin: 0.04, end: 0),
@@ -136,16 +118,14 @@ class _RuleItem extends StatelessWidget {
   final String text;
   final bool passed;
 
-  const _RuleItem({
-    required this.text,
-    required this.passed,
-  });
+  const _RuleItem({required this.text, required this.passed});
 
   @override
   Widget build(BuildContext context) {
     final successColor = const Color(0xFF34B67A);
-    final idleColor =
-    Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55);
+    final idleColor = Theme.of(
+      context,
+    ).colorScheme.onSurface.withValues(alpha: 0.55);
     final textColor = passed
         ? successColor
         : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.78);

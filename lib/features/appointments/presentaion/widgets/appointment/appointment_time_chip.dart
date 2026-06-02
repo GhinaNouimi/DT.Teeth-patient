@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/theme/theme_extensions.dart';
 
-
 class AppointmentTimeChip extends StatelessWidget {
   final String label;
   final bool selected;
@@ -52,22 +51,18 @@ class AppointmentTimeChip extends StatelessWidget {
           border: Border.all(color: borderColor),
           boxShadow: selected
               ? [
-            BoxShadow(
-              color: colors.buttonPrimary.withValues(alpha: 0.22),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ]
+                  BoxShadow(
+                    color: colors.buttonPrimary.withValues(alpha: 0.22),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
               : null,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.schedule_rounded,
-              size: 18,
-              color: textColor,
-            ),
+            Icon(Icons.schedule_rounded, size: 18, color: textColor),
             const SizedBox(width: 8),
             Text(
               label,

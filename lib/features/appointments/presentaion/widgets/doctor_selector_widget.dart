@@ -86,7 +86,9 @@ class _DoctorCard extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: isSelected ? colors.buttonPrimary.withValues(alpha: 0.1) : colors.surfacePrimary,
+          color: isSelected
+              ? colors.buttonPrimary.withValues(alpha: 0.1)
+              : colors.surfacePrimary,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isSelected ? colors.buttonPrimary : colors.borderSoft,
@@ -94,12 +96,12 @@ class _DoctorCard extends StatelessWidget {
           ),
           boxShadow: isSelected
               ? [
-            BoxShadow(
-              color: colors.buttonPrimary.withValues(alpha: 0.2),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
-            ),
-          ]
+                  BoxShadow(
+                    color: colors.buttonPrimary.withValues(alpha: 0.2),
+                    blurRadius: 12,
+                    offset: const Offset(0, 6),
+                  ),
+                ]
               : null,
         ),
         child: Row(

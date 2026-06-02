@@ -1,8 +1,4 @@
-enum TreatmentTimelineStepState {
-  completed,
-  current,
-  upcoming,
-}
+enum TreatmentTimelineStepState { completed, current, upcoming }
 
 class TreatmentTimelineStepEntity {
   final String title;

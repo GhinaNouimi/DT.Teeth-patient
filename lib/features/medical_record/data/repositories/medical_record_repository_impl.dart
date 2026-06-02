@@ -1,4 +1,3 @@
-
 import '../../domain/entities/attachment_entity.dart';
 import '../../domain/entities/payment_plan_entity.dart';
 import '../../domain/entities/prescription_entity.dart';
@@ -25,9 +24,11 @@ class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
 
   @override
   Future<List<AttachmentEntity>> getAttachmentsByTreatment(
-      String treatmentId,
-      ) async {
-    final attachments = await _dataSource.getAttachmentsByTreatment(treatmentId);
+    String treatmentId,
+  ) async {
+    final attachments = await _dataSource.getAttachmentsByTreatment(
+      treatmentId,
+    );
     return attachments.map((attachment) => attachment.toEntity()).toList();
   }
 

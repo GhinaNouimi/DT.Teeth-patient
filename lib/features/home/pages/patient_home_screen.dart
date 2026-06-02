@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import '../../appointments/presentaion/models/mock_appointments_data.dart';
 import '../../appointments/presentaion/sections/next_appointment_section.dart';
 import '../sections/center_address_section.dart';
@@ -55,7 +54,6 @@ class PatientHomeScreen extends StatelessWidget {
                 //     child: SpecialtiesSection(),
                 //   ),
                 // ),
-
                 const SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(20, 24, 20, 0),
@@ -77,9 +75,7 @@ class PatientHomeScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SliverPadding(
-                  padding: EdgeInsets.only(bottom: 110),
-                ),
+                const SliverPadding(padding: EdgeInsets.only(bottom: 110)),
               ],
             ),
           ),

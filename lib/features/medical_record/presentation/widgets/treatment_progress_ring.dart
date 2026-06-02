@@ -37,9 +37,9 @@ class TreatmentProgressRing extends StatelessWidget {
           Text(
             '$percent%',
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: colors.textPrimary,
-                  fontWeight: FontWeight.w800,
-                ),
+              color: colors.textPrimary,
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ],
       ),
@@ -72,10 +72,7 @@ class _ProgressRingPainter extends CustomPainter {
 
     final progressPaint = Paint()
       ..shader = SweepGradient(
-        colors: [
-          accentColor.withValues(alpha: 0.42),
-          accentColor,
-        ],
+        colors: [accentColor.withValues(alpha: 0.42), accentColor],
       ).createShader(Rect.fromCircle(center: center, radius: radius))
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth

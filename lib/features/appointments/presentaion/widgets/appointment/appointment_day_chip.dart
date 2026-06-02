@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/theme/theme_extensions.dart';
 
-
 class AppointmentDayChip extends StatelessWidget {
   final String label;
   final bool selected;

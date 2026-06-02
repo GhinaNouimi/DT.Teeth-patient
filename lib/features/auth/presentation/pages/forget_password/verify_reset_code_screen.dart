@@ -10,10 +10,7 @@ import '../widgets/primary_app_button.dart';
 class VerifyResetCodeScreen extends StatefulWidget {
   final String email;
 
-  const VerifyResetCodeScreen({
-    super.key,
-    required this.email,
-  });
+  const VerifyResetCodeScreen({super.key, required this.email});
 
   @override
   State<VerifyResetCodeScreen> createState() => _VerifyResetCodeScreenState();
@@ -36,10 +33,7 @@ class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
         message: 'يمكنك الآن إعادة تعيين كلمة المرور.',
         buttonText: 'متابعة',
         onPressed: () {
-          context.push(
-            AppRoutes.resetPassword,
-            extra: widget.email,
-          );
+          context.push(AppRoutes.resetPassword, extra: widget.email);
         },
       );
     }
@@ -88,10 +82,7 @@ class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
             onPressed: _submit,
           ),
           const SizedBox(height: 12),
-          TextButton(
-            onPressed: () {},
-            child: const Text('إعادة إرسال الرمز'),
-          ),
+          TextButton(onPressed: () {}, child: const Text('إعادة إرسال الرمز')),
           TextButton(
             onPressed: () => context.pop(),
             child: const Text('العودة'),

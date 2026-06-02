@@ -13,10 +13,7 @@ import '../widgets/primary_app_button.dart';
 class ResetPasswordScreen extends StatefulWidget {
   final String email;
 
-  const ResetPasswordScreen({
-    super.key,
-    required this.email,
-  });
+  const ResetPasswordScreen({super.key, required this.email});
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -78,9 +75,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         key: _formKey,
         child: Column(
           children: [
-            PasswordStrengthCard(
-              password: _passwordController.text,
-            ),
+            PasswordStrengthCard(password: _passwordController.text),
             const SizedBox(height: 16),
             AppTextField(
               controller: _passwordController,

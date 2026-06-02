@@ -31,10 +31,7 @@ class BookingDoctorSummaryCard extends StatelessWidget {
           CircleAvatar(
             radius: 32,
             backgroundColor: colors.surfaceMuted,
-            child: Text(
-              doctor.imageUrl,
-              style: const TextStyle(fontSize: 36),
-            ),
+            child: Text(doctor.imageUrl, style: const TextStyle(fontSize: 36)),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -57,7 +54,10 @@ class BookingDoctorSummaryCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: colors.surfaceSecondary,
                     borderRadius: BorderRadius.circular(12),

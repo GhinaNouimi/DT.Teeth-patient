@@ -1,13 +1,6 @@
-enum AttachmentCategory {
-  images,
-  xray,
-  reports,
-}
+enum AttachmentCategory { images, xray, reports }
 
-enum AttachmentType {
-  image,
-  pdf,
-}
+enum AttachmentType { image, pdf }
 
 class AttachmentEntity {
   final String id;

@@ -45,11 +45,7 @@ class BookingDateStepSection extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       physics: const BouncingScrollPhysics(),
       children: [
-        BookingDoctorSummaryCard(
-          doctor: doctor,
-          colors: colors,
-          theme: theme,
-        ),
+        BookingDoctorSummaryCard(doctor: doctor, colors: colors, theme: theme),
         const SizedBox(height: 28),
         Text(
           'الخطوة 1: اختر التاريخ',
@@ -112,10 +108,11 @@ class BookingDateStepSection extends StatelessWidget {
             headerStyle: HeaderStyle(
               formatButtonVisible: false,
               titleCentered: true,
-              titleTextStyle: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w800,
-                color: colors.textPrimary,
-              ) ??
+              titleTextStyle:
+                  theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: colors.textPrimary,
+                  ) ??
                   const TextStyle(),
               leftChevronIcon: Icon(
                 Icons.chevron_left_rounded,
@@ -146,7 +143,7 @@ class BookingDateStepSection extends StatelessWidget {
             icon: Icons.check_circle_rounded,
             iconColor: colors.success,
             text:
-            'التاريخ المختار: ${DateFormat('EEEE, d MMMM', 'ar_SA').format(selectedDate!)}',
+                'التاريخ المختار: ${DateFormat('EEEE, d MMMM', 'ar_SA').format(selectedDate!)}',
           ),
         const SizedBox(height: 28),
         Text(
@@ -189,7 +186,9 @@ class BookingDateStepSection extends StatelessWidget {
           ),
         const SizedBox(height: 36),
         ElevatedButton(
-          onPressed: selectedDate != null && selectedTime != null ? onContinue : null,
+          onPressed: selectedDate != null && selectedTime != null
+              ? onContinue
+              : null,
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 16),
             minimumSize: const Size(double.infinity, 0),

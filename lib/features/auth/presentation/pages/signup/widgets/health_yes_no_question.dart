@@ -19,6 +19,7 @@ class HealthYesNoQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final selectedColor = theme.colorScheme.primary;
 
     return Container(
       padding: const EdgeInsets.all(14),
@@ -30,14 +31,12 @@ class HealthYesNoQuestion extends StatelessWidget {
         ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               CircleAvatar(
-                backgroundColor:
-                theme.colorScheme.primary.withValues(alpha: 0.12),
-                child: Icon(icon, color: theme.colorScheme.primary),
+                backgroundColor: selectedColor.withValues(alpha: 0.20),
+                child: Icon(icon, color: selectedColor),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -48,6 +47,7 @@ class HealthYesNoQuestion extends StatelessWidget {
                       title,
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w800,
+                        color: theme.colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -55,7 +55,7 @@ class HealthYesNoQuestion extends StatelessWidget {
                       subtitle,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurface.withValues(
-                          alpha: 0.65,
+                          alpha: 0.72,
                         ),
                       ),
                     ),
@@ -104,32 +104,39 @@ class _OptionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final selectedColor = theme.colorScheme.primary;
 
-    return InkWell(
-      borderRadius: BorderRadius.circular(16),
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: isSelected
-              ? theme.colorScheme.primary.withValues(alpha: 0.13)
-              : theme.colorScheme.surface,
-          border: Border.all(
+    return Semantics(
+      button: true,
+      selected: isSelected,
+      label: text,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
             color: isSelected
-                ? theme.colorScheme.primary
-                : theme.colorScheme.outline.withValues(alpha: 0.3),
+                ? selectedColor.withValues(alpha: 0.18)
+                : theme.colorScheme.surface,
+            border: Border.all(
+              width: isSelected ? 1.6 : 1,
+              color: isSelected
+                  ? selectedColor
+                  : theme.colorScheme.outline.withValues(alpha: 0.35),
+            ),
           ),
-        ),
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.w800,
-            color: isSelected
-                ? theme.colorScheme.primary
-                : theme.colorScheme.onSurface,
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w800,
+              color: isSelected
+                  ? selectedColor
+                  : theme.colorScheme.onSurface.withValues(alpha: 0.88),
+            ),
           ),
         ),
       ),

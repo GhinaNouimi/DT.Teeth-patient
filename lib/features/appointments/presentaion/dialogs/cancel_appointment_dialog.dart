@@ -9,10 +9,7 @@ import '../models/appointments_store.dart';
 class CancelAppointmentDialog extends StatelessWidget {
   final String appointmentId;
 
-  const CancelAppointmentDialog({
-    super.key,
-    required this.appointmentId,
-  });
+  const CancelAppointmentDialog({super.key, required this.appointmentId});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +18,7 @@ class CancelAppointmentDialog extends StatelessWidget {
 
     return AlertDialog(
       backgroundColor: colors.surfacePrimary,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       title: Text(
         'إلغاء الموعد',
         style: theme.textTheme.titleLarge?.copyWith(
@@ -44,7 +39,6 @@ class CancelAppointmentDialog extends StatelessWidget {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () async {
-
               AppointmentsStore.instance.cancelAppointment(appointmentId);
 
               await showSuccessBottomSheet(
@@ -64,7 +58,6 @@ class CancelAppointmentDialog extends StatelessWidget {
             child: const Text('تأكيد الإلغاء'),
           ),
         ),
-
       ],
     );
   }

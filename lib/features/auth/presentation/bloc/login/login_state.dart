@@ -15,15 +15,11 @@ class LoginLoading extends LoginState {
 class LoginSuccess extends LoginState {
   final LoginResponseModel response;
 
-  const LoginSuccess({
-    required this.response,
-  });
+  const LoginSuccess({required this.response});
 }
 
 class LoginFailure extends LoginState {
   final String message;
 
-  const LoginFailure({
-    required this.message,
-  });
+  const LoginFailure({required this.message});
 }

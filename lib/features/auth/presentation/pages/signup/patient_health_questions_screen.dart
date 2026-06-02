@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../core/routing/app_routes.dart';
 import '../../../../../core/utils/validators.dart';
 import '../../../../../core/widgets/feedback/error_bottom_sheet.dart';
+import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
 import '../../../data/models/register_patient_request_model.dart';
 import '../../bloc/register/register_bloc.dart';
 import '../../bloc/register/register_event.dart';
@@ -86,6 +87,16 @@ class _PatientHealthQuestionsScreenState
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) async {
         if (state is RegisterSuccess) {
+          await showSuccessBottomSheet(
+            context,
+            title: 'تم إنشاء الحساب بنجاح',
+            message:
+            'أرسلنا رمز التحقق إلى بريدك الإلكتروني. يرجى إدخال الرمز لتفعيل حسابك.',
+            buttonText: 'الانتقال للتحقق',
+          );
+
+          if (!context.mounted) return;
+
           context.push(
             AppRoutes.verify,
             extra: widget.basicRegisterData['email'],
@@ -94,17 +105,16 @@ class _PatientHealthQuestionsScreenState
 
         if (state is RegisterFailure) {
           await showErrorBottomSheet(
-          context,
-          title: 'فشل إنشاء الحساب',
-          message: state.message,
-          buttonText: 'حسنًا',
+            context,
+            title: 'فشل إنشاء الحساب',
+            message: state.message,
+            buttonText: 'حسنًا',
           );
         }
-      },
-      child: AuthShell(
+      },      child: AuthShell(
         title: 'إكمال بيانات المريض',
         subtitle:
-        'هذه المعلومات تساعد المركز في التعامل مع الحالات الطارئة بشكل آمن',
+            'هذه المعلومات تساعد المركز في التعامل مع الحالات الطارئة بشكل آمن',
         child: Form(
           key: _formKey,
           child: Column(
@@ -206,8 +216,8 @@ class _PatientHealthQuestionsScreenState
                   final isLoading = state is RegisterLoading;
 
                   return PrimaryAppButton(
-                    text: isLoading ? 'جاري إنشاء الحساب...' : 'متابعة',
-                    icon: Icons.arrow_forward_rounded,
+                    text: isLoading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب',
+                    icon: Icons.check_rounded,
                     onPressed: isLoading ? null : _submit,
                   );
                 },
