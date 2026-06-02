@@ -1,6 +1,10 @@
 import '../../../../core/network/api_constants.dart';
 import '../../../../core/network/dio_client.dart';
 
+import '../models/forgot_password_reset_password_request_model.dart';
+import '../models/forgot_password_response_model.dart';
+import '../models/forgot_password_send_code_request_model.dart';
+import '../models/forgot_password_verify_code_request_model.dart';
 import '../models/login_request_model.dart';
 import '../models/login_response_model.dart';
 import '../models/register_patient_request_model.dart';
@@ -24,6 +28,18 @@ abstract class AuthRemoteDataSource {
       );
 
   Future<LoginResponseModel> loginPatient(LoginRequestModel request);
+
+  Future<ForgotPasswordResponseModel> sendForgotPasswordCode(
+      ForgotPasswordSendCodeRequestModel request,
+      );
+
+  Future<ForgotPasswordResponseModel> verifyForgotPasswordCode(
+      ForgotPasswordVerifyCodeRequestModel request,
+      );
+
+  Future<ForgotPasswordResponseModel> resetPassword(
+      ForgotPasswordResetPasswordRequestModel request,
+      );
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -72,4 +88,40 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
     return LoginResponseModel.fromJson(response.data);
   }
+  @override
+  Future<ForgotPasswordResponseModel> sendForgotPasswordCode(
+      ForgotPasswordSendCodeRequestModel request,
+      ) async {
+    final response = await DioClient.dio.post(
+      ApiConstants.forgotPasswordSendCode,
+      data: request.toJson(),
+    );
+
+    return ForgotPasswordResponseModel.fromJson(response.data);
+  }
+
+  @override
+  Future<ForgotPasswordResponseModel> verifyForgotPasswordCode(
+      ForgotPasswordVerifyCodeRequestModel request,
+      ) async {
+    final response = await DioClient.dio.post(
+      ApiConstants.forgotPasswordVerifyCode,
+      data: request.toJson(),
+    );
+
+    return ForgotPasswordResponseModel.fromJson(response.data);
+  }
+
+  @override
+  Future<ForgotPasswordResponseModel> resetPassword(
+      ForgotPasswordResetPasswordRequestModel request,
+      ) async {
+    final response = await DioClient.dio.post(
+      ApiConstants.forgotPasswordResetPassword,
+      data: request.toJson(),
+    );
+
+    return ForgotPasswordResponseModel.fromJson(response.data);
+  }
+
 }

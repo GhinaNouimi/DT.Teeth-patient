@@ -8,6 +8,10 @@ class AppInterceptor extends Interceptor {
     '/patient/register',
     '/patient/verifyEmail',
     '/patient/sendVerification',
+
+    '/forgotPassword/sendCode',
+    '/forgotPassword/verifyCode',
+    '/forgotPassword/resetPassword',
   ];
 
   static const _sensitiveKeys = {

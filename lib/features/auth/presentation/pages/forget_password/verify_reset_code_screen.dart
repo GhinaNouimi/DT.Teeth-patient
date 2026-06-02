@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../../core/routing/app_routes.dart';
+import '../../../../../core/widgets/feedback/error_bottom_sheet.dart';
 import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
+import '../../../data/models/forgot_password_send_code_request_model.dart';
+import '../../../data/models/forgot_password_verify_code_request_model.dart';
+import '../../bloc/forgot_password/forgot_password_bloc.dart';
+import '../../bloc/forgot_password/forgot_password_event.dart';
+import '../../bloc/forgot_password/forgot_password_state.dart';
 import '../widgets/auth_shell.dart';
 import '../widgets/primary_app_button.dart';
 
 class VerifyResetCodeScreen extends StatefulWidget {
   final String email;
 
-  const VerifyResetCodeScreen({super.key, required this.email});
+  const VerifyResetCodeScreen({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<VerifyResetCodeScreen> createState() => _VerifyResetCodeScreenState();
@@ -25,18 +35,37 @@ class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
     super.dispose();
   }
 
-  Future<void> _submit() async {
-    if (_pinController.text.trim().length == 6) {
-      await showSuccessBottomSheet(
+  void _submit() {
+    final code = _pinController.text.trim();
+
+    if (code.length != 6) {
+      showErrorBottomSheet(
         context,
-        title: 'تم التحقق من الرمز',
-        message: 'يمكنك الآن إعادة تعيين كلمة المرور.',
-        buttonText: 'متابعة',
-        onPressed: () {
-          context.push(AppRoutes.resetPassword, extra: widget.email);
-        },
+        title: 'رمز غير مكتمل',
+        message: 'يرجى إدخال رمز تحقق مكون من 6 أرقام.',
+        buttonText: 'حسنًا',
       );
+      return;
     }
+
+    final request = ForgotPasswordVerifyCodeRequestModel(
+      email: widget.email,
+      verificationCode: code,
+    );
+
+    context.read<ForgotPasswordBloc>().add(
+      VerifyForgotPasswordCodeSubmitted(request: request),
+    );
+  }
+
+  void _resendCode() {
+    final request = ForgotPasswordSendCodeRequestModel(
+      email: widget.email,
+    );
+
+    context.read<ForgotPasswordBloc>().add(
+      SendForgotPasswordCodeSubmitted(request: request),
+    );
   }
 
   @override
@@ -54,40 +83,93 @@ class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
       ),
     );
 
-    return AuthShell(
-      title: 'التحقق من الرمز',
-      subtitle: 'أدخل الرمز المرسل إلى ${widget.email}',
-      child: Column(
-        children: [
-          Directionality(
-            textDirection: TextDirection.ltr,
-            child: Pinput(
-              controller: _pinController,
-              length: 6,
-              defaultPinTheme: defaultPinTheme,
-              focusedPinTheme: defaultPinTheme.copyWith(
-                decoration: defaultPinTheme.decoration?.copyWith(
-                  border: Border.all(
-                    color: theme.colorScheme.primary,
-                    width: 1.5,
+    return BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
+      listener: (context, state) async {
+        if (state is ForgotPasswordVerifyCodeSuccess) {
+          await showSuccessBottomSheet(
+            context,
+            title: 'تم التحقق من الرمز',
+            message: 'تم التحقق من الرمز بنجاح. يمكنك الآن إعادة تعيين كلمة المرور.',
+            buttonText: 'متابعة',
+            onPressed: () {
+              context.push(AppRoutes.resetPassword, extra: widget.email);
+            },
+          );
+        }
+
+        if (state is ForgotPasswordSendCodeSuccess) {
+          await showSuccessBottomSheet(
+            context,
+            title: 'تم إرسال الرمز',
+            message: 'أرسلنا رمز تحقق جديد إلى بريدك الإلكتروني.\nصلاحية الرمز دقيقتان.',
+            buttonText: 'حسنًا',
+          );
+        }
+
+        if (state is ForgotPasswordFailure) {
+          await showErrorBottomSheet(
+            context,
+            title: 'حدث خطأ',
+            message: state.message,
+            buttonText: 'حسنًا',
+          );
+        }
+      },
+      child: AuthShell(
+        title: 'التحقق من الرمز',
+        subtitle: 'أدخل الرمز المرسل إلى ${widget.email}',
+        child: Column(
+          children: [
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: Pinput(
+                controller: _pinController,
+                length: 6,
+                defaultPinTheme: defaultPinTheme,
+                focusedPinTheme: defaultPinTheme.copyWith(
+                  decoration: defaultPinTheme.decoration?.copyWith(
+                    border: Border.all(
+                      color: theme.colorScheme.primary,
+                      width: 1.5,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          PrimaryAppButton(
-            text: 'تأكيد الرمز',
-            icon: Icons.verified_user_outlined,
-            onPressed: _submit,
-          ),
-          const SizedBox(height: 12),
-          TextButton(onPressed: () {}, child: const Text('إعادة إرسال الرمز')),
-          TextButton(
-            onPressed: () => context.pop(),
-            child: const Text('العودة'),
-          ),
-        ],
+
+            const SizedBox(height: 20),
+
+            BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
+              builder: (context, state) {
+                final isLoading = state is ForgotPasswordLoading;
+
+                return PrimaryAppButton(
+                  text: isLoading ? 'جاري التحقق...' : 'تأكيد الرمز',
+                  icon: Icons.verified_user_outlined,
+                  onPressed: isLoading ? null : _submit,
+                );
+              },
+            ),
+
+            const SizedBox(height: 12),
+
+            BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
+              builder: (context, state) {
+                final isLoading = state is ForgotPasswordLoading;
+
+                return TextButton(
+                  onPressed: isLoading ? null : _resendCode,
+                  child: const Text('إعادة إرسال الرمز'),
+                );
+              },
+            ),
+
+            TextButton(
+              onPressed: () => context.pop(),
+              child: const Text('العودة'),
+            ),
+          ],
+        ),
       ),
     );
   }

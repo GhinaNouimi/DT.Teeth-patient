@@ -1,5 +1,9 @@
 import '../../data/datasources/auth_remote_data_source.dart';
 
+import '../../data/models/forgot_password_reset_password_request_model.dart';
+import '../../data/models/forgot_password_response_model.dart';
+import '../../data/models/forgot_password_send_code_request_model.dart';
+import '../../data/models/forgot_password_verify_code_request_model.dart';
 import '../../data/models/login_request_model.dart';
 import '../../data/models/login_response_model.dart';
 import '../../data/models/register_patient_request_model.dart';
@@ -44,5 +48,26 @@ class AuthRepositoryImpl implements AuthRepository {
       LoginRequestModel request,
       ) {
     return remoteDataSource.loginPatient(request);
+  }
+
+  @override
+  Future<ForgotPasswordResponseModel> sendForgotPasswordCode(
+      ForgotPasswordSendCodeRequestModel request,
+      ) {
+    return remoteDataSource.sendForgotPasswordCode(request);
+  }
+
+  @override
+  Future<ForgotPasswordResponseModel> verifyForgotPasswordCode(
+      ForgotPasswordVerifyCodeRequestModel request,
+      ) {
+    return remoteDataSource.verifyForgotPasswordCode(request);
+  }
+
+  @override
+  Future<ForgotPasswordResponseModel> resetPassword(
+      ForgotPasswordResetPasswordRequestModel request,
+      ) {
+    return remoteDataSource.resetPassword(request);
   }
 }

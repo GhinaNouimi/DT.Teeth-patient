@@ -57,7 +57,8 @@ class ApiErrorHandler {
     }
 
     if (statusCode == 429) {
-      return 'تم إرسال عدد كبير من الطلبات. يرجى المحاولة بعد قليل.';
+      return _extractMessage(data) ??
+          'تم إرسال عدد كبير من الطلبات. يرجى المحاولة بعد قليل.';
     }
 
     if (statusCode != null && statusCode >= 500) {
@@ -159,6 +160,27 @@ class ApiErrorHandler {
 
     if (lowerMessage.contains('patient registered successfully')) {
       return 'تم إنشاء الحساب بنجاح.';
+    }
+
+    if (lowerMessage.contains('invalid or expired verification code')) {
+      return 'رمز التحقق غير صحيح أو منتهي الصلاحية.';
+    }
+
+    if (lowerMessage.contains('maximum number of attempts')) {
+      return 'تم تجاوز عدد المحاولات المسموح. يرجى المحاولة غداً.';
+    }
+
+    if (lowerMessage.contains('verification code is valid')) {
+      return 'تم التحقق من الرمز بنجاح.';
+    }
+
+    if (lowerMessage.contains('password reset successfully')) {
+      return 'تمت إعادة تعيين كلمة المرور بنجاح.';
+    }
+
+    if (lowerMessage.contains('code sent') ||
+        lowerMessage.contains('verification code sent')) {
+      return 'تم إرسال رمز التحقق إلى بريدك الإلكتروني.';
     }
 
     return message;

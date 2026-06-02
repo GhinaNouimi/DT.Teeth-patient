@@ -37,21 +37,12 @@ class _SignupScreenState extends State<SignupScreen> {
   static const List<String> _genderOptions = ['ذكر', 'أنثى'];
 
   @override
-  void initState() {
-    super.initState();
-    _passwordController.addListener(_passwordListener);
-  }
-
-  void _passwordListener() => setState(() {});
-
-  @override
   void dispose() {
     _nameController.dispose();
     _phoneController.dispose();
     _emailController.dispose();
     _birthDateController.dispose();
     _addressController.dispose();
-    _passwordController.removeListener(_passwordListener);
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -72,8 +63,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
     setState(() {
       _selectedBirthDate = picked;
-      _birthDateController.text =
-          DateFormat('yyyy-MM-dd').format(picked);
+      _birthDateController.text = DateFormat('yyyy-MM-dd').format(picked);
     });
   }
 
@@ -186,17 +176,22 @@ class _SignupScreenState extends State<SignupScreen> {
               alignment: Alignment.centerRight,
               child: Text(
                 'شروط كلمة المرور',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
 
             const SizedBox(height: 10),
 
-            PasswordStrengthCard(
-              password: _passwordController.text,
-            ).animate().fadeIn(delay: 340.ms),
+            AnimatedBuilder(
+              animation: _passwordController,
+              builder: (context, _) {
+                return PasswordStrengthCard(
+                  password: _passwordController.text,
+                ).animate().fadeIn(delay: 340.ms);
+              },
+            ),
 
             const SizedBox(height: 16),
 
@@ -207,7 +202,6 @@ class _SignupScreenState extends State<SignupScreen> {
               prefixIcon: Icons.lock_outline_rounded,
               obscureText: true,
               validator: AppValidators.strongPassword,
-              onChanged: (_) => setState(() {}),
             ).animate().fadeIn(delay: 380.ms).slideX(begin: 0.08, end: 0),
 
             const SizedBox(height: 16),

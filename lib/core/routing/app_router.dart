@@ -12,8 +12,12 @@ import '../../features/auth/data/datasources/auth_remote_data_source.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/domain/usecases/login_patient_usecase.dart';
 import '../../features/auth/domain/usecases/register_patient_usecase.dart';
+import '../../features/auth/domain/usecases/reset_password_usecase.dart';
+import '../../features/auth/domain/usecases/send_forgot_password_code_usecase.dart';
 import '../../features/auth/domain/usecases/send_verification_usecase.dart';
 import '../../features/auth/domain/usecases/verify_email_usecase.dart';
+import '../../features/auth/domain/usecases/verify_forgot_password_code_usecase.dart';
+import '../../features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
 import '../../features/auth/presentation/bloc/login/login_bloc.dart';
 import '../../features/auth/presentation/bloc/register/register_bloc.dart';
 import '../../features/auth/presentation/bloc/verify_email/verify_email_bloc.dart';
@@ -127,17 +131,56 @@ class AppRouter {
             child: VerifyScreen(email: email),
           );
         },
-      ),      GoRoute(
+      ),
+      GoRoute(
         path: AppRoutes.forgotPassword,
         name: 'forgot-password',
-        builder: (context, state) => const ForgotPasswordScreen(),
+        builder: (context, state) {
+          final repository = AuthRepositoryImpl(
+            remoteDataSource: AuthRemoteDataSourceImpl(),
+          );
+
+          return BlocProvider(
+            create: (_) => ForgotPasswordBloc(
+              sendForgotPasswordCodeUseCase: SendForgotPasswordCodeUseCase(
+                repository: repository,
+              ),
+              verifyForgotPasswordCodeUseCase: VerifyForgotPasswordCodeUseCase(
+                repository: repository,
+              ),
+              resetPasswordUseCase: ResetPasswordUseCase(
+                repository: repository,
+              ),
+              networkInfo: NetworkInfo(connectivity: Connectivity()),
+            ),
+            child: const ForgotPasswordScreen(),
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.verifyResetCode,
         name: 'verify-reset-code',
         builder: (context, state) {
           final email = state.extra as String? ?? '';
-          return VerifyResetCodeScreen(email: email);
+          final repository = AuthRepositoryImpl(
+            remoteDataSource: AuthRemoteDataSourceImpl(),
+          );
+
+          return BlocProvider(
+            create: (_) => ForgotPasswordBloc(
+              sendForgotPasswordCodeUseCase: SendForgotPasswordCodeUseCase(
+                repository: repository,
+              ),
+              verifyForgotPasswordCodeUseCase: VerifyForgotPasswordCodeUseCase(
+                repository: repository,
+              ),
+              resetPasswordUseCase: ResetPasswordUseCase(
+                repository: repository,
+              ),
+              networkInfo: NetworkInfo(connectivity: Connectivity()),
+            ),
+            child: VerifyResetCodeScreen(email: email),
+          );
         },
       ),
       GoRoute(
@@ -145,7 +188,25 @@ class AppRouter {
         name: 'reset-password',
         builder: (context, state) {
           final email = state.extra as String? ?? '';
-          return ResetPasswordScreen(email: email);
+          final repository = AuthRepositoryImpl(
+            remoteDataSource: AuthRemoteDataSourceImpl(),
+          );
+
+          return BlocProvider(
+            create: (_) => ForgotPasswordBloc(
+              sendForgotPasswordCodeUseCase: SendForgotPasswordCodeUseCase(
+                repository: repository,
+              ),
+              verifyForgotPasswordCodeUseCase: VerifyForgotPasswordCodeUseCase(
+                repository: repository,
+              ),
+              resetPasswordUseCase: ResetPasswordUseCase(
+                repository: repository,
+              ),
+              networkInfo: NetworkInfo(connectivity: Connectivity()),
+            ),
+            child: ResetPasswordScreen(email: email),
+          );
         },
       ),
       GoRoute(
