@@ -5,6 +5,7 @@ import '../../doctors/presentation/pages/doctors_screen.dart';
 import '../../home/pages/patient_home_screen.dart';
 import '../../home/widgets/patient_bottom_nav_bar.dart';
 import '../../medical_record/presentation/pages/medical_record_home_screen.dart';
+import '../../profile/presentation/pages/profile_screen.dart';
 
 class PatientMainShellScreen extends StatefulWidget {
   const PatientMainShellScreen({super.key});
@@ -21,7 +22,7 @@ class _PatientMainShellScreenState extends State<PatientMainShellScreen> {
     DoctorsScreen(),
     AppointmentsManagementScreen(),
     MedicalRecordHomeScreen(),
-    _ComingSoonScreen(title: 'حسابي'),
+    ProfileScreen(),
   ];
 
   void _onTap(int index) {
@@ -42,13 +43,3 @@ class _PatientMainShellScreenState extends State<PatientMainShellScreen> {
   }
 }
 
-class _ComingSoonScreen extends StatelessWidget {
-  final String title;
-
-  const _ComingSoonScreen({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text(title));
-  }
-}

@@ -70,7 +70,8 @@ class _MedicalRecordHomeScreenState extends State<MedicalRecordHomeScreen> {
           children: [
             const Padding(
               padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
-              child: MedicalRecordHeaderSection(
+              child:
+              MedicalRecordHeaderSection(
                 title: 'الملف الطبي',
                 subtitle:
                     'تابع رحلة علاجك، مواعيد الجلسات، والملاحظات الطبية من مكان واحد.',

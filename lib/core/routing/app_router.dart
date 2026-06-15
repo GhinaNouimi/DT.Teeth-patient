@@ -41,11 +41,14 @@ import '../../features/medical_record/presentation/pages/prescription_details_sc
 import '../../features/medical_record/presentation/pages/prescriptions_screen.dart';
 import '../../features/medical_record/presentation/pages/treatment_details_screen.dart';
 import '../../features/medical_record/presentation/pages/treatments_screen.dart';
+import '../../features/profile/domain/entities/profile_entity.dart';
+import '../../features/profile/presentation/pages/edit_profile_screen.dart';
+import '../../features/profile/presentation/pages/profile_screen.dart';
 import '../network/network_info.dart';
 
 class AppRouter {
   static final router = GoRouter(
-    initialLocation: AppRoutes.splash,
+    initialLocation: AppRoutes.home,
     routes: [
       GoRoute(
         path: AppRoutes.splash,
@@ -213,6 +216,19 @@ class AppRouter {
         path: AppRoutes.home,
         name: 'home',
         builder: (context, state) => const PatientMainShellScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.profile,
+        name: 'profile',
+        builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.editProfile,
+        name: 'edit-profile',
+        builder: (context, state) {
+          final profile = state.extra as ProfileEntity;
+          return EditProfileScreen(profile: profile);
+        },
       ),
       GoRoute(
         path: AppRoutes.appointmentDetails,

@@ -8,6 +8,8 @@ class AppRoutes {
   static const verifyResetCode = '/verify-reset-code';
   static const resetPassword = '/reset-password';
   static const home = '/home';
+  static const profile = '/profile';
+  static const editProfile = '/edit-profile';
 
   static const doctors = '/doctors';
   static const doctorDetails = '/doctor-details';
