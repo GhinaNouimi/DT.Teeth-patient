@@ -39,7 +39,7 @@ class ProfileHeaderSection extends StatelessWidget {
             children: [
               ProfileAvatarCard(
                 name: profile.name,
-                avatarUrl: profile.avatarUrl,
+                avatarStyleId: profile.avatarStyleId,
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -61,43 +61,18 @@ class ProfileHeaderSection extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Row(
+                    const SizedBox(height: 12),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
                       children: [
-                        Icon(
-                          Icons.email_outlined,
-                          size: 16,
-                          color: colors.navBarItem,
+                        _InfoBadge(
+                          icon: Icons.email_outlined,
+                          label: profile.email,
                         ),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            profile.email,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: colors.textSecondary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.phone_outlined,
-                          size: 16,
-                          color: colors.navBarItem,
-                        ),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            profile.phone,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: colors.textSecondary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                        _InfoBadge(
+                          icon: Icons.phone_outlined,
+                          label: profile.phone,
                         ),
                       ],
                     ),
@@ -112,27 +87,77 @@ class ProfileHeaderSection extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed: onEditProfileTap,
               style: OutlinedButton.styleFrom(
+                visualDensity: VisualDensity.compact,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 12,
+                  horizontal: 12,
+                  vertical: 15,
                 ),
+                minimumSize: Size.zero,
                 side: BorderSide(color: colors.borderSoft),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(14),
                 ),
                 backgroundColor: colors.surfacePrimary,
               ),
               icon: Icon(
                 Icons.edit_outlined,
-                size: 18,
+                size: 16,
                 color: colors.navBarItem,
               ),
               label: Text(
                 'تعديل البروفايل',
-                style: theme.textTheme.titleSmall?.copyWith(
+                style: theme.textTheme.bodyMedium?.copyWith(
                   color: colors.navBarItem,
                   fontWeight: FontWeight.w700,
                 ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoBadge extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const _InfoBadge({
+    required this.icon,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: colors.backgroundSecondary,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: colors.borderSoft),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 15,
+            color: colors.navBarItem,
+          ),
+          const SizedBox(width: 6),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 170),
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: colors.textPrimary,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),

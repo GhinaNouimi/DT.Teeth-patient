@@ -14,7 +14,7 @@ class ProfileEntity {
   final bool isSmoker;
   final bool drinksAlcoholFrequently;
   final String teethCleaningFrequency;
-  final String? avatarUrl;
+  final String? avatarStyleId;
   final bool isDarkModeEnabled;
   final String languageCode;
 
@@ -34,7 +34,7 @@ class ProfileEntity {
     required this.isSmoker,
     required this.drinksAlcoholFrequently,
     required this.teethCleaningFrequency,
-    required this.avatarUrl,
+    required this.avatarStyleId,
     required this.isDarkModeEnabled,
     required this.languageCode,
   });
@@ -55,7 +55,7 @@ class ProfileEntity {
     bool? isSmoker,
     bool? drinksAlcoholFrequently,
     String? teethCleaningFrequency,
-    String? avatarUrl,
+    String? avatarStyleId,
     bool? isDarkModeEnabled,
     String? languageCode,
   }) {
@@ -80,7 +80,7 @@ class ProfileEntity {
       drinksAlcoholFrequently ?? this.drinksAlcoholFrequently,
       teethCleaningFrequency:
       teethCleaningFrequency ?? this.teethCleaningFrequency,
-      avatarUrl: avatarUrl ?? this.avatarUrl,
+      avatarStyleId: avatarStyleId ?? this.avatarStyleId,
       isDarkModeEnabled: isDarkModeEnabled ?? this.isDarkModeEnabled,
       languageCode: languageCode ?? this.languageCode,
     );

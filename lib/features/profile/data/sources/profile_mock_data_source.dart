@@ -17,7 +17,7 @@ class ProfileMockDataSource {
     isSmoker: false,
     drinksAlcoholFrequently: false,
     teethCleaningFrequency: 'مرتان يوميًا',
-    avatarUrl: null,
+    avatarStyleId: 'female_1',
     isDarkModeEnabled: false,
     languageCode: 'ar',
   );

@@ -34,8 +34,9 @@ abstract final class AppTheme {
           inversePrimary: colors.navBarItem,
         );
 
-    final baseTextTheme = GoogleFonts.alexandriaTextTheme();
-
+    final baseTextTheme = GoogleFonts.readexProTextTheme(
+      ThemeData(brightness: brightness).textTheme,
+    );
     return ThemeData(
       useMaterial3: true,
       brightness: brightness,

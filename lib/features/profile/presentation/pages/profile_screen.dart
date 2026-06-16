@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../domain/entities/profile_entity.dart';
-import '../../profile_di.dart';
 import '../sections/profile_account_section.dart';
 import '../sections/profile_header_section.dart';
 import '../sections/profile_preferences_section.dart';
@@ -17,190 +16,125 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  ProfileEntity? _profile;
-  bool _isLoading = true;
+  late ProfileEntity _profile;
 
   @override
   void initState() {
     super.initState();
-    _loadProfile();
-  }
-
-  Future<void> _loadProfile() async {
-    final profile = await ProfileDi.getProfileUseCase();
-    if (!mounted) return;
-
-    setState(() {
-      _profile = profile;
-      _isLoading = false;
-    });
-  }
-
-  Future<void> _updateTheme(bool value) async {
-    final profile = _profile;
-    if (profile == null) return;
-
-    final updatedProfile = await ProfileDi.updateProfileUseCase(
-      profile.copyWith(isDarkModeEnabled: value),
+    _profile = const ProfileEntity(
+      id: 'profile-001',
+      name: 'نور الهدى أحمد',
+      email: 'noor.ahmad@example.com',
+      phone: '+963 944 123 456',
+      dateOfBirth: '14 يونيو 1998',
+      gender: 0,
+      address: 'دمشق - المزة',
+      emergencyContactName: 'أحمد خالد',
+      emergencyContactRelation: 'الأب',
+      emergencyContactPhone: '+963 933 000 111',
+      isPregnant: false,
+      isBreastfeeding: false,
+      isSmoker: false,
+      drinksAlcoholFrequently: false,
+      teethCleaningFrequency: 'مرتان يوميًا',
+      avatarStyleId: 'female_1',
+      isDarkModeEnabled: false,
+      languageCode: 'ar',
     );
-
-    if (!mounted) return;
-
-    setState(() {
-      _profile = updatedProfile;
-    });
   }
 
-  void _showLanguageSheet() {
-    final profile = _profile;
-    if (profile == null) return;
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
 
-    showModalBottomSheet<void>(
+  Future<void> _showLanguageSheet() async {
+    final selected = await showModalBottomSheet<String>(
       context: context,
-      backgroundColor: Colors.transparent,
+      backgroundColor: context.colors.surfacePrimary,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
       builder: (context) {
-        final colors = context.colors;
         final theme = Theme.of(context);
+        final colors = context.colors;
 
-        Widget optionTile({
-          required String label,
-          required String code,
-        }) {
-          final isSelected = profile.languageCode == code;
-
-          return InkWell(
-            onTap: () async {
-              final updatedProfile = await ProfileDi.updateProfileUseCase(
-                profile.copyWith(languageCode: code),
-              );
-
-              if (!mounted) return;
-
-              setState(() {
-                _profile = updatedProfile;
-              });
-
-              if (context.mounted) {
-                Navigator.of(context).pop();
-              }
-            },
-            borderRadius: BorderRadius.circular(18),
-            child: Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: isSelected
-                    ? colors.surfaceMuted
-                    : colors.surfacePrimary,
-                borderRadius: BorderRadius.circular(18),
-                border: Border.all(
-                  color: isSelected
-                      ? colors.navBarItem.withValues(alpha: 0.14)
-                      : colors.borderSoft,
-                ),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      label,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        color: colors.textPrimary,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ),
-                  if (isSelected)
-                    Icon(
-                      Icons.check_circle_rounded,
-                      color: colors.navBarItem,
-                    ),
-                ],
-              ),
-            ),
-          );
-        }
-
-        return Container(
-          padding: const EdgeInsets.fromLTRB(20, 14, 20, 24),
-          decoration: BoxDecoration(
-            color: colors.background,
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(28),
-            ),
-          ),
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 120),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 46,
-                height: 5,
-                decoration: BoxDecoration(
-                  color: colors.borderSoft,
-                  borderRadius: BorderRadius.circular(999),
-                ),
-              ),
-              const SizedBox(height: 18),
               Text(
-                'اختر اللغة',
-                style: theme.textTheme.titleMedium?.copyWith(
+                'اختيار اللغة',
+                style: theme.textTheme.titleLarge?.copyWith(
                   color: colors.textPrimary,
                   fontWeight: FontWeight.w800,
                 ),
               ),
-              const SizedBox(height: 18),
-              optionTile(label: 'العربية', code: 'ar'),
-              const SizedBox(height: 10),
-              optionTile(label: 'English', code: 'en'),
+              const SizedBox(height: 12),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                onTap: () => Navigator.of(context).pop('ar'),
+                title: const Text('العربية'),
+                trailing: _profile.languageCode == 'ar'
+                    ? Icon(Icons.check_circle, color: colors.success)
+                    : null,
+              ),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                onTap: () => Navigator.of(context).pop('en'),
+                title: const Text('English'),
+                trailing: _profile.languageCode == 'en'
+                    ? Icon(Icons.check_circle, color: colors.success)
+                    : null,
+              ),
             ],
           ),
         );
       },
     );
+
+    if (selected != null) {
+      setState(() {
+        _profile = _profile.copyWith(languageCode: selected);
+      });
+    }
   }
 
-  void _showLogoutDialog() {
+  Future<void> _showLogoutDialog() async {
     final colors = context.colors;
-    final theme = Theme.of(context);
 
-    showDialog<void>(
+    final shouldLogout = await showDialog<bool>(
       context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          backgroundColor: colors.surfacePrimary,
-          title: Text(
-            'تسجيل الخروج',
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: colors.textPrimary,
-              fontWeight: FontWeight.w800,
-            ),
+      builder: (context) => AlertDialog(
+        title: const Text('تسجيل الخروج'),
+        content: const Text('هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('إلغاء'),
           ),
-          content: Text(
-            'هل تريد تسجيل الخروج من الحساب الحالي؟',
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: colors.textSecondary,
-              height: 1.6,
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: colors.danger,
+              foregroundColor: colors.textInverse,
             ),
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('خروج'),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('إلغاء'),
-            ),
-            FilledButton(
-              onPressed: () {
-                Navigator.of(dialogContext).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('تم تسجيل الخروج بنجاح'),
-                  ),
-                );
-              },
-              child: const Text('تأكيد'),
-            ),
-          ],
-        );
-      },
+        ],
+      ),
     );
+
+    if (shouldLogout == true && mounted) {
+      _showMessage('تم تنفيذ تسجيل الخروج بشكل تجريبي.');
+    }
   }
 
   @override
@@ -212,143 +146,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: colors.background,
       body: SafeArea(
         bottom: false,
-        child: _isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : (_profile == null)
-            ? Center(
-          child: Text(
-            'تعذر تحميل بيانات الحساب',
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: colors.textPrimary,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        )
-            : ListView(
+        child: ListView(
           physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(20, 18, 20, 28),
-          children: [
-            _ProfileTopBrandBar(profileName: _profile!.name),
+          padding: EdgeInsets.fromLTRB(
+            20,
+            16,
+            20,
+            MediaQuery.of(context).padding.bottom + 110,
+          ),          children: [
+            Text(
+              'حسابي',
+              style: theme.textTheme.headlineMedium?.copyWith(
+                color: colors.textPrimary,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'إدارة ملفك الشخصي، التفضيلات، وإعدادات الحساب من مكان واحد.',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colors.textSecondary,
+                height: 1.5,
+              ),
+            ),
             const SizedBox(height: 20),
             ProfileHeaderSection(
-              profile: _profile!,
+              profile: _profile,
               onEditProfileTap: () {
                 context.push(
                   AppRoutes.editProfile,
-                  extra: _profile!,
+                  extra: _profile,
                 );
               },
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 16),
             ProfilePreferencesSection(
-              profile: _profile!,
-              onThemeChanged: _updateTheme,
+              profile: _profile,
+              onThemeChanged: (value) {
+                setState(() {
+                  _profile = _profile.copyWith(isDarkModeEnabled: value);
+                });
+              },
               onLanguageTap: _showLanguageSheet,
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 16),
             ProfileAccountSection(
               onComplaintsTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('سيتم إضافة الشكاوى والدعم لاحقًا'),
-                  ),
-                );
+                _showMessage('سيتم إضافة الشكاوى والدعم لاحقًا.');
               },
               onChangePasswordTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      'سيتم إضافة تغيير كلمة المرور لاحقًا',
-                    ),
-                  ),
-                );
+                _showMessage('سيتم إضافة تغيير كلمة المرور لاحقًا.');
               },
               onLogoutTap: _showLogoutDialog,
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _ProfileTopBrandBar extends StatelessWidget {
-  final String profileName;
-
-  const _ProfileTopBrandBar({
-    required this.profileName,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final theme = Theme.of(context);
-
-    return Row(
-      children: [
-        Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            color: colors.surfacePrimary,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: colors.borderSoft),
-          ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Icon(
-                Icons.notifications_none_rounded,
-                color: colors.navBarItem,
-              ),
-              PositionedDirectional(
-                top: 10,
-                end: 10,
-                child: Container(
-                  width: 7,
-                  height: 7,
-                  decoration: BoxDecoration(
-                    color: colors.buttonPrimary,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Column(
-            children: [
-              Text(
-                'DT.Teeth',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: colors.navBarItem,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Container(
-                width: 52,
-                height: 3,
-                decoration: BoxDecoration(
-                  color: colors.buttonPrimary.withValues(alpha: 0.7),
-                  borderRadius: BorderRadius.circular(999),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            color: colors.surfacePrimary,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: colors.borderSoft),
-          ),
-
-        ),
-      ],
     );
   }
 }

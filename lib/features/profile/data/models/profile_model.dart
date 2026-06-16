@@ -16,7 +16,7 @@ class ProfileModel {
   final bool isSmoker;
   final bool drinksAlcoholFrequently;
   final String teethCleaningFrequency;
-  final String? avatarUrl;
+  final String? avatarStyleId;
   final bool isDarkModeEnabled;
   final String languageCode;
 
@@ -36,7 +36,7 @@ class ProfileModel {
     required this.isSmoker,
     required this.drinksAlcoholFrequently,
     required this.teethCleaningFrequency,
-    required this.avatarUrl,
+    required this.avatarStyleId,
     required this.isDarkModeEnabled,
     required this.languageCode,
   });
@@ -58,7 +58,7 @@ class ProfileModel {
       isSmoker: isSmoker,
       drinksAlcoholFrequently: drinksAlcoholFrequently,
       teethCleaningFrequency: teethCleaningFrequency,
-      avatarUrl: avatarUrl,
+      avatarStyleId: avatarStyleId,
       isDarkModeEnabled: isDarkModeEnabled,
       languageCode: languageCode,
     );
@@ -81,7 +81,7 @@ class ProfileModel {
       isSmoker: entity.isSmoker,
       drinksAlcoholFrequently: entity.drinksAlcoholFrequently,
       teethCleaningFrequency: entity.teethCleaningFrequency,
-      avatarUrl: entity.avatarUrl,
+      avatarStyleId: entity.avatarStyleId,
       isDarkModeEnabled: entity.isDarkModeEnabled,
       languageCode: entity.languageCode,
     );
@@ -103,7 +103,7 @@ class ProfileModel {
     bool? isSmoker,
     bool? drinksAlcoholFrequently,
     String? teethCleaningFrequency,
-    String? avatarUrl,
+    String? avatarStyleId,
     bool? isDarkModeEnabled,
     String? languageCode,
   }) {
@@ -128,7 +128,7 @@ class ProfileModel {
       drinksAlcoholFrequently ?? this.drinksAlcoholFrequently,
       teethCleaningFrequency:
       teethCleaningFrequency ?? this.teethCleaningFrequency,
-      avatarUrl: avatarUrl ?? this.avatarUrl,
+      avatarStyleId: avatarStyleId ?? this.avatarStyleId,
       isDarkModeEnabled: isDarkModeEnabled ?? this.isDarkModeEnabled,
       languageCode: languageCode ?? this.languageCode,
     );
@@ -156,7 +156,7 @@ class ProfileModel {
       json['drinks_alcohol_frequently'] as bool? ?? false,
       teethCleaningFrequency:
       json['teeth_cleaning_frequency'] as String? ?? '',
-      avatarUrl: json['avatar_url'] as String?,
+      avatarStyleId: json['avatar_style_id'] as String?,
       isDarkModeEnabled: json['is_dark_mode_enabled'] as bool? ?? false,
       languageCode: json['language_code'] as String? ?? 'ar',
     );
@@ -179,7 +179,7 @@ class ProfileModel {
       'is_smoker': isSmoker,
       'drinks_alcohol_frequently': drinksAlcoholFrequently,
       'teeth_cleaning_frequency': teethCleaningFrequency,
-      'avatar_url': avatarUrl,
+      'avatar_style_id': avatarStyleId,
       'is_dark_mode_enabled': isDarkModeEnabled,
       'language_code': languageCode,
     };
