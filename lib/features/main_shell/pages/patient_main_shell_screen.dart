@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../appointments/presentaion/pages/appointments_management_screen.dart';
 import '../../doctors/presentation/pages/doctors_screen.dart';
 import '../../home/pages/patient_home_screen.dart';
+import '../../home/sections/patient_home_app_bar_section.dart';
 import '../../home/widgets/patient_bottom_nav_bar.dart';
 import '../../medical_record/presentation/pages/medical_record_home_screen.dart';
 import '../../profile/presentation/pages/profile_screen.dart';
@@ -34,7 +35,24 @@ class _PatientMainShellScreenState extends State<PatientMainShellScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: IndexedStack(index: _currentIndex, children: _pages),
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
+              child: PatientHomeAppBarSection(),
+            ),
+            const SizedBox(height: 14),
+            Expanded(
+              child: IndexedStack(
+                index: _currentIndex,
+                children: _pages,
+              ),
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: PatientBottomNavBar(
         currentIndex: _currentIndex,
         onTap: _onTap,
@@ -42,4 +60,3 @@ class _PatientMainShellScreenState extends State<PatientMainShellScreen> {
     );
   }
 }
-

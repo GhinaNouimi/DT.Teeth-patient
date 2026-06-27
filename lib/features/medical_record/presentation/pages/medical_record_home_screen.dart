@@ -68,22 +68,22 @@ class _MedicalRecordHomeScreenState extends State<MedicalRecordHomeScreen> {
         bottom: false,
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
-              child:
-              MedicalRecordHeaderSection(
-                title: 'الملف الطبي',
-                subtitle:
-                    'تابع رحلة علاجك، مواعيد الجلسات، والملاحظات الطبية من مكان واحد.',
-              ),
-            ),
+            // const Padding(
+            //   padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
+            //   child:
+            //   // MedicalRecordHeaderSection(
+            //   //   title: 'الملف الطبي',
+            //   //   subtitle:
+            //   //       'تابع رحلة علاجك، مواعيد الجلسات، والملاحظات الطبية من مكان واحد.',
+            //   // ),
+            // ),
 
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ListView(
                       physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 120),
+                      padding: const EdgeInsets.fromLTRB(20, 3, 20, 120),
                       children: [
                         const SizedBox(height: 16),
 

@@ -4,128 +4,276 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/theme_extensions.dart';
+import '../../../../generated/assets.dart';
 import '../models/appointment_ui_model.dart';
 
 class NextAppointmentSection extends StatelessWidget {
   final AppointmentUiModel appointment;
 
-  const NextAppointmentSection({super.key, required this.appointment});
+  const NextAppointmentSection({
+    super.key,
+    required this.appointment,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    final dayName = DateFormat(
+      'EEEE',
+      'ar_SA',
+    ).format(appointment.appointmentDate);
+
+    final dayNumber = DateFormat(
+      'd',
+      'ar_SA',
+    ).format(appointment.appointmentDate);
+
+    final monthName = DateFormat(
+      'MMMM',
+      'ar_SA',
+    ).format(appointment.appointmentDate);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const _SectionHeader(title: 'موعدك القادم'),
+        const SizedBox(height: 14),
+        Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(26),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(26),
+            onTap: () {
+              context.push(AppRoutes.appointmentDetails, extra: appointment);
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              decoration: BoxDecoration(
+                color: colors.surfacePrimary,
+                borderRadius: BorderRadius.circular(26),
+                border: Border.all(color: colors.borderSoft),
+                boxShadow: [
+                  BoxShadow(
+                    color: colors.shadow,
+                    blurRadius: 18,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  _DateBlock(
+                    dayName: dayName,
+                    dayNumber: dayNumber,
+                    monthName: monthName,
+                  ),
+                  Container(
+                    width: 1,
+                    height: 72,
+                    margin: const EdgeInsets.symmetric(horizontal: 14),
+                    color: colors.borderSoft,
+                  ),
+                  Expanded(
+                    child: _AppointmentInfo(appointment: appointment),
+                  ),
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    width: 76,
+                    height: 76,
+                    child: Image.asset(
+                      Assets.dentalChair,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  final String title;
+
+  const _SectionHeader({required this.title});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
 
-    final formattedDate = DateFormat(
-      'EEEE d MMMM',
-      'ar_SA',
-    ).format(appointment.appointmentDate);
-
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: colors.surfacePrimary,
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: colors.borderSoft),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'موعدك القادم',
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            title,
             style: theme.textTheme.titleLarge?.copyWith(
               color: colors.textPrimary,
               fontWeight: FontWeight.w800,
             ),
           ),
+        ),
+        Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            color: colors.surfaceMuted,
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: Icon(
+            Icons.calendar_month_rounded,
+            color: colors.navBarItem,
+            size: 21,
+          ),
+        ),
+      ],
+    );
+  }
+}
 
-          const SizedBox(height: 16),
+class _DateBlock extends StatelessWidget {
+  final String dayName;
+  final String dayNumber;
+  final String monthName;
 
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(
-              color: colors.surfaceSecondary,
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.calendar_today_rounded,
-                  color: colors.navBarItem,
-                  size: 18,
-                ),
+  const _DateBlock({
+    required this.dayName,
+    required this.dayNumber,
+    required this.monthName,
+  });
 
-                const SizedBox(width: 8),
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
 
-                Expanded(
-                  child: Text(
-                    '$formattedDate - ${appointment.appointmentTime}',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: colors.textPrimary,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ],
+    return SizedBox(
+      width: 62,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            dayName,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: colors.textSecondary,
+              fontWeight: FontWeight.w700,
             ),
           ),
-
-          const SizedBox(height: 16),
-
+          const SizedBox(height: 4),
           Text(
-            '${appointment.service.displayName} مع ${appointment.doctor.name}',
-            style: theme.textTheme.titleMedium?.copyWith(
+            dayNumber,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.headlineSmall?.copyWith(
+              color: colors.textPrimary,
+              fontWeight: FontWeight.w900,
+              height: 1,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            monthName,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodySmall?.copyWith(
               color: colors.textPrimary,
               fontWeight: FontWeight.w700,
             ),
           ),
-
-          const SizedBox(height: 14),
-
-          Row(
-            children: [
-              Icon(
-                Icons.access_time_filled_rounded,
-                size: 18,
-                color: colors.buttonPrimary,
-              ),
-
-              const SizedBox(width: 8),
-
-              Expanded(
-                child: Text(
-                  'يرجى الوصول إلى العيادة قبل الموعد بـ 10 دقائق.',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: colors.textSecondary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 20),
-
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                context.push(AppRoutes.appointmentDetails, extra: appointment);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: colors.buttonSecondary,
-                foregroundColor: colors.textPrimary,
-                elevation: 0,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18),
-                ),
-              ),
-              child: const Text('عرض التفاصيل'),
-            ),
-          ),
         ],
       ),
+    );
+  }
+}
+
+class _AppointmentInfo extends StatelessWidget {
+  final AppointmentUiModel appointment;
+
+  const _AppointmentInfo({required this.appointment});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          appointment.service.displayName,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: theme.textTheme.titleMedium?.copyWith(
+            color: colors.textPrimary,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          appointment.doctor.name,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: colors.textPrimary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.access_time_rounded,
+                  color: colors.textSecondary,
+                  size: 15,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  appointment.appointmentTime,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: colors.textSecondary,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ],
+            ),
+
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+              decoration: BoxDecoration(
+                color: colors.surfaceMuted,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: colors.borderSoft),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'التفاصيل',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: colors.textPrimary,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Icon(
+                    Icons.arrow_forward_rounded,
+                    color: colors.textPrimary,
+                    size: 16,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),      ],
     );
   }
 }

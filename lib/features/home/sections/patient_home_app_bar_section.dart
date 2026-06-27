@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/theme_extensions.dart';
+import '../../../core/widgets/branding/app_tooth_logo.dart';
 import '../../../core/widgets/branding/dental_smile_mark.dart';
 import '../widgets/home_section_title.dart';
 
@@ -17,10 +18,7 @@ class PatientHomeAppBarSection extends StatelessWidget {
         SizedBox(
           width: 54,
           height: 54,
-          child: Image.asset(
-            'assets/images/dt_teeth_logo.png',
-            fit: BoxFit.contain,
-          ),
+          child: const AppToothLogo(size: 48)
         ),
         const SizedBox(width: 12),
         Expanded(

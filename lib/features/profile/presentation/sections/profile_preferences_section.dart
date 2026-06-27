@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/profile_entity.dart';
-import '../widgets/profile_section_card.dart';
 import '../widgets/profile_action_tile.dart';
+import '../widgets/profile_section_card.dart';
 
 class ProfilePreferencesSection extends StatelessWidget {
-  final ProfileEntity profile;
+  final bool isDarkModeEnabled;
+  final String languageCode;
   final ValueChanged<bool> onThemeChanged;
   final VoidCallback onLanguageTap;
 
   const ProfilePreferencesSection({
     super.key,
-    required this.profile,
+    required this.isDarkModeEnabled,
+    required this.languageCode,
     required this.onThemeChanged,
     required this.onLanguageTap,
   });
 
   String get _languageLabel {
-    switch (profile.languageCode) {
+    switch (languageCode) {
       case 'ar':
         return 'العربية';
       case 'en':
         return 'English';
       default:
-        return profile.languageCode;
+        return languageCode;
     }
   }
 
@@ -35,11 +36,11 @@ class ProfilePreferencesSection extends StatelessWidget {
         children: [
           ProfileActionTile(
             title: 'الوضع الليلي',
-            subtitle: profile.isDarkModeEnabled ? 'مفعل حاليًا' : 'غير مفعل',
+            subtitle: isDarkModeEnabled ? 'مفعل حاليًا' : 'غير مفعل',
             icon: Icons.dark_mode_outlined,
-            onTap: () => onThemeChanged(!profile.isDarkModeEnabled),
+            onTap: () => onThemeChanged(!isDarkModeEnabled),
             trailing: Switch(
-              value: profile.isDarkModeEnabled,
+              value: isDarkModeEnabled,
               onChanged: onThemeChanged,
             ),
           ),

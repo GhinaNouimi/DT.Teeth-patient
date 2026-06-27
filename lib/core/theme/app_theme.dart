@@ -11,29 +11,25 @@ abstract final class AppTheme {
       _buildTheme(AppColorTokens.dark, Brightness.dark);
 
   static ThemeData _buildTheme(AppColorTokens colors, Brightness brightness) {
-    final colorScheme =
-        ColorScheme.fromSeed(
-          seedColor: colors.buttonPrimary,
-          brightness: brightness,
-        ).copyWith(
-          primary: colors.buttonPrimary,
-          onPrimary: colors.textPrimary,
-          secondary: colors.buttonSecondary,
-          onSecondary: colors.textPrimary,
-          error: colors.danger,
-          onError: colors.textInverse,
-          surface: colors.surfacePrimary,
-          onSurface: colors.textPrimary,
-          tertiary: colors.reservedState,
-          onTertiary: colors.textPrimary,
-          outline: colors.borderSoft,
-          shadow: colors.shadow,
-          scrim: colors.shadow,
-          inverseSurface: colors.textPrimary,
-          onInverseSurface: colors.textInverse,
-          inversePrimary: colors.navBarItem,
-        );
-
+    final colorScheme = ColorScheme(
+      brightness: brightness,
+      primary: colors.buttonPrimary,
+      onPrimary: colors.textPrimary,
+      secondary: colors.buttonSecondary,
+      onSecondary: colors.textPrimary,
+      tertiary: colors.reservedState,
+      onTertiary: colors.textPrimary,
+      error: colors.danger,
+      onError: colors.textInverse,
+      surface: colors.surfacePrimary,
+      onSurface: colors.textPrimary,
+      outline: colors.borderSoft,
+      shadow: colors.shadow,
+      scrim: colors.shadow,
+      inverseSurface: colors.textPrimary,
+      onInverseSurface: colors.textInverse,
+      inversePrimary: colors.navBarItem,
+    );
     final baseTextTheme = GoogleFonts.readexProTextTheme(
       ThemeData(brightness: brightness).textTheme,
     );

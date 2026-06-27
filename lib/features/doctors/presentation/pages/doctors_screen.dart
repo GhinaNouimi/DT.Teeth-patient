@@ -115,11 +115,11 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
           children: [
             /// 🔹 Header + Search + Filters
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 3, 20, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const DoctorsHeaderSection(),
+                  // const DoctorsHeaderSection(),
                   const SizedBox(height: 18),
 
                   DoctorSearchFieldWidget(

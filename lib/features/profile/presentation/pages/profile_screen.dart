@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/routing/app_routes.dart';
+import '../../../../core/theme/theme_bloc/theme_bloc.dart';
+import '../../../../core/theme/theme_bloc/theme_event.dart';
+import '../../../../core/theme/theme_bloc/theme_state.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../domain/entities/profile_entity.dart';
+import '../dialogs/logout_dialog.dart';
 import '../sections/profile_account_section.dart';
 import '../sections/profile_header_section.dart';
 import '../sections/profile_preferences_section.dart';
+import '../sheets/language_sheet.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -21,7 +27,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _profile = const ProfileEntity(
+    _profile = _initialProfile;
+  }
+
+  ProfileEntity get _initialProfile {
+    return const ProfileEntity(
       id: 'profile-001',
       name: 'نور الهدى أحمد',
       email: 'noor.ahmad@example.com',
@@ -49,92 +59,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Future<void> _showLanguageSheet() async {
-    final selected = await showModalBottomSheet<String>(
-      context: context,
-      backgroundColor: context.colors.surfacePrimary,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-      ),
-      builder: (context) {
-        final theme = Theme.of(context);
-        final colors = context.colors;
-
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 120),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'اختيار اللغة',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: colors.textPrimary,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              const SizedBox(height: 12),
-              ListTile(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                onTap: () => Navigator.of(context).pop('ar'),
-                title: const Text('العربية'),
-                trailing: _profile.languageCode == 'ar'
-                    ? Icon(Icons.check_circle, color: colors.success)
-                    : null,
-              ),
-              ListTile(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                onTap: () => Navigator.of(context).pop('en'),
-                title: const Text('English'),
-                trailing: _profile.languageCode == 'en'
-                    ? Icon(Icons.check_circle, color: colors.success)
-                    : null,
-              ),
-            ],
-          ),
-        );
-      },
+  void _goToEditProfile() {
+    context.push(
+      AppRoutes.editProfile,
+      extra: _profile,
     );
-
-    if (selected != null) {
-      setState(() {
-        _profile = _profile.copyWith(languageCode: selected);
-      });
-    }
   }
 
-  Future<void> _showLogoutDialog() async {
-    final colors = context.colors;
-
-    final shouldLogout = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('تسجيل الخروج'),
-        content: const Text('هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('إلغاء'),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: colors.danger,
-              foregroundColor: colors.textInverse,
-            ),
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('خروج'),
-          ),
-        ],
+  void _changeTheme(bool isDarkModeEnabled) {
+    context.read<ThemeBloc>().add(
+      ThemeChanged(
+        isDarkModeEnabled ? ThemeMode.dark : ThemeMode.light,
       ),
     );
+  }
 
-    if (shouldLogout == true && mounted) {
-      _showMessage('تم تنفيذ تسجيل الخروج بشكل تجريبي.');
-    }
+  Future<void> _handleLanguageTap() async {
+    final selectedLanguage = await showLanguageSelectionSheet(
+      context: context,
+      currentLanguageCode: _profile.languageCode,
+    );
+
+    if (selectedLanguage == null) return;
+
+    setState(() {
+      _profile = _profile.copyWith(languageCode: selectedLanguage);
+    });
+  }
+
+  Future<void> _handleLogoutTap() async {
+    final shouldLogout = await showLogoutConfirmationDialog(context);
+
+    if (!shouldLogout || !mounted) return;
+
+    _showMessage('تم تنفيذ تسجيل الخروج بشكل تجريبي.');
   }
 
   @override
@@ -150,44 +108,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
           physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.fromLTRB(
             20,
-            16,
+            3,
             20,
             MediaQuery.of(context).padding.bottom + 110,
-          ),          children: [
-            Text(
-              'حسابي',
-              style: theme.textTheme.headlineMedium?.copyWith(
-                color: colors.textPrimary,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'إدارة ملفك الشخصي، التفضيلات، وإعدادات الحساب من مكان واحد.',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: colors.textSecondary,
-                height: 1.5,
-              ),
-            ),
+          ),
+          children: [
+            // _ProfilePageTitle(theme: theme),
             const SizedBox(height: 20),
             ProfileHeaderSection(
               profile: _profile,
-              onEditProfileTap: () {
-                context.push(
-                  AppRoutes.editProfile,
-                  extra: _profile,
-                );
-              },
+              onEditProfileTap: _goToEditProfile,
             ),
             const SizedBox(height: 16),
-            ProfilePreferencesSection(
-              profile: _profile,
-              onThemeChanged: (value) {
-                setState(() {
-                  _profile = _profile.copyWith(isDarkModeEnabled: value);
-                });
+            BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, themeState) {
+                final isDarkMode = themeState.themeMode == ThemeMode.dark;
+
+                return ProfilePreferencesSection(
+                  isDarkModeEnabled: isDarkMode,
+                  languageCode: _profile.languageCode,
+                  onThemeChanged: _changeTheme,
+                  onLanguageTap: _handleLanguageTap,
+                );
               },
-              onLanguageTap: _showLanguageSheet,
             ),
             const SizedBox(height: 16),
             ProfileAccountSection(
@@ -197,7 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onChangePasswordTap: () {
                 _showMessage('سيتم إضافة تغيير كلمة المرور لاحقًا.');
               },
-              onLogoutTap: _showLogoutDialog,
+              onLogoutTap: _handleLogoutTap,
             ),
           ],
         ),
@@ -205,3 +148,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
+
+// class _ProfilePageTitle extends StatelessWidget {
+//   final ThemeData theme;
+//
+//   const _ProfilePageTitle({
+//     required this.theme,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final colors = context.colors;
+//
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Text(
+//           'حسابي',
+//           style: theme.textTheme.headlineMedium?.copyWith(
+//             color: colors.textPrimary,
+//             fontWeight: FontWeight.w800,
+//           ),
+//         ),
+//         const SizedBox(height: 8),
+//         Text(
+//           'إدارة ملفك الشخصي، التفضيلات، وإعدادات الحساب من مكان واحد.',
+//           style: theme.textTheme.bodyMedium?.copyWith(
+//             color: colors.textSecondary,
+//             height: 1.5,
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }

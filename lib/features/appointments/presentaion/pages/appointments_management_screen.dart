@@ -41,9 +41,9 @@ class _AppointmentsManagementScreenState
             bottom: false,
             child: ListView(
               physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 120),
+              padding: const EdgeInsets.fromLTRB(20, 3, 20, 120),
               children: [
-                const AppointmentsHeaderSection(),
+                // const AppointmentsHeaderSection(),
 
                 const SizedBox(height: 20),
 

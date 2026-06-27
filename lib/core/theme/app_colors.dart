@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Raw color palette used across the application.
-/// These are the source colors before mapping them to semantic roles.
 abstract final class AppColors {
   static const Color transparent = Colors.transparent;
 
@@ -32,11 +30,25 @@ abstract final class AppColors {
   static const Color warningPeach = Color(0xFFFFE6CC);
   static const Color dangerRose = Color(0xFFE76F6F);
 
-  static const Color darkSurface = Color(0xFF111322);
-  static const Color darkSurfaceSoft = Color(0xFF1A1F33);
-  static const Color darkCard = Color(0xFF20263D);
-  static const Color darkStroke = Color(0xFF2F3654);
-  static const Color darkTextPrimary = Color(0xFFF4F6FF);
-  static const Color darkTextSecondary = Color(0xFFB8C1E0);
-  static const Color darkMutedBlue = Color(0xFF8EA4D1);
+  // Dark theme palette
+  static const Color darkSurface = Color(0xFF111318);
+  static const Color darkSurfaceSoft = Color(0xFF1A1D24);
+  static const Color darkCard = Color(0xFF222734);
+  static const Color darkElevatedCard = Color(0xFF2B3142);
+  static const Color darkStroke = Color(0xFF353C4D);
+
+  static const Color darkTextPrimary = Color(0xFFF5F7FA);
+  static const Color darkTextSecondary = Color(0xFFB4BDD0);
+  static const Color darkMutedBlue = Color(0xFF7E8BA3);
+
+  static const Color darkPrimaryPurple = Color(0xFFA58BFF);
+  static const Color darkPrimaryPurplePressed = Color(0xFF8E72F5);
+  static const Color darkSecondaryBlue = Color(0xFF5879B8);
+
+  static const Color darkInput = Color(0xFF252B38);
+  static const Color darkTableHeader = Color(0xFF30384A);
+
+  static const Color darkSuccess = Color(0xFF43C47A);
+  static const Color darkWarning = Color(0xFFF4B74E);
+  static const Color darkDanger = Color(0xFFF26D6D);
 }

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
-/// Semantic tokens:
-/// use these names in UI instead of referencing raw hex colors directly.
 class AppColorTokens {
   const AppColorTokens({
     required this.background,
@@ -26,6 +24,10 @@ class AppColorTokens {
     required this.warning,
     required this.danger,
     required this.shadow,
+    required this.heroStart,
+    required this.heroEnd,
+    required this.heroBorder,
+    required this.heroButton,
   });
 
   final Color background;
@@ -33,21 +35,33 @@ class AppColorTokens {
   final Color surfacePrimary;
   final Color surfaceSecondary;
   final Color surfaceMuted;
+
   final Color textPrimary;
   final Color textSecondary;
   final Color textInverse;
+
   final Color navBarItem;
+
   final Color inputBackground;
   final Color tableHeader;
+
   final Color buttonPrimary;
   final Color buttonSecondary;
+
   final Color borderSoft;
   final Color emptyState;
   final Color reservedState;
+
   final Color success;
   final Color warning;
   final Color danger;
+
   final Color shadow;
+
+  final Color heroStart;
+  final Color heroEnd;
+  final Color heroBorder;
+  final Color heroButton;
 
   static const AppColorTokens light = AppColorTokens(
     background: AppColors.cloud,
@@ -70,28 +84,36 @@ class AppColorTokens {
     warning: AppColors.warningPeach,
     danger: AppColors.dangerRose,
     shadow: Color(0x14000000),
+    heroStart: AppColors.frostBlue,
+    heroEnd: AppColors.lavenderBlush,
+    heroBorder: AppColors.paleSky,
+    heroButton: AppColors.midnightNavy,
   );
 
-  static final AppColorTokens dark = AppColorTokens(
-    background: AppColors.darkSurface,
-    backgroundSecondary: AppColors.darkSurfaceSoft,
-    surfacePrimary: AppColors.darkCard,
-    surfaceSecondary: const Color(0xFF302845),
-    surfaceMuted: const Color(0xFF26314A),
-    textPrimary: AppColors.darkTextPrimary,
-    textSecondary: AppColors.darkTextSecondary,
-    textInverse: AppColors.midnightNavy,
-    navBarItem: AppColors.darkTextPrimary,
-    inputBackground: const Color(0xFF2A3350),
-    tableHeader: const Color(0xFF304467),
-    buttonPrimary: const Color(0xFF8D70B9),
-    buttonSecondary: const Color(0xFF476187),
-    borderSoft: AppColors.darkStroke,
-    emptyState: const Color(0xFF23314D),
-    reservedState: const Color(0xFF1F4930),
-    success: const Color(0xFF66D18E),
-    warning: const Color(0xFFF4BE7A),
-    danger: const Color(0xFFFF8E8E),
-    shadow: const Color(0x33000000),
+  static const AppColorTokens dark = AppColorTokens(
+    background: Color(0xFF080A12),
+    backgroundSecondary: Color(0xFF101522),
+    surfacePrimary: Color(0xFF1A2233),
+    surfaceSecondary: Color(0xFF263553),
+    surfaceMuted: Color(0xFF303D5E),
+    textPrimary: Color(0xFFF7F8FF),
+    textSecondary: Color(0xFFC2C8DA),
+    textInverse: AppColors.black,
+    navBarItem: Color(0xFFA98BFF),
+    inputBackground: Color(0xFF111827),
+    tableHeader: Color(0xFF2C3B5C),
+    buttonPrimary: Color(0xFF5D7FB8),
+    buttonSecondary: Color(0xFF9B6EF3),
+    borderSoft: Color(0xFF3A4668),
+    emptyState: Color(0xFF151C2B),
+    reservedState: Color(0xFF214B38),
+    success: Color(0xFF45D483),
+    warning: Color(0xFFF6B84B),
+    danger: Color(0xFFFF6B75),
+    shadow: Color(0x99000000),
+    heroStart: Color(0xFF1E2B47),
+    heroEnd: Color(0xFF111827),
+    heroBorder: Color(0xFF3D4D73),
+    heroButton: Color(0xFF5D7FB8),
   );
 }
