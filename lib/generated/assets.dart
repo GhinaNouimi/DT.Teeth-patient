@@ -7,4 +7,6 @@ class Assets {
 
   static const String dentalChair = 'assets/images/dental_chair.png';
 
+  static const String offerDiscount ='assets/images/offer_discount.png';
+
 }
