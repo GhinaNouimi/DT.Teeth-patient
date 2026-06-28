@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 16),
             ProfileAccountSection(
               onComplaintsTap: () {
-                _showMessage('سيتم إضافة الشكاوى والدعم لاحقًا.');
+                context.push(AppRoutes.complaints);
               },
               onChangePasswordTap: () {
                 _showMessage('سيتم إضافة تغيير كلمة المرور لاحقًا.');

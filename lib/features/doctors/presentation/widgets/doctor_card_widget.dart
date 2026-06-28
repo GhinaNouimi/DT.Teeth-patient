@@ -1,6 +1,10 @@
 import 'package:dt_teeth/features/doctors/presentation/models/doctor_ui_model.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/theme_extensions.dart';
+import '../../../../core/widgets/common/app_section_card.dart';
 
 class DoctorCardWidget extends StatelessWidget {
   final DoctorUiModel doctor;
@@ -17,74 +21,65 @@ class DoctorCardWidget extends StatelessWidget {
     final theme = Theme.of(context);
     final colors = context.colors;
 
-    return InkWell(
+    return AppSectionCard(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(24),
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: colors.surfacePrimary,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: colors.borderSoft),
-        ),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 32,
-              backgroundColor: colors.surfaceMuted,
-              child: Text(
-                doctor.imageUrl,
-                style: const TextStyle(fontSize: 40),
-              ),
+      radius: AppRadius.xl,
+      padding: const EdgeInsets.all(14),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 32,
+            backgroundColor: colors.surfaceMuted,
+            child: Text(
+              doctor.imageUrl,
+              style: const TextStyle(fontSize: 40),
             ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    doctor.name,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: colors.textPrimary,
-                      fontWeight: FontWeight.w800,
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  doctor.name,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: colors.textPrimary,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xxs),
+                Text(
+                  doctor.specialty,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: colors.textSecondary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Wrap(
+                  spacing: AppSpacing.sm,
+                  runSpacing: AppSpacing.xs,
+                  children: [
+                    _MiniMetaWidget(
+                      text: '${doctor.yearsOfExperience} سنوات',
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    doctor.specialty,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: colors.textSecondary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 6,
-                    children: [
-                      _MiniMetaWidget(
-                        text: '${doctor.yearsOfExperience} سنوات',
-                      ),
-                      _MiniMetaWidget(text: '${doctor.treatedPatients}+ مريض'),
-                    ],
-                  ),
-                ],
-              ),
+                    _MiniMetaWidget(text: '${doctor.treatedPatients}+ مريض'),
+                  ],
+                ),
+              ],
             ),
-            _RatingBadgeWidget(
-              rating: doctor.rating,
-              reviewsCount: doctor.reviewsCount,
-              colors: colors,
-              theme: theme,
-            ),
-            const SizedBox(width: 4),
-            Icon(
-              Icons.arrow_forward_ios_rounded,
-              size: 16,
-              color: colors.buttonPrimary,
-            ),
-          ],
-        ),
+          ),
+          _RatingBadgeWidget(
+            rating: doctor.rating,
+            reviewsCount: doctor.reviewsCount,
+          ),
+          const SizedBox(width: AppSpacing.xxs),
+          Icon(
+            Icons.arrow_forward_ios_rounded,
+            size: 16,
+            color: colors.buttonPrimary,
+          ),
+        ],
       ),
     );
   }
@@ -101,10 +96,13 @@ class _MiniMetaWidget extends StatelessWidget {
     final colors = context.colors;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: AppSpacing.xs,
+      ),
       decoration: BoxDecoration(
         color: colors.surfaceSecondary,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
       ),
       child: Text(
         text,
@@ -120,39 +118,40 @@ class _MiniMetaWidget extends StatelessWidget {
 class _RatingBadgeWidget extends StatelessWidget {
   final double rating;
   final int reviewsCount;
-  final dynamic colors;
-  final ThemeData theme;
 
   const _RatingBadgeWidget({
     required this.rating,
     required this.reviewsCount,
-    required this.colors,
-    required this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final theme = Theme.of(context);
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: AppSpacing.sm,
+      ),
       decoration: BoxDecoration(
         color: colors.surfaceSecondary,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              ...List.generate(5, (index) {
-                final isFilled = index < rating.toInt();
-                return Icon(
-                  isFilled ? Icons.star_rounded : Icons.star_outline_rounded,
-                  color: isFilled ? const Color(0xFFFFC107) : colors.borderSoft,
-                  size: 14,
-                );
-              }),
-            ],
+            children: List.generate(5, (index) {
+              final isFilled = index < rating.toInt();
+
+              return Icon(
+                isFilled ? Icons.star_rounded : Icons.star_outline_rounded,
+                color: isFilled ? colors.warning : colors.borderSoft,
+                size: 14,
+              );
+            }),
           ),
           const SizedBox(height: 2),
           Text(

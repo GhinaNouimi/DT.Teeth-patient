@@ -29,7 +29,7 @@ class OfferCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(28),
         child: Container(
           width: 300,
-          padding: const EdgeInsets.all(18),
+          padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(28),
             gradient: LinearGradient(
@@ -55,8 +55,8 @@ class OfferCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _DiscountBadge(),
-                    const SizedBox(height: 14),
+                    const _DiscountBadge(),
+                    const SizedBox(height: 8),
                     Text(
                       title,
                       maxLines: 1,
@@ -66,33 +66,26 @@ class OfferCard extends StatelessWidget {
                         fontWeight: FontWeight.w900,
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(height: 4),
                     Text(
                       subtitle,
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: colors.textSecondary,
                         fontWeight: FontWeight.w600,
-                        height: 1.4,
                       ),
                     ),
                     const Spacer(),
-                    Text(
-                      'عرض التفاصيل',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: colors.textPrimary,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
+                    _DetailsChip(),
                   ],
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
               Image.asset(
                 imagePath,
-                width: 92,
-                height: 92,
+                width: 86,
+                height: 86,
                 fit: BoxFit.contain,
               ),
             ],
@@ -104,13 +97,15 @@ class OfferCard extends StatelessWidget {
 }
 
 class _DiscountBadge extends StatelessWidget {
+  const _DiscountBadge();
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: colors.surfaceMuted,
         borderRadius: BorderRadius.circular(999),
@@ -118,7 +113,31 @@ class _DiscountBadge extends StatelessWidget {
       ),
       child: Text(
         'عرض خاص',
-        style: theme.textTheme.labelMedium?.copyWith(
+        style: theme.textTheme.labelSmall?.copyWith(
+          color: colors.textPrimary,
+          fontWeight: FontWeight.w800,
+        ),
+      ),
+    );
+  }
+}
+
+class _DetailsChip extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: colors.surfaceMuted,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: colors.borderSoft),
+      ),
+      child: Text(
+        'عرض التفاصيل',
+        style: theme.textTheme.bodySmall?.copyWith(
           color: colors.textPrimary,
           fontWeight: FontWeight.w800,
         ),

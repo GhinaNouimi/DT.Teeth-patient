@@ -10,7 +10,9 @@ class AppRoutes {
   static const home = '/home';
   static const profile = '/profile';
   static const editProfile = '/edit-profile';
-
+  static const complaints = '/complaints';
+  static const createComplaint = '/create-complaint';
+  static const complaintDetails = '/complaint-details';
   static const doctors = '/doctors';
   static const doctorDetails = '/doctor-details';
   static const booking = '/booking';

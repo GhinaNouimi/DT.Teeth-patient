@@ -1,7 +1,7 @@
 class ApiConstants {
   ApiConstants._();
 
-  static const String baseUrl = 'http://5.5.5.131:8000/api';
+  static const String baseUrl = 'http://192.168.34.250:8000/api';
 
   static const String patientRegister = '/patient/register';
   static const String patientVerifyEmail = '/patient/verifyEmail';

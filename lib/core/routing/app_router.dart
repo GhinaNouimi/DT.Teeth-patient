@@ -29,6 +29,9 @@ import '../../features/auth/presentation/pages/on_boarding/splash_screen.dart';
 import '../../features/auth/presentation/pages/signup/patient_health_questions_screen.dart';
 import '../../features/auth/presentation/pages/signup/signup_screen.dart';
 import '../../features/auth/presentation/pages/verify_account/verify_screen.dart';
+import '../../features/complaints/presentation/pages/complaint_details_screen.dart';
+import '../../features/complaints/presentation/pages/complaints_list_screen.dart';
+import '../../features/complaints/presentation/pages/create_complaint_screen.dart';
 import '../../features/doctors/presentation/models/doctor_ui_model.dart';
 import '../../features/doctors/presentation/pages/booking_screen.dart';
 import '../../features/doctors/presentation/pages/doctor_profile_screen.dart';
@@ -325,6 +328,25 @@ class AppRouter {
         path: AppRoutes.medicalRecordPaymentPlanDetails,
         name: 'medical-record-payment-plan-details',
         builder: (context, state) => const PaymentPlanDetailsScreen(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.complaints,
+        name: 'complaints',
+        builder: (context, state) => const ComplaintsListScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.createComplaint,
+        name: 'create-complaint',
+        builder: (context, state) => const CreateComplaintScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.complaintDetails,
+        name: 'complaint-details',
+        builder: (context, state) {
+          final complaintId = state.extra as String;
+          return ComplaintDetailsScreen(complaintId: complaintId);
+        },
       ),
     ],
   );

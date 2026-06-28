@@ -4,11 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/theme_extensions.dart';
+import '../../../../core/widgets/common/app_filter_tabs.dart';
 import '../data/mock_doctors_data.dart';
-import '../sections/doctors_header_section.dart';
 import '../widgets/doctor_card_widget.dart';
 import '../widgets/doctor_search_field.dart';
-import '../widgets/specialty_filter_chip.dart';
 
 class DoctorsScreen extends StatefulWidget {
   const DoctorsScreen({super.key});
@@ -24,7 +23,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
   String _selectedSpecialty = 'الكل';
   String _searchQuery = '';
 
-  List<DoctorUiModel> _doctors = [];
+  final List<DoctorUiModel> _doctors = [];
 
   int _page = 1;
   final int _limit = 10;
@@ -46,24 +45,27 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
   }
 
   Future<void> _fetchDoctors({bool isRefresh = false}) async {
-    if (_isLoading || !_hasMore) return;
+    if (_isLoading || (!_hasMore && !isRefresh)) return;
 
     setState(() => _isLoading = true);
 
-    await Future.delayed(const Duration(milliseconds: 400)); // simulate API
+    await Future.delayed(const Duration(milliseconds: 400));
 
     final allDoctors = MockDoctorsData.filterBySpecialty(_selectedSpecialty)
         .where(
           (doctor) =>
-              doctor.name.contains(_searchQuery) ||
-              doctor.specialty.contains(_searchQuery),
-        )
+      doctor.name.contains(_searchQuery) ||
+          doctor.specialty.contains(_searchQuery),
+    )
         .toList();
 
     final start = (_page - 1) * _limit;
     final end = start + _limit;
 
     if (start >= allDoctors.length) {
+      if (isRefresh) {
+        _doctors.clear();
+      }
       _hasMore = false;
       setState(() => _isLoading = false);
       return;
@@ -75,7 +77,9 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
     );
 
     if (isRefresh) {
-      _doctors = newDoctors;
+      _doctors
+        ..clear()
+        ..addAll(newDoctors);
     } else {
       _doctors.addAll(newDoctors);
     }
@@ -113,15 +117,12 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            /// 🔹 Header + Search + Filters
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 3, 20, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // const DoctorsHeaderSection(),
                   const SizedBox(height: 18),
-
                   DoctorSearchFieldWidget(
                     controller: _searchController,
                     onChanged: (value) {
@@ -129,72 +130,61 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                       _resetAndFetch();
                     },
                   ),
-
                   const SizedBox(height: 16),
-
-                  SizedBox(
-                    height: 42,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: specialties.length,
-                      separatorBuilder: (_, __) => const SizedBox(width: 10),
-                      itemBuilder: (context, index) {
-                        final specialty = specialties[index];
-
-                        return SpecialtyFilterWidget(
-                          label: specialty,
-                          selected: _selectedSpecialty == specialty,
-                          onTap: () {
-                            setState(() => _selectedSpecialty = specialty);
-                            _resetAndFetch();
-                          },
-                        );
-                      },
-                    ),
+                  AppFilterTabs<String>(
+                    selectedValue: _selectedSpecialty,
+                    onChanged: (specialty) {
+                      setState(() => _selectedSpecialty = specialty);
+                      _resetAndFetch();
+                    },
+                    items: specialties
+                        .map(
+                          (specialty) => AppFilterTabItem<String>(
+                        value: specialty,
+                        label: specialty,
+                      ),
+                    )
+                        .toList(),
                   ),
-
                   const SizedBox(height: 12),
                 ],
               ),
             ),
-
-            /// 🔹 قائمة الأطباء (Pagination)
             Expanded(
               child: _doctors.isEmpty && _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ListView.builder(
-                      controller: _scrollController,
-                      padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
-                      itemCount: _doctors.length + 1,
-                      itemBuilder: (context, index) {
-                        if (index < _doctors.length) {
-                          final doctor = _doctors[index];
+                controller: _scrollController,
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+                itemCount: _doctors.length + 1,
+                itemBuilder: (context, index) {
+                  if (index < _doctors.length) {
+                    final doctor = _doctors[index];
 
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 14),
-                            child: DoctorCardWidget(
-                              doctor: doctor,
-                              onTap: () {
-                                context.push(
-                                  AppRoutes.doctorDetails,
-                                  extra: doctor,
-                                );
-                              },
-                            ),
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 14),
+                      child: DoctorCardWidget(
+                        doctor: doctor,
+                        onTap: () {
+                          context.push(
+                            AppRoutes.doctorDetails,
+                            extra: doctor,
                           );
-                        }
+                        },
+                      ),
+                    );
+                  }
 
-                        /// 🔹 Loader أسفل القائمة
-                        return _isLoading
-                            ? const Padding(
-                                padding: EdgeInsets.all(16),
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              )
-                            : const SizedBox();
-                      },
+                  return _isLoading
+                      ? const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Center(
+                      child: CircularProgressIndicator(),
                     ),
+                  )
+                      : const SizedBox();
+                },
+              ),
             ),
           ],
         ),
