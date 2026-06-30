@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../../core/routing/app_routes.dart';
-import '../../../../../core/storage/secure_storage_service.dart';
 import '../../../../../core/widgets/feedback/error_bottom_sheet.dart';
 import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
 import '../../../data/models/send_verification_request_model.dart';
@@ -86,13 +85,6 @@ class _VerifyScreenState extends State<VerifyScreen> {
     return BlocListener<VerifyEmailBloc, VerifyEmailState>(
       listener: (context, state) async {
         if (state is VerifyEmailSuccess) {
-          await SecureStorageService.saveToken(
-            token: state.response.token,
-            tokenType: state.response.tokenType,
-          );
-
-          if (!context.mounted) return;
-
           await showSuccessBottomSheet(
             context,
             title: 'تم تأكيد الحساب',
@@ -162,7 +154,6 @@ class _VerifyScreenState extends State<VerifyScreen> {
               ),
             ),
             const SizedBox(height: 20),
-
             BlocBuilder<VerifyEmailBloc, VerifyEmailState>(
               builder: (context, state) {
                 final isLoading = state is VerifyEmailLoading;
@@ -174,9 +165,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 );
               },
             ),
-
             const SizedBox(height: 12),
-
             BlocBuilder<VerifyEmailBloc, VerifyEmailState>(
               builder: (context, state) {
                 final isLoading = state is ResendVerificationLoading;
@@ -190,7 +179,6 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 );
               },
             ),
-
             TextButton(
               onPressed: () => context.pop(),
               child: const Text('العودة'),

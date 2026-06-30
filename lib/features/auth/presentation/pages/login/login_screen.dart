@@ -4,9 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../core/routing/app_routes.dart';
-import '../../../../../core/storage/secure_storage_service.dart';
 import '../../../../../core/utils/validators.dart';
-
 import '../../../../../core/widgets/feedback/error_bottom_sheet.dart';
 import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
 import '../../../data/models/login_request_model.dart';
@@ -49,18 +47,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
     context.read<LoginBloc>().add(LoginPatientSubmitted(request: request));
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) async {
         if (state is LoginSuccess) {
-          await SecureStorageService.saveToken(
-            token: state.response.token,
-            tokenType: state.response.tokenType,
-          );
-
-          if (!context.mounted) return;
-
           await showSuccessBottomSheet(
             context,
             title: 'تم تسجيل الدخول',

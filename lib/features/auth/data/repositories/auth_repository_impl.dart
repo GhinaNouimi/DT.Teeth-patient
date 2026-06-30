@@ -1,3 +1,4 @@
+import '../../../../../core/storage/secure_storage_service.dart';
 import '../../data/datasources/auth_remote_data_source.dart';
 
 import '../../data/models/forgot_password_reset_password_request_model.dart';
@@ -32,8 +33,15 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<VerifyEmailResponseModel> verifyEmail(
       VerifyEmailRequestModel request,
-      ) {
-    return remoteDataSource.verifyEmail(request);
+      ) async {
+    final response = await remoteDataSource.verifyEmail(request);
+
+    await SecureStorageService.saveToken(
+      token: response.token,
+      tokenType: response.tokenType,
+    );
+
+    return response;
   }
 
   @override
@@ -46,8 +54,15 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<LoginResponseModel> loginPatient(
       LoginRequestModel request,
-      ) {
-    return remoteDataSource.loginPatient(request);
+      ) async {
+    final response = await remoteDataSource.loginPatient(request);
+
+    await SecureStorageService.saveToken(
+      token: response.token,
+      tokenType: response.tokenType,
+    );
+
+    return response;
   }
 
   @override
