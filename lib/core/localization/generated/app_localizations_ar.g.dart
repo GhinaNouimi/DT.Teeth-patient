@@ -25,4 +25,491 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
 
   @override
   String get splashTagline => 'رعاية أسنان حديثة تبدأ بتجربة رقمية أنيقة';
+
+  @override
+  String get selectLanguage => 'اختيار اللغة';
+
+  @override
+  String get arabic => 'العربية';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get ok => 'حسنًا';
+
+  @override
+  String get back => 'رجوع';
+
+  @override
+  String get returnText => 'العودة';
+
+  @override
+  String get continueText => 'متابعة';
+
+  @override
+  String get login => 'تسجيل الدخول';
+
+  @override
+  String get createAccount => 'إنشاء الحساب';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get password => 'كلمة المرور';
+
+  @override
+  String get confirmPassword => 'تأكيد كلمة المرور';
+
+  @override
+  String get phoneNumber => 'رقم الهاتف';
+
+  @override
+  String get fullName => 'الاسم الكامل';
+
+  @override
+  String get fullNameHint => 'أدخل اسمك الكامل';
+
+  @override
+  String get address => 'العنوان';
+
+  @override
+  String get addressHint => 'أدخل عنوانك';
+
+  @override
+  String get nameRequired => 'الرجاء إدخال الاسم الكامل';
+
+  @override
+  String get emailRequired => 'الرجاء إدخال البريد الإلكتروني';
+
+  @override
+  String get emailInvalid => 'البريد الإلكتروني غير صالح';
+
+  @override
+  String get phoneRequired => 'الرجاء إدخال رقم الهاتف';
+
+  @override
+  String get phoneInvalid => 'رقم الهاتف غير صالح';
+
+  @override
+  String get addressRequired => 'الرجاء إدخال العنوان';
+
+  @override
+  String get birthDateRequired => 'الرجاء اختيار تاريخ الميلاد';
+
+  @override
+  String get passwordRequired => 'الرجاء إدخال كلمة المرور';
+
+  @override
+  String get passwordConfirmationRequired => 'الرجاء تأكيد كلمة المرور';
+
+  @override
+  String get passwordsDoNotMatch => 'كلمة المرور غير متطابقة';
+
+  @override
+  String get passwordMinLength => 'يجب أن تكون كلمة المرور 8 أحرف على الأقل';
+
+  @override
+  String get passwordUppercase => 'يجب أن تحتوي كلمة المرور على حرف كبير';
+
+  @override
+  String get passwordLowercase => 'يجب أن تحتوي كلمة المرور على حرف صغير';
+
+  @override
+  String get passwordNumber => 'يجب أن تحتوي كلمة المرور على رقم';
+
+  @override
+  String get passwordSpecial => 'يجب أن تحتوي كلمة المرور على رمز خاص';
+
+  @override
+  String get passwordRules => 'شروط كلمة المرور';
+
+  @override
+  String get passwordStrengthStart => 'ابدأ بكتابة كلمة المرور';
+
+  @override
+  String passwordStrengthTitle(Object label) {
+    return 'قوة كلمة المرور: $label';
+  }
+
+  @override
+  String get passwordRuleMinLength => '8 أحرف على الأقل';
+
+  @override
+  String get passwordRuleUpperLower => 'حرف كبير وحرف صغير';
+
+  @override
+  String get passwordRuleNumber => 'رقم واحد على الأقل';
+
+  @override
+  String get passwordRuleSpecial => 'رمز خاص مثل ! @ # \$ %';
+
+  @override
+  String get passwordWeak => 'ضعيفة';
+
+  @override
+  String get passwordMedium => 'متوسطة';
+
+  @override
+  String get passwordStrong => 'قوية';
+
+  @override
+  String get signupTitle => 'إنشاء حساب';
+
+  @override
+  String get signupSubtitle => 'أنشئ حسابك للوصول إلى مواعيدك وخدمات المركز';
+
+  @override
+  String get alreadyHaveAccount => 'لديك حساب بالفعل؟';
+
+  @override
+  String get birthDate => 'تاريخ الميلاد';
+
+  @override
+  String get birthDateHint => 'اختر تاريخ الميلاد';
+
+  @override
+  String get gender => 'الجنس';
+
+  @override
+  String get genderRequired => 'يرجى اختيار الجنس';
+
+  @override
+  String get male => 'ذكر';
+
+  @override
+  String get female => 'أنثى';
+
+  @override
+  String get completePatientData => 'إكمال بيانات المريض';
+
+  @override
+  String get patientHealthSubtitle =>
+      'هذه المعلومات تساعد المركز في التعامل مع الحالات الطارئة بشكل آمن';
+
+  @override
+  String get emergencyContactName => 'اسم شخص للطوارئ';
+
+  @override
+  String get emergencyContactNameHint => 'مثال: محمد أحمد';
+
+  @override
+  String get emergencyContactRelation => 'صلة القرابة';
+
+  @override
+  String get emergencyContactRelationHint => 'مثال: أخ، أب، أم';
+
+  @override
+  String get emergencyPhone => 'رقم هاتف الطوارئ';
+
+  @override
+  String get doYouSmoke => 'هل تدخن؟';
+
+  @override
+  String get smokingSubtitle => 'يساعد الطبيب في تقييم صحة الفم والأسنان';
+
+  @override
+  String get drinkAlcohol => 'هل تشرب الكحول بشكل متكرر؟';
+
+  @override
+  String get alcoholSubtitle => 'هذه المعلومة تبقى ضمن بياناتك الطبية';
+
+  @override
+  String get isPregnant => 'هل أنتِ حامل؟';
+
+  @override
+  String get pregnantSubtitle => 'مهم قبل الأشعة أو بعض الأدوية';
+
+  @override
+  String get isBreastfeeding => 'هل أنتِ مرضعة؟';
+
+  @override
+  String get breastfeedingSubtitle => 'مهم قبل وصف بعض الأدوية';
+
+  @override
+  String get yes => 'نعم';
+
+  @override
+  String get no => 'لا';
+
+  @override
+  String get teethCleaningFrequency => 'عدد مرات تنظيف الأسنان';
+
+  @override
+  String get teethCleaningOnce => 'مرة يومياً';
+
+  @override
+  String get teethCleaningTwice => 'مرتين يومياً';
+
+  @override
+  String get teethCleaningRarely => 'نادراً';
+
+  @override
+  String get emergencyContactNameRequired => 'الرجاء إدخال اسم شخص للطوارئ';
+
+  @override
+  String get emergencyContactRelationRequired => 'الرجاء إدخال صلة القرابة';
+
+  @override
+  String get loginTitle => 'تسجيل الدخول';
+
+  @override
+  String get loginSubtitle => 'أدخل بياناتك للوصول إلى حسابك بسهولة وأمان';
+
+  @override
+  String get doNotHaveAccount => 'ليس لديك حساب؟';
+
+  @override
+  String get forgotPasswordQuestion => 'نسيت كلمة المرور؟';
+
+  @override
+  String get loginButton => 'دخول';
+
+  @override
+  String get loggingIn => 'جاري تسجيل الدخول...';
+
+  @override
+  String get loginSuccessTitle => 'تم تسجيل الدخول';
+
+  @override
+  String get loginSuccessMessage =>
+      'تم تسجيل دخولك بنجاح. يمكنك الآن متابعة استخدام التطبيق.';
+
+  @override
+  String get loginFailedTitle => 'فشل تسجيل الدخول';
+
+  @override
+  String get forgotPasswordTitle => 'نسيت كلمة المرور';
+
+  @override
+  String get forgotPasswordSubtitle =>
+      'أدخل بريدك الإلكتروني لإرسال رمز التحقق';
+
+  @override
+  String get sendCode => 'إرسال الرمز';
+
+  @override
+  String get sendingCode => 'جاري إرسال الرمز...';
+
+  @override
+  String get codeSentTitle => 'تم إرسال الرمز';
+
+  @override
+  String get codeSentMessage =>
+      'أرسلنا رمز التحقق إلى بريدك الإلكتروني.\nصلاحية الرمز دقيقتان.';
+
+  @override
+  String get newCodeSentMessage =>
+      'أرسلنا رمز تحقق جديد إلى بريدك الإلكتروني.\nصلاحية الرمز دقيقتان.';
+
+  @override
+  String get enterCode => 'إدخال الرمز';
+
+  @override
+  String get backToLogin => 'العودة لتسجيل الدخول';
+
+  @override
+  String get sendCodeFailedTitle => 'فشل إرسال الرمز';
+
+  @override
+  String get verifyCodeTitle => 'التحقق من الرمز';
+
+  @override
+  String verifyCodeSubtitle(Object email) {
+    return 'أدخل الرمز المرسل إلى $email';
+  }
+
+  @override
+  String get incompleteCodeTitle => 'رمز غير مكتمل';
+
+  @override
+  String get incompleteCodeMessage => 'يرجى إدخال رمز تحقق مكون من 6 أرقام.';
+
+  @override
+  String get codeVerifiedTitle => 'تم التحقق من الرمز';
+
+  @override
+  String get codeVerifiedMessage =>
+      'تم التحقق من الرمز بنجاح. يمكنك الآن إعادة تعيين كلمة المرور.';
+
+  @override
+  String get verifyCodeButton => 'تأكيد الرمز';
+
+  @override
+  String get verifying => 'جاري التحقق...';
+
+  @override
+  String get resendCode => 'إعادة إرسال الرمز';
+
+  @override
+  String get resetPasswordTitle => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String resetPasswordSubtitle(Object email) {
+    return 'أدخل كلمة مرور جديدة لحساب $email';
+  }
+
+  @override
+  String get newPassword => 'كلمة المرور الجديدة';
+
+  @override
+  String get savePassword => 'حفظ كلمة المرور';
+
+  @override
+  String get saving => 'جاري الحفظ...';
+
+  @override
+  String get passwordUpdatedTitle => 'تم تحديث كلمة المرور';
+
+  @override
+  String get passwordUpdatedMessage =>
+      'تمت إعادة تعيين كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة.';
+
+  @override
+  String get passwordUpdateFailedTitle => 'فشل تحديث كلمة المرور';
+
+  @override
+  String get confirmPasswordRequired => 'الرجاء تأكيد كلمة المرور';
+
+  @override
+  String get passwordsNotMatching => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get passwordConfirmHint => 'أعد إدخال كلمة المرور للتأكيد';
+
+  @override
+  String get passwordsMatch => 'كلمتا المرور متطابقتان';
+
+  @override
+  String get accountCreatedSuccessfully => 'تم إنشاء الحساب بنجاح';
+
+  @override
+  String get verificationCodeSent =>
+      'أرسلنا رمز التحقق إلى بريدك الإلكتروني. يرجى إدخال الرمز لتفعيل حسابك.';
+
+  @override
+  String get goToVerification => 'الانتقال للتحقق';
+
+  @override
+  String get accountCreationFailed => 'فشل إنشاء الحساب';
+
+  @override
+  String get creatingAccount => 'جاري إنشاء الحساب...';
+
+  @override
+  String get accountVerificationTitle => 'تأكيد الحساب';
+
+  @override
+  String accountVerificationSubtitle(Object email) {
+    return 'أدخل رمز التحقق المرسل إلى $email';
+  }
+
+  @override
+  String get accountVerifiedTitle => 'تم تأكيد الحساب';
+
+  @override
+  String get accountVerifiedMessage =>
+      'تم تأكيد حسابك بنجاح. يمكنك الآن استخدام التطبيق.';
+
+  @override
+  String get verificationFailedTitle => 'فشل التحقق';
+
+  @override
+  String get newVerificationCodeSentMessage =>
+      'أرسلنا رمز تحقق جديد إلى بريدك الإلكتروني. الرمز صالح لمدة دقيقتين.';
+
+  @override
+  String get genericErrorTitle => 'حدث خطأ';
+
+  @override
+  String get featuredOffers => 'عروض مميزة';
+
+  @override
+  String get specialOffer => 'عرض خاص';
+
+  @override
+  String get viewDetails => 'عرض التفاصيل';
+
+  @override
+  String get offerWhiteningTitle => 'خصم 20% على التبييض';
+
+  @override
+  String get offerWhiteningSubtitle => 'لفترة محدودة هذا الأسبوع';
+
+  @override
+  String get offerCleaningTitle => 'عرض تنظيف الأسنان';
+
+  @override
+  String get offerCleaningSubtitle => 'احجز موعدك الآن واستفد من العرض';
+
+  @override
+  String get offerCheckupTitle => 'خصم على جلسة الفحص';
+
+  @override
+  String get offerCheckupSubtitle => 'اطمئن على صحة أسنانك بسهولة';
+
+  @override
+  String get nextAppointment => 'موعدك القادم';
+
+  @override
+  String get welcomePatient => 'مرحباً بك 👋';
+
+  @override
+  String get welcomeSubtitle => 'نهتم بابتسامتك دائماً';
+
+  @override
+  String get bookAppointment => 'حجز موعد';
+
+  @override
+  String get quickActions => 'إجراءات سريعة';
+
+  @override
+  String get emergencyAppointment => 'موعد طارئ';
+
+  @override
+  String get contact => 'التواصل';
+
+  @override
+  String get smartAssistant => 'المساعد الذكي';
+
+  @override
+  String get appointmentTypeTitle => 'نوع الموعد';
+
+  @override
+  String get appointmentTypeEmergencyDescription =>
+      'موعد طارئ - سيتم معالجته فوراً';
+
+  @override
+  String get appointmentTypeRegularDescription => 'حجز موعد عادي';
+
+  @override
+  String get appointmentTypeFollowUpDescription => 'موعد متابعة';
+
+  @override
+  String get noUpcomingAppointments => 'لا توجد مواعيد قادمة';
+
+  @override
+  String get noPastAppointments => 'لا توجد مواعيد سابقة';
+
+  @override
+  String get bookFirstAppointment => 'ابدأ بحجز موعدك الأول الآن';
+
+  @override
+  String get noPastAppointmentsSubtitle => 'لم تسجل مواعيد سابقة بعد';
+
+  @override
+  String get noDoctorsAvailable => 'لا يوجد أطباء متاحون لهذه الخدمة';
+
+  @override
+  String get selectDoctor => 'اختر الطبيب';
+
+  @override
+  String get selectServiceType => 'اختر نوع الخدمة';
+
+  @override
+  String get emergency => 'طارئ';
 }

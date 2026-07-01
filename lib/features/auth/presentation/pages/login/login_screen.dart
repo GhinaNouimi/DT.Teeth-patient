@@ -3,16 +3,15 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../core/localization/app_localizations.dart';
 import '../../../../../core/routing/app_routes.dart';
 import '../../../../../core/utils/validators.dart';
 import '../../../../../core/widgets/feedback/error_bottom_sheet.dart';
 import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
 import '../../../data/models/login_request_model.dart';
-
 import '../../bloc/login/login_bloc.dart';
 import '../../bloc/login/login_event.dart';
 import '../../bloc/login/login_state.dart';
-
 import '../widgets/app_text_field.dart';
 import '../widgets/auth_shell.dart';
 import '../widgets/primary_app_button.dart';
@@ -50,14 +49,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) async {
         if (state is LoginSuccess) {
           await showSuccessBottomSheet(
             context,
-            title: 'تم تسجيل الدخول',
-            message: 'تم تسجيل دخولك بنجاح. يمكنك الآن متابعة استخدام التطبيق.',
-            buttonText: 'متابعة',
+            title: l10n.loginSuccessTitle,
+            message: l10n.loginSuccessMessage,
+            buttonText: l10n.continueText,
             onPressed: () {
               context.go(AppRoutes.home);
             },
@@ -67,17 +68,17 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state is LoginFailure) {
           await showErrorBottomSheet(
             context,
-            title: 'فشل تسجيل الدخول',
+            title: l10n.loginFailedTitle,
             message: state.message,
-            buttonText: 'حسنًا',
+            buttonText: l10n.ok,
           );
         }
       },
       child: AuthShell(
-        title: 'تسجيل الدخول',
-        subtitle: 'أدخل بياناتك للوصول إلى حسابك بسهولة وأمان',
-        bottomText: 'ليس لديك حساب؟',
-        bottomActionText: 'إنشاء حساب',
+        title: l10n.loginTitle,
+        subtitle: l10n.loginSubtitle,
+        bottomText: l10n.doNotHaveAccount,
+        bottomActionText: l10n.createAccount,
         onBottomTap: () => context.go(AppRoutes.signup),
         child: Form(
           key: _formKey,
@@ -85,24 +86,28 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               AppTextField(
                 controller: _emailController,
-                label: 'البريد الإلكتروني',
-                hint: 'name@example.com',
+                label: l10n.email,
+                hint: l10n.emailHint,
                 prefixIcon: Icons.mail_outline_rounded,
                 keyboardType: TextInputType.emailAddress,
-                validator: AppValidators.email,
+                validator: (value) => AppValidators.email(
+                  value,
+                  requiredMessage: l10n.emailRequired,
+                  invalidMessage: l10n.emailInvalid,
+                ),
               ).animate().fadeIn(delay: 80.ms).slideX(begin: 0.08, end: 0),
 
               const SizedBox(height: 16),
 
               AppTextField(
                 controller: _passwordController,
-                label: 'كلمة المرور',
+                label: l10n.password,
                 hint: '********',
                 prefixIcon: Icons.lock_outline_rounded,
                 obscureText: true,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'الرجاء إدخال كلمة المرور';
+                    return l10n.passwordRequired;
                   }
 
                   return null;
@@ -112,12 +117,12 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 10),
 
               Align(
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerEnd,
                 child: TextButton(
                   onPressed: () {
                     context.push(AppRoutes.forgotPassword);
                   },
-                  child: const Text('نسيت كلمة المرور؟'),
+                  child: Text(l10n.forgotPasswordQuestion),
                 ),
               ).animate().fadeIn(delay: 260.ms),
 
@@ -128,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   final isLoading = state is LoginLoading;
 
                   return PrimaryAppButton(
-                    text: isLoading ? 'جاري تسجيل الدخول...' : 'دخول',
+                    text: isLoading ? l10n.loggingIn : l10n.loginButton,
                     icon: Icons.arrow_forward_rounded,
                     onPressed: isLoading ? null : _submit,
                   );

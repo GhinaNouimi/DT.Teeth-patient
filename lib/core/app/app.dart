@@ -2,36 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../config/locale_controller.dart';
+import '../localization/app_localizations.dart';
+import '../localization/locale_bloc/locale_bloc.dart';
+import '../localization/locale_bloc/locale_state.dart';
 import '../routing/app_router.dart';
 import '../theme/app_theme.dart';
-import '../theme/theme_extensions.dart';
-import '../localization/app_localizations.dart';
 import '../theme/theme_bloc/theme_bloc.dart';
 import '../theme/theme_bloc/theme_state.dart';
+import '../theme/theme_extensions.dart';
 
 class MyApp extends StatelessWidget {
-  final LocaleController localeController;
-
   const MyApp({
     super.key,
-    required this.localeController,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: localeController,
-      builder: (context, _) {
+    return BlocBuilder<LocaleBloc, LocaleState>(
+      builder: (context, localeState) {
         return BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, themeState) {
             return MaterialApp.router(
               debugShowCheckedModeBanner: false,
-
-              locale: localeController.locale,
+              locale: localeState.locale,
               supportedLocales: AppLocalizations.supportedLocales,
               localizationsDelegates: AppLocalizations.localizationsDelegates,
-
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: themeState.themeMode,
+              routerConfig: AppRouter.router,
               builder: (context, child) {
                 final colors = context.colors;
                 final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -52,20 +51,15 @@ class MyApp extends StatelessWidget {
                   value: overlayStyle,
                   child: Directionality(
                     textDirection: AppLocalizations.getDirection(
-                      localeController.locale,
+                      localeState.locale,
                     ),
                     child: ColoredBox(
                       color: colors.background,
-                      child: child!,
+                      child: child ?? const SizedBox.shrink(),
                     ),
                   ),
                 );
               },
-
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
-              themeMode: themeState.themeMode,
-              routerConfig: AppRouter.router,
             );
           },
         );

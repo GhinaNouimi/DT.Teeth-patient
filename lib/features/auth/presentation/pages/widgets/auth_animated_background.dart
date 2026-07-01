@@ -1,13 +1,18 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 class AuthAnimatedBackground extends StatefulWidget {
   final Widget child;
 
-  const AuthAnimatedBackground({super.key, required this.child});
+  const AuthAnimatedBackground({
+    super.key,
+    required this.child,
+  });
 
   @override
-  State<AuthAnimatedBackground> createState() => _AuthAnimatedBackgroundState();
+  State<AuthAnimatedBackground> createState() =>
+      _AuthAnimatedBackgroundState();
 }
 
 class _AuthAnimatedBackgroundState extends State<AuthAnimatedBackground>
@@ -56,25 +61,25 @@ class _AuthAnimatedBackgroundState extends State<AuthAnimatedBackground>
           ),
           child: Stack(
             children: [
-              Positioned(
+              PositionedDirectional(
                 top: -50 + (_controller.value * 25),
-                left: -20,
+                start: -20,
                 child: _Orb(
                   size: 220,
                   color: theme.colorScheme.primary.withValues(alpha: 0.22),
                 ),
               ),
-              Positioned(
+              PositionedDirectional(
                 top: 140 - (_controller.value * 20),
-                right: 12,
+                end: 12,
                 child: _Orb(
                   size: 140,
                   color: theme.colorScheme.secondary.withValues(alpha: 0.18),
                 ),
               ),
-              Positioned(
+              PositionedDirectional(
                 bottom: -60 + (_controller.value * 35),
-                right: -10,
+                end: -10,
                 child: _Orb(
                   size: 250,
                   color: const Color(0xFF63D7C1).withValues(alpha: 0.16),
@@ -93,7 +98,10 @@ class _Orb extends StatelessWidget {
   final double size;
   final Color color;
 
-  const _Orb({required this.size, required this.color});
+  const _Orb({
+    required this.size,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +112,11 @@ class _Orb extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           boxShadow: [
-            BoxShadow(color: color, blurRadius: 90, spreadRadius: 18),
+            BoxShadow(
+              color: color,
+              blurRadius: 90,
+              spreadRadius: 18,
+            ),
           ],
         ),
       ),

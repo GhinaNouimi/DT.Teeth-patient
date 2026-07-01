@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../core/localization/app_localizations.dart';
+
 class TeethCleaningSelector extends StatelessWidget {
   final String value;
   final ValueChanged<String> onChanged;
@@ -10,34 +12,35 @@ class TeethCleaningSelector extends StatelessWidget {
     required this.onChanged,
   });
 
-  static const options = [
-    _CleaningOption(
-      value: 'once',
-      title: 'مرة يومياً',
-      icon: Icons.looks_one_rounded,
-    ),
-    _CleaningOption(
-      value: 'twice',
-      title: 'مرتين يومياً',
-      icon: Icons.looks_two_rounded,
-    ),
-    _CleaningOption(
-      value: 'rarely',
-      title: 'نادراً',
-      icon: Icons.auto_awesome_rounded,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final selectedColor = theme.colorScheme.primary;
+
+    final options = [
+      _CleaningOption(
+        value: 'once',
+        title: l10n.teethCleaningOnce,
+        icon: Icons.looks_one_rounded,
+      ),
+      _CleaningOption(
+        value: 'twice',
+        title: l10n.teethCleaningTwice,
+        icon: Icons.looks_two_rounded,
+      ),
+      _CleaningOption(
+        value: 'rarely',
+        title: l10n.teethCleaningRarely,
+        icon: Icons.auto_awesome_rounded,
+      ),
+    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'عدد مرات تنظيف الأسنان',
+          l10n.teethCleaningFrequency,
           style: theme.textTheme.titleSmall?.copyWith(
             fontWeight: FontWeight.w800,
             color: theme.colorScheme.onSurface,

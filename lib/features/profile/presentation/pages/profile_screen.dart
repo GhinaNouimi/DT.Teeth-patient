@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/localization/locale_bloc/locale_bloc.dart';
+import '../../../../core/localization/locale_bloc/locale_event.dart';
+import '../../../../core/localization/locale_bloc/locale_state.dart';
+import '../../../../core/localization/widgets/language_sheet.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/theme_bloc/theme_bloc.dart';
 import '../../../../core/theme/theme_bloc/theme_event.dart';
@@ -12,7 +16,6 @@ import '../dialogs/logout_dialog.dart';
 import '../sections/profile_account_section.dart';
 import '../sections/profile_header_section.dart';
 import '../sections/profile_preferences_section.dart';
-import '../sheets/language_sheet.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -74,17 +77,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Future<void> _handleLanguageTap() async {
+  Future<void> _handleLanguageTap(String currentLanguageCode) async {
     final selectedLanguage = await showLanguageSelectionSheet(
       context: context,
-      currentLanguageCode: _profile.languageCode,
+      currentLanguageCode: currentLanguageCode,
     );
 
     if (selectedLanguage == null) return;
+    if (!mounted) return;
 
-    setState(() {
-      _profile = _profile.copyWith(languageCode: selectedLanguage);
-    });
+    context.read<LocaleBloc>().add(
+      LanguageChanged(selectedLanguage),
+    );
   }
 
   Future<void> _handleLogoutTap() async {
@@ -98,7 +102,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final theme = Theme.of(context);
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -113,7 +116,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             MediaQuery.of(context).padding.bottom + 110,
           ),
           children: [
-            // _ProfilePageTitle(theme: theme),
             const SizedBox(height: 20),
             ProfileHeaderSection(
               profile: _profile,
@@ -124,11 +126,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               builder: (context, themeState) {
                 final isDarkMode = themeState.themeMode == ThemeMode.dark;
 
-                return ProfilePreferencesSection(
-                  isDarkModeEnabled: isDarkMode,
-                  languageCode: _profile.languageCode,
-                  onThemeChanged: _changeTheme,
-                  onLanguageTap: _handleLanguageTap,
+                return BlocBuilder<LocaleBloc, LocaleState>(
+                  builder: (context, localeState) {
+                    final languageCode = localeState.locale.languageCode;
+
+                    return ProfilePreferencesSection(
+                      isDarkModeEnabled: isDarkMode,
+                      languageCode: languageCode,
+                      onThemeChanged: _changeTheme,
+                      onLanguageTap: () => _handleLanguageTap(languageCode),
+                    );
+                  },
                 );
               },
             ),
@@ -148,37 +156,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
-// class _ProfilePageTitle extends StatelessWidget {
-//   final ThemeData theme;
-//
-//   const _ProfilePageTitle({
-//     required this.theme,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final colors = context.colors;
-//
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           'حسابي',
-//           style: theme.textTheme.headlineMedium?.copyWith(
-//             color: colors.textPrimary,
-//             fontWeight: FontWeight.w800,
-//           ),
-//         ),
-//         const SizedBox(height: 8),
-//         Text(
-//           'إدارة ملفك الشخصي، التفضيلات، وإعدادات الحساب من مكان واحد.',
-//           style: theme.textTheme.bodyMedium?.copyWith(
-//             color: colors.textSecondary,
-//             height: 1.5,
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }

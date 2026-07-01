@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../../../generated/assets.dart';
@@ -18,26 +19,29 @@ class NextAppointmentSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final l10n = context.l10n;
+    final localeCode = Localizations.localeOf(context).languageCode;
+    final dateLocale = localeCode == 'ar' ? 'ar_SA' : 'en_US';
 
     final dayName = DateFormat(
-      'EEEE',
-      'ar_SA',
-    ).format(appointment.appointmentDate);
+      localeCode == 'ar' ? 'EEEE' : 'EEE',
+      dateLocale,
+    ).format(
+      appointment.appointmentDate,
+    );
 
-    final dayNumber = DateFormat(
-      'd',
-      'ar_SA',
-    ).format(appointment.appointmentDate);
+    final dayNumber = DateFormat('d', dateLocale).format(
+      appointment.appointmentDate,
+    );
 
-    final monthName = DateFormat(
-      'MMMM',
-      'ar_SA',
-    ).format(appointment.appointmentDate);
+    final monthName = DateFormat('MMMM', dateLocale).format(
+      appointment.appointmentDate,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _SectionHeader(title: 'موعدك القادم'),
+        _SectionHeader(title: l10n.nextAppointment),
         const SizedBox(height: 14),
         Material(
           color: Colors.transparent,
@@ -99,7 +103,9 @@ class NextAppointmentSection extends StatelessWidget {
 class _SectionHeader extends StatelessWidget {
   final String title;
 
-  const _SectionHeader({required this.title});
+  const _SectionHeader({
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -192,12 +198,15 @@ class _DateBlock extends StatelessWidget {
 class _AppointmentInfo extends StatelessWidget {
   final AppointmentUiModel appointment;
 
-  const _AppointmentInfo({required this.appointment});
+  const _AppointmentInfo({
+    required this.appointment,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
+    final l10n = context.l10n;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,7 +254,6 @@ class _AppointmentInfo extends StatelessWidget {
                 ),
               ],
             ),
-
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
               decoration: BoxDecoration(
@@ -257,23 +265,20 @@ class _AppointmentInfo extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'التفاصيل',
+                    l10n.viewDetails,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: colors.textPrimary,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
                   const SizedBox(width: 4),
-                  Icon(
-                    Icons.arrow_forward_rounded,
-                    color: colors.textPrimary,
-                    size: 16,
-                  ),
+
                 ],
               ),
             ),
           ],
-        ),      ],
+        ),
+      ],
     );
   }
 }

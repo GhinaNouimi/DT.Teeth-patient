@@ -1,57 +1,91 @@
+enum PasswordStrengthLevel {
+  weak,
+  medium,
+  strong,
+}
+
 abstract final class AppValidators {
   static String? requiredField(
-    String? value, {
-    String fieldName = 'هذا الحقل',
-  }) {
+      String? value, {
+        String? message,
+      }) {
     if (value == null || value.trim().isEmpty) {
-      return 'الرجاء إدخال $fieldName';
+      return message ?? 'هذا الحقل مطلوب';
     }
+
     return null;
   }
 
-  static String? email(String? value) {
+  static String? email(
+      String? value, {
+        String? requiredMessage,
+        String? invalidMessage,
+      }) {
     if (value == null || value.trim().isEmpty) {
-      return 'الرجاء إدخال البريد الإلكتروني';
+      return requiredMessage ?? 'Email is required';
     }
 
     final emailRegex = RegExp(r'^[\w\.\-]+@([\w\-]+\.)+[a-zA-Z]{2,4}$');
+
     if (!emailRegex.hasMatch(value.trim())) {
-      return 'البريد الإلكتروني غير صالح';
+      return invalidMessage ?? 'Invalid email address';
     }
+
     return null;
   }
 
-  static String? phone(String? value) {
+  static String? phone(
+      String? value, {
+        String? requiredMessage,
+        String? invalidMessage,
+      }) {
     if (value == null || value.trim().isEmpty) {
-      return 'الرجاء إدخال رقم الهاتف';
+      return requiredMessage ?? 'Phone number is required';
     }
 
     final cleaned = value.replaceAll(' ', '');
+
     if (cleaned.length < 9 || cleaned.length > 15) {
-      return 'رقم الهاتف غير صالح';
+      return invalidMessage ?? 'Invalid phone number';
     }
+
     return null;
   }
 
-  static String? strongPassword(String? value) {
+  static String? strongPassword(
+      String? value, {
+        String? requiredMessage,
+        String? minLengthMessage,
+        String? uppercaseMessage,
+        String? lowercaseMessage,
+        String? numberMessage,
+        String? specialCharacterMessage,
+      }) {
     if (value == null || value.isEmpty) {
-      return 'الرجاء إدخال كلمة المرور';
+      return requiredMessage ?? 'Password is required';
     }
+
     if (value.length < 8) {
-      return 'يجب أن تكون 8 أحرف على الأقل';
+      return minLengthMessage ?? 'Password must be at least 8 characters';
     }
+
     if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return 'يجب أن تحتوي على حرف كبير';
+      return uppercaseMessage ?? 'Password must contain an uppercase letter';
     }
+
     if (!RegExp(r'[a-z]').hasMatch(value)) {
-      return 'يجب أن تحتوي على حرف صغير';
+      return lowercaseMessage ?? 'Password must contain a lowercase letter';
     }
+
     if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return 'يجب أن تحتوي على رقم';
+      return numberMessage ?? 'Password must contain a number';
     }
+
     if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-      return 'يجب أن تحتوي على رمز خاص';
+      return specialCharacterMessage ??
+          'Password must contain a special character';
     }
+
     return null;
   }
 
@@ -67,10 +101,12 @@ abstract final class AppValidators {
     return score.clamp(0, 1);
   }
 
-  static String passwordStrengthLabel(String value) {
+  static PasswordStrengthLevel passwordStrengthLevel(String value) {
     final strength = passwordStrength(value);
-    if (strength < 0.4) return 'ضعيفة';
-    if (strength < 0.75) return 'متوسطة';
-    return 'قوية';
+
+    if (strength < 0.4) return PasswordStrengthLevel.weak;
+    if (strength < 0.75) return PasswordStrengthLevel.medium;
+
+    return PasswordStrengthLevel.strong;
   }
 }

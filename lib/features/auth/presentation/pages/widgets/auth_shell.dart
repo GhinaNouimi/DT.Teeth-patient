@@ -2,7 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/localization/locale_bloc/locale_bloc.dart';
+import '../../../../../core/localization/locale_bloc/locale_event.dart';
+import '../../../../../core/localization/locale_bloc/locale_state.dart';
+import '../../../../../core/localization/widgets/language_sheet.dart';
+import '../../../../../core/theme/theme_extensions.dart';
 import '../../../../../core/widgets/branding/smile_divider.dart';
 import '../../../../../core/widgets/branding/tooth_glow_background.dart';
 
@@ -47,9 +53,24 @@ class _AuthShellState extends State<AuthShell>
     super.dispose();
   }
 
+  Future<void> _changeLanguage(String currentLanguageCode) async {
+    final selectedLanguage = await showLanguageSelectionSheet(
+      context: context,
+      currentLanguageCode: currentLanguageCode,
+    );
+
+    if (selectedLanguage == null) return;
+    if (!mounted) return;
+
+    context.read<LocaleBloc>().add(
+      LanguageChanged(selectedLanguage),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colors = context.colors;
 
     return Scaffold(
       body: ToothGlowBackground(
@@ -59,10 +80,58 @@ class _AuthShellState extends State<AuthShell>
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 460),
-                child: AnimatedBuilder(
-                  animation: _borderController,
-                  builder: (context, _) {
-                    return Container(
+                child: Column(
+                  children: [
+                    BlocBuilder<LocaleBloc, LocaleState>(
+                      builder: (context, localeState) {
+                        final languageCode =
+                        localeState.locale.languageCode.toUpperCase();
+
+                        return Align(
+                          alignment: AlignmentDirectional.centerEnd,
+                          child: Material(
+                            color: colors.surfacePrimary,
+                            borderRadius: BorderRadius.circular(16),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(16),
+                              onTap: () => _changeLanguage(
+                                localeState.locale.languageCode,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.symmetric(
+                                  horizontal: 12,
+                                  vertical: 8,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.language_rounded,
+                                      size: 18,
+                                      color: colors.textPrimary,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      languageCode,
+                                      style:
+                                      theme.textTheme.labelLarge?.copyWith(
+                                        color: colors.textPrimary,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    AnimatedBuilder(
+                      animation: _borderController,
+                      builder: (context, _) {
+                        return Container(
                           padding: const EdgeInsets.all(1.4),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(34),
@@ -77,7 +146,8 @@ class _AuthShellState extends State<AuthShell>
                                 theme.colorScheme.secondary.withValues(
                                   alpha: 0.75,
                                 ),
-                                const Color(0xFF63D7C1).withValues(alpha: 0.75),
+                                const Color(0xFF63D7C1)
+                                    .withValues(alpha: 0.75),
                                 theme.colorScheme.primary.withValues(
                                   alpha: 0.95,
                                 ),
@@ -85,9 +155,8 @@ class _AuthShellState extends State<AuthShell>
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: theme.colorScheme.primary.withValues(
-                                  alpha: 0.12,
-                                ),
+                                color: theme.colorScheme.primary
+                                    .withValues(alpha: 0.12),
                                 blurRadius: 26,
                                 spreadRadius: 1,
                                 offset: const Offset(0, 12),
@@ -97,24 +166,27 @@ class _AuthShellState extends State<AuthShell>
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(33),
                             child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                              filter: ImageFilter.blur(
+                                sigmaX: 20,
+                                sigmaY: 20,
+                              ),
                               child: Container(
                                 padding: const EdgeInsets.all(22),
                                 decoration: BoxDecoration(
-                                  color: theme.colorScheme.surface.withValues(
-                                    alpha: 0.95,
-                                  ),
+                                  color: theme.colorScheme.surface
+                                      .withValues(alpha: 0.95),
                                   borderRadius: BorderRadius.circular(33),
                                 ),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       widget.title,
                                       style: theme.textTheme.headlineMedium
                                           ?.copyWith(
-                                            fontWeight: FontWeight.w800,
-                                          ),
+                                        fontWeight: FontWeight.w800,
+                                      ),
                                     ),
                                     const SizedBox(height: 10),
                                     const SmileDivider(),
@@ -123,29 +195,30 @@ class _AuthShellState extends State<AuthShell>
                                       widget.subtitle,
                                       style: theme.textTheme.bodyMedium
                                           ?.copyWith(
-                                            color: theme.colorScheme.onSurface
-                                                .withValues(alpha: 0.75),
-                                            height: 1.5,
-                                          ),
+                                        color: theme.colorScheme.onSurface
+                                            .withValues(alpha: 0.75),
+                                        height: 1.5,
+                                      ),
                                     ),
                                     const SizedBox(height: 24),
                                     widget.child,
                                     if (widget.bottomText != null &&
-                                        widget.bottomActionText != null) ...[
+                                        widget.bottomActionText !=
+                                            null) ...[
                                       const SizedBox(height: 18),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.center,
                                         children: [
                                           Text(
                                             widget.bottomText!,
-                                            style: theme.textTheme.bodyMedium
+                                            style: theme
+                                                .textTheme.bodyMedium
                                                 ?.copyWith(
-                                                  color: theme
-                                                      .colorScheme
-                                                      .onSurface
-                                                      .withValues(alpha: 0.75),
-                                                ),
+                                              color: theme
+                                                  .colorScheme.onSurface
+                                                  .withValues(alpha: 0.75),
+                                            ),
                                           ),
                                           TextButton(
                                             onPressed: widget.onBottomTap,
@@ -162,15 +235,17 @@ class _AuthShellState extends State<AuthShell>
                             ),
                           ),
                         )
-                        .animate()
-                        .fadeIn(duration: 320.ms)
-                        .slideY(
+                            .animate()
+                            .fadeIn(duration: 320.ms)
+                            .slideY(
                           begin: 0.03,
                           end: 0,
                           duration: 320.ms,
                           curve: Curves.easeOutCubic,
                         );
-                  },
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),

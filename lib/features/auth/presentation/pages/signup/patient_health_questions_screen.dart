@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../core/localization/app_localizations.dart';
 import '../../../../../core/routing/app_routes.dart';
 import '../../../../../core/utils/validators.dart';
 import '../../../../../core/widgets/feedback/error_bottom_sheet.dart';
@@ -84,15 +85,16 @@ class _PatientHealthQuestionsScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) async {
         if (state is RegisterSuccess) {
           await showSuccessBottomSheet(
             context,
-            title: 'تم إنشاء الحساب بنجاح',
-            message:
-            'أرسلنا رمز التحقق إلى بريدك الإلكتروني. يرجى إدخال الرمز لتفعيل حسابك.',
-            buttonText: 'الانتقال للتحقق',
+            title: l10n.accountCreatedSuccessfully,
+            message: l10n.verificationCodeSent,
+            buttonText: l10n.goToVerification,
           );
 
           if (!context.mounted) return;
@@ -106,27 +108,27 @@ class _PatientHealthQuestionsScreenState
         if (state is RegisterFailure) {
           await showErrorBottomSheet(
             context,
-            title: 'فشل إنشاء الحساب',
+            title: l10n.accountCreationFailed,
             message: state.message,
-            buttonText: 'حسنًا',
+            buttonText: l10n.ok,
           );
         }
-      },      child: AuthShell(
-        title: 'إكمال بيانات المريض',
-        subtitle:
-            'هذه المعلومات تساعد المركز في التعامل مع الحالات الطارئة بشكل آمن',
+      },
+      child: AuthShell(
+        title: l10n.completePatientData,
+        subtitle: l10n.patientHealthSubtitle,
         child: Form(
           key: _formKey,
           child: Column(
             children: [
               AppTextField(
                 controller: _emergencyNameController,
-                label: 'اسم شخص للطوارئ',
-                hint: 'مثال: محمد أحمد',
+                label: l10n.emergencyContactName,
+                hint: l10n.emergencyContactNameHint,
                 prefixIcon: Icons.person_outline_rounded,
                 validator: (value) => AppValidators.requiredField(
                   value,
-                  fieldName: 'اسم شخص الطوارئ',
+                  message: l10n.emergencyContactNameRequired,
                 ),
               ).animate().fadeIn(delay: 60.ms).slideX(begin: 0.08, end: 0),
 
@@ -134,12 +136,12 @@ class _PatientHealthQuestionsScreenState
 
               AppTextField(
                 controller: _emergencyRelationController,
-                label: 'صلة القرابة',
-                hint: 'مثال: أخ، أب، أم',
+                label: l10n.emergencyContactRelation,
+                hint: l10n.emergencyContactRelationHint,
                 prefixIcon: Icons.family_restroom_rounded,
                 validator: (value) => AppValidators.requiredField(
                   value,
-                  fieldName: 'صلة القرابة',
+                  message: l10n.emergencyContactRelationRequired,
                 ),
               ).animate().fadeIn(delay: 120.ms).slideX(begin: 0.08, end: 0),
 
@@ -147,18 +149,22 @@ class _PatientHealthQuestionsScreenState
 
               AppTextField(
                 controller: _emergencyPhoneController,
-                label: 'رقم هاتف الطوارئ',
+                label: l10n.emergencyPhone,
                 hint: '+963 ...',
                 prefixIcon: Icons.phone_in_talk_outlined,
                 keyboardType: TextInputType.phone,
-                validator: AppValidators.phone,
+                validator: (value) => AppValidators.phone(
+                  value,
+                  requiredMessage: l10n.phoneRequired,
+                  invalidMessage: l10n.phoneInvalid,
+                ),
               ).animate().fadeIn(delay: 180.ms).slideX(begin: 0.08, end: 0),
 
               const SizedBox(height: 20),
 
               HealthYesNoQuestion(
-                title: 'هل تدخن؟',
-                subtitle: 'يساعد الطبيب في تقييم صحة الفم والأسنان',
+                title: l10n.doYouSmoke,
+                subtitle: l10n.smokingSubtitle,
                 icon: Icons.smoking_rooms_outlined,
                 value: _isSmoker,
                 onChanged: (value) => setState(() => _isSmoker = value),
@@ -167,8 +173,8 @@ class _PatientHealthQuestionsScreenState
               const SizedBox(height: 12),
 
               HealthYesNoQuestion(
-                title: 'هل تشرب الكحول بشكل متكرر؟',
-                subtitle: 'هذه المعلومة تبقى ضمن بياناتك الطبية',
+                title: l10n.drinkAlcohol,
+                subtitle: l10n.alcoholSubtitle,
                 icon: Icons.local_drink_outlined,
                 value: _drinksAlcoholFrequently,
                 onChanged: (value) {
@@ -180,8 +186,8 @@ class _PatientHealthQuestionsScreenState
                 const SizedBox(height: 12),
 
                 HealthYesNoQuestion(
-                  title: 'هل أنتِ حامل؟',
-                  subtitle: 'مهم قبل الأشعة أو بعض الأدوية',
+                  title: l10n.isPregnant,
+                  subtitle: l10n.pregnantSubtitle,
                   icon: Icons.pregnant_woman_rounded,
                   value: _isPregnant,
                   onChanged: (value) => setState(() => _isPregnant = value),
@@ -190,8 +196,8 @@ class _PatientHealthQuestionsScreenState
                 const SizedBox(height: 12),
 
                 HealthYesNoQuestion(
-                  title: 'هل أنتِ مرضعة؟',
-                  subtitle: 'مهم قبل وصف بعض الأدوية',
+                  title: l10n.isBreastfeeding,
+                  subtitle: l10n.breastfeedingSubtitle,
                   icon: Icons.child_friendly_rounded,
                   value: _isBreastfeeding,
                   onChanged: (value) {
@@ -216,7 +222,9 @@ class _PatientHealthQuestionsScreenState
                   final isLoading = state is RegisterLoading;
 
                   return PrimaryAppButton(
-                    text: isLoading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب',
+                    text: isLoading
+                        ? l10n.creatingAccount
+                        : l10n.createAccount,
                     icon: Icons.check_rounded,
                     onPressed: isLoading ? null : _submit,
                   );

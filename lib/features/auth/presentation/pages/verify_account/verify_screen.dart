@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 
+import '../../../../../core/localization/app_localizations.dart';
 import '../../../../../core/routing/app_routes.dart';
 import '../../../../../core/widgets/feedback/error_bottom_sheet.dart';
 import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
@@ -17,7 +18,10 @@ import '../widgets/primary_app_button.dart';
 class VerifyScreen extends StatefulWidget {
   final String email;
 
-  const VerifyScreen({super.key, required this.email});
+  const VerifyScreen({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<VerifyScreen> createState() => _VerifyScreenState();
@@ -33,14 +37,15 @@ class _VerifyScreenState extends State<VerifyScreen> {
   }
 
   void _verify() {
+    final l10n = context.l10n;
     final code = _pinController.text.trim();
 
     if (code.length != 6) {
       showErrorBottomSheet(
         context,
-        title: 'رمز غير مكتمل',
-        message: 'يرجى إدخال رمز تحقق مكون من 6 أرقام.',
-        buttonText: 'حسنًا',
+        title: l10n.incompleteCodeTitle,
+        message: l10n.incompleteCodeMessage,
+        buttonText: l10n.ok,
       );
       return;
     }
@@ -66,6 +71,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     final defaultPinTheme = PinTheme(
       width: 58,
@@ -87,9 +93,9 @@ class _VerifyScreenState extends State<VerifyScreen> {
         if (state is VerifyEmailSuccess) {
           await showSuccessBottomSheet(
             context,
-            title: 'تم تأكيد الحساب',
-            message: 'تم تأكيد حسابك بنجاح. يمكنك الآن استخدام التطبيق.',
-            buttonText: 'متابعة',
+            title: l10n.accountVerifiedTitle,
+            message: l10n.accountVerifiedMessage,
+            buttonText: l10n.continueText,
             onPressed: () {
               context.go(AppRoutes.home);
             },
@@ -99,34 +105,33 @@ class _VerifyScreenState extends State<VerifyScreen> {
         if (state is VerifyEmailFailure) {
           await showErrorBottomSheet(
             context,
-            title: 'فشل التحقق',
+            title: l10n.verificationFailedTitle,
             message: state.message,
-            buttonText: 'حسنًا',
+            buttonText: l10n.ok,
           );
         }
 
         if (state is ResendVerificationSuccess) {
           await showSuccessBottomSheet(
             context,
-            title: 'تم إرسال الرمز',
-            message:
-            'أرسلنا رمز تحقق جديد إلى بريدك الإلكتروني. الرمز صالح لمدة دقيقتين.',
-            buttonText: 'حسنًا',
+            title: l10n.codeSentTitle,
+            message: l10n.newVerificationCodeSentMessage,
+            buttonText: l10n.ok,
           );
         }
 
         if (state is ResendVerificationFailure) {
           await showErrorBottomSheet(
             context,
-            title: 'فشل إرسال الرمز',
+            title: l10n.sendCodeFailedTitle,
             message: state.message,
-            buttonText: 'حسنًا',
+            buttonText: l10n.ok,
           );
         }
       },
       child: AuthShell(
-        title: 'تأكيد الحساب',
-        subtitle: 'أدخل رمز التحقق المرسل إلى ${widget.email}',
+        title: l10n.accountVerificationTitle,
+        subtitle: l10n.accountVerificationSubtitle(widget.email),
         child: Column(
           children: [
             Directionality(
@@ -159,7 +164,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 final isLoading = state is VerifyEmailLoading;
 
                 return PrimaryAppButton(
-                  text: isLoading ? 'جاري التحقق...' : 'تأكيد الرمز',
+                  text: isLoading ? l10n.verifying : l10n.verifyCodeButton,
                   icon: Icons.verified_user_outlined,
                   onPressed: isLoading ? null : _verify,
                 );
@@ -174,14 +179,14 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 return TextButton(
                   onPressed: isLoading || isVerifyLoading ? null : _resendCode,
                   child: Text(
-                    isLoading ? 'جاري إرسال الرمز...' : 'إعادة إرسال الرمز',
+                    isLoading ? l10n.sendingCode : l10n.resendCode,
                   ),
                 );
               },
             ),
             TextButton(
               onPressed: () => context.pop(),
-              child: const Text('العودة'),
+              child: Text(l10n.returnText),
             ),
           ],
         ),

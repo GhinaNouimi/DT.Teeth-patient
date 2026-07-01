@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
+import '../../../../../core/localization/app_localizations.dart';
 import '../../../../../core/utils/validators.dart';
 
 class PasswordStrengthCard extends StatelessWidget {
@@ -13,20 +14,30 @@ class PasswordStrengthCard extends StatelessWidget {
     this.showTitle = true,
   });
 
+  String _strengthLabel(BuildContext context) {
+    final l10n = context.l10n;
+    final strength = AppValidators.passwordStrength(password);
+
+    if (password.isEmpty) return l10n.passwordStrengthStart;
+    if (strength < 0.4) return l10n.passwordWeak;
+    if (strength < 0.75) return l10n.passwordMedium;
+    return l10n.passwordStrong;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
+
     final strength = AppValidators.passwordStrength(password);
-    final label = password.isEmpty
-        ? 'ابدأ بكتابة كلمة المرور'
-        : AppValidators.passwordStrengthLabel(password);
+    final label = _strengthLabel(context);
 
     final hasMinLength = password.length >= 8;
     final hasUpperAndLower =
         RegExp(r'[A-Z]').hasMatch(password) &&
-        RegExp(r'[a-z]').hasMatch(password);
+            RegExp(r'[a-z]').hasMatch(password);
     final hasNumber = RegExp(r'[0-9]').hasMatch(password);
-    final hasSpecial = RegExp(r'[!@#$%^&*(),.?\":{}|<>]').hasMatch(password);
+    final hasSpecial = RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password);
 
     Color accentColor;
     if (password.isEmpty) {
@@ -44,10 +55,10 @@ class PasswordStrengthCard extends StatelessWidget {
         : accentColor;
 
     final checks = [
-      _RuleItem(text: '8 أحرف على الأقل', passed: hasMinLength),
-      _RuleItem(text: 'حرف كبير وحرف صغير', passed: hasUpperAndLower),
-      _RuleItem(text: 'رقم واحد على الأقل', passed: hasNumber),
-      _RuleItem(text: 'رمز خاص مثل ! @ # \$ %', passed: hasSpecial),
+      _RuleItem(text: l10n.passwordRuleMinLength, passed: hasMinLength),
+      _RuleItem(text: l10n.passwordRuleUpperLower, passed: hasUpperAndLower),
+      _RuleItem(text: l10n.passwordRuleNumber, passed: hasNumber),
+      _RuleItem(text: l10n.passwordRuleSpecial, passed: hasSpecial),
     ];
 
     return AnimatedContainer(
@@ -81,7 +92,7 @@ class PasswordStrengthCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    'قوة كلمة المرور: $label',
+                    l10n.passwordStrengthTitle(label),
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: titleColor,
                       fontWeight: FontWeight.w700,
@@ -103,7 +114,7 @@ class PasswordStrengthCard extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           ...checks.map(
-            (item) => item
+                (item) => item
                 .animate(target: 1)
                 .fadeIn(duration: 250.ms)
                 .slideX(begin: 0.04, end: 0),
@@ -118,20 +129,23 @@ class _RuleItem extends StatelessWidget {
   final String text;
   final bool passed;
 
-  const _RuleItem({required this.text, required this.passed});
+  const _RuleItem({
+    required this.text,
+    required this.passed,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final successColor = const Color(0xFF34B67A);
-    final idleColor = Theme.of(
-      context,
-    ).colorScheme.onSurface.withValues(alpha: 0.55);
+    const successColor = Color(0xFF34B67A);
+    final theme = Theme.of(context);
+
+    final idleColor = theme.colorScheme.onSurface.withValues(alpha: 0.55);
     final textColor = passed
         ? successColor
-        : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.78);
+        : theme.colorScheme.onSurface.withValues(alpha: 0.78);
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsetsDirectional.only(bottom: 8),
       child: Row(
         children: [
           Icon(
@@ -145,7 +159,7 @@ class _RuleItem extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: theme.textTheme.bodyMedium?.copyWith(
                 color: textColor,
                 fontWeight: passed ? FontWeight.w600 : FontWeight.w500,
               ),

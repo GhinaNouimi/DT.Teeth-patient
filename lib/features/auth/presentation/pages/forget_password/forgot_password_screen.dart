@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../core/localization/app_localizations.dart';
 import '../../../../../core/routing/app_routes.dart';
 import '../../../../../core/utils/validators.dart';
 import '../../../../../core/widgets/feedback/error_bottom_sheet.dart';
@@ -46,14 +47,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
       listener: (context, state) async {
         if (state is ForgotPasswordSendCodeSuccess) {
           await showSuccessBottomSheet(
             context,
-            title: 'تم إرسال الرمز',
-            message: 'أرسلنا رمز التحقق إلى بريدك الإلكتروني.\nصلاحية الرمز دقيقتان.',
-            buttonText: 'إدخال الرمز',
+            title: l10n.codeSentTitle,
+            message: l10n.codeSentMessage,
+            buttonText: l10n.enterCode,
             onPressed: () {
               context.push(
                 AppRoutes.verifyResetCode,
@@ -66,23 +69,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         if (state is ForgotPasswordFailure) {
           await showErrorBottomSheet(
             context,
-            title: 'فشل إرسال الرمز',
+            title: l10n.sendCodeFailedTitle,
             message: state.message,
-            buttonText: 'حسنًا',
+            buttonText: l10n.ok,
           );
         }
       },
       child: AuthShell(
-        title: 'نسيت كلمة المرور',
-        subtitle: 'أدخل بريدك الإلكتروني لإرسال رمز التحقق',
+        title: l10n.forgotPasswordTitle,
+        subtitle: l10n.forgotPasswordSubtitle,
         child: Form(
           key: _formKey,
           child: Column(
             children: [
               AppTextField(
                 controller: _emailController,
-                label: 'البريد الإلكتروني',
-                hint: 'name@example.com',
+                label: l10n.email,
+                hint: l10n.emailHint,
                 prefixIcon: Icons.mail_outline_rounded,
                 keyboardType: TextInputType.emailAddress,
                 validator: AppValidators.email,
@@ -95,7 +98,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   final isLoading = state is ForgotPasswordLoading;
 
                   return PrimaryAppButton(
-                    text: isLoading ? 'جاري إرسال الرمز...' : 'إرسال الرمز',
+                    text: isLoading ? l10n.sendingCode : l10n.sendCode,
                     icon: Icons.mark_email_read_outlined,
                     onPressed: isLoading ? null : _submit,
                   );
@@ -106,7 +109,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
               TextButton(
                 onPressed: () => context.pop(),
-                child: const Text('العودة لتسجيل الدخول'),
+                child: Text(l10n.backToLogin),
               ),
             ],
           ),

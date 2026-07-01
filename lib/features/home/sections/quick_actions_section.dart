@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/routing/app_routes.dart';
 import '../widgets/home_section_title.dart';
 import '../widgets/quick_action_circle_tile.dart';
@@ -10,10 +11,14 @@ class QuickActionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const HomeSectionTitle(title: 'إجراءات سريعة'),
+        HomeSectionTitle(
+          title: l10n.quickActions,
+        ),
         const SizedBox(height: 16),
 
         Row(
@@ -21,20 +26,20 @@ class QuickActionsSection extends StatelessWidget {
           children: [
             QuickActionCircleTile(
               icon: Icons.emergency_outlined,
-              label: 'موعد طارئ',
+              label: l10n.emergencyAppointment,
               type: QuickActionCircleType.emergency,
               onTap: () {
                 context.push(AppRoutes.emergencyAppointment);
               },
             ),
-            const QuickActionCircleTile(
+            QuickActionCircleTile(
               icon: Icons.call_outlined,
-              label: 'التواصل',
+              label: l10n.contact,
               type: QuickActionCircleType.contact,
             ),
-            const QuickActionCircleTile(
+            QuickActionCircleTile(
               icon: Icons.smart_toy_outlined,
-              label: 'المساعد الذكي',
+              label: l10n.smartAssistant,
               type: QuickActionCircleType.ai,
             ),
           ],

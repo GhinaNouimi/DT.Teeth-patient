@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/localization/app_localizations.dart';
+
 class PasswordMatchCard extends StatelessWidget {
   final String password;
   final String confirmPassword;
@@ -13,6 +15,7 @@ class PasswordMatchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     final hasValue = confirmPassword.isNotEmpty;
     final matches = hasValue && password == confirmPassword;
@@ -24,10 +27,10 @@ class PasswordMatchCard extends StatelessWidget {
         : const Color(0xFFE76F6F);
 
     final text = !hasValue
-        ? 'أعد إدخال كلمة المرور للتأكيد'
+        ? l10n.passwordConfirmHint
         : matches
-        ? 'كلمتا المرور متطابقتان'
-        : 'كلمتا المرور غير متطابقتين';
+        ? l10n.passwordsMatch
+        : l10n.passwordsNotMatching;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 220),

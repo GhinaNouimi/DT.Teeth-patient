@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 
+import '../../../../../core/localization/app_localizations.dart';
 import '../../../../../core/routing/app_routes.dart';
 import '../../../../../core/widgets/feedback/error_bottom_sheet.dart';
 import '../../../../../core/widgets/feedback/success_bottom_sheet.dart';
@@ -36,14 +37,15 @@ class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
   }
 
   void _submit() {
+    final l10n = context.l10n;
     final code = _pinController.text.trim();
 
     if (code.length != 6) {
       showErrorBottomSheet(
         context,
-        title: 'رمز غير مكتمل',
-        message: 'يرجى إدخال رمز تحقق مكون من 6 أرقام.',
-        buttonText: 'حسنًا',
+        title: l10n.incompleteCodeTitle,
+        message: l10n.incompleteCodeMessage,
+        buttonText: l10n.ok,
       );
       return;
     }
@@ -71,6 +73,7 @@ class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     final defaultPinTheme = PinTheme(
       width: 56,
@@ -88,9 +91,9 @@ class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
         if (state is ForgotPasswordVerifyCodeSuccess) {
           await showSuccessBottomSheet(
             context,
-            title: 'تم التحقق من الرمز',
-            message: 'تم التحقق من الرمز بنجاح. يمكنك الآن إعادة تعيين كلمة المرور.',
-            buttonText: 'متابعة',
+            title: l10n.codeVerifiedTitle,
+            message: l10n.codeVerifiedMessage,
+            buttonText: l10n.continueText,
             onPressed: () {
               context.push(AppRoutes.resetPassword, extra: widget.email);
             },
@@ -100,24 +103,24 @@ class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
         if (state is ForgotPasswordSendCodeSuccess) {
           await showSuccessBottomSheet(
             context,
-            title: 'تم إرسال الرمز',
-            message: 'أرسلنا رمز تحقق جديد إلى بريدك الإلكتروني.\nصلاحية الرمز دقيقتان.',
-            buttonText: 'حسنًا',
+            title: l10n.codeSentTitle,
+            message: l10n.newCodeSentMessage,
+            buttonText: l10n.ok,
           );
         }
 
         if (state is ForgotPasswordFailure) {
           await showErrorBottomSheet(
             context,
-            title: 'حدث خطأ',
+            title: l10n.genericErrorTitle,
             message: state.message,
-            buttonText: 'حسنًا',
+            buttonText: l10n.ok,
           );
         }
       },
       child: AuthShell(
-        title: 'التحقق من الرمز',
-        subtitle: 'أدخل الرمز المرسل إلى ${widget.email}',
+        title: l10n.verifyCodeTitle,
+        subtitle: l10n.verifyCodeSubtitle(widget.email),
         child: Column(
           children: [
             Directionality(
@@ -136,37 +139,32 @@ class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
-
             BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
               builder: (context, state) {
                 final isLoading = state is ForgotPasswordLoading;
 
                 return PrimaryAppButton(
-                  text: isLoading ? 'جاري التحقق...' : 'تأكيد الرمز',
+                  text: isLoading ? l10n.verifying : l10n.verifyCodeButton,
                   icon: Icons.verified_user_outlined,
                   onPressed: isLoading ? null : _submit,
                 );
               },
             ),
-
             const SizedBox(height: 12),
-
             BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
               builder: (context, state) {
                 final isLoading = state is ForgotPasswordLoading;
 
                 return TextButton(
                   onPressed: isLoading ? null : _resendCode,
-                  child: const Text('إعادة إرسال الرمز'),
+                  child: Text(l10n.resendCode),
                 );
               },
             ),
-
             TextButton(
               onPressed: () => context.pop(),
-              child: const Text('العودة'),
+              child: Text(l10n.returnText),
             ),
           ],
         ),

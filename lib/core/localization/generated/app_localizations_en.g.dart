@@ -15,10 +15,10 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
   String get bottomNavDoctors => 'Doctors';
 
   @override
-  String get bottomNavAppointments => 'Appointments';
+  String get bottomNavAppointments => 'Schedule';
 
   @override
-  String get bottomNavMedicalRecord => 'Medical Record';
+  String get bottomNavMedicalRecord => 'Records';
 
   @override
   String get bottomNavAccount => 'Account';
@@ -26,4 +26,500 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
   @override
   String get splashTagline =>
       'Modern dental care starts with an elegant digital experience';
+
+  @override
+  String get selectLanguage => 'Select Language';
+
+  @override
+  String get arabic => 'Arabic';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get returnText => 'Return';
+
+  @override
+  String get continueText => 'Continue';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get createAccount => 'Create Account';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get fullName => 'Full Name';
+
+  @override
+  String get fullNameHint => 'Enter your full name';
+
+  @override
+  String get address => 'Address';
+
+  @override
+  String get addressHint => 'Enter your address';
+
+  @override
+  String get nameRequired => 'Please enter your full name';
+
+  @override
+  String get emailRequired => 'Please enter your email';
+
+  @override
+  String get emailInvalid => 'Invalid email address';
+
+  @override
+  String get phoneRequired => 'Please enter your phone number';
+
+  @override
+  String get phoneInvalid => 'Invalid phone number';
+
+  @override
+  String get addressRequired => 'Please enter your address';
+
+  @override
+  String get birthDateRequired => 'Please select your date of birth';
+
+  @override
+  String get passwordRequired => 'Please enter your password';
+
+  @override
+  String get passwordConfirmationRequired => 'Please confirm your password';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get passwordMinLength => 'Password must be at least 8 characters';
+
+  @override
+  String get passwordUppercase => 'Password must contain an uppercase letter';
+
+  @override
+  String get passwordLowercase => 'Password must contain a lowercase letter';
+
+  @override
+  String get passwordNumber => 'Password must contain a number';
+
+  @override
+  String get passwordSpecial => 'Password must contain a special character';
+
+  @override
+  String get passwordRules => 'Password Rules';
+
+  @override
+  String get passwordStrengthStart => 'Start typing your password';
+
+  @override
+  String passwordStrengthTitle(Object label) {
+    return 'Password strength: $label';
+  }
+
+  @override
+  String get passwordRuleMinLength => 'At least 8 characters';
+
+  @override
+  String get passwordRuleUpperLower => 'Uppercase and lowercase letters';
+
+  @override
+  String get passwordRuleNumber => 'At least one number';
+
+  @override
+  String get passwordRuleSpecial => 'A special character like ! @ # \$ %';
+
+  @override
+  String get passwordWeak => 'Weak';
+
+  @override
+  String get passwordMedium => 'Medium';
+
+  @override
+  String get passwordStrong => 'Strong';
+
+  @override
+  String get signupTitle => 'Create Account';
+
+  @override
+  String get signupSubtitle =>
+      'Create your account to access your appointments and clinic services';
+
+  @override
+  String get alreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get birthDate => 'Date of Birth';
+
+  @override
+  String get birthDateHint => 'Select your date of birth';
+
+  @override
+  String get gender => 'Gender';
+
+  @override
+  String get genderRequired => 'Please select your gender';
+
+  @override
+  String get male => 'Male';
+
+  @override
+  String get female => 'Female';
+
+  @override
+  String get completePatientData => 'Complete Patient Data';
+
+  @override
+  String get patientHealthSubtitle =>
+      'This information helps the clinic handle emergency cases safely';
+
+  @override
+  String get emergencyContactName => 'Emergency Contact Name';
+
+  @override
+  String get emergencyContactNameHint => 'Example: Mohammad Ahmad';
+
+  @override
+  String get emergencyContactRelation => 'Relationship';
+
+  @override
+  String get emergencyContactRelationHint => 'Example: Brother, Father, Mother';
+
+  @override
+  String get emergencyPhone => 'Emergency Phone Number';
+
+  @override
+  String get doYouSmoke => 'Do you smoke?';
+
+  @override
+  String get smokingSubtitle => 'Helps the dentist assess your oral health';
+
+  @override
+  String get drinkAlcohol => 'Do you frequently drink alcohol?';
+
+  @override
+  String get alcoholSubtitle =>
+      'This information remains part of your medical data';
+
+  @override
+  String get isPregnant => 'Are you pregnant?';
+
+  @override
+  String get pregnantSubtitle => 'Important before X-rays or some medications';
+
+  @override
+  String get isBreastfeeding => 'Are you breastfeeding?';
+
+  @override
+  String get breastfeedingSubtitle =>
+      'Important before prescribing some medications';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get teethCleaningFrequency => 'Teeth cleaning frequency';
+
+  @override
+  String get teethCleaningOnce => 'Once daily';
+
+  @override
+  String get teethCleaningTwice => 'Twice daily';
+
+  @override
+  String get teethCleaningRarely => 'Rarely';
+
+  @override
+  String get emergencyContactNameRequired =>
+      'Please enter the emergency contact name';
+
+  @override
+  String get emergencyContactRelationRequired =>
+      'Please enter the relationship';
+
+  @override
+  String get loginTitle => 'Login';
+
+  @override
+  String get loginSubtitle =>
+      'Enter your information to access your account easily and securely';
+
+  @override
+  String get doNotHaveAccount => 'Don’t have an account?';
+
+  @override
+  String get forgotPasswordQuestion => 'Forgot password?';
+
+  @override
+  String get loginButton => 'Login';
+
+  @override
+  String get loggingIn => 'Logging in...';
+
+  @override
+  String get loginSuccessTitle => 'Login Successful';
+
+  @override
+  String get loginSuccessMessage =>
+      'You have logged in successfully. You can now continue using the app.';
+
+  @override
+  String get loginFailedTitle => 'Login Failed';
+
+  @override
+  String get forgotPasswordTitle => 'Forgot Password';
+
+  @override
+  String get forgotPasswordSubtitle =>
+      'Enter your email to receive a verification code';
+
+  @override
+  String get sendCode => 'Send Code';
+
+  @override
+  String get sendingCode => 'Sending code...';
+
+  @override
+  String get codeSentTitle => 'Code Sent';
+
+  @override
+  String get codeSentMessage =>
+      'We sent a verification code to your email.\nThe code is valid for two minutes.';
+
+  @override
+  String get newCodeSentMessage =>
+      'We sent a new verification code to your email.\nThe code is valid for two minutes.';
+
+  @override
+  String get enterCode => 'Enter Code';
+
+  @override
+  String get backToLogin => 'Back to Login';
+
+  @override
+  String get sendCodeFailedTitle => 'Failed to Send Code';
+
+  @override
+  String get verifyCodeTitle => 'Verify Code';
+
+  @override
+  String verifyCodeSubtitle(Object email) {
+    return 'Enter the code sent to $email';
+  }
+
+  @override
+  String get incompleteCodeTitle => 'Incomplete Code';
+
+  @override
+  String get incompleteCodeMessage =>
+      'Please enter a 6-digit verification code.';
+
+  @override
+  String get codeVerifiedTitle => 'Code Verified';
+
+  @override
+  String get codeVerifiedMessage =>
+      'The code has been verified successfully. You can now reset your password.';
+
+  @override
+  String get verifyCodeButton => 'Confirm Code';
+
+  @override
+  String get verifying => 'Verifying...';
+
+  @override
+  String get resendCode => 'Resend Code';
+
+  @override
+  String get resetPasswordTitle => 'Reset Password';
+
+  @override
+  String resetPasswordSubtitle(Object email) {
+    return 'Enter a new password for $email';
+  }
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get savePassword => 'Save Password';
+
+  @override
+  String get saving => 'Saving...';
+
+  @override
+  String get passwordUpdatedTitle => 'Password Updated';
+
+  @override
+  String get passwordUpdatedMessage =>
+      'Your password has been reset successfully. You can now log in with your new password.';
+
+  @override
+  String get passwordUpdateFailedTitle => 'Password Update Failed';
+
+  @override
+  String get confirmPasswordRequired => 'Please confirm your password';
+
+  @override
+  String get passwordsNotMatching => 'Passwords do not match';
+
+  @override
+  String get passwordConfirmHint => 'Re-enter your password to confirm';
+
+  @override
+  String get passwordsMatch => 'Passwords match';
+
+  @override
+  String get accountCreatedSuccessfully => 'Account Created Successfully';
+
+  @override
+  String get verificationCodeSent =>
+      'We sent a verification code to your email. Please enter it to activate your account.';
+
+  @override
+  String get goToVerification => 'Go to Verification';
+
+  @override
+  String get accountCreationFailed => 'Account Creation Failed';
+
+  @override
+  String get creatingAccount => 'Creating account...';
+
+  @override
+  String get accountVerificationTitle => 'Account Verification';
+
+  @override
+  String accountVerificationSubtitle(Object email) {
+    return 'Enter the verification code sent to $email';
+  }
+
+  @override
+  String get accountVerifiedTitle => 'Account Verified';
+
+  @override
+  String get accountVerifiedMessage =>
+      'Your account has been verified successfully. You can now use the app.';
+
+  @override
+  String get verificationFailedTitle => 'Verification Failed';
+
+  @override
+  String get newVerificationCodeSentMessage =>
+      'We sent a new verification code to your email. The code is valid for two minutes.';
+
+  @override
+  String get genericErrorTitle => 'Something went wrong';
+
+  @override
+  String get featuredOffers => 'Featured Offers';
+
+  @override
+  String get specialOffer => 'Special Offer';
+
+  @override
+  String get viewDetails => 'View Details';
+
+  @override
+  String get offerWhiteningTitle => '20% off whitening';
+
+  @override
+  String get offerWhiteningSubtitle => 'For a limited time this week';
+
+  @override
+  String get offerCleaningTitle => 'Teeth cleaning offer';
+
+  @override
+  String get offerCleaningSubtitle =>
+      'Book your appointment now and benefit from the offer';
+
+  @override
+  String get offerCheckupTitle => 'Discount on check-up session';
+
+  @override
+  String get offerCheckupSubtitle => 'Check your dental health easily';
+
+  @override
+  String get nextAppointment => 'Next Appointment';
+
+  @override
+  String get welcomePatient => 'Welcome 👋';
+
+  @override
+  String get welcomeSubtitle => 'We always care about your smile';
+
+  @override
+  String get bookAppointment => 'Book Now';
+
+  @override
+  String get quickActions => 'Quick Actions';
+
+  @override
+  String get emergencyAppointment => 'Emergency Appointment';
+
+  @override
+  String get contact => 'Contact';
+
+  @override
+  String get smartAssistant => 'AI Assistant';
+
+  @override
+  String get appointmentTypeTitle => 'Appointment Type';
+
+  @override
+  String get appointmentTypeEmergencyDescription =>
+      'Emergency appointment - will be handled immediately';
+
+  @override
+  String get appointmentTypeRegularDescription => 'Book a regular appointment';
+
+  @override
+  String get appointmentTypeFollowUpDescription => 'Follow-up appointment';
+
+  @override
+  String get noUpcomingAppointments => 'No upcoming appointments';
+
+  @override
+  String get noPastAppointments => 'No past appointments';
+
+  @override
+  String get bookFirstAppointment =>
+      'Start by booking your first appointment now';
+
+  @override
+  String get noPastAppointmentsSubtitle => 'You have no past appointments yet';
+
+  @override
+  String get noDoctorsAvailable => 'No doctors available for this service';
+
+  @override
+  String get selectDoctor => 'Select Doctor';
+
+  @override
+  String get selectServiceType => 'Select Service Type';
+
+  @override
+  String get emergency => 'Emergency';
 }

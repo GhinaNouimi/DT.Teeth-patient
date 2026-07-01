@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../core/localization/app_localizations.dart';
+
 class HealthYesNoQuestion extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -19,6 +21,7 @@ class HealthYesNoQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final selectedColor = theme.colorScheme.primary;
 
     return Container(
@@ -69,7 +72,7 @@ class HealthYesNoQuestion extends StatelessWidget {
             children: [
               Expanded(
                 child: _OptionButton(
-                  text: 'لا',
+                  text: l10n.no,
                   isSelected: !value,
                   onTap: () => onChanged(false),
                 ),
@@ -77,7 +80,7 @@ class HealthYesNoQuestion extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: _OptionButton(
-                  text: 'نعم',
+                  text: l10n.yes,
                   isSelected: value,
                   onTap: () => onChanged(true),
                 ),

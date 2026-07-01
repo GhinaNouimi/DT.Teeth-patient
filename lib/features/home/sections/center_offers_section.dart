@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/localization/app_localizations.dart';
 import '../../../generated/assets.dart';
 import '../widgets/home_section_title.dart';
 import '../widgets/offer_card.dart';
@@ -9,20 +10,22 @@ class CenterOffersSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     final offers = [
-      const _OfferItem(
-        title: 'خصم 20% على التبييض',
-        subtitle: 'لفترة محدودة هذا الأسبوع',
+      _OfferItem(
+        title: l10n.offerWhiteningTitle,
+        subtitle: l10n.offerWhiteningSubtitle,
         imagePath: Assets.offerDiscount,
       ),
-      const _OfferItem(
-        title: 'عرض تنظيف الأسنان',
-        subtitle: 'احجز موعدك الآن واستفد من العرض',
+      _OfferItem(
+        title: l10n.offerCleaningTitle,
+        subtitle: l10n.offerCleaningSubtitle,
         imagePath: Assets.offerDiscount,
       ),
-      const _OfferItem(
-        title: 'خصم على جلسة الفحص',
-        subtitle: 'اطمئن على صحة أسنانك بسهولة',
+      _OfferItem(
+        title: l10n.offerCheckupTitle,
+        subtitle: l10n.offerCheckupSubtitle,
         imagePath: Assets.offerDiscount,
       ),
     ];
@@ -30,7 +33,9 @@ class CenterOffersSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const HomeSectionTitle(title: 'عروض مميزة'),
+        HomeSectionTitle(
+          title: l10n.featuredOffers,
+        ),
         const SizedBox(height: 14),
         SizedBox(
           height: 165,

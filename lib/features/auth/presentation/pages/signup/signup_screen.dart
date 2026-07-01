@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../core/localization/app_localizations.dart';
 import '../../../../../core/routing/app_routes.dart';
 import '../../../../../core/utils/validators.dart';
 import '../widgets/app_text_field.dart';
@@ -31,10 +32,8 @@ class _SignupScreenState extends State<SignupScreen> {
   final _confirmPasswordController = TextEditingController();
 
   DateTime? _selectedBirthDate;
-  String? _selectedGender;
+  String? _selectedGenderCode;
   bool _showGenderError = false;
-
-  static const List<String> _genderOptions = ['ذكر', 'أنثى'];
 
   @override
   void dispose() {
@@ -69,7 +68,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   Future<void> _submit() async {
     final isFormValid = _formKey.currentState!.validate();
-    final hasGender = _selectedGender != null;
+    final hasGender = _selectedGenderCode != null;
 
     setState(() {
       _showGenderError = !hasGender;
@@ -84,20 +83,34 @@ class _SignupScreenState extends State<SignupScreen> {
       'password': _passwordController.text,
       'password_confirmation': _confirmPasswordController.text,
       'date_of_birth': _birthDateController.text.trim(),
-      'gender': _selectedGender == 'ذكر' ? 1 : 2,
+      'gender': _selectedGenderCode == 'male' ? 1 : 2,
       'address': _addressController.text.trim(),
     };
 
+    if (!mounted) return;
     context.push(AppRoutes.patientHealthQuestions, extra: basicRegisterData);
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    final genderOptions = [
+      l10n.male,
+      l10n.female,
+    ];
+
+    final selectedGenderLabel = switch (_selectedGenderCode) {
+      'male' => l10n.male,
+      'female' => l10n.female,
+      _ => null,
+    };
+
     return AuthShell(
-      title: 'إنشاء حساب',
-      subtitle: 'أنشئ حسابك للوصول إلى مواعيدك وخدمات المركز',
-      bottomText: 'لديك حساب بالفعل؟',
-      bottomActionText: 'تسجيل الدخول',
+      title: l10n.signupTitle,
+      subtitle: l10n.signupSubtitle,
+      bottomText: l10n.alreadyHaveAccount,
+      bottomActionText: l10n.login,
       onBottomTap: () => context.go(AppRoutes.login),
       child: Form(
         key: _formKey,
@@ -105,33 +118,43 @@ class _SignupScreenState extends State<SignupScreen> {
           children: [
             AppTextField(
               controller: _nameController,
-              label: 'الاسم الكامل',
-              hint: 'أدخل اسمك الكامل',
+              label: l10n.fullName,
+              hint: l10n.fullNameHint,
               prefixIcon: Icons.person_outline_rounded,
-              validator: (value) =>
-                  AppValidators.requiredField(value, fieldName: 'الاسم'),
+              validator: (value) => AppValidators.requiredField(
+                value,
+                message: l10n.nameRequired,
+              ),
             ).animate().fadeIn(delay: 60.ms).slideX(begin: 0.08, end: 0),
 
             const SizedBox(height: 16),
 
             AppTextField(
               controller: _phoneController,
-              label: 'رقم الهاتف',
+              label: l10n.phoneNumber,
               hint: '+963 ...',
               prefixIcon: Icons.phone_outlined,
               keyboardType: TextInputType.phone,
-              validator: AppValidators.phone,
+              validator: (value) => AppValidators.phone(
+                value,
+                requiredMessage: l10n.phoneRequired,
+                invalidMessage: l10n.phoneInvalid,
+              ),
             ).animate().fadeIn(delay: 120.ms).slideX(begin: 0.08, end: 0),
 
             const SizedBox(height: 16),
 
             AppTextField(
               controller: _emailController,
-              label: 'البريد الإلكتروني',
-              hint: 'name@example.com',
+              label: l10n.email,
+              hint: l10n.emailHint,
               prefixIcon: Icons.mail_outline_rounded,
               keyboardType: TextInputType.emailAddress,
-              validator: AppValidators.email,
+              validator: (value) => AppValidators.email(
+                value,
+                requiredMessage: l10n.emailRequired,
+                invalidMessage: l10n.emailInvalid,
+              ),
             ).animate().fadeIn(delay: 180.ms).slideX(begin: 0.08, end: 0),
 
             const SizedBox(height: 16),
@@ -145,12 +168,12 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(height: 16),
 
             GenderSelectorCard(
-              selectedGender: _selectedGender,
-              options: _genderOptions,
+              selectedGender: selectedGenderLabel,
+              options: genderOptions,
               showError: _showGenderError,
               onSelected: (value) {
                 setState(() {
-                  _selectedGender = value;
+                  _selectedGenderCode = value == l10n.male ? 'male' : 'female';
                   _showGenderError = false;
                 });
               },
@@ -161,21 +184,23 @@ class _SignupScreenState extends State<SignupScreen> {
 
             AppTextField(
               controller: _addressController,
-              label: 'العنوان',
-              hint: 'أدخل عنوانك',
+              label: l10n.address,
+              hint: l10n.addressHint,
               prefixIcon: Icons.location_on_outlined,
               maxLines: 3,
               textInputAction: TextInputAction.newline,
-              validator: (value) =>
-                  AppValidators.requiredField(value, fieldName: 'العنوان'),
+              validator: (value) => AppValidators.requiredField(
+                value,
+                message: l10n.addressRequired,
+              ),
             ).animate().fadeIn(delay: 300.ms).slideX(begin: 0.08, end: 0),
 
             const SizedBox(height: 16),
 
             Align(
-              alignment: Alignment.centerRight,
+              alignment: AlignmentDirectional.centerStart,
               child: Text(
-                'شروط كلمة المرور',
+                l10n.passwordRules,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -197,28 +222,36 @@ class _SignupScreenState extends State<SignupScreen> {
 
             AppTextField(
               controller: _passwordController,
-              label: 'كلمة المرور',
+              label: l10n.password,
               hint: '********',
               prefixIcon: Icons.lock_outline_rounded,
               obscureText: true,
-              validator: AppValidators.strongPassword,
+              validator: (value) => AppValidators.strongPassword(
+                value,
+                requiredMessage: l10n.passwordRequired,
+                minLengthMessage: l10n.passwordMinLength,
+                uppercaseMessage: l10n.passwordUppercase,
+                lowercaseMessage: l10n.passwordLowercase,
+                numberMessage: l10n.passwordNumber,
+                specialCharacterMessage: l10n.passwordSpecial,
+              ),
             ).animate().fadeIn(delay: 380.ms).slideX(begin: 0.08, end: 0),
 
             const SizedBox(height: 16),
 
             AppTextField(
               controller: _confirmPasswordController,
-              label: 'تأكيد كلمة المرور',
+              label: l10n.confirmPassword,
               hint: '********',
               prefixIcon: Icons.lock_reset_rounded,
               obscureText: true,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'يرجى تأكيد كلمة المرور';
+                  return l10n.passwordConfirmationRequired;
                 }
 
                 if (value != _passwordController.text) {
-                  return 'كلمة المرور غير متطابقة';
+                  return l10n.passwordsDoNotMatch;
                 }
 
                 return null;
@@ -228,7 +261,7 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(height: 20),
 
             PrimaryAppButton(
-              text: 'متابعة',
+              text: l10n.continueText,
               icon: Icons.arrow_forward_rounded,
               onPressed: _submit,
             ).animate().fadeIn(delay: 500.ms).slideY(begin: 0.14, end: 0),

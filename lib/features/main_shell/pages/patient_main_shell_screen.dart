@@ -40,7 +40,7 @@ class _PatientMainShellScreenState extends State<PatientMainShellScreen> {
         child: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(20, 16, 20, 0),
               child: PatientHomeAppBarSection(),
             ),
             const SizedBox(height: 14),

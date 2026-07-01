@@ -35,13 +35,36 @@ class AppTextField extends StatefulWidget {
 }
 
 class _AppTextFieldState extends State<AppTextField> {
+  final _fieldKey = GlobalKey<FormFieldState<String>>();
+
   late bool _isObscure;
   bool _isFocused = false;
+  Locale? _lastLocale;
 
   @override
   void initState() {
     super.initState();
     _isObscure = widget.obscureText;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final currentLocale = Localizations.localeOf(context);
+
+    if (_lastLocale != null && _lastLocale != currentLocale) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+
+        final fieldState = _fieldKey.currentState;
+        if (fieldState != null && fieldState.hasError) {
+          fieldState.validate();
+        }
+      });
+    }
+
+    _lastLocale = currentLocale;
   }
 
   @override
@@ -86,13 +109,13 @@ class _AppTextFieldState extends State<AppTextField> {
           ],
         ),
         child: TextFormField(
+          key: _fieldKey,
           controller: widget.controller,
           validator: widget.validator,
           obscureText: _isObscure,
           keyboardType: effectiveKeyboardType,
-          textInputAction: isMultiline
-              ? TextInputAction.newline
-              : widget.textInputAction,
+          textInputAction:
+          isMultiline ? TextInputAction.newline : widget.textInputAction,
           onChanged: widget.onChanged,
           readOnly: widget.readOnly,
           onTap: widget.onTap,
@@ -107,22 +130,22 @@ class _AppTextFieldState extends State<AppTextField> {
             prefixIconConstraints: const BoxConstraints(minWidth: 44),
             suffixIcon: widget.obscureText
                 ? IconButton(
-                    onPressed: () => setState(() => _isObscure = !_isObscure),
-                    icon: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 180),
-                      child: Icon(
-                        _isObscure
-                            ? Icons.visibility_rounded
-                            : Icons.visibility_off_rounded,
-                        key: ValueKey(_isObscure),
-                      ),
-                    ),
-                  )
+              onPressed: () => setState(() => _isObscure = !_isObscure),
+              icon: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 180),
+                child: Icon(
+                  _isObscure
+                      ? Icons.visibility_rounded
+                      : Icons.visibility_off_rounded,
+                  key: ValueKey(_isObscure),
+                ),
+              ),
+            )
                 : (widget.readOnly && widget.onTap != null)
                 ? Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: theme.colorScheme.primary.withValues(alpha: 0.8),
-                  )
+              Icons.keyboard_arrow_down_rounded,
+              color: theme.colorScheme.primary.withValues(alpha: 0.8),
+            )
                 : null,
           ),
         ),

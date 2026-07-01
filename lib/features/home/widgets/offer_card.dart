@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/theme/theme_extensions.dart';
 
 class OfferCard extends StatelessWidget {
@@ -77,7 +78,7 @@ class OfferCard extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    _DetailsChip(),
+                    const _DetailsChip(),
                   ],
                 ),
               ),
@@ -103,6 +104,7 @@ class _DiscountBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
+    final l10n = context.l10n;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -112,7 +114,7 @@ class _DiscountBadge extends StatelessWidget {
         border: Border.all(color: colors.borderSoft),
       ),
       child: Text(
-        'عرض خاص',
+        l10n.specialOffer,
         style: theme.textTheme.labelSmall?.copyWith(
           color: colors.textPrimary,
           fontWeight: FontWeight.w800,
@@ -123,10 +125,13 @@ class _DiscountBadge extends StatelessWidget {
 }
 
 class _DetailsChip extends StatelessWidget {
+  const _DetailsChip();
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
+    final l10n = context.l10n;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -136,7 +141,7 @@ class _DetailsChip extends StatelessWidget {
         border: Border.all(color: colors.borderSoft),
       ),
       child: Text(
-        'عرض التفاصيل',
+        l10n.viewDetails,
         style: theme.textTheme.bodySmall?.copyWith(
           color: colors.textPrimary,
           fontWeight: FontWeight.w800,

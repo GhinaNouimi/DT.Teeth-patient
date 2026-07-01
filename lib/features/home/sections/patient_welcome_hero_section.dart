@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/localization/app_localizations.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../../core/theme/theme_extensions.dart';
 import '../../../generated/assets.dart';
@@ -12,6 +13,9 @@ class PatientWelcomeHeroSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
+    final l10n = context.l10n;
+
+    const userName = 'Sarah';
 
     return Container(
       height: 190,
@@ -38,14 +42,13 @@ class PatientWelcomeHeroSection extends StatelessWidget {
       child: Row(
         textDirection: Directionality.of(context),
         children: [
-          /// النص (يصبح يمين بالعربي ويسار بالإنكليزي تلقائياً)
           Expanded(
             flex: 5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'مرحباً سارة 👋',
+                  l10n.welcomePatient,
                   style: theme.textTheme.headlineSmall?.copyWith(
                     color: colors.textPrimary,
                     fontWeight: FontWeight.w800,
@@ -53,7 +56,7 @@ class PatientWelcomeHeroSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'نهتم بابتسامتك دائماً',
+                  l10n.welcomeSubtitle,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: colors.textSecondary,
                     fontWeight: FontWeight.w600,
@@ -67,7 +70,7 @@ class PatientWelcomeHeroSection extends StatelessWidget {
                       context.push(AppRoutes.newAppointment);
                     },
                     icon: const Icon(Icons.add_rounded, size: 20),
-                    label: const Text('حجز موعد'),
+                    label: Text(l10n.bookAppointment),
                     style: FilledButton.styleFrom(
                       backgroundColor: colors.heroButton,
                       foregroundColor: colors.textInverse,
@@ -89,7 +92,7 @@ class PatientWelcomeHeroSection extends StatelessWidget {
             child: Center(
               child: FractionallySizedBox(
                 widthFactor: 1.9,
-                heightFactor:1.9  ,
+                heightFactor: 1.9,
                 child: Image.asset(
                   Assets.welcomeHero,
                   fit: BoxFit.contain,
