@@ -41,7 +41,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
 
     context.read<ForgotPasswordBloc>().add(
-      SendForgotPasswordCodeSubmitted(request: request),
+      SendForgotPasswordCodeSubmitted(request: request,
+        languageCode: Localizations.localeOf(context).languageCode,),
     );
   }
 

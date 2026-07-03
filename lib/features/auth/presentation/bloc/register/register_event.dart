@@ -6,6 +6,10 @@ abstract class RegisterEvent {
 
 class RegisterPatientSubmitted extends RegisterEvent {
   final RegisterPatientRequestModel request;
+  final String languageCode;
 
-  const RegisterPatientSubmitted({required this.request});
+  const RegisterPatientSubmitted({
+    required this.request,
+    required this.languageCode,
+  });
 }

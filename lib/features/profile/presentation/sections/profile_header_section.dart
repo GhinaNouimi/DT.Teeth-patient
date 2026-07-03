@@ -1,8 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../domain/entities/profile_entity.dart';
-import '../widgets/profile_avatar_card.dart';
 
 class ProfileHeaderSection extends StatelessWidget {
   final ProfileEntity profile;
@@ -18,6 +19,7 @@ class ProfileHeaderSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Container(
       padding: const EdgeInsets.all(18),
@@ -25,21 +27,28 @@ class ProfileHeaderSection extends StatelessWidget {
         color: colors.surfacePrimary,
         borderRadius: BorderRadius.circular(26),
         border: Border.all(color: colors.borderSoft),
-        boxShadow: [
-          BoxShadow(
-            color: colors.shadow.withValues(alpha: 0.05),
-            blurRadius: 18,
-            offset: const Offset(0, 8),
-          ),
-        ],
       ),
       child: Column(
         children: [
           Row(
             children: [
-              ProfileAvatarCard(
-                name: profile.name,
-                avatarStyleId: profile.avatarStyleId,
+              CircleAvatar(
+                radius: 38,
+                backgroundColor: colors.surfaceSecondary,
+                child: ClipOval(
+                  child: CachedNetworkImage(
+                    imageUrl: profile.profilePicture,
+                    width: 76,
+                    height: 76,
+                    fit: BoxFit.cover,
+                    placeholder: (_, __) => const CircularProgressIndicator(),
+                    errorWidget: (_, __, ___) => Icon(
+                      Icons.person_rounded,
+                      size: 38,
+                      color: colors.navBarItem,
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -55,7 +64,7 @@ class ProfileHeaderSection extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'ملف المريض',
+                      l10n.patientProfile,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: colors.textSecondary,
                         fontWeight: FontWeight.w600,
@@ -86,32 +95,8 @@ class ProfileHeaderSection extends StatelessWidget {
             alignment: AlignmentDirectional.centerStart,
             child: OutlinedButton.icon(
               onPressed: onEditProfileTap,
-              style: OutlinedButton.styleFrom(
-                visualDensity: VisualDensity.compact,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 15,
-                ),
-                minimumSize: Size.zero,
-                side: BorderSide(color: colors.borderSoft),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                backgroundColor: colors.surfacePrimary,
-              ),
-              icon: Icon(
-                Icons.edit_outlined,
-                size: 16,
-                color: colors.navBarItem,
-              ),
-              label: Text(
-                'تعديل البروفايل',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: colors.navBarItem,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+              icon: Icon(Icons.edit_outlined, size: 16, color: colors.navBarItem),
+              label: Text(l10n.editProfile),
             ),
           ),
         ],
@@ -144,21 +129,14 @@ class _InfoBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: 15,
-            color: colors.navBarItem,
-          ),
+          Icon(icon, size: 15, color: colors.navBarItem),
           const SizedBox(width: 6),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 170),
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: colors.textPrimary,
-                fontWeight: FontWeight.w600,
-              ),
+          Text(
+            label,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: colors.textPrimary,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/theme/theme_extensions.dart';
 
 class EditProfileGenderSelector extends StatelessWidget {
@@ -18,6 +19,7 @@ class EditProfileGenderSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     Widget item(String label, int value) {
       final isSelected = selectedGender == value;
@@ -57,7 +59,7 @@ class EditProfileGenderSelector extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'الجنس',
+          l10n.gender,
           style: theme.textTheme.bodySmall?.copyWith(
             color: colors.textSecondary,
             fontWeight: FontWeight.w700,
@@ -66,9 +68,9 @@ class EditProfileGenderSelector extends StatelessWidget {
         const SizedBox(height: 10),
         Row(
           children: [
-            item('ذكر', 1),
+            item(l10n.male, 1),
             const SizedBox(width: 10),
-            item('أنثى', 0),
+            item(l10n.female, 2),
           ],
         ),
       ],

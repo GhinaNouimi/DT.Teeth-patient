@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
+
 import '../../../../core/network/api_constants.dart';
 import '../../../../core/network/dio_client.dart';
 
+import '../../../../core/network/multipart_helper.dart';
 import '../models/forgot_password_reset_password_request_model.dart';
 import '../models/forgot_password_response_model.dart';
 import '../models/forgot_password_send_code_request_model.dart';
@@ -40,6 +43,8 @@ abstract class AuthRemoteDataSource {
   Future<ForgotPasswordResponseModel> resetPassword(
       ForgotPasswordResetPasswordRequestModel request,
       );
+
+  Future<void> logoutPatient();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -47,9 +52,23 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<RegisterResponseModel> registerPatient(
       RegisterPatientRequestModel request,
       ) async {
+    final profilePicture = await MultipartHelper.imageFileToMultipart(
+      file: request.profilePicture,
+    );
+
+    final formData = FormData.fromMap({
+      ...request.toJson(),
+      if (profilePicture != null) 'profile_picture': profilePicture,
+    });
+
     final response = await DioClient.dio.post(
       ApiConstants.patientRegister,
-      data: request.toJson(),
+      data: formData,
+      options: Options(
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      ),
     );
 
     return RegisterResponseModel.fromJson(response.data);
@@ -123,5 +142,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
     return ForgotPasswordResponseModel.fromJson(response.data);
   }
+
+  @override
+  Future<void> logoutPatient() async {
+    await DioClient.dio.post(ApiConstants.patientLogout);
+  }
+
 
 }

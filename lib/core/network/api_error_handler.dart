@@ -1,74 +1,153 @@
 import 'package:dio/dio.dart';
 
+import 'api_error_mapper.dart';
+import 'api_error_messages.dart';
+
 class ApiErrorHandler {
   const ApiErrorHandler._();
 
-  static String handle(Object error) {
+  static String handle(
+      Object error, {
+        required String languageCode,
+      }) {
     if (error is DioException) {
-      return _handleDioException(error);
+      return _handleDioException(error, languageCode);
     }
 
-    return 'حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.';
+    return ApiErrorMessages.text(
+      languageCode,
+      ar: 'حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.',
+      en: 'An unexpected error occurred. Please try again later.',
+    );
   }
 
-  static String _handleDioException(DioException error) {
+  static String _handleDioException(
+      DioException error,
+      String languageCode,
+      ) {
     switch (error.type) {
       case DioExceptionType.connectionError:
-        return 'تعذر الاتصال بالخادم. تأكد من اتصال الإنترنت وحاول مجدداً.';
+        return ApiErrorMessages.text(
+          languageCode,
+          ar: 'تعذر الاتصال بالخادم. تأكد من اتصال الإنترنت وحاول مجدداً.',
+          en: 'Could not connect to the server. Check your internet connection and try again.',
+        );
 
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        return 'استغرق الاتصال وقتاً أطول من المتوقع. يرجى المحاولة مرة أخرى.';
+        return ApiErrorMessages.text(
+          languageCode,
+          ar: 'استغرق الاتصال وقتاً أطول من المتوقع. يرجى المحاولة مرة أخرى.',
+          en: 'The connection took longer than expected. Please try again.',
+        );
+
+      case DioExceptionType.transformTimeout:
+        return ApiErrorMessages.text(
+          languageCode,
+          ar: 'استغرق تجهيز البيانات وقتاً أطول من المتوقع.',
+          en: 'Processing the response took longer than expected.',
+        );
 
       case DioExceptionType.badResponse:
-        return _handleBadResponse(error.response);
+        return _handleBadResponse(error.response, languageCode);
 
       case DioExceptionType.cancel:
-        return 'تم إلغاء العملية.';
+        return ApiErrorMessages.text(
+          languageCode,
+          ar: 'تم إلغاء العملية.',
+          en: 'The request was cancelled.',
+        );
 
-      default:
-        return 'حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.';
+      case DioExceptionType.badCertificate:
+        return ApiErrorMessages.text(
+          languageCode,
+          ar: 'تعذر التحقق من شهادة الأمان الخاصة بالخادم.',
+          en: 'Could not verify the server security certificate.',
+        );
+
+      case DioExceptionType.unknown:
+        return ApiErrorMessages.text(
+          languageCode,
+          ar: 'حدث خطأ في الاتصال. يرجى المحاولة لاحقاً.',
+          en: 'A connection error occurred. Please try again later.',
+        );
     }
   }
 
-  static String _handleBadResponse(Response? response) {
+  static String _handleBadResponse(
+      Response? response,
+      String languageCode,
+      ) {
     final statusCode = response?.statusCode;
     final data = response?.data;
 
     if (statusCode == 400) {
-      return _extractMessage(data) ?? 'الطلب غير صحيح. يرجى التحقق من البيانات.';
+      return _extractMessage(data, languageCode) ??
+          ApiErrorMessages.text(
+            languageCode,
+            ar: 'الطلب غير صحيح. يرجى التحقق من البيانات.',
+            en: 'The request is invalid. Please check your data.',
+          );
     }
 
     if (statusCode == 401) {
-      return 'انتهت الجلسة. يرجى تسجيل الدخول مجدداً.';
+      return ApiErrorMessages.text(
+        languageCode,
+        ar: 'انتهت الجلسة. يرجى تسجيل الدخول مجدداً.',
+        en: 'Your session has expired. Please log in again.',
+      );
     }
 
     if (statusCode == 403) {
-      return 'لا تملك صلاحية لتنفيذ هذه العملية.';
+      return ApiErrorMessages.text(
+        languageCode,
+        ar: 'لا تملك صلاحية لتنفيذ هذه العملية.',
+        en: 'You do not have permission to perform this action.',
+      );
     }
 
     if (statusCode == 404) {
-      return 'العنصر المطلوب غير موجود.';
+      return ApiErrorMessages.text(
+        languageCode,
+        ar: 'العنصر المطلوب غير موجود.',
+        en: 'The requested item was not found.',
+      );
     }
 
     if (statusCode == 422) {
-      return _handleValidationErrors(data);
+      return _handleValidationErrors(data, languageCode);
     }
 
     if (statusCode == 429) {
-      return _extractMessage(data) ??
-          'تم إرسال عدد كبير من الطلبات. يرجى المحاولة بعد قليل.';
+      return _extractMessage(data, languageCode) ??
+          ApiErrorMessages.text(
+            languageCode,
+            ar: 'تم إرسال عدد كبير من الطلبات. يرجى المحاولة بعد قليل.',
+            en: 'Too many requests. Please try again shortly.',
+          );
     }
 
     if (statusCode != null && statusCode >= 500) {
-      return 'حدث خطأ في الخادم. يرجى المحاولة لاحقاً.';
+      return ApiErrorMessages.text(
+        languageCode,
+        ar: 'حدث خطأ في الخادم. يرجى المحاولة لاحقاً.',
+        en: 'A server error occurred. Please try again later.',
+      );
     }
 
-    return _extractMessage(data) ?? 'تعذر إكمال العملية. يرجى المحاولة مرة أخرى.';
+    return _extractMessage(data, languageCode) ??
+        ApiErrorMessages.text(
+          languageCode,
+          ar: 'تعذر إكمال العملية. يرجى المحاولة مرة أخرى.',
+          en: 'Could not complete the request. Please try again.',
+        );
   }
 
-  static String _handleValidationErrors(dynamic data) {
+  static String _handleValidationErrors(
+      dynamic data,
+      String languageCode,
+      ) {
     if (data is Map<String, dynamic>) {
       final errors = data['errors'];
 
@@ -77,112 +156,44 @@ class ApiErrorHandler {
         final firstError = errors.values.first;
 
         if (firstError is List && firstError.isNotEmpty) {
-          return _translateValidationError(
+          return ApiErrorMapper.validation(
             field: firstField,
             message: firstError.first.toString(),
+            languageCode: languageCode,
           );
         }
       }
 
-      return _extractMessage(data) ?? 'يرجى التأكد من صحة البيانات المدخلة.';
+      return _extractMessage(data, languageCode) ??
+          ApiErrorMessages.text(
+            languageCode,
+            ar: 'يرجى التأكد من صحة البيانات المدخلة.',
+            en: 'Please make sure the entered data is correct.',
+          );
     }
 
-    return 'يرجى التأكد من صحة البيانات المدخلة.';
+    return ApiErrorMessages.text(
+      languageCode,
+      ar: 'يرجى التأكد من صحة البيانات المدخلة.',
+      en: 'Please make sure the entered data is correct.',
+    );
   }
 
-  static String? _extractMessage(dynamic data) {
+  static String? _extractMessage(
+      dynamic data,
+      String languageCode,
+      ) {
     if (data is Map<String, dynamic>) {
       final message = data['message'];
 
       if (message is String && message.trim().isNotEmpty) {
-        return _translateCommonServerMessage(message);
+        return ApiErrorMapper.common(
+          message: message,
+          languageCode: languageCode,
+        );
       }
     }
 
     return null;
-  }
-
-  static String _translateValidationError({
-    required String field,
-    required String message,
-  }) {
-    final lowerMessage = message.toLowerCase();
-
-    if (field == 'email' && lowerMessage.contains('already')) {
-      return 'هذا البريد الإلكتروني مستخدم مسبقاً.';
-    }
-
-    if (field == 'phone' && lowerMessage.contains('already')) {
-      return 'رقم الهاتف مستخدم مسبقاً.';
-    }
-
-    if (field == 'password') {
-      return 'كلمة المرور غير مطابقة للشروط المطلوبة.';
-    }
-
-    if (field == 'password_confirmation') {
-      return 'تأكيد كلمة المرور غير مطابق.';
-    }
-
-    if (field == 'date_of_birth') {
-      return 'يرجى إدخال تاريخ ميلاد صحيح.';
-    }
-
-    if (field == 'name') {
-      return 'يرجى إدخال الاسم بشكل صحيح.';
-    }
-
-    if (field == 'address') {
-      return 'يرجى إدخال العنوان.';
-    }
-
-    if (field.contains('emergency_contact_phone')) {
-      return 'يرجى إدخال رقم هاتف الطوارئ بشكل صحيح.';
-    }
-
-    return 'يرجى التأكد من صحة البيانات المدخلة.';
-  }
-
-  static String _translateCommonServerMessage(String message) {
-    final lowerMessage = message.toLowerCase();
-
-    if (lowerMessage.contains('invalid credentials')) {
-      return 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
-    }
-
-    if (lowerMessage.contains('unauthenticated')) {
-      return 'انتهت الجلسة. يرجى تسجيل الدخول مجدداً.';
-    }
-
-    if (lowerMessage.contains('not found')) {
-      return 'العنصر المطلوب غير موجود.';
-    }
-
-    if (lowerMessage.contains('patient registered successfully')) {
-      return 'تم إنشاء الحساب بنجاح.';
-    }
-
-    if (lowerMessage.contains('invalid or expired verification code')) {
-      return 'رمز التحقق غير صحيح أو منتهي الصلاحية.';
-    }
-
-    if (lowerMessage.contains('maximum number of attempts')) {
-      return 'تم تجاوز عدد المحاولات المسموح. يرجى المحاولة غداً.';
-    }
-
-    if (lowerMessage.contains('verification code is valid')) {
-      return 'تم التحقق من الرمز بنجاح.';
-    }
-
-    if (lowerMessage.contains('password reset successfully')) {
-      return 'تمت إعادة تعيين كلمة المرور بنجاح.';
-    }
-
-    if (lowerMessage.contains('code sent') ||
-        lowerMessage.contains('verification code sent')) {
-      return 'تم إرسال رمز التحقق إلى بريدك الإلكتروني.';
-    }
-
-    return message;
   }
 }

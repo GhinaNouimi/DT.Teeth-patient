@@ -1,11 +1,8 @@
 import 'dart:io';
 
-class RegisterPatientRequestModel {
+class UpdateProfileRequestModel {
   final String name;
-  final String email;
   final String phone;
-  final String password;
-  final String passwordConfirmation;
   final String dateOfBirth;
   final int gender;
   final String address;
@@ -19,12 +16,9 @@ class RegisterPatientRequestModel {
   final String teethCleaningFrequency;
   final File? profilePicture;
 
-  const RegisterPatientRequestModel({
+  const UpdateProfileRequestModel({
     required this.name,
-    required this.email,
     required this.phone,
-    required this.password,
-    required this.passwordConfirmation,
     required this.dateOfBirth,
     required this.gender,
     required this.address,
@@ -42,10 +36,7 @@ class RegisterPatientRequestModel {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'email': email,
       'phone': phone,
-      'password': password,
-      'password_confirmation': passwordConfirmation,
       'date_of_birth': dateOfBirth,
       'gender': gender,
       'address': address,

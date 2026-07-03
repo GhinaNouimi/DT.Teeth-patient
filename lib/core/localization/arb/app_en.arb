@@ -1,25 +1,20 @@
 {
   "@@locale": "en",
-
   "bottomNavHome": "Home",
   "bottomNavDoctors": "Doctors",
   "bottomNavAppointments": "Schedule",
   "bottomNavMedicalRecord": "Records",
   "bottomNavAccount": "Account",
-
   "splashTagline": "Modern dental care starts with an elegant digital experience",
-
   "selectLanguage": "Select Language",
   "arabic": "Arabic",
   "english": "English",
-
   "ok": "OK",
   "back": "Back",
   "returnText": "Return",
   "continueText": "Continue",
   "login": "Login",
   "createAccount": "Create Account",
-
   "email": "Email",
   "emailHint": "name@example.com",
   "password": "Password",
@@ -29,7 +24,9 @@
   "fullNameHint": "Enter your full name",
   "address": "Address",
   "addressHint": "Enter your address",
-
+  "profilePicture": "Profile Picture",
+  "addProfilePictureOptional": "Add profile picture optional",
+  "viewProfilePicture": "View profile picture",
   "nameRequired": "Please enter your full name",
   "emailRequired": "Please enter your email",
   "emailInvalid": "Invalid email address",
@@ -45,7 +42,6 @@
   "passwordLowercase": "Password must contain a lowercase letter",
   "passwordNumber": "Password must contain a number",
   "passwordSpecial": "Password must contain a special character",
-
   "passwordRules": "Password Rules",
   "passwordStrengthStart": "Start typing your password",
   "passwordStrengthTitle": "Password strength: {label}",
@@ -56,7 +52,6 @@
   "passwordWeak": "Weak",
   "passwordMedium": "Medium",
   "passwordStrong": "Strong",
-
   "signupTitle": "Create Account",
   "signupSubtitle": "Create your account to access your appointments and clinic services",
   "alreadyHaveAccount": "Already have an account?",
@@ -66,7 +61,6 @@
   "genderRequired": "Please select your gender",
   "male": "Male",
   "female": "Female",
-
   "completePatientData": "Complete Patient Data",
   "patientHealthSubtitle": "This information helps the clinic handle emergency cases safely",
   "emergencyContactName": "Emergency Contact Name",
@@ -90,7 +84,6 @@
   "teethCleaningRarely": "Rarely",
   "emergencyContactNameRequired": "Please enter the emergency contact name",
   "emergencyContactRelationRequired": "Please enter the relationship",
-
   "loginTitle": "Login",
   "loginSubtitle": "Enter your information to access your account easily and securely",
   "doNotHaveAccount": "Don’t have an account?",
@@ -100,7 +93,6 @@
   "loginSuccessTitle": "Login Successful",
   "loginSuccessMessage": "You have logged in successfully. You can now continue using the app.",
   "loginFailedTitle": "Login Failed",
-
   "forgotPasswordTitle": "Forgot Password",
   "forgotPasswordSubtitle": "Enter your email to receive a verification code",
   "sendCode": "Send Code",
@@ -111,7 +103,6 @@
   "enterCode": "Enter Code",
   "backToLogin": "Back to Login",
   "sendCodeFailedTitle": "Failed to Send Code",
-
   "verifyCodeTitle": "Verify Code",
   "verifyCodeSubtitle": "Enter the code sent to {email}",
   "incompleteCodeTitle": "Incomplete Code",
@@ -121,7 +112,6 @@
   "verifyCodeButton": "Confirm Code",
   "verifying": "Verifying...",
   "resendCode": "Resend Code",
-
   "resetPasswordTitle": "Reset Password",
   "resetPasswordSubtitle": "Enter a new password for {email}",
   "newPassword": "New Password",
@@ -134,22 +124,18 @@
   "passwordsNotMatching": "Passwords do not match",
   "passwordConfirmHint": "Re-enter your password to confirm",
   "passwordsMatch": "Passwords match",
-
   "accountCreatedSuccessfully": "Account Created Successfully",
   "verificationCodeSent": "We sent a verification code to your email. Please enter it to activate your account.",
   "goToVerification": "Go to Verification",
   "accountCreationFailed": "Account Creation Failed",
   "creatingAccount": "Creating account...",
-
   "accountVerificationTitle": "Account Verification",
   "accountVerificationSubtitle": "Enter the verification code sent to {email}",
   "accountVerifiedTitle": "Account Verified",
   "accountVerifiedMessage": "Your account has been verified successfully. You can now use the app.",
   "verificationFailedTitle": "Verification Failed",
   "newVerificationCodeSentMessage": "We sent a new verification code to your email. The code is valid for two minutes.",
-
   "genericErrorTitle": "Something went wrong",
-
   "featuredOffers": "Featured Offers",
   "specialOffer": "Special Offer",
   "viewDetails": "View Details",
@@ -160,7 +146,6 @@
   "offerCheckupTitle": "Discount on check-up session",
   "offerCheckupSubtitle": "Check your dental health easily",
   "nextAppointment": "Next Appointment",
-
   "welcomePatient": "Welcome 👋",
   "welcomeSubtitle": "We always care about your smile",
   "bookAppointment": "Book Now",
@@ -168,7 +153,6 @@
   "emergencyAppointment": "Emergency Appointment",
   "contact": "Contact",
   "smartAssistant": "AI Assistant",
-
   "appointmentTypeTitle": "Appointment Type",
   "appointmentTypeEmergencyDescription": "Emergency appointment - will be handled immediately",
   "appointmentTypeRegularDescription": "Book a regular appointment",
@@ -180,5 +164,46 @@
   "noDoctorsAvailable": "No doctors available for this service",
   "selectDoctor": "Select Doctor",
   "selectServiceType": "Select Service Type",
-  "emergency": "Emergency"
+  "emergency": "Emergency",
+  "logout": "Logout",
+  "logoutSubtitle": "The current session will end and you will return to the login screen.",
+  "logoutConfirmationTitle": "Logout",
+  "logoutConfirmationMessage": "Are you sure you want to log out of your account?",
+  "cancel": "Cancel",
+  "logoutButton": "Logout",
+  "logoutSuccess": "Logged out successfully.",
+  "logoutFailed": "Logout failed",
+  "profile": "Profile",
+  "patientProfile": "Patient Profile",
+  "editProfile": "Edit Profile",
+  "profileLoading": "Loading profile data...",
+  "profileLoadFailed": "Failed to load profile",
+  "profileUpdatedSuccessfully": "Profile updated successfully.",
+  "profileUpdateFailed": "Profile update failed",
+  "retry": "Retry",
+  "profileBasicInfo": "Basic Information",
+  "profileEmergencyContact": "Emergency Contact",
+  "profileAdditionalInfo": "Additional Information",
+  "profileAccountSupport": "Account & Support",
+  "profilePreferences": "Preferences",
+  "darkMode": "Dark Mode",
+  "darkModeEnabled": "Currently enabled",
+  "darkModeDisabled": "Currently disabled",
+  "language": "Language",
+  "complaintsAndSupport": "Complaints & Support",
+  "complaintsAndSupportSubtitle": "Send a complaint or contact support when needed.",
+  "changePassword": "Change Password",
+  "changePasswordSubtitle": "Update your password to keep your account secure.",
+  "saveChanges": "Save Changes",
+  "savingChanges": "Saving...",
+  "edit": "Edit",
+  "save": "Save",
+  "confirmSave": "Confirm Save",
+  "confirmSaveMessage": "Are you sure you want to save the changes?",
+  "savedSuccessfully": "Saved Successfully",
+  "excellent": "Ok",
+  "emailReadOnly": "Email cannot be edited",
+  "emergencyContact": "Emergency Contact",
+  "editMode": "Edit mode",
+  "viewMode": "View mode"
 }

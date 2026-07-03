@@ -26,6 +26,12 @@ class ForgotPasswordBloc
     on<ResetPasswordSubmitted>(_onResetPasswordSubmitted);
   }
 
+  String _noInternetMessage(String languageCode) {
+    return languageCode.toLowerCase().startsWith('ar')
+        ? 'لا يوجد اتصال بالإنترنت، يرجى المحاولة لاحقًا'
+        : 'No internet connection. Please try again later.';
+  }
+
   Future<void> _onSendForgotPasswordCodeSubmitted(
       SendForgotPasswordCodeSubmitted event,
       Emitter<ForgotPasswordState> emit,
@@ -36,8 +42,8 @@ class ForgotPasswordBloc
 
     if (!isConnected) {
       emit(
-        const ForgotPasswordFailure(
-          message: 'لا يوجد اتصال بالإنترنت، يرجى المحاولة لاحقًا',
+        ForgotPasswordFailure(
+          message: _noInternetMessage(event.languageCode),
         ),
       );
       return;
@@ -47,7 +53,14 @@ class ForgotPasswordBloc
       final response = await sendForgotPasswordCodeUseCase(event.request);
       emit(ForgotPasswordSendCodeSuccess(response: response));
     } catch (error) {
-      emit(ForgotPasswordFailure(message: ApiErrorHandler.handle(error)));
+      emit(
+        ForgotPasswordFailure(
+          message: ApiErrorHandler.handle(
+            error,
+            languageCode: event.languageCode,
+          ),
+        ),
+      );
     }
   }
 
@@ -61,8 +74,8 @@ class ForgotPasswordBloc
 
     if (!isConnected) {
       emit(
-        const ForgotPasswordFailure(
-          message: 'لا يوجد اتصال بالإنترنت، يرجى المحاولة لاحقًا',
+        ForgotPasswordFailure(
+          message: _noInternetMessage(event.languageCode),
         ),
       );
       return;
@@ -72,7 +85,14 @@ class ForgotPasswordBloc
       final response = await verifyForgotPasswordCodeUseCase(event.request);
       emit(ForgotPasswordVerifyCodeSuccess(response: response));
     } catch (error) {
-      emit(ForgotPasswordFailure(message: ApiErrorHandler.handle(error)));
+      emit(
+        ForgotPasswordFailure(
+          message: ApiErrorHandler.handle(
+            error,
+            languageCode: event.languageCode,
+          ),
+        ),
+      );
     }
   }
 
@@ -86,8 +106,8 @@ class ForgotPasswordBloc
 
     if (!isConnected) {
       emit(
-        const ForgotPasswordFailure(
-          message: 'لا يوجد اتصال بالإنترنت، يرجى المحاولة لاحقًا',
+        ForgotPasswordFailure(
+          message: _noInternetMessage(event.languageCode),
         ),
       );
       return;
@@ -97,7 +117,14 @@ class ForgotPasswordBloc
       final response = await resetPasswordUseCase(event.request);
       emit(ForgotPasswordResetSuccess(response: response));
     } catch (error) {
-      emit(ForgotPasswordFailure(message: ApiErrorHandler.handle(error)));
+      emit(
+        ForgotPasswordFailure(
+          message: ApiErrorHandler.handle(
+            error,
+            languageCode: event.languageCode,
+          ),
+        ),
+      );
     }
   }
 }

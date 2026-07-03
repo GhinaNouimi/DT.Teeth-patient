@@ -2,12 +2,14 @@ import '../../domain/entities/profile_entity.dart';
 
 class ProfileModel {
   final String id;
+  final String userId;
   final String name;
   final String email;
   final String phone;
   final String dateOfBirth;
   final int gender;
   final String address;
+  final String profilePicture;
   final String emergencyContactName;
   final String emergencyContactRelation;
   final String emergencyContactPhone;
@@ -16,18 +18,22 @@ class ProfileModel {
   final bool isSmoker;
   final bool drinksAlcoholFrequently;
   final String teethCleaningFrequency;
-  final String? avatarStyleId;
+  final List<String> allergies;
+  final List<String> chronicDiseases;
+  final List<String> medications;
   final bool isDarkModeEnabled;
   final String languageCode;
 
   const ProfileModel({
     required this.id,
+    required this.userId,
     required this.name,
     required this.email,
     required this.phone,
     required this.dateOfBirth,
     required this.gender,
     required this.address,
+    required this.profilePicture,
     required this.emergencyContactName,
     required this.emergencyContactRelation,
     required this.emergencyContactPhone,
@@ -36,20 +42,54 @@ class ProfileModel {
     required this.isSmoker,
     required this.drinksAlcoholFrequently,
     required this.teethCleaningFrequency,
-    required this.avatarStyleId,
+    required this.allergies,
+    required this.chronicDiseases,
+    required this.medications,
     required this.isDarkModeEnabled,
     required this.languageCode,
   });
 
+  factory ProfileModel.fromApiJson(Map<String, dynamic> json) {
+    final data = json['data'] as Map<String, dynamic>? ?? {};
+    final user = data['user'] as Map<String, dynamic>? ?? {};
+
+    return ProfileModel(
+      id: data['id'].toString(),
+      userId: data['user_id'].toString(),
+      name: user['name'] ?? '',
+      email: user['email'] ?? '',
+      phone: user['phone'] ?? '',
+      dateOfBirth: user['date_of_birth'] ?? '',
+      gender: user['gender'] ?? -1,
+      address: user['address'] ?? '',
+      profilePicture: user['profile_picture'] ?? '',
+      emergencyContactName: data['emergency_contact_name'] ?? '',
+      emergencyContactRelation: data['emergency_contact_relation'] ?? '',
+      emergencyContactPhone: data['emergency_contact_phone'] ?? '',
+      isPregnant: _toBool(data['is_pregnant']),
+      isBreastfeeding: _toBool(data['is_breastfeeding']),
+      isSmoker: _toBool(data['is_smoker']),
+      drinksAlcoholFrequently: _toBool(data['drinks_alcohol_frequently']),
+      teethCleaningFrequency: data['teeth_cleaning_frequency'] ?? '',
+      allergies: _toStringList(data['allergies']),
+      chronicDiseases: _toStringList(data['chronic_diseases']),
+      medications: _toStringList(data['medications']),
+      isDarkModeEnabled: false,
+      languageCode: 'ar',
+    );
+  }
+
   ProfileEntity toEntity() {
     return ProfileEntity(
       id: id,
+      userId: userId,
       name: name,
       email: email,
       phone: phone,
       dateOfBirth: dateOfBirth,
       gender: gender,
       address: address,
+      profilePicture: profilePicture,
       emergencyContactName: emergencyContactName,
       emergencyContactRelation: emergencyContactRelation,
       emergencyContactPhone: emergencyContactPhone,
@@ -58,130 +98,25 @@ class ProfileModel {
       isSmoker: isSmoker,
       drinksAlcoholFrequently: drinksAlcoholFrequently,
       teethCleaningFrequency: teethCleaningFrequency,
-      avatarStyleId: avatarStyleId,
+      allergies: allergies,
+      chronicDiseases: chronicDiseases,
+      medications: medications,
       isDarkModeEnabled: isDarkModeEnabled,
       languageCode: languageCode,
     );
   }
 
-  factory ProfileModel.fromEntity(ProfileEntity entity) {
-    return ProfileModel(
-      id: entity.id,
-      name: entity.name,
-      email: entity.email,
-      phone: entity.phone,
-      dateOfBirth: entity.dateOfBirth,
-      gender: entity.gender,
-      address: entity.address,
-      emergencyContactName: entity.emergencyContactName,
-      emergencyContactRelation: entity.emergencyContactRelation,
-      emergencyContactPhone: entity.emergencyContactPhone,
-      isPregnant: entity.isPregnant,
-      isBreastfeeding: entity.isBreastfeeding,
-      isSmoker: entity.isSmoker,
-      drinksAlcoholFrequently: entity.drinksAlcoholFrequently,
-      teethCleaningFrequency: entity.teethCleaningFrequency,
-      avatarStyleId: entity.avatarStyleId,
-      isDarkModeEnabled: entity.isDarkModeEnabled,
-      languageCode: entity.languageCode,
-    );
+  static bool _toBool(dynamic value) {
+    if (value is bool) return value;
+    if (value is int) return value == 1;
+    if (value is String) return value == '1' || value.toLowerCase() == 'true';
+    return false;
   }
 
-  ProfileModel copyWith({
-    String? id,
-    String? name,
-    String? email,
-    String? phone,
-    String? dateOfBirth,
-    int? gender,
-    String? address,
-    String? emergencyContactName,
-    String? emergencyContactRelation,
-    String? emergencyContactPhone,
-    bool? isPregnant,
-    bool? isBreastfeeding,
-    bool? isSmoker,
-    bool? drinksAlcoholFrequently,
-    String? teethCleaningFrequency,
-    String? avatarStyleId,
-    bool? isDarkModeEnabled,
-    String? languageCode,
-  }) {
-    return ProfileModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      email: email ?? this.email,
-      phone: phone ?? this.phone,
-      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
-      gender: gender ?? this.gender,
-      address: address ?? this.address,
-      emergencyContactName:
-      emergencyContactName ?? this.emergencyContactName,
-      emergencyContactRelation:
-      emergencyContactRelation ?? this.emergencyContactRelation,
-      emergencyContactPhone:
-      emergencyContactPhone ?? this.emergencyContactPhone,
-      isPregnant: isPregnant ?? this.isPregnant,
-      isBreastfeeding: isBreastfeeding ?? this.isBreastfeeding,
-      isSmoker: isSmoker ?? this.isSmoker,
-      drinksAlcoholFrequently:
-      drinksAlcoholFrequently ?? this.drinksAlcoholFrequently,
-      teethCleaningFrequency:
-      teethCleaningFrequency ?? this.teethCleaningFrequency,
-      avatarStyleId: avatarStyleId ?? this.avatarStyleId,
-      isDarkModeEnabled: isDarkModeEnabled ?? this.isDarkModeEnabled,
-      languageCode: languageCode ?? this.languageCode,
-    );
-  }
-
-  factory ProfileModel.fromJson(Map<String, dynamic> json) {
-    return ProfileModel(
-      id: json['id'].toString(),
-      name: json['name'] as String? ?? '',
-      email: json['email'] as String? ?? '',
-      phone: json['phone'] as String? ?? '',
-      dateOfBirth: json['date_of_birth'] as String? ?? '',
-      gender: json['gender'] as int? ?? -1,
-      address: json['address'] as String? ?? '',
-      emergencyContactName:
-      json['emergency_contact_name'] as String? ?? '',
-      emergencyContactRelation:
-      json['emergency_contact_relation'] as String? ?? '',
-      emergencyContactPhone:
-      json['emergency_contact_phone'] as String? ?? '',
-      isPregnant: json['is_pregnant'] as bool? ?? false,
-      isBreastfeeding: json['is_breastfeeding'] as bool? ?? false,
-      isSmoker: json['is_smoker'] as bool? ?? false,
-      drinksAlcoholFrequently:
-      json['drinks_alcohol_frequently'] as bool? ?? false,
-      teethCleaningFrequency:
-      json['teeth_cleaning_frequency'] as String? ?? '',
-      avatarStyleId: json['avatar_style_id'] as String?,
-      isDarkModeEnabled: json['is_dark_mode_enabled'] as bool? ?? false,
-      languageCode: json['language_code'] as String? ?? 'ar',
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'phone': phone,
-      'date_of_birth': dateOfBirth,
-      'gender': gender,
-      'address': address,
-      'emergency_contact_name': emergencyContactName,
-      'emergency_contact_relation': emergencyContactRelation,
-      'emergency_contact_phone': emergencyContactPhone,
-      'is_pregnant': isPregnant,
-      'is_breastfeeding': isBreastfeeding,
-      'is_smoker': isSmoker,
-      'drinks_alcohol_frequently': drinksAlcoholFrequently,
-      'teeth_cleaning_frequency': teethCleaningFrequency,
-      'avatar_style_id': avatarStyleId,
-      'is_dark_mode_enabled': isDarkModeEnabled,
-      'language_code': languageCode,
-    };
+  static List<String> _toStringList(dynamic value) {
+    if (value is List) {
+      return value.map((e) => e.toString()).toList();
+    }
+    return [];
   }
 }

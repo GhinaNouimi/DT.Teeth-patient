@@ -85,4 +85,13 @@ class AuthRepositoryImpl implements AuthRepository {
       ) {
     return remoteDataSource.resetPassword(request);
   }
+
+  @override
+  Future<void> logoutPatient() async {
+    try {
+      await remoteDataSource.logoutPatient();
+    } finally {
+      await SecureStorageService.clearToken();
+    }
+  }
 }

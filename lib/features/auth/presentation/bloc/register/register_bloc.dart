@@ -17,6 +17,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<RegisterPatientSubmitted>(_onRegisterPatientSubmitted);
   }
 
+  String _noInternetMessage(String languageCode) {
+    return languageCode.toLowerCase().startsWith('ar')
+        ? 'لا يوجد اتصال بالإنترنت، يرجى المحاولة لاحقًا'
+        : 'No internet connection. Please try again later.';
+  }
+
   Future<void> _onRegisterPatientSubmitted(
       RegisterPatientSubmitted event,
       Emitter<RegisterState> emit,
@@ -27,8 +33,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
     if (!isConnected) {
       emit(
-        const RegisterFailure(
-          message: 'لا يوجد اتصال بالإنترنت، يرجى المحاولة لاحقًا',
+        RegisterFailure(
+          message: _noInternetMessage(event.languageCode),
         ),
       );
       return;
@@ -38,7 +44,14 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       final response = await registerPatientUseCase(event.request);
       emit(RegisterSuccess(response: response));
     } catch (error) {
-      emit(RegisterFailure(message: ApiErrorHandler.handle(error)));
+      emit(
+        RegisterFailure(
+          message: ApiErrorHandler.handle(
+            error,
+            languageCode: event.languageCode,
+          ),
+        ),
+      );
     }
   }
 }

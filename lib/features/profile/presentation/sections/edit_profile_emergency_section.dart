@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../widgets/edit_profile_field.dart';
 import '../widgets/edit_profile_section_card.dart';
 
@@ -19,22 +20,24 @@ class EditProfileEmergencySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return EditProfileSectionCard(
-      title: 'جهة الاتصال للطوارئ',
+      title: l10n.profileEmergencyContact,
       child: Column(
         children: [
           EditProfileField(
-            label: 'الاسم',
+            label: l10n.emergencyContactName,
             controller: emergencyNameController,
             enabled: enabled,
           ),
           EditProfileField(
-            label: 'صلة القرابة',
+            label: l10n.emergencyContactRelation,
             controller: emergencyRelationController,
             enabled: enabled,
           ),
           EditProfileField(
-            label: 'رقم الهاتف',
+            label: l10n.emergencyPhone,
             controller: emergencyPhoneController,
             enabled: enabled,
             keyboardType: TextInputType.phone,

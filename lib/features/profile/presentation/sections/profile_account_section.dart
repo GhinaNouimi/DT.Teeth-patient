@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../widgets/logout_action_tile.dart';
 import '../widgets/profile_action_tile.dart';
 import '../widgets/profile_section_card.dart';
@@ -18,29 +19,28 @@ class ProfileAccountSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return ProfileSectionCard(
-      title: 'الحساب والدعم',
+      title: l10n.profileAccountSupport,
       child: Column(
         children: [
           ProfileActionTile(
-            title: 'الشكاوى والدعم',
-            subtitle: 'أرسل شكوى أو تواصل مع الدعم عند الحاجة.',
+            title: l10n.complaintsAndSupport,
+            subtitle: l10n.complaintsAndSupportSubtitle,
             icon: Icons.chat_bubble_outline_rounded,
             onTap: onComplaintsTap,
           ),
           const SizedBox(height: 8),
           ProfileActionTile(
-            title: 'تغيير كلمة المرور',
-            subtitle: 'حدّث كلمة المرور للحفاظ على أمان حسابك.',
+            title: l10n.changePassword,
+            subtitle: l10n.changePasswordSubtitle,
             icon: Icons.lock_outline_rounded,
             onTap: onChangePasswordTap,
           ),
           const SizedBox(height: 14),
-          LogoutActionTile(
-            onTap: onLogoutTap,
-          ),
+          LogoutActionTile(onTap: onLogoutTap),
           const SizedBox(height: 14),
-
         ],
       ),
     );

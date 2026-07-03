@@ -44,7 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
       password: _passwordController.text,
     );
 
-    context.read<LoginBloc>().add(LoginPatientSubmitted(request: request));
+    context.read<LoginBloc>().add(LoginPatientSubmitted(
+      request: request,
+      languageCode: Localizations.localeOf(context).languageCode,
+    ));
   }
 
   @override

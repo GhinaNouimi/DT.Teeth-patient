@@ -81,6 +81,15 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
   String get addressHint => 'أدخل عنوانك';
 
   @override
+  String get profilePicture => 'الصورة الشخصية';
+
+  @override
+  String get addProfilePictureOptional => 'إضافة صورة شخصية اختياري';
+
+  @override
+  String get viewProfilePicture => 'عرض الصورة الشخصية';
+
+  @override
   String get nameRequired => 'الرجاء إدخال الاسم الكامل';
 
   @override
@@ -512,4 +521,131 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
 
   @override
   String get emergency => 'طارئ';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get logoutSubtitle =>
+      'سيتم إنهاء الجلسة الحالية والعودة إلى شاشة الدخول.';
+
+  @override
+  String get logoutConfirmationTitle => 'تسجيل الخروج';
+
+  @override
+  String get logoutConfirmationMessage =>
+      'هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get logoutButton => 'خروج';
+
+  @override
+  String get logoutSuccess => 'تم تسجيل الخروج بنجاح.';
+
+  @override
+  String get logoutFailed => 'فشل تسجيل الخروج';
+
+  @override
+  String get profile => 'البروفايل';
+
+  @override
+  String get patientProfile => 'ملف المريض';
+
+  @override
+  String get editProfile => 'تعديل البروفايل';
+
+  @override
+  String get profileLoading => 'جاري تحميل بيانات البروفايل...';
+
+  @override
+  String get profileLoadFailed => 'فشل تحميل البروفايل';
+
+  @override
+  String get profileUpdatedSuccessfully => 'تم تحديث البروفايل بنجاح.';
+
+  @override
+  String get profileUpdateFailed => 'فشل تحديث البروفايل';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get profileBasicInfo => 'البيانات الأساسية';
+
+  @override
+  String get profileEmergencyContact => 'جهة الاتصال للطوارئ';
+
+  @override
+  String get profileAdditionalInfo => 'معلومات إضافية';
+
+  @override
+  String get profileAccountSupport => 'الحساب والدعم';
+
+  @override
+  String get profilePreferences => 'التفضيلات';
+
+  @override
+  String get darkMode => 'الوضع الليلي';
+
+  @override
+  String get darkModeEnabled => 'مفعل حاليًا';
+
+  @override
+  String get darkModeDisabled => 'غير مفعل';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get complaintsAndSupport => 'الشكاوى والدعم';
+
+  @override
+  String get complaintsAndSupportSubtitle =>
+      'أرسل شكوى أو تواصل مع الدعم عند الحاجة.';
+
+  @override
+  String get changePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get changePasswordSubtitle =>
+      'حدّث كلمة المرور للحفاظ على أمان حسابك.';
+
+  @override
+  String get saveChanges => 'حفظ التعديلات';
+
+  @override
+  String get savingChanges => 'جارٍ الحفظ...';
+
+  @override
+  String get edit => 'تعديل';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get confirmSave => 'تأكيد الحفظ';
+
+  @override
+  String get confirmSaveMessage => 'هل أنت متأكد أنك تريد حفظ التعديلات؟';
+
+  @override
+  String get savedSuccessfully => 'تم الحفظ بنجاح';
+
+  @override
+  String get excellent => 'ممتاز';
+
+  @override
+  String get emailReadOnly => 'لا يمكن تعديل البريد الإلكتروني';
+
+  @override
+  String get emergencyContact => 'جهة الاتصال للطوارئ';
+
+  @override
+  String get editMode => 'وضع التعديل';
+
+  @override
+  String get viewMode => 'وضع الاستعراض';
 }

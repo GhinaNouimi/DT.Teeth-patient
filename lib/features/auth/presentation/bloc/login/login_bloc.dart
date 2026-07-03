@@ -17,6 +17,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginPatientSubmitted>(_onLoginPatientSubmitted);
   }
 
+  String _noInternetMessage(String languageCode) {
+    return languageCode.toLowerCase().startsWith('ar')
+        ? 'لا يوجد اتصال بالإنترنت، يرجى المحاولة لاحقًا'
+        : 'No internet connection. Please try again later.';
+  }
+
   Future<void> _onLoginPatientSubmitted(
       LoginPatientSubmitted event,
       Emitter<LoginState> emit,
@@ -27,8 +33,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     if (!isConnected) {
       emit(
-        const LoginFailure(
-          message: 'لا يوجد اتصال بالإنترنت، يرجى المحاولة لاحقًا',
+        LoginFailure(
+          message: _noInternetMessage(event.languageCode),
         ),
       );
       return;
@@ -38,7 +44,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final response = await loginPatientUseCase(event.request);
       emit(LoginSuccess(response: response));
     } catch (error) {
-      emit(LoginFailure(message: ApiErrorHandler.handle(error)));
+      emit(
+        LoginFailure(
+          message: ApiErrorHandler.handle(
+            error,
+            languageCode: event.languageCode,
+          ),
+        ),
+      );
     }
   }
 }

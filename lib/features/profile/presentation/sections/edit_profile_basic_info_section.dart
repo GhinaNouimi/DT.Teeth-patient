@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../widgets/edit_profile_field.dart';
 import '../widgets/edit_profile_gender_selector.dart';
 import '../widgets/edit_profile_readonly_field.dart';
@@ -29,32 +30,34 @@ class EditProfileBasicInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return EditProfileSectionCard(
-      title: 'البيانات الأساسية',
+      title: l10n.profileBasicInfo,
       child: Column(
         children: [
           EditProfileField(
-            label: 'الاسم الكامل',
+            label: l10n.fullName,
             controller: nameController,
             enabled: enabled,
           ),
           EditProfileReadOnlyField(
-            label: 'البريد الإلكتروني',
+            label: l10n.email,
             value: emailController.text,
           ),
           EditProfileField(
-            label: 'رقم الهاتف',
+            label: l10n.phoneNumber,
             controller: phoneController,
             enabled: enabled,
             keyboardType: TextInputType.phone,
           ),
           EditProfileField(
-            label: 'تاريخ الميلاد',
+            label: l10n.birthDate,
             controller: dateOfBirthController,
             enabled: enabled,
           ),
           EditProfileField(
-            label: 'العنوان',
+            label: l10n.address,
             controller: addressController,
             enabled: enabled,
             maxLines: 2,

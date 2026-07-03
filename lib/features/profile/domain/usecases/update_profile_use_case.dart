@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../entities/profile_entity.dart';
 import '../repositories/profile_repository.dart';
 
@@ -6,7 +8,13 @@ class UpdateProfileUseCase {
 
   const UpdateProfileUseCase(this._repository);
 
-  Future<ProfileEntity> call(ProfileEntity profile) {
-    return _repository.updateProfile(profile);
+  Future<ProfileEntity> call(
+      ProfileEntity profile, {
+        File? profilePicture,
+      }) {
+    return _repository.updateProfile(
+      profile,
+      profilePicture: profilePicture,
+    );
   }
 }

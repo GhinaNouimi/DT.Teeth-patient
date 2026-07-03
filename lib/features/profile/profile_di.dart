@@ -1,14 +1,15 @@
+import 'data/datasources/profile_remote_data_source.dart';
 import 'data/repositories/profile_repository_impl.dart';
-import 'data/sources/profile_mock_data_source.dart';
 import 'domain/usecases/get_profile_use_case.dart';
 import 'domain/usecases/update_profile_use_case.dart';
 
 abstract final class ProfileDi {
-  static final ProfileMockDataSource _mockDataSource =
-  ProfileMockDataSource();
+  static final ProfileRemoteDataSource _remoteDataSource =
+  ProfileRemoteDataSourceImpl();
 
-  static final ProfileRepositoryImpl _repository =
-  ProfileRepositoryImpl(_mockDataSource);
+  static final ProfileRepositoryImpl _repository = ProfileRepositoryImpl(
+    remoteDataSource: _remoteDataSource,
+  );
 
   static final GetProfileUseCase getProfileUseCase =
   GetProfileUseCase(_repository);

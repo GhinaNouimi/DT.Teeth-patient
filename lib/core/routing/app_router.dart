@@ -1,6 +1,9 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dt_teeth/core/routing/app_routes.dart';
 import 'package:dt_teeth/features/appointments/presentaion/pages/emergency_appointment_screen.dart';
+import 'package:dt_teeth/features/auth/domain/usecases/logout_patient_usecase.dart';
+import 'package:dt_teeth/features/auth/presentation/bloc/logout/logout_bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -45,13 +48,16 @@ import '../../features/medical_record/presentation/pages/prescriptions_screen.da
 import '../../features/medical_record/presentation/pages/treatment_details_screen.dart';
 import '../../features/medical_record/presentation/pages/treatments_screen.dart';
 import '../../features/profile/domain/entities/profile_entity.dart';
+import '../../features/profile/presentation/bloc/profile/profile_bloc.dart';
+import '../../features/profile/presentation/bloc/profile/profile_event.dart';
 import '../../features/profile/presentation/pages/edit_profile_screen.dart';
 import '../../features/profile/presentation/pages/profile_screen.dart';
+import '../../features/profile/profile_di.dart';
 import '../network/network_info.dart';
 
 class AppRouter {
   static final router = GoRouter(
-    initialLocation: AppRoutes.home,
+    initialLocation: AppRoutes.splash,
     routes: [
       GoRoute(
         path: AppRoutes.splash,
@@ -218,19 +224,74 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.home,
         name: 'home',
-        builder: (context, state) => const PatientMainShellScreen(),
+        builder: (context, state) {
+          final authRepository = AuthRepositoryImpl(
+            remoteDataSource: AuthRemoteDataSourceImpl(),
+          );
+
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => LogoutBloc(
+                  logoutPatientUseCase: LogoutPatientUseCase(
+                    repository: authRepository,
+                  ),
+                  networkInfo: NetworkInfo(
+                    connectivity: Connectivity(),
+                  ),
+                ),
+              ),
+              BlocProvider(
+                create: (_) => ProfileBloc(
+                  getProfileUseCase: ProfileDi.getProfileUseCase,
+                  updateProfileUseCase: ProfileDi.updateProfileUseCase,
+                  networkInfo: NetworkInfo(
+                    connectivity: Connectivity(),
+                  ),
+                )..add( LoadProfileRequested(
+                  languageCode: Localizations.localeOf(context).languageCode,
+                )),
+              ),
+            ],
+            child: const PatientMainShellScreen(),
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.profile,
         name: 'profile',
-        builder: (context, state) => const ProfileScreen(),
+        builder: (context, state) {
+          final repository = AuthRepositoryImpl(
+            remoteDataSource: AuthRemoteDataSourceImpl(),
+          );
+
+          return BlocProvider(
+            create: (_) => LogoutBloc(
+              logoutPatientUseCase: LogoutPatientUseCase(
+                repository: repository,
+              ),
+              networkInfo: NetworkInfo(
+                connectivity: Connectivity(),
+              ),
+            ),
+            child: const ProfileScreen(),
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.editProfile,
         name: 'edit-profile',
         builder: (context, state) {
           final profile = state.extra as ProfileEntity;
-          return EditProfileScreen(profile: profile);
+
+          return BlocProvider(
+            create: (_) => ProfileBloc(
+              getProfileUseCase: ProfileDi.getProfileUseCase,
+              updateProfileUseCase: ProfileDi.updateProfileUseCase,
+              networkInfo: NetworkInfo(connectivity: Connectivity()),
+            ),
+            child: EditProfileScreen(profile: profile),
+          );
         },
       ),
       GoRoute(

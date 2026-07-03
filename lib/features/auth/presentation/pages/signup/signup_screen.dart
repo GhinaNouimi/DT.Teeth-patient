@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:photo_view/photo_view.dart';
 
 import '../../../../../core/localization/app_localizations.dart';
 import '../../../../../core/routing/app_routes.dart';
@@ -31,8 +35,11 @@ class _SignupScreenState extends State<SignupScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
+  final _imagePicker = ImagePicker();
+
   DateTime? _selectedBirthDate;
   String? _selectedGenderCode;
+  File? _profilePicture;
   bool _showGenderError = false;
 
   @override
@@ -45,6 +52,19 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _pickProfilePicture() async {
+    final pickedImage = await _imagePicker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 100,
+    );
+
+    if (pickedImage == null) return;
+
+    setState(() {
+      _profilePicture = File(pickedImage.path);
+    });
   }
 
   Future<void> _pickBirthDate() async {
@@ -85,6 +105,7 @@ class _SignupScreenState extends State<SignupScreen> {
       'date_of_birth': _birthDateController.text.trim(),
       'gender': _selectedGenderCode == 'male' ? 1 : 2,
       'address': _addressController.text.trim(),
+      'profile_picture': _profilePicture,
     };
 
     if (!mounted) return;
@@ -116,6 +137,13 @@ class _SignupScreenState extends State<SignupScreen> {
         key: _formKey,
         child: Column(
           children: [
+            _ProfilePicturePicker(
+              image: _profilePicture,
+              onTap: _pickProfilePicture,
+            ).animate().fadeIn(delay: 40.ms).slideY(begin: 0.08, end: 0),
+
+            const SizedBox(height: 18),
+
             AppTextField(
               controller: _nameController,
               label: l10n.fullName,
@@ -268,6 +296,131 @@ class _SignupScreenState extends State<SignupScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _ProfilePicturePicker extends StatelessWidget {
+  final File? image;
+  final VoidCallback onTap;
+
+  const _ProfilePicturePicker({
+    required this.image,
+    required this.onTap,
+  });
+
+  void _openImageViewer(BuildContext context) {
+    if (image == null) {
+      onTap();
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (_) {
+        return Dialog(
+          insetPadding: const EdgeInsets.all(16),
+          backgroundColor: Colors.black,
+          child: Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: PhotoView(
+                  imageProvider: FileImage(image!),
+                  backgroundDecoration: const BoxDecoration(
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              PositionedDirectional(
+                top: 8,
+                end: 8,
+                child: IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(
+                    Icons.close_rounded,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+
+    return Column(
+      children: [
+        Text(
+          l10n.profilePicture,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Semantics(
+          button: true,
+          label: image == null
+              ? l10n.addProfilePictureOptional
+              : l10n.viewProfilePicture,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(999),
+            onTap: () => _openImageViewer(context),
+            child: Stack(
+              alignment: AlignmentDirectional.bottomEnd,
+              children: [
+                CircleAvatar(
+                  radius: 64,
+                  backgroundColor:
+                  theme.colorScheme.primary.withValues(alpha: 0.14),
+                  backgroundImage: image != null ? FileImage(image!) : null,
+                  child: image == null
+                      ? Icon(
+                    Icons.person_rounded,
+                    size: 62,
+                    color: theme.colorScheme.primary,
+                  )
+                      : null,
+                ),
+                InkWell(
+                  borderRadius: BorderRadius.circular(999),
+                  onTap: onTap,
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.primary,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: theme.colorScheme.surface,
+                        width: 3,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.camera_alt_rounded,
+                      size: 20,
+                      color: theme.colorScheme.onPrimary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          l10n.addProfilePictureOptional,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.65),
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
     );
   }
 }

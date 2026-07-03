@@ -8,24 +8,30 @@ abstract class ForgotPasswordEvent {
 
 class SendForgotPasswordCodeSubmitted extends ForgotPasswordEvent {
   final ForgotPasswordSendCodeRequestModel request;
+  final String languageCode;
 
   const SendForgotPasswordCodeSubmitted({
     required this.request,
+    required this.languageCode,
   });
 }
 
 class VerifyForgotPasswordCodeSubmitted extends ForgotPasswordEvent {
   final ForgotPasswordVerifyCodeRequestModel request;
+  final String languageCode;
 
   const VerifyForgotPasswordCodeSubmitted({
     required this.request,
+    required this.languageCode,
   });
 }
 
 class ResetPasswordSubmitted extends ForgotPasswordEvent {
   final ForgotPasswordResetPasswordRequestModel request;
+  final String languageCode;
 
   const ResetPasswordSubmitted({
     required this.request,
+    required this.languageCode,
   });
 }

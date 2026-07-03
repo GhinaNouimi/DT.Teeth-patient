@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/theme/theme_extensions.dart';
 
 Future<bool> showLogoutConfirmationDialog(BuildContext context) async {
   final colors = context.colors;
+  final l10n = context.l10n;
 
   final result = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('تسجيل الخروج'),
-      content: const Text('هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟'),
+      title: Text(l10n.logoutConfirmationTitle),
+      content: Text(l10n.logoutConfirmationMessage),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('إلغاء'),
+          child: Text(l10n.cancel),
         ),
         FilledButton(
           style: FilledButton.styleFrom(
@@ -21,7 +23,7 @@ Future<bool> showLogoutConfirmationDialog(BuildContext context) async {
             foregroundColor: colors.textInverse,
           ),
           onPressed: () => Navigator.of(context).pop(true),
-          child: const Text('خروج'),
+          child: Text(l10n.logoutButton),
         ),
       ],
     ),

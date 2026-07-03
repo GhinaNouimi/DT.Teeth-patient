@@ -7,12 +7,20 @@ abstract class VerifyEmailEvent {
 
 class VerifyEmailSubmitted extends VerifyEmailEvent {
   final VerifyEmailRequestModel request;
+  final String languageCode;
 
-  const VerifyEmailSubmitted({required this.request});
+  const VerifyEmailSubmitted({
+    required this.request,
+    required this.languageCode,
+  });
 }
 
 class ResendVerificationSubmitted extends VerifyEmailEvent {
   final SendVerificationRequestModel request;
+  final String languageCode;
 
-  const ResendVerificationSubmitted({required this.request});
+  const ResendVerificationSubmitted({
+    required this.request,
+    required this.languageCode,
+  });
 }

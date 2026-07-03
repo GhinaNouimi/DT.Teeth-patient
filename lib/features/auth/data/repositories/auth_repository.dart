@@ -39,4 +39,6 @@ abstract class AuthRepository {
   Future<ForgotPasswordResponseModel> resetPassword(
       ForgotPasswordResetPasswordRequestModel request,
       );
+
+  Future<void> logoutPatient();
 }

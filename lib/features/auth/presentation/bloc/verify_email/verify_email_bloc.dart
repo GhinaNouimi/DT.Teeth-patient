@@ -21,6 +21,12 @@ class VerifyEmailBloc extends Bloc<VerifyEmailEvent, VerifyEmailState> {
     on<ResendVerificationSubmitted>(_onResendVerificationSubmitted);
   }
 
+  String _noInternetMessage(String languageCode) {
+    return languageCode.toLowerCase().startsWith('ar')
+        ? 'لا يوجد اتصال بالإنترنت، يرجى المحاولة لاحقًا'
+        : 'No internet connection. Please try again later.';
+  }
+
   Future<void> _onVerifyEmailSubmitted(
       VerifyEmailSubmitted event,
       Emitter<VerifyEmailState> emit,
@@ -31,8 +37,8 @@ class VerifyEmailBloc extends Bloc<VerifyEmailEvent, VerifyEmailState> {
 
     if (!isConnected) {
       emit(
-        const VerifyEmailFailure(
-          message: 'لا يوجد اتصال بالإنترنت، يرجى المحاولة لاحقًا',
+        VerifyEmailFailure(
+          message: _noInternetMessage(event.languageCode),
         ),
       );
       return;
@@ -42,7 +48,14 @@ class VerifyEmailBloc extends Bloc<VerifyEmailEvent, VerifyEmailState> {
       final response = await verifyEmailUseCase(event.request);
       emit(VerifyEmailSuccess(response: response));
     } catch (error) {
-      emit(VerifyEmailFailure(message: ApiErrorHandler.handle(error)));
+      emit(
+        VerifyEmailFailure(
+          message: ApiErrorHandler.handle(
+            error,
+            languageCode: event.languageCode,
+          ),
+        ),
+      );
     }
   }
 
@@ -56,8 +69,8 @@ class VerifyEmailBloc extends Bloc<VerifyEmailEvent, VerifyEmailState> {
 
     if (!isConnected) {
       emit(
-        const ResendVerificationFailure(
-          message: 'لا يوجد اتصال بالإنترنت، يرجى المحاولة لاحقًا',
+        ResendVerificationFailure(
+          message: _noInternetMessage(event.languageCode),
         ),
       );
       return;
@@ -67,7 +80,14 @@ class VerifyEmailBloc extends Bloc<VerifyEmailEvent, VerifyEmailState> {
       final response = await sendVerificationUseCase(event.request);
       emit(ResendVerificationSuccess(response: response));
     } catch (error) {
-      emit(ResendVerificationFailure(message: ApiErrorHandler.handle(error)));
+      emit(
+        ResendVerificationFailure(
+          message: ApiErrorHandler.handle(
+            error,
+            languageCode: event.languageCode,
+          ),
+        ),
+      );
     }
   }
 }

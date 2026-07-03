@@ -13,4 +13,7 @@ class ApiConstants {
   static const String forgotPasswordVerifyCode = '/forgotPassword/verifyCode';
 
   static const String forgotPasswordResetPassword = '/forgotPassword/resetPassword';
+  static const String patientLogout = '/patient/logout';
+  static const String patientShowProfile = '/patient/showProfile';
+  static const String patientEditProfile = '/patient/editProfile';
 }

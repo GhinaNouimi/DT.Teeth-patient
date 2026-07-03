@@ -56,7 +56,7 @@ class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
     );
 
     context.read<ForgotPasswordBloc>().add(
-      VerifyForgotPasswordCodeSubmitted(request: request),
+      VerifyForgotPasswordCodeSubmitted(request: request,languageCode: Localizations.localeOf(context).languageCode,),
     );
   }
 
@@ -66,7 +66,7 @@ class _VerifyResetCodeScreenState extends State<VerifyResetCodeScreen> {
     );
 
     context.read<ForgotPasswordBloc>().add(
-      SendForgotPasswordCodeSubmitted(request: request),
+      SendForgotPasswordCodeSubmitted(request: request,languageCode: Localizations.localeOf(context).languageCode,),
     );
   }
 

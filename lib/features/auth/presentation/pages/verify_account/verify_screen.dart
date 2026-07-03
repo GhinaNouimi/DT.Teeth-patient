@@ -56,7 +56,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
     );
 
     context.read<VerifyEmailBloc>().add(
-      VerifyEmailSubmitted(request: request),
+      VerifyEmailSubmitted(request: request,languageCode: Localizations.localeOf(context).languageCode,),
     );
   }
 
@@ -64,7 +64,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
     final request = SendVerificationRequestModel(email: widget.email);
 
     context.read<VerifyEmailBloc>().add(
-      ResendVerificationSubmitted(request: request),
+      ResendVerificationSubmitted(request: request,languageCode: Localizations.localeOf(context).languageCode,),
     );
   }
 

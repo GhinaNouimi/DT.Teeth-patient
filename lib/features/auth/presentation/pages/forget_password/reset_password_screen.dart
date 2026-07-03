@@ -64,7 +64,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     );
 
     context.read<ForgotPasswordBloc>().add(
-      ResetPasswordSubmitted(request: request),
+      ResetPasswordSubmitted(request: request,languageCode: Localizations.localeOf(context).languageCode,),
     );
   }
 

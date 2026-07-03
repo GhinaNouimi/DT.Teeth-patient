@@ -6,6 +6,10 @@ abstract class LoginEvent {
 
 class LoginPatientSubmitted extends LoginEvent {
   final LoginRequestModel request;
+  final String languageCode;
 
-  const LoginPatientSubmitted({required this.request});
+  const LoginPatientSubmitted({
+    required this.request,
+    required this.languageCode,
+  });
 }

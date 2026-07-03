@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,10 +78,14 @@ class _PatientHealthQuestionsScreenState
       isSmoker: _isSmoker,
       drinksAlcoholFrequently: _drinksAlcoholFrequently,
       teethCleaningFrequency: _teethCleaningFrequency,
+      profilePicture: widget.basicRegisterData['profile_picture'] as File?,
     );
 
     context.read<RegisterBloc>().add(
-      RegisterPatientSubmitted(request: request),
+      RegisterPatientSubmitted(
+        request: request,
+        languageCode: Localizations.localeOf(context).languageCode,
+      ),
     );
   }
 

@@ -245,6 +245,24 @@ abstract class GeneratedAppLocalizations {
   /// **'أدخل عنوانك'**
   String get addressHint;
 
+  /// No description provided for @profilePicture.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصورة الشخصية'**
+  String get profilePicture;
+
+  /// No description provided for @addProfilePictureOptional.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة صورة شخصية اختياري'**
+  String get addProfilePictureOptional;
+
+  /// No description provided for @viewProfilePicture.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض الصورة الشخصية'**
+  String get viewProfilePicture;
+
   /// No description provided for @nameRequired.
   ///
   /// In ar, this message translates to:
@@ -1072,6 +1090,252 @@ abstract class GeneratedAppLocalizations {
   /// In ar, this message translates to:
   /// **'طارئ'**
   String get emergency;
+
+  /// No description provided for @logout.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الخروج'**
+  String get logout;
+
+  /// No description provided for @logoutSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم إنهاء الجلسة الحالية والعودة إلى شاشة الدخول.'**
+  String get logoutSubtitle;
+
+  /// No description provided for @logoutConfirmationTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الخروج'**
+  String get logoutConfirmationTitle;
+
+  /// No description provided for @logoutConfirmationMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟'**
+  String get logoutConfirmationMessage;
+
+  /// No description provided for @cancel.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء'**
+  String get cancel;
+
+  /// No description provided for @logoutButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'خروج'**
+  String get logoutButton;
+
+  /// No description provided for @logoutSuccess.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تسجيل الخروج بنجاح.'**
+  String get logoutSuccess;
+
+  /// No description provided for @logoutFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'فشل تسجيل الخروج'**
+  String get logoutFailed;
+
+  /// No description provided for @profile.
+  ///
+  /// In ar, this message translates to:
+  /// **'البروفايل'**
+  String get profile;
+
+  /// No description provided for @patientProfile.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملف المريض'**
+  String get patientProfile;
+
+  /// No description provided for @editProfile.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل البروفايل'**
+  String get editProfile;
+
+  /// No description provided for @profileLoading.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري تحميل بيانات البروفايل...'**
+  String get profileLoading;
+
+  /// No description provided for @profileLoadFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'فشل تحميل البروفايل'**
+  String get profileLoadFailed;
+
+  /// No description provided for @profileUpdatedSuccessfully.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تحديث البروفايل بنجاح.'**
+  String get profileUpdatedSuccessfully;
+
+  /// No description provided for @profileUpdateFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'فشل تحديث البروفايل'**
+  String get profileUpdateFailed;
+
+  /// No description provided for @retry.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة المحاولة'**
+  String get retry;
+
+  /// No description provided for @profileBasicInfo.
+  ///
+  /// In ar, this message translates to:
+  /// **'البيانات الأساسية'**
+  String get profileBasicInfo;
+
+  /// No description provided for @profileEmergencyContact.
+  ///
+  /// In ar, this message translates to:
+  /// **'جهة الاتصال للطوارئ'**
+  String get profileEmergencyContact;
+
+  /// No description provided for @profileAdditionalInfo.
+  ///
+  /// In ar, this message translates to:
+  /// **'معلومات إضافية'**
+  String get profileAdditionalInfo;
+
+  /// No description provided for @profileAccountSupport.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحساب والدعم'**
+  String get profileAccountSupport;
+
+  /// No description provided for @profilePreferences.
+  ///
+  /// In ar, this message translates to:
+  /// **'التفضيلات'**
+  String get profilePreferences;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In ar, this message translates to:
+  /// **'الوضع الليلي'**
+  String get darkMode;
+
+  /// No description provided for @darkModeEnabled.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفعل حاليًا'**
+  String get darkModeEnabled;
+
+  /// No description provided for @darkModeDisabled.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير مفعل'**
+  String get darkModeDisabled;
+
+  /// No description provided for @language.
+  ///
+  /// In ar, this message translates to:
+  /// **'اللغة'**
+  String get language;
+
+  /// No description provided for @complaintsAndSupport.
+  ///
+  /// In ar, this message translates to:
+  /// **'الشكاوى والدعم'**
+  String get complaintsAndSupport;
+
+  /// No description provided for @complaintsAndSupportSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرسل شكوى أو تواصل مع الدعم عند الحاجة.'**
+  String get complaintsAndSupportSubtitle;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير كلمة المرور'**
+  String get changePassword;
+
+  /// No description provided for @changePasswordSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدّث كلمة المرور للحفاظ على أمان حسابك.'**
+  String get changePasswordSubtitle;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ التعديلات'**
+  String get saveChanges;
+
+  /// No description provided for @savingChanges.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ الحفظ...'**
+  String get savingChanges;
+
+  /// No description provided for @edit.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل'**
+  String get edit;
+
+  /// No description provided for @save.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ'**
+  String get save;
+
+  /// No description provided for @confirmSave.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكيد الحفظ'**
+  String get confirmSave;
+
+  /// No description provided for @confirmSaveMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل أنت متأكد أنك تريد حفظ التعديلات؟'**
+  String get confirmSaveMessage;
+
+  /// No description provided for @savedSuccessfully.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم الحفظ بنجاح'**
+  String get savedSuccessfully;
+
+  /// No description provided for @excellent.
+  ///
+  /// In ar, this message translates to:
+  /// **'ممتاز'**
+  String get excellent;
+
+  /// No description provided for @emailReadOnly.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يمكن تعديل البريد الإلكتروني'**
+  String get emailReadOnly;
+
+  /// No description provided for @emergencyContact.
+  ///
+  /// In ar, this message translates to:
+  /// **'جهة الاتصال للطوارئ'**
+  String get emergencyContact;
+
+  /// No description provided for @editMode.
+  ///
+  /// In ar, this message translates to:
+  /// **'وضع التعديل'**
+  String get editMode;
+
+  /// No description provided for @viewMode.
+  ///
+  /// In ar, this message translates to:
+  /// **'وضع الاستعراض'**
+  String get viewMode;
 }
 
 class _GeneratedAppLocalizationsDelegate

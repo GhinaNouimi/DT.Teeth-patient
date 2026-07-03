@@ -82,6 +82,15 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
   String get addressHint => 'Enter your address';
 
   @override
+  String get profilePicture => 'Profile Picture';
+
+  @override
+  String get addProfilePictureOptional => 'Add profile picture optional';
+
+  @override
+  String get viewProfilePicture => 'View profile picture';
+
+  @override
   String get nameRequired => 'Please enter your full name';
 
   @override
@@ -522,4 +531,131 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
 
   @override
   String get emergency => 'Emergency';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get logoutSubtitle =>
+      'The current session will end and you will return to the login screen.';
+
+  @override
+  String get logoutConfirmationTitle => 'Logout';
+
+  @override
+  String get logoutConfirmationMessage =>
+      'Are you sure you want to log out of your account?';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get logoutButton => 'Logout';
+
+  @override
+  String get logoutSuccess => 'Logged out successfully.';
+
+  @override
+  String get logoutFailed => 'Logout failed';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get patientProfile => 'Patient Profile';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get profileLoading => 'Loading profile data...';
+
+  @override
+  String get profileLoadFailed => 'Failed to load profile';
+
+  @override
+  String get profileUpdatedSuccessfully => 'Profile updated successfully.';
+
+  @override
+  String get profileUpdateFailed => 'Profile update failed';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get profileBasicInfo => 'Basic Information';
+
+  @override
+  String get profileEmergencyContact => 'Emergency Contact';
+
+  @override
+  String get profileAdditionalInfo => 'Additional Information';
+
+  @override
+  String get profileAccountSupport => 'Account & Support';
+
+  @override
+  String get profilePreferences => 'Preferences';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get darkModeEnabled => 'Currently enabled';
+
+  @override
+  String get darkModeDisabled => 'Currently disabled';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get complaintsAndSupport => 'Complaints & Support';
+
+  @override
+  String get complaintsAndSupportSubtitle =>
+      'Send a complaint or contact support when needed.';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get changePasswordSubtitle =>
+      'Update your password to keep your account secure.';
+
+  @override
+  String get saveChanges => 'Save Changes';
+
+  @override
+  String get savingChanges => 'Saving...';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get confirmSave => 'Confirm Save';
+
+  @override
+  String get confirmSaveMessage => 'Are you sure you want to save the changes?';
+
+  @override
+  String get savedSuccessfully => 'Saved Successfully';
+
+  @override
+  String get excellent => 'Ok';
+
+  @override
+  String get emailReadOnly => 'Email cannot be edited';
+
+  @override
+  String get emergencyContact => 'Emergency Contact';
+
+  @override
+  String get editMode => 'Edit mode';
+
+  @override
+  String get viewMode => 'View mode';
 }

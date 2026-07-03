@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../widgets/profile_action_tile.dart';
 import '../widgets/profile_section_card.dart';
 
@@ -17,12 +18,14 @@ class ProfilePreferencesSection extends StatelessWidget {
     required this.onLanguageTap,
   });
 
-  String get _languageLabel {
+  String _languageLabel(BuildContext context) {
+    final l10n = context.l10n;
+
     switch (languageCode) {
       case 'ar':
-        return 'العربية';
+        return l10n.arabic;
       case 'en':
-        return 'English';
+        return l10n.english;
       default:
         return languageCode;
     }
@@ -30,13 +33,17 @@ class ProfilePreferencesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return ProfileSectionCard(
-      title: 'التفضيلات',
+      title: l10n.profilePreferences,
       child: Column(
         children: [
           ProfileActionTile(
-            title: 'الوضع الليلي',
-            subtitle: isDarkModeEnabled ? 'مفعل حاليًا' : 'غير مفعل',
+            title: l10n.darkMode,
+            subtitle: isDarkModeEnabled
+                ? l10n.darkModeEnabled
+                : l10n.darkModeDisabled,
             icon: Icons.dark_mode_outlined,
             onTap: () => onThemeChanged(!isDarkModeEnabled),
             trailing: Switch(
@@ -46,8 +53,8 @@ class ProfilePreferencesSection extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           ProfileActionTile(
-            title: 'اللغة',
-            subtitle: _languageLabel,
+            title: l10n.language,
+            subtitle: _languageLabel(context),
             icon: Icons.language_rounded,
             onTap: onLanguageTap,
           ),
