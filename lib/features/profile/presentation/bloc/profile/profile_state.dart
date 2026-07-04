@@ -15,8 +15,13 @@ class ProfileLoading extends ProfileState {
 class ProfileLoaded extends ProfileState {
   final ProfileEntity profile;
 
+  /// true => البيانات معروضة من الكاش (Offline)
+  /// false => البيانات جاءت من الـ API
+  final bool isFromCache;
+
   const ProfileLoaded({
     required this.profile,
+    this.isFromCache = false,
   });
 }
 

@@ -648,4 +648,62 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
 
   @override
   String get viewMode => 'وضع الاستعراض';
+
+  @override
+  String get offlineCachedDataMessage =>
+      'أنت غير متصل بالإنترنت، يتم عرض آخر بيانات محفوظة.';
+
+  @override
+  String get prescriptions => 'الوصفات الطبية';
+
+  @override
+  String get prescriptionDetails => 'تفاصيل الوصفة';
+
+  @override
+  String get current => 'الحالية';
+
+  @override
+  String get previous => 'السابقة';
+
+  @override
+  String get noPrescriptionsTitle => 'لا توجد وصفات هنا';
+
+  @override
+  String get noPrescriptionsSubtitle => 'ستظهر وصفاتك الطبية في هذا القسم.';
+
+  @override
+  String get prescriptionLoadFailed => 'تعذر تحميل الوصفات';
+
+  @override
+  String get prescriptionDetailsLoadFailed => 'تعذر تحميل تفاصيل الوصفة';
+
+  @override
+  String get doctor => 'الطبيب';
+
+  @override
+  String get prescriptionDate => 'تاريخ الوصفة';
+
+  @override
+  String get medications => 'الأدوية';
+
+  @override
+  String get medicationName => 'اسم الدواء';
+
+  @override
+  String get dosage => 'الجرعة';
+
+  @override
+  String get frequency => 'التكرار';
+
+  @override
+  String get duration => 'المدة';
+
+  @override
+  String get notes => 'الملاحظات';
+
+  @override
+  String get noNotes => 'لا توجد ملاحظات';
+
+  @override
+  String get additionalInstructions => 'تعليمات إضافية';
 }

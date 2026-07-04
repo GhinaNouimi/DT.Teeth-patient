@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/connectivity/connectivity_bloc.dart';
+import '../../../../core/connectivity/connectivity_state.dart';
 import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/localization/locale_bloc/locale_bloc.dart';
 import '../../../../core/localization/locale_bloc/locale_event.dart';
@@ -13,6 +15,7 @@ import '../../../../core/theme/theme_bloc/theme_event.dart';
 import '../../../../core/theme/theme_bloc/theme_state.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../../../core/widgets/feedback/error_bottom_sheet.dart';
+import '../../../../core/widgets/feedback/offline_cached_banner.dart';
 import '../../../../core/widgets/feedback/success_bottom_sheet.dart';
 import '../../../../core/widgets/loading/app_skeleton.dart';
 import '../../../auth/presentation/bloc/logout/logout_bloc.dart';
@@ -27,8 +30,15 @@ import '../sections/profile_account_section.dart';
 import '../sections/profile_header_section.dart';
 import '../sections/profile_preferences_section.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool _isOfflineBannerDismissed = false;
 
   ProfileEntity _fakeProfile(String languageCode) {
     return ProfileEntity(
@@ -83,6 +93,14 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
+  void _reloadProfile(BuildContext context) {
+    context.read<ProfileBloc>().add(
+      LoadProfileRequested(
+        languageCode: Localizations.localeOf(context).languageCode,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
@@ -91,6 +109,28 @@ class ProfileScreen extends StatelessWidget {
 
     return MultiBlocListener(
       listeners: [
+        BlocListener<ConnectivityBloc, ConnectivityState>(
+          listener: (context, connectivityState) {
+            if (connectivityState is ConnectivityOffline) {
+              setState(() {
+                _isOfflineBannerDismissed = false;
+              });
+            }
+
+            if (connectivityState is ConnectivityOnline) {
+              final profileState = context.read<ProfileBloc>().state;
+
+              if (profileState is ProfileLoaded &&
+                  profileState.isFromCache) {
+                setState(() {
+                  _isOfflineBannerDismissed = false;
+                });
+
+                _reloadProfile(context);
+              }
+            }
+          },
+        ),
         BlocListener<LogoutBloc, LogoutState>(
           listener: (context, state) async {
             if (state is LogoutSuccess) {
@@ -128,13 +168,7 @@ class ProfileScreen extends StatelessWidget {
               if (profileState is ProfileFailure) {
                 return Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      context.read<ProfileBloc>().add(
-                        LoadProfileRequested(
-                          languageCode: languageCode,
-                        ),
-                      );
-                    },
+                    onPressed: () => _reloadProfile(context),
                     child: Text(l10n.retry),
                   ),
                 );
@@ -146,92 +180,125 @@ class ProfileScreen extends StatelessWidget {
                   ? profileState.profile
                   : _fakeProfile(languageCode);
 
+              final isFromCache = profileState is ProfileLoaded &&
+                  profileState.isFromCache;
+
+              final showOfflineBanner =
+                  isFromCache && !_isOfflineBannerDismissed;
+
               return AppSkeleton(
                 enabled: isLoading,
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    20,
-                    3,
-                    20,
-                    MediaQuery.of(context).padding.bottom + 110,
-                  ),
+                child: Column(
                   children: [
-                    const SizedBox(height: 20),
-                    ProfileHeaderSection(
-                      profile: profile,
-                      onEditProfileTap: isLoading
-                          ? () {}
-                          : () async {
-                        final updatedProfile = await context.push(
-                          AppRoutes.editProfile,
-                          extra: profile,
-                        );
-
-                        if (!context.mounted) return;
-
-                        if (updatedProfile != null) {
-                          context.read<ProfileBloc>().add(
-                            LoadProfileRequested(
-                              languageCode: languageCode,
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    BlocBuilder<ThemeBloc, ThemeState>(
-                      builder: (context, themeState) {
-                        final isDarkMode =
-                            themeState.themeMode == ThemeMode.dark;
-
-                        return BlocBuilder<LocaleBloc, LocaleState>(
-                          builder: (context, localeState) {
-                            final currentLanguageCode =
-                                localeState.locale.languageCode;
-
-                            return ProfilePreferencesSection(
-                              isDarkModeEnabled: isDarkMode,
-                              languageCode: currentLanguageCode,
-                              onThemeChanged: (value) {
-                                context.read<ThemeBloc>().add(
-                                  ThemeChanged(
-                                    value
-                                        ? ThemeMode.dark
-                                        : ThemeMode.light,
-                                  ),
-                                );
-                              },
-                              onLanguageTap: () {
-                                _handleLanguageTap(
-                                  context,
-                                  currentLanguageCode,
-                                );
-                              },
-                            );
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 250),
+                      child: showOfflineBanner
+                          ? Padding(
+                        key: const ValueKey('offline_banner'),
+                        padding: const EdgeInsets.fromLTRB(
+                          20,
+                          14,
+                          20,
+                          0,
+                        ),
+                        child: OfflineCachedBanner(
+                          message: l10n.offlineCachedDataMessage,
+                          onClose: () {
+                            setState(() {
+                              _isOfflineBannerDismissed = true;
+                            });
                           },
-                        );
-                      },
+                        ),
+                      )
+                          : const SizedBox.shrink(
+                        key: ValueKey('no_offline_banner'),
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    BlocBuilder<LogoutBloc, LogoutState>(
-                      builder: (context, logoutState) {
-                        final isLogoutLoading = logoutState is LogoutLoading;
+                    Expanded(
+                      child: ListView(
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.fromLTRB(
+                          20,
+                          20,
+                          20,
+                          MediaQuery.of(context).padding.bottom + 110,
+                        ),
+                        children: [
+                          ProfileHeaderSection(
+                            profile: profile,
+                            onEditProfileTap: isLoading
+                                ? () {}
+                                : () async {
+                              final updatedProfile = await context.push(
+                                AppRoutes.editProfile,
+                                extra: profile,
+                              );
 
-                        return IgnorePointer(
-                          ignoring: isLogoutLoading || isLoading,
-                          child: Opacity(
-                            opacity: isLogoutLoading ? 0.55 : 1,
-                            child: ProfileAccountSection(
-                              onComplaintsTap: () {
-                                context.push(AppRoutes.complaints);
-                              },
-                              onChangePasswordTap: () {},
-                              onLogoutTap: () => _handleLogoutTap(context),
-                            ),
+                              if (!context.mounted) return;
+
+                              if (updatedProfile != null) {
+                                _reloadProfile(context);
+                              }
+                            },
                           ),
-                        );
-                      },
+                          const SizedBox(height: 16),
+                          BlocBuilder<ThemeBloc, ThemeState>(
+                            builder: (context, themeState) {
+                              final isDarkMode =
+                                  themeState.themeMode == ThemeMode.dark;
+
+                              return BlocBuilder<LocaleBloc, LocaleState>(
+                                builder: (context, localeState) {
+                                  final currentLanguageCode =
+                                      localeState.locale.languageCode;
+
+                                  return ProfilePreferencesSection(
+                                    isDarkModeEnabled: isDarkMode,
+                                    languageCode: currentLanguageCode,
+                                    onThemeChanged: (value) {
+                                      context.read<ThemeBloc>().add(
+                                        ThemeChanged(
+                                          value
+                                              ? ThemeMode.dark
+                                              : ThemeMode.light,
+                                        ),
+                                      );
+                                    },
+                                    onLanguageTap: () {
+                                      _handleLanguageTap(
+                                        context,
+                                        currentLanguageCode,
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          BlocBuilder<LogoutBloc, LogoutState>(
+                            builder: (context, logoutState) {
+                              final isLogoutLoading =
+                              logoutState is LogoutLoading;
+
+                              return IgnorePointer(
+                                ignoring: isLogoutLoading || isLoading,
+                                child: Opacity(
+                                  opacity: isLogoutLoading ? 0.55 : 1,
+                                  child: ProfileAccountSection(
+                                    onComplaintsTap: () {
+                                      context.push(AppRoutes.complaints);
+                                    },
+                                    onChangePasswordTap: () {},
+                                    onLogoutTap: () =>
+                                        _handleLogoutTap(context),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

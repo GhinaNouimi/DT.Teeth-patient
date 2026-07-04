@@ -43,8 +43,9 @@ import '../../features/main_shell/pages/patient_main_shell_screen.dart';
 import '../../features/medical_record/presentation/pages/attachments_screen.dart';
 import '../../features/medical_record/presentation/pages/payment_plan_details_screen.dart';
 import '../../features/medical_record/presentation/pages/payments_screen.dart';
-import '../../features/medical_record/presentation/pages/prescription_details_screen.dart';
-import '../../features/medical_record/presentation/pages/prescriptions_screen.dart';
+
+import '../../features/medical_record/presentation/pages/prescription/prescription_details_screen.dart';
+import '../../features/medical_record/presentation/pages/prescription/prescriptions_screen.dart';
 import '../../features/medical_record/presentation/pages/treatment_details_screen.dart';
 import '../../features/medical_record/presentation/pages/treatments_screen.dart';
 import '../../features/profile/domain/entities/profile_entity.dart';
@@ -245,14 +246,12 @@ class AppRouter {
                 create: (_) => ProfileBloc(
                   getProfileUseCase: ProfileDi.getProfileUseCase,
                   updateProfileUseCase: ProfileDi.updateProfileUseCase,
-                  networkInfo: NetworkInfo(
-                    connectivity: Connectivity(),
+                )..add(
+                  LoadProfileRequested(
+                    languageCode: Localizations.localeOf(context).languageCode,
                   ),
-                )..add( LoadProfileRequested(
-                  languageCode: Localizations.localeOf(context).languageCode,
-                )),
-              ),
-            ],
+                ),
+              ),            ],
             child: const PatientMainShellScreen(),
           );
         },
@@ -288,7 +287,6 @@ class AppRouter {
             create: (_) => ProfileBloc(
               getProfileUseCase: ProfileDi.getProfileUseCase,
               updateProfileUseCase: ProfileDi.updateProfileUseCase,
-              networkInfo: NetworkInfo(connectivity: Connectivity()),
             ),
             child: EditProfileScreen(profile: profile),
           );
@@ -376,7 +374,7 @@ class AppRouter {
         path: AppRoutes.medicalRecordPrescriptionDetails,
         name: 'medical-record-prescription-details',
         builder: (context, state) {
-          final prescriptionId = state.extra as String;
+          final prescriptionId = state.extra.toString();
           return PrescriptionDetailsScreen(prescriptionId: prescriptionId);
         },
       ),

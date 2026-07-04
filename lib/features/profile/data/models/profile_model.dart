@@ -54,29 +54,89 @@ class ProfileModel {
     final user = data['user'] as Map<String, dynamic>? ?? {};
 
     return ProfileModel(
-      id: data['id'].toString(),
-      userId: data['user_id'].toString(),
-      name: user['name'] ?? '',
-      email: user['email'] ?? '',
-      phone: user['phone'] ?? '',
-      dateOfBirth: user['date_of_birth'] ?? '',
-      gender: user['gender'] ?? -1,
-      address: user['address'] ?? '',
-      profilePicture: user['profile_picture'] ?? '',
-      emergencyContactName: data['emergency_contact_name'] ?? '',
-      emergencyContactRelation: data['emergency_contact_relation'] ?? '',
-      emergencyContactPhone: data['emergency_contact_phone'] ?? '',
+      id: data['id']?.toString() ?? '',
+      userId: data['user_id']?.toString() ?? '',
+      name: user['name']?.toString() ?? '',
+      email: user['email']?.toString() ?? '',
+      phone: user['phone']?.toString() ?? '',
+      dateOfBirth: user['date_of_birth']?.toString() ?? '',
+      gender: _toInt(user['gender']),
+      address: user['address']?.toString() ?? '',
+      profilePicture: user['profile_picture']?.toString() ?? '',
+      emergencyContactName: data['emergency_contact_name']?.toString() ?? '',
+      emergencyContactRelation:
+      data['emergency_contact_relation']?.toString() ?? '',
+      emergencyContactPhone: data['emergency_contact_phone']?.toString() ?? '',
       isPregnant: _toBool(data['is_pregnant']),
       isBreastfeeding: _toBool(data['is_breastfeeding']),
       isSmoker: _toBool(data['is_smoker']),
       drinksAlcoholFrequently: _toBool(data['drinks_alcohol_frequently']),
-      teethCleaningFrequency: data['teeth_cleaning_frequency'] ?? '',
+      teethCleaningFrequency:
+      data['teeth_cleaning_frequency']?.toString() ?? '',
       allergies: _toStringList(data['allergies']),
       chronicDiseases: _toStringList(data['chronic_diseases']),
       medications: _toStringList(data['medications']),
       isDarkModeEnabled: false,
       languageCode: 'ar',
     );
+  }
+
+  factory ProfileModel.fromJson(Map<String, dynamic> json) {
+    return ProfileModel(
+      id: json['id']?.toString() ?? '',
+      userId: json['userId']?.toString() ?? '',
+      name: json['name']?.toString() ?? '',
+      email: json['email']?.toString() ?? '',
+      phone: json['phone']?.toString() ?? '',
+      dateOfBirth: json['dateOfBirth']?.toString() ?? '',
+      gender: _toInt(json['gender']),
+      address: json['address']?.toString() ?? '',
+      profilePicture: json['profilePicture']?.toString() ?? '',
+      emergencyContactName:
+      json['emergencyContactName']?.toString() ?? '',
+      emergencyContactRelation:
+      json['emergencyContactRelation']?.toString() ?? '',
+      emergencyContactPhone:
+      json['emergencyContactPhone']?.toString() ?? '',
+      isPregnant: _toBool(json['isPregnant']),
+      isBreastfeeding: _toBool(json['isBreastfeeding']),
+      isSmoker: _toBool(json['isSmoker']),
+      drinksAlcoholFrequently: _toBool(json['drinksAlcoholFrequently']),
+      teethCleaningFrequency:
+      json['teethCleaningFrequency']?.toString() ?? '',
+      allergies: _toStringList(json['allergies']),
+      chronicDiseases: _toStringList(json['chronicDiseases']),
+      medications: _toStringList(json['medications']),
+      isDarkModeEnabled: _toBool(json['isDarkModeEnabled']),
+      languageCode: json['languageCode']?.toString() ?? 'ar',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'userId': userId,
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'dateOfBirth': dateOfBirth,
+      'gender': gender,
+      'address': address,
+      'profilePicture': profilePicture,
+      'emergencyContactName': emergencyContactName,
+      'emergencyContactRelation': emergencyContactRelation,
+      'emergencyContactPhone': emergencyContactPhone,
+      'isPregnant': isPregnant,
+      'isBreastfeeding': isBreastfeeding,
+      'isSmoker': isSmoker,
+      'drinksAlcoholFrequently': drinksAlcoholFrequently,
+      'teethCleaningFrequency': teethCleaningFrequency,
+      'allergies': allergies,
+      'chronicDiseases': chronicDiseases,
+      'medications': medications,
+      'isDarkModeEnabled': isDarkModeEnabled,
+      'languageCode': languageCode,
+    };
   }
 
   ProfileEntity toEntity() {
@@ -106,17 +166,26 @@ class ProfileModel {
     );
   }
 
+  static int _toInt(dynamic value) {
+    if (value is int) return value;
+    if (value is String) return int.tryParse(value) ?? -1;
+    return -1;
+  }
+
   static bool _toBool(dynamic value) {
     if (value is bool) return value;
     if (value is int) return value == 1;
-    if (value is String) return value == '1' || value.toLowerCase() == 'true';
+    if (value is String) {
+      return value == '1' || value.toLowerCase() == 'true';
+    }
     return false;
   }
 
   static List<String> _toStringList(dynamic value) {
     if (value is List) {
-      return value.map((e) => e.toString()).toList();
+      return value.map((element) => element.toString()).toList();
     }
+
     return [];
   }
 }

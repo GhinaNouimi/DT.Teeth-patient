@@ -3,11 +3,21 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 class NetworkInfo {
   final Connectivity connectivity;
 
-  NetworkInfo({required this.connectivity});
+  const NetworkInfo({
+    required this.connectivity,
+  });
 
+  /// Checks the current internet connection.
   Future<bool> get isConnected async {
-    final result = await connectivity.checkConnectivity();
+    final results = await connectivity.checkConnectivity();
 
-    return result != ConnectivityResult.none;
+    return !results.contains(ConnectivityResult.none);
+  }
+
+  /// Emits connection changes.
+  Stream<bool> get onConnectionChanged {
+    return connectivity.onConnectivityChanged.map(
+          (results) => !results.contains(ConnectivityResult.none),
+    );
   }
 }

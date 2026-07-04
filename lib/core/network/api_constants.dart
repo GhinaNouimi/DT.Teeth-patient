@@ -16,4 +16,18 @@ class ApiConstants {
   static const String patientLogout = '/patient/logout';
   static const String patientShowProfile = '/patient/showProfile';
   static const String patientEditProfile = '/patient/editProfile';
+  // Appointments
+  static const String patientShowAppointments =
+      '/patient/showAppointments';
+  static const String patientShowPreviousAppointments =
+      '/patient/showPreviousAppointments';
+  static const String patientShowAppointmentDetails =
+      '/patient/showAppointmentdetails';
+  static const String patientCancelAppointment =
+      '/patient/cancelAppointment';
+  static const String patientShowAllPrescriptions =
+      '/patient/showAllPrescriptions';
+
+  static String patientShowPrescriptionDetails(int prescriptionId) =>
+      '/patient/showPrescriptionDetails/$prescriptionId';
 }

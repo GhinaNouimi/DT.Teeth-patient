@@ -1,3 +1,4 @@
+import '../../../../core/cache/cached_result.dart';
 import '../entities/profile_entity.dart';
 import '../repositories/profile_repository.dart';
 
@@ -6,7 +7,7 @@ class GetProfileUseCase {
 
   const GetProfileUseCase(this._repository);
 
-  Future<ProfileEntity> call() {
+  Future<CachedResult<ProfileEntity>> call() {
     return _repository.getProfile();
   }
 }

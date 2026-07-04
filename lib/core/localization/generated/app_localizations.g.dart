@@ -1336,6 +1336,120 @@ abstract class GeneratedAppLocalizations {
   /// In ar, this message translates to:
   /// **'وضع الاستعراض'**
   String get viewMode;
+
+  /// No description provided for @offlineCachedDataMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنت غير متصل بالإنترنت، يتم عرض آخر بيانات محفوظة.'**
+  String get offlineCachedDataMessage;
+
+  /// No description provided for @prescriptions.
+  ///
+  /// In ar, this message translates to:
+  /// **'الوصفات الطبية'**
+  String get prescriptions;
+
+  /// No description provided for @prescriptionDetails.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل الوصفة'**
+  String get prescriptionDetails;
+
+  /// No description provided for @current.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحالية'**
+  String get current;
+
+  /// No description provided for @previous.
+  ///
+  /// In ar, this message translates to:
+  /// **'السابقة'**
+  String get previous;
+
+  /// No description provided for @noPrescriptionsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد وصفات هنا'**
+  String get noPrescriptionsTitle;
+
+  /// No description provided for @noPrescriptionsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ستظهر وصفاتك الطبية في هذا القسم.'**
+  String get noPrescriptionsSubtitle;
+
+  /// No description provided for @prescriptionLoadFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل الوصفات'**
+  String get prescriptionLoadFailed;
+
+  /// No description provided for @prescriptionDetailsLoadFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل تفاصيل الوصفة'**
+  String get prescriptionDetailsLoadFailed;
+
+  /// No description provided for @doctor.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطبيب'**
+  String get doctor;
+
+  /// No description provided for @prescriptionDate.
+  ///
+  /// In ar, this message translates to:
+  /// **'تاريخ الوصفة'**
+  String get prescriptionDate;
+
+  /// No description provided for @medications.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأدوية'**
+  String get medications;
+
+  /// No description provided for @medicationName.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم الدواء'**
+  String get medicationName;
+
+  /// No description provided for @dosage.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجرعة'**
+  String get dosage;
+
+  /// No description provided for @frequency.
+  ///
+  /// In ar, this message translates to:
+  /// **'التكرار'**
+  String get frequency;
+
+  /// No description provided for @duration.
+  ///
+  /// In ar, this message translates to:
+  /// **'المدة'**
+  String get duration;
+
+  /// No description provided for @notes.
+  ///
+  /// In ar, this message translates to:
+  /// **'الملاحظات'**
+  String get notes;
+
+  /// No description provided for @noNotes.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد ملاحظات'**
+  String get noNotes;
+
+  /// No description provided for @additionalInstructions.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعليمات إضافية'**
+  String get additionalInstructions;
 }
 
 class _GeneratedAppLocalizationsDelegate

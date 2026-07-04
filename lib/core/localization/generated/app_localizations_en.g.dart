@@ -658,4 +658,64 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
 
   @override
   String get viewMode => 'View mode';
+
+  @override
+  String get offlineCachedDataMessage =>
+      'You are offline. Showing the last saved data.';
+
+  @override
+  String get prescriptions => 'Prescriptions';
+
+  @override
+  String get prescriptionDetails => 'Prescription Details';
+
+  @override
+  String get current => 'Current';
+
+  @override
+  String get previous => 'Previous';
+
+  @override
+  String get noPrescriptionsTitle => 'No prescriptions here';
+
+  @override
+  String get noPrescriptionsSubtitle =>
+      'Your medical prescriptions will appear in this section.';
+
+  @override
+  String get prescriptionLoadFailed => 'Failed to load prescriptions';
+
+  @override
+  String get prescriptionDetailsLoadFailed =>
+      'Failed to load prescription details';
+
+  @override
+  String get doctor => 'Doctor';
+
+  @override
+  String get prescriptionDate => 'Prescription date';
+
+  @override
+  String get medications => 'Medications';
+
+  @override
+  String get medicationName => 'Medication name';
+
+  @override
+  String get dosage => 'Dosage';
+
+  @override
+  String get frequency => 'Frequency';
+
+  @override
+  String get duration => 'Duration';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get noNotes => 'No notes';
+
+  @override
+  String get additionalInstructions => 'Additional instructions';
 }
