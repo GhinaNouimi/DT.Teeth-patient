@@ -221,15 +221,15 @@ class _AppointmentInfo extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Text(
-          appointment.doctor.name,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: colors.textPrimary,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        // Text(
+        //   appointment.doctor.name,
+        //   maxLines: 1,
+        //   overflow: TextOverflow.ellipsis,
+        //   style: theme.textTheme.bodyMedium?.copyWith(
+        //     color: colors.textPrimary,
+        //     fontWeight: FontWeight.w600,
+        //   ),
+        // ),
         const SizedBox(height: 8),
         Wrap(
           spacing: 8,

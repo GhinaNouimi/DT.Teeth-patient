@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/theme/app_color_tokens.dart';
 import '../widgets/doctor_section_title.dart';
 
@@ -17,10 +18,15 @@ class DoctorAboutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DoctorSectionTitle(title: 'عن الطبيب', theme: theme, colors: colors),
+        DoctorSectionTitle(
+          title: l10n.aboutDoctor,
+          theme: theme,
+          colors: colors,
+        ),
         const SizedBox(height: 12),
         Container(
           padding: const EdgeInsets.all(16),

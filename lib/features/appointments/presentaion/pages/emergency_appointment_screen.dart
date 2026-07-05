@@ -40,49 +40,49 @@ class _EmergencyAppointmentScreenState
     }
   }
 
-  void _submitEmergencyRequest() {
-    final doctor = MockAppointmentsData.getDoctorsByService(
-      ServiceType.emergency,
-    ).first;
-
-    final appointment = AppointmentUiModel(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-
-      doctor: doctor,
-
-      appointmentDate: DateTime.now(),
-
-      appointmentTime: 'أقرب وقت متاح',
-
-      type: AppointmentType.emergency,
-
-      service: ServiceType.emergency,
-
-      status: AppointmentStatus.pending,
-
-      patientNotes: _problemController.text.trim(),
-
-      doctorNotes: 'سيتم التواصل معك وتحديد أقرب موعد متاح.',
-
-      emergencyDescription: _problemController.text.trim(),
-
-      requiresCall: _requiresCall,
-
-      location: 'عيادة DT.Teeth',
-
-      durationMinutes: 30,
-
-      createdAt: DateTime.now(),
-    );
-
-    AppointmentsStore.instance.addAppointment(appointment);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('تم إرسال طلب الطوارئ بنجاح.')),
-    );
-
-    context.pop();
-  }
+  // void _submitEmergencyRequest() {
+  //   final doctor = MockAppointmentsData.getDoctorsByService(
+  //     ServiceType.emergency,
+  //   ).first;
+  //
+  //   final appointment = AppointmentUiModel(
+  //     id: DateTime.now().millisecondsSinceEpoch.toString(),
+  //
+  //     doctor: doctor,
+  //
+  //     appointmentDate: DateTime.now(),
+  //
+  //     appointmentTime: 'أقرب وقت متاح',
+  //
+  //     type: AppointmentType.emergency,
+  //
+  //     service: ServiceType.emergency,
+  //
+  //     status: AppointmentStatus.pending,
+  //
+  //     patientNotes: _problemController.text.trim(),
+  //
+  //     doctorNotes: 'سيتم التواصل معك وتحديد أقرب موعد متاح.',
+  //
+  //     emergencyDescription: _problemController.text.trim(),
+  //
+  //     requiresCall: _requiresCall,
+  //
+  //     location: 'عيادة DT.Teeth',
+  //
+  //     durationMinutes: 30,
+  //
+  //     createdAt: DateTime.now(),
+  //   );
+  //
+  //   AppointmentsStore.instance.addAppointment(appointment);
+  //
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     const SnackBar(content: Text('تم إرسال طلب الطوارئ بنجاح.')),
+  //   );
+  //
+  //   context.pop();
+  // }
 
   bool get _canSubmit {
     return _problemController.text.trim().isNotEmpty;
@@ -191,13 +191,13 @@ class _EmergencyAppointmentScreenState
             SizedBox(
               width: double.infinity,
 
-              child: ElevatedButton.icon(
-                onPressed: _canSubmit ? _submitEmergencyRequest : null,
-
-                icon: const Icon(Icons.emergency_rounded),
-
-                label: const Text('طلب أقرب موعد فوري'),
-              ),
+              // child: ElevatedButton.icon(
+              //   onPressed: _canSubmit ? _submitEmergencyRequest : null,
+              //
+              //   icon: const Icon(Icons.emergency_rounded),
+              //
+              //   label: const Text('طلب أقرب موعد فوري'),
+              // ),
             ),
           ],
         ),

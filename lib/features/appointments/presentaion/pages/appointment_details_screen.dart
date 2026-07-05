@@ -111,10 +111,10 @@ class AppointmentDetailsScreen extends StatelessWidget {
                       CircleAvatar(
                         radius: 28,
                         backgroundColor: colors.surfaceMuted,
-                        child: Text(
-                          appointment.doctor.imageUrl,
-                          style: const TextStyle(fontSize: 28),
-                        ),
+                        // child: Text(
+                        //   appointment.doctor.imageUrl,
+                        //   style: const TextStyle(fontSize: 28),
+                        // ),
                       ),
 
                       const SizedBox(width: 14),
@@ -123,22 +123,22 @@ class AppointmentDetailsScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              appointment.doctor.name,
-                              style: theme.textTheme.bodyLarge?.copyWith(
-                                color: colors.textPrimary,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
+                            // Text(
+                            //   appointment.doctor.name,
+                            //   style: theme.textTheme.bodyLarge?.copyWith(
+                            //     color: colors.textPrimary,
+                            //     fontWeight: FontWeight.w800,
+                            //   ),
+                            // ),
 
                             const SizedBox(height: 4),
 
-                            Text(
-                              appointment.doctor.specialty,
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: colors.textSecondary,
-                              ),
-                            ),
+                            // Text(
+                            //   appointment.doctor.specialty,
+                            //   style: theme.textTheme.bodyMedium?.copyWith(
+                            //     color: colors.textSecondary,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

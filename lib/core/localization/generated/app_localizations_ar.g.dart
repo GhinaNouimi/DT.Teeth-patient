@@ -706,4 +706,51 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
 
   @override
   String get additionalInstructions => 'تعليمات إضافية';
+
+  @override
+  String get doctors => 'أطباء الأسنان';
+
+  @override
+  String get doctorProfile => 'ملف طبيب الأسنان';
+
+  @override
+  String get searchDoctorsHint => 'ابحث عن طبيب أسنان...';
+
+  @override
+  String get noDoctorsTitle => 'لا يوجد أطباء أسنان';
+
+  @override
+  String get noDoctorsSubtitle => 'لا يوجد أطباء أسنان متاحون حالياً.';
+
+  @override
+  String get doctorsLoadFailed => 'تعذر تحميل أطباء الأسنان';
+
+  @override
+  String get aboutDoctor => 'نبذة عن طبيب الأسنان';
+
+  @override
+  String get yearsOfExperience => 'سنوات الخبرة';
+
+  @override
+  String yearsValue(Object count) {
+    return '$count سنة';
+  }
+
+  @override
+  String get rating => 'التقييم';
+
+  @override
+  String get specialization => 'التخصص';
+
+  @override
+  String get rateDentist => 'قيّم طبيب الأسنان';
+
+  @override
+  String get sendRating => 'إرسال التقييم';
+
+  @override
+  String get allDentists => 'الكل';
+
+  @override
+  String get ratingSubmittedSuccessfully => 'تم إرسال تقييمك بنجاح.';
 }

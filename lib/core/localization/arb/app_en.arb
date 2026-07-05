@@ -224,5 +224,20 @@
   "duration": "Duration",
   "notes": "Notes",
   "noNotes": "No notes",
-  "additionalInstructions": "Additional instructions"
+  "additionalInstructions": "Additional instructions",
+  "doctors": "Dentists",
+  "doctorProfile": "Dentist Profile",
+  "searchDoctorsHint": "Search for a dentist...",
+  "noDoctorsTitle": "No dentists found",
+  "noDoctorsSubtitle": "There are no dentists available at the moment.",
+  "doctorsLoadFailed": "Failed to load dentists",
+  "aboutDoctor": "About the Dentist",
+  "yearsOfExperience": "Years of Experience",
+  "yearsValue": "{count} years",
+  "rating": "Rating",
+  "specialization": "Specialization",
+  "rateDentist": "Rate the Dentist",
+  "sendRating": "Send Rating",
+  "allDentists": "All",
+  "ratingSubmittedSuccessfully": "Your rating has been submitted successfully."
 }

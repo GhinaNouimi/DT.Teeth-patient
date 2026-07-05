@@ -224,5 +224,20 @@
   "duration": "المدة",
   "notes": "الملاحظات",
   "noNotes": "لا توجد ملاحظات",
-  "additionalInstructions": "تعليمات إضافية"
+  "additionalInstructions": "تعليمات إضافية",
+  "doctors": "أطباء الأسنان",
+  "doctorProfile": "ملف طبيب الأسنان",
+  "searchDoctorsHint": "ابحث عن طبيب أسنان...",
+  "noDoctorsTitle": "لا يوجد أطباء أسنان",
+  "noDoctorsSubtitle": "لا يوجد أطباء أسنان متاحون حالياً.",
+  "doctorsLoadFailed": "تعذر تحميل أطباء الأسنان",
+  "aboutDoctor": "نبذة عن طبيب الأسنان",
+  "yearsOfExperience": "سنوات الخبرة",
+  "yearsValue": "{count} سنة",
+  "rating": "التقييم",
+  "specialization": "التخصص",
+  "rateDentist": "قيّم طبيب الأسنان",
+  "sendRating": "إرسال التقييم",
+  "allDentists": "الكل",
+  "ratingSubmittedSuccessfully": "تم إرسال تقييمك بنجاح."
 }

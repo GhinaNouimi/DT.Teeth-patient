@@ -1,146 +1,124 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/theme/app_color_tokens.dart';
-import '../models/doctor_ui_model.dart';
 import '../widgets/doctor_section_title.dart';
 
 class DoctorRatingsSection extends StatelessWidget {
-  final DoctorUiModel doctor;
-  final double userRating;
-  final ValueChanged<double> onRatingChanged;
+  final int currentRating;
+  final int userRating;
+  final bool isSubmitting;
+  final ValueChanged<int> onRatingChanged;
   final VoidCallback onSubmitRating;
   final AppColorTokens colors;
   final ThemeData theme;
 
   const DoctorRatingsSection({
     super.key,
-    required this.doctor,
+    required this.currentRating,
     required this.userRating,
+    required this.isSubmitting,
     required this.onRatingChanged,
     required this.onSubmitRating,
     required this.colors,
     required this.theme,
   });
 
-  String _getRatingText(int rating) {
-    switch (rating) {
-      case 5:
-        return 'ممتاز جداً! 😍';
-      case 4:
-        return 'جيد جداً! 😊';
-      case 3:
-        return 'جيد 👍';
-      case 2:
-        return 'حسن 👌';
-      case 1:
-        return 'لم يعجبني 😞';
-      default:
-        return '';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: colors.surfaceSecondary,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(22),
         border: Border.all(color: colors.borderSoft),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DoctorSectionTitle(title: 'التقييمات', theme: theme, colors: colors),
-          const SizedBox(height: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          DoctorSectionTitle(
+            title: l10n.rating,
+            theme: theme,
+            colors: colors,
+          ),
+          const SizedBox(height: 14),
+
+          Row(
             children: [
+              ...List.generate(5, (index) {
+                final isFilled = index < currentRating;
+
+                return Icon(
+                  isFilled ? Icons.star_rounded : Icons.star_border_rounded,
+                  color: isFilled ? colors.warning : colors.textSecondary,
+                  size: 24,
+                );
+              }),
+              const SizedBox(width: 10),
               Text(
-                '${doctor.rating}',
-                style: theme.textTheme.headlineLarge?.copyWith(
-                  fontWeight: FontWeight.w800,
+                currentRating == 0 ? '-' : '$currentRating / 5',
+                style: theme.textTheme.bodyMedium?.copyWith(
                   color: colors.textPrimary,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Row(
-                children: List.generate(5, (index) {
-                  final isFilled = index < doctor.rating.toInt();
-                  return Icon(
-                    isFilled ? Icons.star_rounded : Icons.star_outline_rounded,
-                    color: isFilled
-                        ? const Color(0xFFFFC107)
-                        : colors.textPrimary,
-                    size: 16,
-                  );
-                }),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                '${doctor.reviewsCount} تقييم',
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: colors.textSecondary,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ],
           ),
-          const Divider(),
-          const SizedBox(height: 16),
+
+          const Divider(height: 32),
+
           Text(
-            'قيّم الطبيب',
+            l10n.rateDentist,
             style: theme.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w800,
               color: colors.textPrimary,
             ),
           ),
           const SizedBox(height: 16),
-          Center(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(5, (index) {
-                    return GestureDetector(
-                      onTap: () => onRatingChanged((index + 1).toDouble()),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Icon(
-                          index < userRating
-                              ? Icons.star_rounded
-                              : Icons.star_outline_rounded,
-                          color: index < userRating
-                              ? const Color(0xFFFFC107)
-                              : colors.textPrimary,
-                          size: 40,
-                        ),
-                      ),
-                    );
-                  }),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(5, (index) {
+              final value = index + 1;
+              final isSelected = value <= userRating;
+
+              return GestureDetector(
+                onTap: isSubmitting ? null : () => onRatingChanged(value),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: Icon(
+                    isSelected
+                        ? Icons.star_rounded
+                        : Icons.star_border_rounded,
+                    color: isSelected ? colors.warning : colors.textPrimary,
+                    size: 46,
+                  ),
                 ),
-                const SizedBox(height: 12),
-                if (userRating > 0)
-                  Text(
-                    _getRatingText(userRating.toInt()),
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: colors.textSecondary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                const SizedBox(height: 16),
-                if (userRating > 0)
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: onSubmitRating,
-                      icon: const Icon(Icons.send_rounded),
-                      label: const Text('إرسال التقييم'),
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                      ),
-                    ),
-                  ),
-              ],
+              );
+            }),
+          ),
+
+          const SizedBox(height: 20),
+
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: userRating == 0 || isSubmitting
+                  ? null
+                  : onSubmitRating,
+              icon: Icon(
+                isSubmitting
+                    ? Icons.hourglass_top_rounded
+                    : Icons.send_rounded,
+              ),
+              label: Text(
+                isSubmitting ? l10n.saving : l10n.sendRating,
+              ),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 14),
+              ),
             ),
           ),
         ],

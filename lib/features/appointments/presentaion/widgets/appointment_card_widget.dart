@@ -49,10 +49,10 @@ class AppointmentCardWidget extends StatelessWidget {
           CircleAvatar(
             radius: 28,
             backgroundColor: colors.surfaceMuted,
-            child: Text(
-              appointment.doctor.imageUrl,
-              style: const TextStyle(fontSize: 32),
-            ),
+            // child: Text(
+            //   appointment.doctor.imageUrl,
+            //   style: const TextStyle(fontSize: 32),
+            // ),
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
@@ -65,13 +65,13 @@ class AppointmentCardWidget extends StatelessWidget {
                   isCompact: true,
                 ),
                 const SizedBox(height: AppSpacing.xs),
-                Text(
-                  appointment.doctor.name,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: colors.textPrimary,
-                  ),
-                ),
+                // Text(
+                //   appointment.doctor.name,
+                //   style: theme.textTheme.titleSmall?.copyWith(
+                //     fontWeight: FontWeight.w800,
+                //     color: colors.textPrimary,
+                //   ),
+                // ),
                 const SizedBox(height: AppSpacing.xxs),
                 Text(
                   appointment.service.displayName,

@@ -718,4 +718,53 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
 
   @override
   String get additionalInstructions => 'Additional instructions';
+
+  @override
+  String get doctors => 'Dentists';
+
+  @override
+  String get doctorProfile => 'Dentist Profile';
+
+  @override
+  String get searchDoctorsHint => 'Search for a dentist...';
+
+  @override
+  String get noDoctorsTitle => 'No dentists found';
+
+  @override
+  String get noDoctorsSubtitle =>
+      'There are no dentists available at the moment.';
+
+  @override
+  String get doctorsLoadFailed => 'Failed to load dentists';
+
+  @override
+  String get aboutDoctor => 'About the Dentist';
+
+  @override
+  String get yearsOfExperience => 'Years of Experience';
+
+  @override
+  String yearsValue(Object count) {
+    return '$count years';
+  }
+
+  @override
+  String get rating => 'Rating';
+
+  @override
+  String get specialization => 'Specialization';
+
+  @override
+  String get rateDentist => 'Rate the Dentist';
+
+  @override
+  String get sendRating => 'Send Rating';
+
+  @override
+  String get allDentists => 'All';
+
+  @override
+  String get ratingSubmittedSuccessfully =>
+      'Your rating has been submitted successfully.';
 }

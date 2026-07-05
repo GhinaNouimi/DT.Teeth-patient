@@ -35,8 +35,6 @@ import '../../features/auth/presentation/pages/verify_account/verify_screen.dart
 import '../../features/complaints/presentation/pages/complaint_details_screen.dart';
 import '../../features/complaints/presentation/pages/complaints_list_screen.dart';
 import '../../features/complaints/presentation/pages/create_complaint_screen.dart';
-import '../../features/doctors/presentation/models/doctor_ui_model.dart';
-import '../../features/doctors/presentation/pages/booking_screen.dart';
 import '../../features/doctors/presentation/pages/doctor_profile_screen.dart';
 import '../../features/appointments/presentaion/pages/reschedule_appointment_screen.dart';
 import '../../features/main_shell/pages/patient_main_shell_screen.dart';
@@ -307,11 +305,11 @@ class AppRouter {
         builder: (context, state) => const AppointmentsManagementScreen(),
       ),
 
-      GoRoute(
-        path: AppRoutes.newAppointment,
-        name: 'new-appointment',
-        builder: (context, state) => const NewAppointmentScreen(),
-      ),
+      // GoRoute(
+      //   path: AppRoutes.newAppointment,
+      //   name: 'new-appointment',
+      //   builder: (context, state) => const NewAppointmentScreen(),
+      // ),
 
       GoRoute(
         path: AppRoutes.emergencyAppointment,
@@ -331,18 +329,19 @@ class AppRouter {
         path: AppRoutes.doctorDetails,
         name: 'doctor-details',
         builder: (context, state) {
-          final doctor = state.extra as DoctorUiModel;
-          return DoctorProfileScreen(doctor: doctor);
+          final dentistId = state.extra as int;
+          return DoctorProfileScreen(dentistId: dentistId);
         },
       ),
-      GoRoute(
-        path: AppRoutes.booking,
-        name: 'booking',
-        builder: (context, state) {
-          final doctor = state.extra as DoctorUiModel;
-          return BookingScreen(doctor: doctor);
-        },
-      ),
+
+      // GoRoute(
+      //   path: AppRoutes.booking,
+      //   name: 'booking',
+      //   builder: (context, state) {
+      //     final doctor = state.extra as DoctorUiModel;
+      //     return BookingScreen(doctor: doctor);
+      //   },
+      // ),
 
       GoRoute(
         path: AppRoutes.medicalRecordTreatments,

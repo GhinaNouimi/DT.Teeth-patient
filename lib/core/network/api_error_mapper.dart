@@ -221,6 +221,13 @@ class ApiErrorMapper {
         en: 'Profile updated successfully.',
       );
     }
+    if (message.contains('يمكنك تقييم الطبيب فقط بعد إتمام موعد معه')) {
+      return ApiErrorMessages.text(
+        languageCode,
+        ar: 'يمكنك تقييم طبيب الأسنان فقط بعد إتمام موعد معه.',
+        en: 'You can rate the dentist only after completing an appointment with them.',
+      );
+    }
 
     return ApiErrorMessages.text(
       languageCode,

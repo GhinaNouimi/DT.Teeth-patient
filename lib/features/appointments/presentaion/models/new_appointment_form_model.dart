@@ -1,4 +1,3 @@
-import '../../../doctors/presentation/models/doctor_ui_model.dart';
 
 import 'appointment_status.dart';
 import 'appointment_type.dart';
@@ -10,7 +9,7 @@ class NewAppointmentFormModel {
 
   final ServiceType? serviceType;
 
-  final DoctorUiModel? selectedDoctor;
+  // final DoctorUiModel? selectedDoctor;
 
   final DateTime? selectedDate;
   final String? selectedTime;
@@ -25,7 +24,7 @@ class NewAppointmentFormModel {
   const NewAppointmentFormModel({
     this.appointmentType,
     this.serviceType,
-    this.selectedDoctor,
+    // this.selectedDoctor,
     this.selectedDate,
     this.selectedTime,
     this.patientNotes,
@@ -38,7 +37,7 @@ class NewAppointmentFormModel {
 
   bool get isServiceSelected => serviceType != null;
 
-  bool get isDoctorSelected => selectedDoctor != null;
+  // bool get isDoctorSelected => selectedDoctor != null;
 
   bool get isScheduleSelected => selectedDate != null && selectedTime != null;
 
@@ -54,7 +53,7 @@ class NewAppointmentFormModel {
 
     return isAppointmentTypeSelected &&
         isServiceSelected &&
-        isDoctorSelected &&
+        // isDoctorSelected &&
         isScheduleSelected;
   }
 
@@ -65,7 +64,7 @@ class NewAppointmentFormModel {
     return AppointmentUiModel(
       id: id,
 
-      doctor: selectedDoctor!,
+      // doctor: selectedDoctor!,
 
       appointmentDate: selectedDate!,
       appointmentTime: selectedTime!,
@@ -92,7 +91,7 @@ class NewAppointmentFormModel {
   NewAppointmentFormModel copyWith({
     AppointmentType? appointmentType,
     ServiceType? serviceType,
-    DoctorUiModel? selectedDoctor,
+    // DoctorUiModel? selectedDoctor,
     DateTime? selectedDate,
     String? selectedTime,
     String? patientNotes,
@@ -107,9 +106,9 @@ class NewAppointmentFormModel {
 
       serviceType: serviceType ?? this.serviceType,
 
-      selectedDoctor: clearDoctor
-          ? null
-          : (selectedDoctor ?? this.selectedDoctor),
+      // selectedDoctor: clearDoctor
+      //     ? null
+      //     : (selectedDoctor ?? this.selectedDoctor),
 
       selectedDate: clearSchedule ? null : (selectedDate ?? this.selectedDate),
 

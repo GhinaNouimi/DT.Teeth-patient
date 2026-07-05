@@ -1,4 +1,3 @@
-import '../../../doctors/presentation/models/doctor_ui_model.dart';
 
 import 'appointment_status.dart';
 import 'appointment_type.dart';
@@ -7,7 +6,7 @@ import 'service_type.dart';
 class AppointmentUiModel {
   final String id;
 
-  final DoctorUiModel doctor;
+  // final DoctorUiModel doctor;
 
   final DateTime appointmentDate;
   final String appointmentTime;
@@ -29,7 +28,7 @@ class AppointmentUiModel {
 
   const AppointmentUiModel({
     required this.id,
-    required this.doctor,
+    // required this.doctor,
     required this.appointmentDate,
     required this.appointmentTime,
     required this.type,
@@ -66,7 +65,7 @@ class AppointmentUiModel {
 
   AppointmentUiModel copyWith({
     String? id,
-    DoctorUiModel? doctor,
+    // DoctorUiModel? doctor,
     DateTime? appointmentDate,
     String? appointmentTime,
     AppointmentType? type,
@@ -82,7 +81,7 @@ class AppointmentUiModel {
   }) {
     return AppointmentUiModel(
       id: id ?? this.id,
-      doctor: doctor ?? this.doctor,
+      // doctor: doctor ?? this.doctor,
       appointmentDate: appointmentDate ?? this.appointmentDate,
       appointmentTime: appointmentTime ?? this.appointmentTime,
       type: type ?? this.type,

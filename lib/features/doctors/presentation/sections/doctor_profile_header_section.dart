@@ -1,21 +1,31 @@
-import 'package:dt_teeth/features/doctors/presentation/models/doctor_ui_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/theme_extensions.dart';
+import '../../domain/entities/dentist_details_entity.dart';
 
 class DoctorProfileHeaderSection extends StatelessWidget {
-  final DoctorUiModel doctor;
+  final DentistDetailsEntity dentist;
+  final String languageCode;
 
-  const DoctorProfileHeaderSection({super.key, required this.doctor});
+  const DoctorProfileHeaderSection({
+    super.key,
+    required this.dentist,
+    required this.languageCode,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
 
+    final specialization = languageCode == 'en'
+        ? dentist.specializationEn
+        : dentist.specializationAr;
+
+    final rating = double.tryParse(dentist.averageRating) ?? 0;
+
     return Column(
       children: [
-        // صورة الطبيب بحجم كبير مثل المثال
         Center(
           child: Container(
             width: 150,
@@ -32,71 +42,68 @@ class DoctorProfileHeaderSection extends StatelessWidget {
                 ),
               ],
             ),
-            child: Center(
-              child: Text(
-                doctor.imageUrl,
-                style: const TextStyle(fontSize: 80),
-              ),
+            clipBehavior: Clip.antiAlias,
+            child: dentist.profilePicture != null &&
+                dentist.profilePicture!.trim().isNotEmpty
+                ? Image.network(
+              dentist.profilePicture!,
+              fit: BoxFit.cover,
+            )
+                : Icon(
+              Icons.person_rounded,
+              size: 80,
+              color: colors.textSecondary,
             ),
           ),
         ),
         const SizedBox(height: 24),
-
-        // الاسم والاختصاص
-        Center(
-          child: Column(
+        Text(
+          dentist.name,
+          style: theme.textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.w800,
+            color: colors.textPrimary,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          specialization,
+          style: theme.textTheme.titleMedium?.copyWith(
+            color: colors.textSecondary,
+            fontWeight: FontWeight.w600,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 12),
+        Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
+          decoration: BoxDecoration(
+            color: colors.surfaceSecondary,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
+              ...List.generate(5, (index) {
+                final isFilled = index < rating.round();
+
+                return Icon(
+                  isFilled
+                      ? Icons.star_rounded
+                      : Icons.star_outline_rounded,
+                  color: isFilled ? colors.warning : colors.borderSoft,
+                  size: 18,
+                );
+              }),
+              const SizedBox(width: 8),
               Text(
-                doctor.name,
-                style: theme.textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.w800,
+                dentist.averageRating,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
                   color: colors.textPrimary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                doctor.specialty,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  color: colors.textSecondary,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 12),
-              // التقييم
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: colors.surfaceSecondary,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ...List.generate(5, (index) {
-                      final isFilled = index < doctor.rating.toInt();
-                      return Icon(
-                        isFilled
-                            ? Icons.star_rounded
-                            : Icons.star_outline_rounded,
-                        color: isFilled
-                            ? const Color(0xFFFFC107)
-                            : colors.borderSoft,
-                        size: 18,
-                      );
-                    }),
-                    const SizedBox(width: 8),
-                    Text(
-                      '${doctor.rating} (${doctor.reviewsCount})',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: colors.textPrimary,
-                      ),
-                    ),
-                  ],
                 ),
               ),
             ],

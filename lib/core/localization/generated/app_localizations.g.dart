@@ -1450,6 +1450,96 @@ abstract class GeneratedAppLocalizations {
   /// In ar, this message translates to:
   /// **'تعليمات إضافية'**
   String get additionalInstructions;
+
+  /// No description provided for @doctors.
+  ///
+  /// In ar, this message translates to:
+  /// **'أطباء الأسنان'**
+  String get doctors;
+
+  /// No description provided for @doctorProfile.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملف طبيب الأسنان'**
+  String get doctorProfile;
+
+  /// No description provided for @searchDoctorsHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث عن طبيب أسنان...'**
+  String get searchDoctorsHint;
+
+  /// No description provided for @noDoctorsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد أطباء أسنان'**
+  String get noDoctorsTitle;
+
+  /// No description provided for @noDoctorsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد أطباء أسنان متاحون حالياً.'**
+  String get noDoctorsSubtitle;
+
+  /// No description provided for @doctorsLoadFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل أطباء الأسنان'**
+  String get doctorsLoadFailed;
+
+  /// No description provided for @aboutDoctor.
+  ///
+  /// In ar, this message translates to:
+  /// **'نبذة عن طبيب الأسنان'**
+  String get aboutDoctor;
+
+  /// No description provided for @yearsOfExperience.
+  ///
+  /// In ar, this message translates to:
+  /// **'سنوات الخبرة'**
+  String get yearsOfExperience;
+
+  /// No description provided for @yearsValue.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} سنة'**
+  String yearsValue(Object count);
+
+  /// No description provided for @rating.
+  ///
+  /// In ar, this message translates to:
+  /// **'التقييم'**
+  String get rating;
+
+  /// No description provided for @specialization.
+  ///
+  /// In ar, this message translates to:
+  /// **'التخصص'**
+  String get specialization;
+
+  /// No description provided for @rateDentist.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيّم طبيب الأسنان'**
+  String get rateDentist;
+
+  /// No description provided for @sendRating.
+  ///
+  /// In ar, this message translates to:
+  /// **'إرسال التقييم'**
+  String get sendRating;
+
+  /// No description provided for @allDentists.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكل'**
+  String get allDentists;
+
+  /// No description provided for @ratingSubmittedSuccessfully.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إرسال تقييمك بنجاح.'**
+  String get ratingSubmittedSuccessfully;
 }
 
 class _GeneratedAppLocalizationsDelegate

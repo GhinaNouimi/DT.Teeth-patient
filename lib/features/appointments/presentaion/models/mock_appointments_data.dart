@@ -1,20 +1,17 @@
 import 'package:dt_teeth/features/appointments/presentaion/models/service_type.dart';
 
-import '../../../doctors/presentation/data/mock_doctors_data.dart';
-import '../../../doctors/presentation/models/doctor_ui_model.dart';
-
 import 'appointment_status.dart';
 import 'appointment_type.dart';
 import 'appointment_ui_model.dart';
 
 class MockAppointmentsData {
   static List<AppointmentUiModel> getAppointments() {
-    final doctors = MockDoctorsData.doctors;
+    // final doctors = MockDoctorsData.doctors;
 
     return [
       AppointmentUiModel(
         id: '1',
-        doctor: doctors[0],
+        // doctor: doctors[0],
         appointmentDate: DateTime.now().add(const Duration(days: 2)),
         appointmentTime: '10:30',
 
@@ -38,7 +35,7 @@ class MockAppointmentsData {
 
       AppointmentUiModel(
         id: '2',
-        doctor: doctors[1],
+        // doctor: doctors[1],
         appointmentDate: DateTime.now().add(const Duration(days: 5)),
         appointmentTime: '14:00',
 
@@ -62,7 +59,7 @@ class MockAppointmentsData {
 
       AppointmentUiModel(
         id: '3',
-        doctor: doctors[0],
+        // doctor: doctors[0],
         appointmentDate: DateTime.now().subtract(const Duration(days: 7)),
         appointmentTime: '09:00',
 
@@ -86,7 +83,7 @@ class MockAppointmentsData {
 
       AppointmentUiModel(
         id: '4',
-        doctor: doctors[1],
+        // doctor: doctors[1],
         appointmentDate: DateTime.now().subtract(const Duration(days: 14)),
         appointmentTime: '11:00',
 
@@ -110,7 +107,7 @@ class MockAppointmentsData {
 
       AppointmentUiModel(
         id: '5',
-        doctor: doctors[2],
+        // doctor: doctors[2],
 
         appointmentDate: DateTime.now().add(const Duration(hours: 1)),
 
@@ -172,15 +169,15 @@ class MockAppointmentsData {
     return upcomingAppointments.first;
   }
 
-  static List<DoctorUiModel> getDoctorsByService(ServiceType service) {
-    if (service == ServiceType.emergency) {
-      return MockDoctorsData.doctors.take(2).toList();
-    }
-
-    return MockDoctorsData.doctors.where((doctor) {
-      return doctor.specialty.contains(service.relatedSpecialty);
-    }).toList();
-  }
+  // static List<DoctorUiModel> getDoctorsByService(ServiceType service) {
+  //   if (service == ServiceType.emergency) {
+  //     return MockDoctorsData.doctors.take(2).toList();
+  //   }
+  //
+  //   return MockDoctorsData.doctors.where((doctor) {
+  //     return doctor.specialty.contains(service.relatedSpecialty);
+  //   }).toList();
+  // }
 
   static List<String> getAvailableTimesForDoctor(String doctorId) {
     switch (doctorId) {
