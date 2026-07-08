@@ -753,4 +753,106 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
 
   @override
   String get ratingSubmittedSuccessfully => 'تم إرسال تقييمك بنجاح.';
+
+  @override
+  String get treatments => 'علاجاتي';
+
+  @override
+  String get completed => 'المكتملة';
+
+  @override
+  String get noTreatmentsTitle => 'لا توجد عناصر هنا بعد';
+
+  @override
+  String get noTreatmentsSubtitle =>
+      'بمجرد بدء خطة علاجية جديدة، ستظهر في هذا القسم.';
+
+  @override
+  String get treatmentDetails => 'تفاصيل العلاج';
+
+  @override
+  String get treatmentLoadFailed => 'تعذر تحميل العلاجات';
+
+  @override
+  String get treatmentDetailsLoadFailed => 'تعذر تحميل تفاصيل العلاج';
+
+  @override
+  String get lastCompletedSession => 'آخر جلسة مكتملة';
+
+  @override
+  String get nextSession => 'الجلسة القادمة';
+
+  @override
+  String get details => 'التفاصيل';
+
+  @override
+  String get startedTreatment => 'بدأ العلاج';
+
+  @override
+  String get currentProgress => 'التقدم الحالي';
+
+  @override
+  String get noScheduledSessions => 'لا توجد جلسات مجدولة';
+
+  @override
+  String get treatmentJourney => 'الرحلة العلاجية';
+
+  @override
+  String get treatmentSessions => 'جلسات العلاج';
+
+  @override
+  String sessionNumber(Object number) {
+    return 'الجلسة $number';
+  }
+
+  @override
+  String get sessionCost => 'تكلفة الجلسة';
+
+  @override
+  String get toothNumber => 'رقم السن';
+
+  @override
+  String get procedure => 'الإجراء';
+
+  @override
+  String get careNotes => 'الملاحظات';
+
+  @override
+  String completedSessions(Object completed, Object total) {
+    return '$completed من $total جلسات';
+  }
+
+  @override
+  String get myTreatments => 'علاجاتي';
+
+  @override
+  String get activeTreatments => 'علاجاتي الحالية';
+
+  @override
+  String get payments => 'الدفعات';
+
+  @override
+  String get viewAll => 'عرض الكل';
+
+  @override
+  String get noData => 'بدون بيانات';
+
+  @override
+  String activeCases(int count) {
+    return '$count حالات نشطة';
+  }
+
+  @override
+  String prescriptionsCount(int count) {
+    return '$count وصفات';
+  }
+
+  @override
+  String get completedTreatments => 'علاجات مكتملة';
+
+  @override
+  String get view => 'استعراض';
+
+  @override
+  String get comingSoon => 'قريبًا';
 }

@@ -239,5 +239,53 @@
   "rateDentist": "قيّم طبيب الأسنان",
   "sendRating": "إرسال التقييم",
   "allDentists": "الكل",
-  "ratingSubmittedSuccessfully": "تم إرسال تقييمك بنجاح."
+  "ratingSubmittedSuccessfully": "تم إرسال تقييمك بنجاح.",
+  "treatments": "علاجاتي",
+  "completed": "المكتملة",
+  "noTreatmentsTitle": "لا توجد عناصر هنا بعد",
+  "noTreatmentsSubtitle": "بمجرد بدء خطة علاجية جديدة، ستظهر في هذا القسم.",
+  "treatmentDetails": "تفاصيل العلاج",
+  "treatmentLoadFailed": "تعذر تحميل العلاجات",
+  "treatmentDetailsLoadFailed": "تعذر تحميل تفاصيل العلاج",
+  "lastCompletedSession": "آخر جلسة مكتملة",
+  "nextSession": "الجلسة القادمة",
+  "details": "التفاصيل",
+  "startedTreatment": "بدأ العلاج",
+  "currentProgress": "التقدم الحالي",
+  "noScheduledSessions": "لا توجد جلسات مجدولة",
+  "treatmentJourney": "الرحلة العلاجية",
+  "treatmentSessions": "جلسات العلاج",
+  "sessionNumber": "الجلسة {number}",
+  "sessionCost": "تكلفة الجلسة",
+  "toothNumber": "رقم السن",
+  "procedure": "الإجراء",
+  "careNotes": "الملاحظات",
+  "completedSessions": "{completed} من {total} جلسات",
+  "myTreatments": "علاجاتي",
+  "activeTreatments": "علاجاتي الحالية",
+  "payments": "الدفعات",
+  "viewAll": "عرض الكل",
+  "noData": "بدون بيانات",
+
+  "activeCases": "{count} حالات نشطة",
+  "@activeCases": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "prescriptionsCount": "{count} وصفات",
+  "@prescriptionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "completedTreatments": "علاجات مكتملة",
+  "view": "استعراض",
+  "comingSoon": "قريبًا"
 }

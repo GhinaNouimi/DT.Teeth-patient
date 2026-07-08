@@ -1540,6 +1540,192 @@ abstract class GeneratedAppLocalizations {
   /// In ar, this message translates to:
   /// **'تم إرسال تقييمك بنجاح.'**
   String get ratingSubmittedSuccessfully;
+
+  /// No description provided for @treatments.
+  ///
+  /// In ar, this message translates to:
+  /// **'علاجاتي'**
+  String get treatments;
+
+  /// No description provided for @completed.
+  ///
+  /// In ar, this message translates to:
+  /// **'المكتملة'**
+  String get completed;
+
+  /// No description provided for @noTreatmentsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد عناصر هنا بعد'**
+  String get noTreatmentsTitle;
+
+  /// No description provided for @noTreatmentsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'بمجرد بدء خطة علاجية جديدة، ستظهر في هذا القسم.'**
+  String get noTreatmentsSubtitle;
+
+  /// No description provided for @treatmentDetails.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل العلاج'**
+  String get treatmentDetails;
+
+  /// No description provided for @treatmentLoadFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل العلاجات'**
+  String get treatmentLoadFailed;
+
+  /// No description provided for @treatmentDetailsLoadFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل تفاصيل العلاج'**
+  String get treatmentDetailsLoadFailed;
+
+  /// No description provided for @lastCompletedSession.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر جلسة مكتملة'**
+  String get lastCompletedSession;
+
+  /// No description provided for @nextSession.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجلسة القادمة'**
+  String get nextSession;
+
+  /// No description provided for @details.
+  ///
+  /// In ar, this message translates to:
+  /// **'التفاصيل'**
+  String get details;
+
+  /// No description provided for @startedTreatment.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدأ العلاج'**
+  String get startedTreatment;
+
+  /// No description provided for @currentProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'التقدم الحالي'**
+  String get currentProgress;
+
+  /// No description provided for @noScheduledSessions.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد جلسات مجدولة'**
+  String get noScheduledSessions;
+
+  /// No description provided for @treatmentJourney.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرحلة العلاجية'**
+  String get treatmentJourney;
+
+  /// No description provided for @treatmentSessions.
+  ///
+  /// In ar, this message translates to:
+  /// **'جلسات العلاج'**
+  String get treatmentSessions;
+
+  /// No description provided for @sessionNumber.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجلسة {number}'**
+  String sessionNumber(Object number);
+
+  /// No description provided for @sessionCost.
+  ///
+  /// In ar, this message translates to:
+  /// **'تكلفة الجلسة'**
+  String get sessionCost;
+
+  /// No description provided for @toothNumber.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم السن'**
+  String get toothNumber;
+
+  /// No description provided for @procedure.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإجراء'**
+  String get procedure;
+
+  /// No description provided for @careNotes.
+  ///
+  /// In ar, this message translates to:
+  /// **'الملاحظات'**
+  String get careNotes;
+
+  /// No description provided for @completedSessions.
+  ///
+  /// In ar, this message translates to:
+  /// **'{completed} من {total} جلسات'**
+  String completedSessions(Object completed, Object total);
+
+  /// No description provided for @myTreatments.
+  ///
+  /// In ar, this message translates to:
+  /// **'علاجاتي'**
+  String get myTreatments;
+
+  /// No description provided for @activeTreatments.
+  ///
+  /// In ar, this message translates to:
+  /// **'علاجاتي الحالية'**
+  String get activeTreatments;
+
+  /// No description provided for @payments.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدفعات'**
+  String get payments;
+
+  /// No description provided for @viewAll.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض الكل'**
+  String get viewAll;
+
+  /// No description provided for @noData.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدون بيانات'**
+  String get noData;
+
+  /// No description provided for @activeCases.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} حالات نشطة'**
+  String activeCases(int count);
+
+  /// No description provided for @prescriptionsCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} وصفات'**
+  String prescriptionsCount(int count);
+
+  /// No description provided for @completedTreatments.
+  ///
+  /// In ar, this message translates to:
+  /// **'علاجات مكتملة'**
+  String get completedTreatments;
+
+  /// No description provided for @view.
+  ///
+  /// In ar, this message translates to:
+  /// **'استعراض'**
+  String get view;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In ar, this message translates to:
+  /// **'قريبًا'**
+  String get comingSoon;
 }
 
 class _GeneratedAppLocalizationsDelegate

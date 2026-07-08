@@ -239,5 +239,53 @@
   "rateDentist": "Rate the Dentist",
   "sendRating": "Send Rating",
   "allDentists": "All",
-  "ratingSubmittedSuccessfully": "Your rating has been submitted successfully."
+  "ratingSubmittedSuccessfully": "Your rating has been submitted successfully.",
+  "treatments": "My Treatments",
+  "completed": "Completed",
+  "noTreatmentsTitle": "No items here yet",
+  "noTreatmentsSubtitle": "Once a new treatment plan starts, it will appear here.",
+  "treatmentDetails": "Treatment Details",
+  "treatmentLoadFailed": "Failed to load treatments",
+  "treatmentDetailsLoadFailed": "Failed to load treatment details",
+  "lastCompletedSession": "Last completed session",
+  "nextSession": "Next session",
+  "details": "Details",
+  "startedTreatment": "Treatment started",
+  "currentProgress": "Current progress",
+  "noScheduledSessions": "No scheduled sessions",
+  "treatmentJourney": "Treatment Journey",
+  "treatmentSessions": "Treatment Sessions",
+  "sessionNumber": "Session {number}",
+  "sessionCost": "Session cost",
+  "toothNumber": "Tooth number",
+  "procedure": "Procedure",
+  "careNotes": "Notes",
+  "completedSessions": "{completed} of {total} sessions",
+  "myTreatments": "My Treatments",
+  "activeTreatments": "Current Treatments",
+  "payments": "Payments",
+  "viewAll": "View All",
+  "noData": "No data",
+
+  "activeCases": "{count} active cases",
+  "@activeCases": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "prescriptionsCount": "{count} prescriptions",
+  "@prescriptionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "completedTreatments": "Completed Treatments",
+  "view": "View",
+  "comingSoon": "Coming soon"
 }

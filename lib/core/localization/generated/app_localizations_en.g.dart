@@ -767,4 +767,106 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
   @override
   String get ratingSubmittedSuccessfully =>
       'Your rating has been submitted successfully.';
+
+  @override
+  String get treatments => 'My Treatments';
+
+  @override
+  String get completed => 'Completed';
+
+  @override
+  String get noTreatmentsTitle => 'No items here yet';
+
+  @override
+  String get noTreatmentsSubtitle =>
+      'Once a new treatment plan starts, it will appear here.';
+
+  @override
+  String get treatmentDetails => 'Treatment Details';
+
+  @override
+  String get treatmentLoadFailed => 'Failed to load treatments';
+
+  @override
+  String get treatmentDetailsLoadFailed => 'Failed to load treatment details';
+
+  @override
+  String get lastCompletedSession => 'Last completed session';
+
+  @override
+  String get nextSession => 'Next session';
+
+  @override
+  String get details => 'Details';
+
+  @override
+  String get startedTreatment => 'Treatment started';
+
+  @override
+  String get currentProgress => 'Current progress';
+
+  @override
+  String get noScheduledSessions => 'No scheduled sessions';
+
+  @override
+  String get treatmentJourney => 'Treatment Journey';
+
+  @override
+  String get treatmentSessions => 'Treatment Sessions';
+
+  @override
+  String sessionNumber(Object number) {
+    return 'Session $number';
+  }
+
+  @override
+  String get sessionCost => 'Session cost';
+
+  @override
+  String get toothNumber => 'Tooth number';
+
+  @override
+  String get procedure => 'Procedure';
+
+  @override
+  String get careNotes => 'Notes';
+
+  @override
+  String completedSessions(Object completed, Object total) {
+    return '$completed of $total sessions';
+  }
+
+  @override
+  String get myTreatments => 'My Treatments';
+
+  @override
+  String get activeTreatments => 'Current Treatments';
+
+  @override
+  String get payments => 'Payments';
+
+  @override
+  String get viewAll => 'View All';
+
+  @override
+  String get noData => 'No data';
+
+  @override
+  String activeCases(int count) {
+    return '$count active cases';
+  }
+
+  @override
+  String prescriptionsCount(int count) {
+    return '$count prescriptions';
+  }
+
+  @override
+  String get completedTreatments => 'Completed Treatments';
+
+  @override
+  String get view => 'View';
+
+  @override
+  String get comingSoon => 'Coming soon';
 }

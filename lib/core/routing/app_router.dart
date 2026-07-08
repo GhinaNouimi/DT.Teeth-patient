@@ -352,18 +352,21 @@ class AppRouter {
         path: AppRoutes.medicalRecordTreatmentDetails,
         name: 'medical-record-treatment-details',
         builder: (context, state) {
-          final treatmentId = state.extra as String;
-          return TreatmentDetailsScreen(treatmentId: treatmentId);
+          final treatmentId = state.extra as int;
+
+          return TreatmentDetailsScreen(
+            treatmentId: treatmentId,
+          );
         },
       ),
-      GoRoute(
-        path: AppRoutes.medicalRecordAttachments,
-        name: 'medical-record-attachments',
-        builder: (context, state) {
-          final treatmentId = state.extra as String;
-          return AttachmentsScreen(treatmentId: treatmentId);
-        },
-      ),
+      // GoRoute(
+      //   path: AppRoutes.medicalRecordAttachments,
+      //   name: 'medical-record-attachments',
+      //   builder: (context, state) {
+      //     final treatmentId = state.extra as String;
+      //     return AttachmentsScreen(treatmentId: treatmentId);
+      //   },
+      // ),
       GoRoute(
         path: AppRoutes.medicalRecordPrescriptions,
         name: 'medical-record-prescriptions',
@@ -377,16 +380,16 @@ class AppRouter {
           return PrescriptionDetailsScreen(prescriptionId: prescriptionId);
         },
       ),
-      GoRoute(
-        path: AppRoutes.medicalRecordPayments,
-        name: 'medical-record-payments',
-        builder: (context, state) => const PaymentsScreen(),
-      ),
-      GoRoute(
-        path: AppRoutes.medicalRecordPaymentPlanDetails,
-        name: 'medical-record-payment-plan-details',
-        builder: (context, state) => const PaymentPlanDetailsScreen(),
-      ),
+      // GoRoute(
+      //   path: AppRoutes.medicalRecordPayments,
+      //   name: 'medical-record-payments',
+      //   builder: (context, state) => const PaymentsScreen(),
+      // ),
+      // GoRoute(
+      //   path: AppRoutes.medicalRecordPaymentPlanDetails,
+      //   name: 'medical-record-payment-plan-details',
+      //   builder: (context, state) => const PaymentPlanDetailsScreen(),
+      // ),
 
       GoRoute(
         path: AppRoutes.complaints,

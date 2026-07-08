@@ -1,51 +1,105 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/routing/app_routes.dart';
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/theme/theme_extensions.dart';
+import '../../../../core/widgets/feedback/offline_cached_banner.dart';
+import '../../../../core/widgets/loading/app_skeleton.dart';
 import '../../../../core/widgets/navigation/app_top_bar.dart';
+import '../../domain/entities/treatment/tooth_treatment_entity.dart';
+import '../../domain/entities/treatment/treatment_dentist_entity.dart';
+import '../../domain/entities/treatment/treatment_entity.dart';
+import '../../domain/entities/treatment/treatment_procedure_entity.dart';
+import '../../domain/entities/treatment/treatment_session_entity.dart';
+import '../../domain/entities/treatment/treatment_type_entity.dart';
 import '../../medical_record_di.dart';
-import '../../domain/entities/treatment_entity.dart';
+import '../bloc/treatment/treatment_bloc.dart';
+import '../bloc/treatment/treatment_event.dart';
+import '../bloc/treatment/treatment_state.dart';
 import '../utils/medical_record_accent.dart';
 import '../widgets/medical_record_empty_state.dart';
 import '../widgets/treatment_progress_ring.dart';
 import '../widgets/treatment_status_chip.dart';
-import '../widgets/treatment_timeline_tile.dart';
 
-class TreatmentDetailsScreen extends StatefulWidget {
-  final String treatmentId;
+class TreatmentDetailsScreen extends StatelessWidget {
+  final int treatmentId;
 
-  const TreatmentDetailsScreen({super.key, required this.treatmentId});
+  const TreatmentDetailsScreen({
+    super.key,
+    required this.treatmentId,
+  });
 
   @override
-  State<TreatmentDetailsScreen> createState() => _TreatmentDetailsScreenState();
+  Widget build(BuildContext context) {
+    final languageCode = Localizations.localeOf(context).languageCode;
+
+    return BlocProvider(
+      create: (_) => TreatmentBloc(
+        getAllTreatmentsUseCase: MedicalRecordDi.getAllTreatmentsUseCase,
+        getTreatmentDetailsUseCase: MedicalRecordDi.getTreatmentDetailsUseCase,
+      )..add(
+        LoadTreatmentDetailsRequested(
+          treatmentId: treatmentId,
+          languageCode: languageCode,
+        ),
+      ),
+      child: const _TreatmentDetailsView(),
+    );
+  }
 }
 
-class _TreatmentDetailsScreenState extends State<TreatmentDetailsScreen> {
-  TreatmentEntity? _treatment;
-  bool _isLoading = true;
+class _TreatmentDetailsView extends StatelessWidget {
+  const _TreatmentDetailsView();
 
-  @override
-  void initState() {
-    super.initState();
-    _loadTreatment();
-  }
-
-  Future<void> _loadTreatment() async {
-    final treatment = await MedicalRecordDi.getTreatmentByIdUseCase(
-      widget.treatmentId,
+  TreatmentEntity _fakeTreatment() {
+    return const TreatmentEntity(
+      id: 0,
+      treatmentType: TreatmentTypeEntity(
+        id: 0,
+        name: 'اسم العلاج',
+        nameEn: 'Treatment name',
+      ),
+      dentist: TreatmentDentistEntity(
+        id: 0,
+        name: 'Doctor name',
+      ),
+      status: 'completed',
+      totalSessionsNeeded: 2,
+      sessionsCompleted: 1,
+      notes: 'Treatment notes',
+      createdAt: '2026-07-08',
+      sessions: [
+        TreatmentSessionEntity(
+          id: 0,
+          treatmentId: 0,
+          sessionNumber: 1,
+          status: 'completed',
+          actualStartTime: '2026-05-20 12:30:00',
+          actualEndTime: '2026-05-20 13:04:00',
+          notes: 'Session notes',
+          sessionCost: 120000,
+          toothTreatments: [
+            ToothTreatmentEntity(
+              id: 0,
+              toothNumber: 23,
+              procedure: TreatmentProcedureEntity(
+                id: 0,
+                name: 'إجراء علاجي',
+                nameEn: 'Dental procedure',
+                price: '120000.00',
+              ),
+              notes: 'Procedure notes',
+            ),
+          ],
+        ),
+      ],
     );
-
-    if (!mounted) return;
-    setState(() {
-      _treatment = treatment;
-      _isLoading = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -53,24 +107,43 @@ class _TreatmentDetailsScreenState extends State<TreatmentDetailsScreen> {
         bottom: false,
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
-              child: AppTopBar(title: 'تفاصيل العلاج'),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+              child: AppTopBar(title: l10n.treatmentDetails),
             ),
             Expanded(
-              child: _isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : (_treatment == null)
-                  ? const Padding(
-                      padding: EdgeInsets.all(20),
+              child: BlocBuilder<TreatmentBloc, TreatmentState>(
+                builder: (context, state) {
+                  final isLoading =
+                      state is TreatmentInitial || state is TreatmentLoading;
+
+                  if (state is TreatmentFailure) {
+                    return Padding(
+                      padding: const EdgeInsets.all(20),
                       child: MedicalRecordEmptyState(
-                        title: 'لم نعثر على تفاصيل العلاج',
-                        subtitle:
-                            'قد تكون البيانات غير متاحة حاليًا، حاول مرة أخرى لاحقًا.',
-                        icon: Icons.error_outline_rounded,
+                        title: l10n.treatmentDetailsLoadFailed,
+                        subtitle: state.message,
+                        icon: Icons.medical_services_outlined,
                       ),
-                    )
-                  : _TreatmentDetailsBody(treatment: _treatment!),
+                    );
+                  }
+
+                  final treatment = state is TreatmentDetailsLoaded
+                      ? state.treatment
+                      : _fakeTreatment();
+
+                  final isFromCache =
+                      state is TreatmentDetailsLoaded && state.isFromCache;
+
+                  return AppSkeleton(
+                    enabled: isLoading,
+                    child: _TreatmentDetailsBody(
+                      treatment: treatment,
+                      isFromCache: isFromCache,
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -81,33 +154,47 @@ class _TreatmentDetailsScreenState extends State<TreatmentDetailsScreen> {
 
 class _TreatmentDetailsBody extends StatelessWidget {
   final TreatmentEntity treatment;
+  final bool isFromCache;
 
-  const _TreatmentDetailsBody({required this.treatment});
+  const _TreatmentDetailsBody({
+    required this.treatment,
+    required this.isFromCache,
+  });
+
+  int get _progressPercent {
+    if (treatment.totalSessionsNeeded == 0) return 0;
+
+    return ((treatment.sessionsCompleted / treatment.totalSessionsNeeded) * 100)
+        .round()
+        .clamp(0, 100);
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
-    final blue = context.medicalAccent;
-    final pinkSoft = context.medicalPinkSoft;
+    final accent = context.medicalAccent;
+    final l10n = context.l10n;
+    final languageCode = Localizations.localeOf(context).languageCode;
+
+    final treatmentName = treatment.treatmentType.localizedName(languageCode);
 
     return ListView(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
       children: [
+        if (isFromCache) ...[
+          OfflineCachedBanner(
+            message: l10n.offlineCachedDataMessage,
+          ),
+          const SizedBox(height: 16),
+        ],
         Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: colors.surfaceMuted,
             borderRadius: BorderRadius.circular(30),
             border: Border.all(color: colors.borderSoft),
-            boxShadow: [
-              BoxShadow(
-                color: colors.shadow.withValues(alpha: 0.08),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
-              ),
-            ],
           ),
           child: Row(
             children: [
@@ -116,28 +203,25 @@ class _TreatmentDetailsBody extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      treatment.name,
-                      style: theme.textTheme.headlineMedium?.copyWith(
+                      treatmentName,
+                      style: theme.textTheme.headlineSmall?.copyWith(
                         color: colors.textPrimary,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      treatment.doctorName,
+                      treatment.dentist.name,
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: colors.textSecondary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 14),
-                    TreatmentStatusChip(
-                      status: treatment.status,
-                      label: treatment.statusLabel,
-                    ),
+                    TreatmentStatusChip(status: treatment.status),
                     const SizedBox(height: 14),
                     Text(
-                      'بدأ العلاج: ${treatment.startedAtLabel}',
+                      '${l10n.startedTreatment}: ${treatment.createdAt}',
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colors.textSecondary,
                         fontWeight: FontWeight.w700,
@@ -148,207 +232,62 @@ class _TreatmentDetailsBody extends StatelessWidget {
               ),
               const SizedBox(width: 14),
               TreatmentProgressRing(
-                percent: treatment.progressPercent,
+                percent: _progressPercent,
                 size: 86,
               ),
             ],
           ),
         ),
-        const SizedBox(height: 20),
-        _InfoGrid(treatment: treatment),
-        const SizedBox(height: 20),
-        _SectionCard(
-          title: 'الرحلة العلاجية',
-          child: Column(
-            children: List.generate(
-              treatment.timeline.length,
-              (index) => TreatmentTimelineTile(
-                step: treatment.timeline[index],
-                isLast: index == treatment.timeline.length - 1,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        _SectionCard(
-          title: 'المواعيد المرتبطة بالعلاج',
-          trailingText: 'حجز متابعة',
-          child: Column(
-            children: treatment.relatedAppointments.map((appointment) {
-              return Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: pinkSoft.withValues(alpha: 0.45),
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: colors.borderSoft),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      appointment.isUpcoming
-                          ? Icons.upcoming_rounded
-                          : Icons.check_circle_rounded,
-                      color: appointment.isUpcoming ? blue : colors.success,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            appointment.title,
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              color: colors.textPrimary,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            '${appointment.dateLabel} - ${appointment.timeLabel}',
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: colors.textSecondary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
-        ),
-        const SizedBox(height: 20),
-        _TextListSection(
-          title: 'الإجراءات المنفذة',
-          items: treatment.completedProcedures,
-        ),
-        const SizedBox(height: 20),
-        _TextListSection(
-          title: 'إرشادات العناية',
-          items: treatment.careInstructions,
-        ),
-        const SizedBox(height: 20),
-        _TextListSection(
-          title: 'ملاحظات الطبيب',
-          items: treatment.doctorNotes,
-          footer: InkWell(
-            onTap: () {
-              context.push(
-                AppRoutes.medicalRecordAttachments,
-                extra: treatment.id,
-              );
-            },
-            borderRadius: BorderRadius.circular(18),
-            child: Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: colors.surfaceSecondary,
-                borderRadius: BorderRadius.circular(18),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.attach_file_rounded, color: blue),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      'الملفات والمرفقات: ${treatment.attachmentsCount} عناصر مرتبطة بهذا العلاج.',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colors.textSecondary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'عرض',
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      color: blue,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _InfoGrid extends StatelessWidget {
-  final TreatmentEntity treatment;
-
-  const _InfoGrid({required this.treatment});
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final theme = Theme.of(context);
-
-    Widget tile(String label, String value) {
-      return Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: colors.surfacePrimary,
-          borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: colors.borderSoft),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        const SizedBox(height: 18),
+        _InfoCard(
           children: [
-            Text(
-              label,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: colors.textSecondary,
-                fontWeight: FontWeight.w700,
+            _InfoRow(
+              label: l10n.currentProgress,
+              value: l10n.completedSessions(
+                treatment.sessionsCompleted,
+                treatment.totalSessionsNeeded,
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              value,
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: colors.textPrimary,
-                fontWeight: FontWeight.w800,
-              ),
+            _InfoRow(
+              label: l10n.notes,
+              value: (treatment.notes ?? '').trim().isEmpty
+                  ? l10n.noNotes
+                  : treatment.notes!,
             ),
           ],
         ),
-      );
-    }
-
-    return Column(
-      children: [
-        tile('التقدم الحالي', treatment.progressLabel),
+        const SizedBox(height: 20),
+        Text(
+          l10n.treatmentSessions,
+          style: theme.textTheme.titleLarge?.copyWith(
+            color: colors.textPrimary,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
         const SizedBox(height: 12),
-        tile(
-          'الجلسة القادمة',
-          treatment.nextSessionLabel ?? 'لا توجد جلسات مجدولة',
+        ...treatment.sessions.map(
+              (session) => Padding(
+            padding: const EdgeInsets.only(bottom: 14),
+            child: _SessionCard(session: session),
+          ),
         ),
       ],
     );
   }
 }
 
-class _SectionCard extends StatelessWidget {
-  final String title;
-  final String? trailingText;
-  final Widget child;
+class _SessionCard extends StatelessWidget {
+  final TreatmentSessionEntity session;
 
-  const _SectionCard({
-    required this.title,
-    this.trailingText,
-    required this.child,
+  const _SessionCard({
+    required this.session,
   });
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
     final theme = Theme.of(context);
-    final blue = context.medicalAccent;
+    final colors = context.colors;
+    final l10n = context.l10n;
 
     return Container(
       padding: const EdgeInsets.all(18),
@@ -364,79 +303,199 @@ class _SectionCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  title,
-                  style: theme.textTheme.titleLarge?.copyWith(
+                  l10n.sessionNumber(session.sessionNumber),
+                  style: theme.textTheme.titleMedium?.copyWith(
                     color: colors.textPrimary,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
               ),
-              if (trailingText != null)
-                Text(
-                  trailingText!,
-                  style: theme.textTheme.labelLarge?.copyWith(
-                    color: blue,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
+              TreatmentStatusChip(status: session.status),
             ],
           ),
-          const SizedBox(height: 16),
-          child,
+          const SizedBox(height: 14),
+          _InfoCard(
+            children: [
+              if (session.actualStartTime != null)
+                _InfoRow(
+                  label: l10n.startedTreatment,
+                  value: session.actualStartTime!,
+                ),
+              if (session.actualEndTime != null)
+                _InfoRow(
+                  label: l10n.duration,
+                  value: session.actualEndTime!,
+                ),
+              _InfoRow(
+                label: l10n.sessionCost,
+                value: session.sessionCost.toString(),
+              ),
+              _InfoRow(
+                label: l10n.notes,
+                value: (session.notes ?? '').trim().isEmpty
+                    ? l10n.noNotes
+                    : session.notes!,
+              ),
+            ],
+          ),
+          if (session.toothTreatments.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Text(
+              l10n.procedure,
+              style: theme.textTheme.titleSmall?.copyWith(
+                color: colors.textPrimary,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 10),
+            ...session.toothTreatments.map(
+                  (toothTreatment) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: _ToothTreatmentCard(toothTreatment: toothTreatment),
+              ),
+            ),
+          ],
         ],
       ),
     );
   }
 }
 
-class _TextListSection extends StatelessWidget {
-  final String title;
-  final List<String> items;
-  final Widget? footer;
+class _ToothTreatmentCard extends StatelessWidget {
+  final ToothTreatmentEntity toothTreatment;
 
-  const _TextListSection({
-    required this.title,
-    required this.items,
-    this.footer,
+  const _ToothTreatmentCard({
+    required this.toothTreatment,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+    final accent = context.medicalAccent;
+    final l10n = context.l10n;
+    final languageCode = Localizations.localeOf(context).languageCode;
+
+    final procedureName =
+    toothTreatment.procedure.localizedName(languageCode);
+
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: colors.surfaceSecondary,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: colors.borderSoft),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${l10n.toothNumber}: ${toothTreatment.toothNumber}',
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: accent,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            procedureName,
+            style: theme.textTheme.titleSmall?.copyWith(
+              color: colors.textPrimary,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            toothTreatment.procedure.price,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: colors.textSecondary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          if ((toothTreatment.notes ?? '').trim().isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              toothTreatment.notes!,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colors.textSecondary,
+                height: 1.5,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoCard extends StatelessWidget {
+  final List<Widget> children;
+
+  const _InfoCard({
+    required this.children,
   });
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final theme = Theme.of(context);
-    final blue = context.medicalAccent;
 
-    return _SectionCard(
-      title: title,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+      decoration: BoxDecoration(
+        color: colors.surfaceMuted,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: colors.borderSoft),
+      ),
       child: Column(
         children: [
-          ...items.map(
-            (item) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.check_circle_outline_rounded,
-                    size: 20,
-                    color: blue,
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      item,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colors.textPrimary,
-                        height: 1.6,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
+          for (int index = 0; index < children.length; index++) ...[
+            children[index],
+            if (index != children.length - 1) const Divider(height: 1),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoRow extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const _InfoRow({
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              label,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colors.textSecondary,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
-          if (footer != null) ...[const SizedBox(height: 4), footer!],
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colors.textPrimary,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
         ],
       ),
     );

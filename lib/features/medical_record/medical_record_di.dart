@@ -3,39 +3,22 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../core/network/network_info.dart';
 import 'data/datasources/local/prescription_local_data_source.dart';
 import 'data/datasources/local/prescription_local_data_source_impl.dart';
+import 'data/datasources/local/treatment_local_data_source.dart';
+import 'data/datasources/local/treatment_local_data_source_impl.dart';
 import 'data/datasources/remote/prescription_remote_data_source.dart';
 import 'data/datasources/remote/prescription_remote_data_source_impl.dart';
-import 'data/repositories/medical_record_repository_impl.dart';
+import 'data/datasources/remote/treatment_remote_data_source.dart';
+import 'data/datasources/remote/treatment_remote_data_source_impl.dart';
 import 'data/repositories/prescription_repository_impl.dart';
-import 'data/sources/medical_record_mock_data_source.dart';
+import 'data/repositories/treatment_repository_impl.dart';
 import 'domain/repositories/prescription_repository.dart';
-import 'domain/usecases/get_attachments_by_treatment_use_case.dart';
-import 'domain/usecases/get_payment_plan_use_case.dart';
-import 'domain/usecases/get_treatment_by_id_use_case.dart';
-import 'domain/usecases/get_treatments_use_case.dart';
+import 'domain/repositories/treatment_repository.dart';
 import 'domain/usecases/prescription/get_all_prescriptions_use_case.dart';
 import 'domain/usecases/prescription/get_prescription_details_use_case.dart';
+import 'domain/usecases/treatment/get_all_treatments_use_case.dart';
+import 'domain/usecases/treatment/get_treatment_details_use_case.dart';
 
 abstract final class MedicalRecordDi {
-  static final MedicalRecordMockDataSource _mockDataSource =
-  MedicalRecordMockDataSource();
-
-  static final MedicalRecordRepositoryImpl _medicalRecordRepository =
-  MedicalRecordRepositoryImpl(_mockDataSource);
-
-  static final GetTreatmentsUseCase getTreatmentsUseCase =
-  GetTreatmentsUseCase(_medicalRecordRepository);
-
-  static final GetTreatmentByIdUseCase getTreatmentByIdUseCase =
-  GetTreatmentByIdUseCase(_medicalRecordRepository);
-
-  static final GetAttachmentsByTreatmentUseCase
-  getAttachmentsByTreatmentUseCase =
-  GetAttachmentsByTreatmentUseCase(_medicalRecordRepository);
-
-  static final GetPaymentPlanUseCase getPaymentPlanUseCase =
-  GetPaymentPlanUseCase(_medicalRecordRepository);
-
   static final NetworkInfo _networkInfo = NetworkInfo(
     connectivity: Connectivity(),
   );
@@ -61,5 +44,28 @@ abstract final class MedicalRecordDi {
   static final GetPrescriptionDetailsUseCase getPrescriptionDetailsUseCase =
   GetPrescriptionDetailsUseCase(
     repository: _prescriptionRepository,
+  );
+
+  static final TreatmentRemoteDataSource _treatmentRemoteDataSource =
+  TreatmentRemoteDataSourceImpl();
+
+  static final TreatmentLocalDataSource _treatmentLocalDataSource =
+  TreatmentLocalDataSourceImpl();
+
+  static final TreatmentRepository _treatmentRepository =
+  TreatmentRepositoryImpl(
+    remoteDataSource: _treatmentRemoteDataSource,
+    localDataSource: _treatmentLocalDataSource,
+    networkInfo: _networkInfo,
+  );
+
+  static final GetAllTreatmentsUseCase getAllTreatmentsUseCase =
+  GetAllTreatmentsUseCase(
+    repository: _treatmentRepository,
+  );
+
+  static final GetTreatmentDetailsUseCase getTreatmentDetailsUseCase =
+  GetTreatmentDetailsUseCase(
+    repository: _treatmentRepository,
   );
 }

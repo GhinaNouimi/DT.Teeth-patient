@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../../../core/widgets/common/app_section_card.dart';
-import '../../domain/entities/treatment_entity.dart';
+import '../../domain/entities/treatment/treatment_entity.dart';
 import '../utils/medical_record_accent.dart';
 import 'treatment_progress_ring.dart';
 import 'treatment_status_chip.dart';
@@ -19,12 +20,28 @@ class TreatmentCard extends StatelessWidget {
     required this.onTap,
   });
 
+  int get _progressPercent {
+    if (treatment.totalSessionsNeeded == 0) return 0;
+
+    return ((treatment.sessionsCompleted / treatment.totalSessionsNeeded) * 100)
+        .round()
+        .clamp(0, 100);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
     final accent = context.medicalAccent;
     final pink = context.medicalPinkAccent;
+    final l10n = context.l10n;
+    final languageCode = Localizations.localeOf(context).languageCode;
+
+    final treatmentName = treatment.treatmentType.localizedName(languageCode);
+    final progressLabel = l10n.completedSessions(
+      treatment.sessionsCompleted,
+      treatment.totalSessionsNeeded,
+    );
 
     return AppSectionCard(
       onTap: onTap,
@@ -39,7 +56,7 @@ class TreatmentCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      treatment.name,
+                      treatmentName,
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: colors.textPrimary,
                         fontWeight: FontWeight.w800,
@@ -47,7 +64,7 @@ class TreatmentCard extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.xs),
                     Text(
-                      treatment.doctorName,
+                      treatment.dentist.name,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colors.textSecondary,
                         fontWeight: FontWeight.w600,
@@ -56,19 +73,16 @@ class TreatmentCard extends StatelessWidget {
                   ],
                 ),
               ),
-              TreatmentProgressRing(percent: treatment.progressPercent),
+              TreatmentProgressRing(percent: _progressPercent),
             ],
           ),
           const SizedBox(height: AppSpacing.lg),
           Row(
             children: [
-              TreatmentStatusChip(
-                status: treatment.status,
-                label: treatment.statusLabel,
-              ),
+              TreatmentStatusChip(status: treatment.status),
               const Spacer(),
               Text(
-                treatment.progressLabel,
+                progressLabel,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: colors.textSecondary,
                   fontWeight: FontWeight.w700,
@@ -93,9 +107,7 @@ class TreatmentCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        treatment.nextSessionLabel == null
-                            ? 'آخر جلسة مكتملة'
-                            : 'الجلسة القادمة',
+                        l10n.startedTreatment,
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: colors.textSecondary,
                           fontWeight: FontWeight.w700,
@@ -103,7 +115,7 @@ class TreatmentCard extends StatelessWidget {
                       ),
                       const SizedBox(height: AppSpacing.xxs),
                       Text(
-                        treatment.nextSessionLabel ?? treatment.startedAtLabel,
+                        treatment.createdAt,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: colors.textPrimary,
                           fontWeight: FontWeight.w700,
@@ -115,28 +127,40 @@ class TreatmentCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  treatment.summary,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: colors.textSecondary,
-                    height: 1.5,
+          if ((treatment.notes ?? '').trim().isNotEmpty) ...[
+            const SizedBox(height: 14),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    treatment.notes!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: colors.textSecondary,
+                      height: 1.5,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              TextButton.icon(
+                const SizedBox(width: AppSpacing.md),
+                TextButton.icon(
+                  onPressed: onTap,
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 16),
+                  label: Text(l10n.details),
+                ),
+              ],
+            ),
+          ] else ...[
+            const SizedBox(height: 14),
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: TextButton.icon(
                 onPressed: onTap,
                 icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 16),
-                label: const Text('التفاصيل'),
+                label: Text(l10n.details),
               ),
-            ],
-          ),
+            ),
+          ],
         ],
       ),
     );

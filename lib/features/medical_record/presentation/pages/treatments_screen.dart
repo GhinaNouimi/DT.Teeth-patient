@@ -1,54 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/theme_extensions.dart';
+import '../../../../core/widgets/feedback/offline_cached_banner.dart';
+import '../../../../core/widgets/loading/app_skeleton.dart';
 import '../../../../core/widgets/navigation/app_top_bar.dart';
+import '../../domain/entities/treatment/treatment_entity.dart';
 import '../../medical_record_di.dart';
-import '../../domain/entities/treatment_entity.dart';
+import '../bloc/treatment/treatment_bloc.dart';
+import '../bloc/treatment/treatment_event.dart';
+import '../bloc/treatment/treatment_state.dart';
 import '../widgets/medical_record_empty_state.dart';
 import '../widgets/medical_record_tab_bar.dart';
 import '../widgets/treatment_card.dart';
 
-class TreatmentsScreen extends StatefulWidget {
+class TreatmentsScreen extends StatelessWidget {
   const TreatmentsScreen({super.key});
 
   @override
-  State<TreatmentsScreen> createState() => _TreatmentsScreenState();
+  Widget build(BuildContext context) {
+    final languageCode = Localizations.localeOf(context).languageCode;
+
+    return BlocProvider(
+      create: (_) => TreatmentBloc(
+        getAllTreatmentsUseCase: MedicalRecordDi.getAllTreatmentsUseCase,
+        getTreatmentDetailsUseCase: MedicalRecordDi.getTreatmentDetailsUseCase,
+      )..add(
+        LoadTreatmentsRequested(languageCode: languageCode),
+      ),
+      child: const _TreatmentsView(),
+    );
+  }
 }
 
-class _TreatmentsScreenState extends State<TreatmentsScreen> {
-  int _currentTabIndex = 0;
-  List<TreatmentEntity> _treatments = const [];
-  bool _isLoading = true;
+class _TreatmentsView extends StatefulWidget {
+  const _TreatmentsView();
 
   @override
-  void initState() {
-    super.initState();
-    _loadTreatments();
-  }
+  State<_TreatmentsView> createState() => _TreatmentsViewState();
+}
 
-  Future<void> _loadTreatments() async {
-    final treatments = await MedicalRecordDi.getTreatmentsUseCase();
-    if (!mounted) return;
-    setState(() {
-      _treatments = treatments;
-      _isLoading = false;
-    });
-  }
+class _TreatmentsViewState extends State<_TreatmentsView> {
+  int _currentTabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final activeTreatments = _treatments
-        .where((treatment) => treatment.isActive)
-        .toList();
-    final completedTreatments = _treatments
-        .where((treatment) => treatment.isCompleted)
-        .toList();
-    final displayedTreatments = _currentTabIndex == 0
-        ? activeTreatments
-        : completedTreatments;
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -56,19 +57,61 @@ class _TreatmentsScreenState extends State<TreatmentsScreen> {
         bottom: false,
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
-              child: AppTopBar(title: 'علاجاتي'),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+              child: AppTopBar(title: l10n.treatments),
             ),
             Expanded(
-              child: _isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : ListView(
+              child: BlocBuilder<TreatmentBloc, TreatmentState>(
+                builder: (context, state) {
+                  final isLoading =
+                      state is TreatmentInitial || state is TreatmentLoading;
+
+                  if (state is TreatmentFailure) {
+                    return Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: MedicalRecordEmptyState(
+                        title: l10n.treatmentLoadFailed,
+                        subtitle: state.message,
+                        icon: Icons.medical_services_outlined,
+                      ),
+                    );
+                  }
+
+                  final treatments = state is TreatmentsLoaded
+                      ? state.treatments
+                      : _fakeTreatments;
+
+                  final isFromCache =
+                      state is TreatmentsLoaded && state.isFromCache;
+
+                  final activeTreatments =
+                  treatments.where((item) => item.isActive).toList();
+
+                  final completedTreatments =
+                  treatments.where((item) => item.isCompleted).toList();
+
+                  final displayedTreatments = _currentTabIndex == 0
+                      ? activeTreatments
+                      : completedTreatments;
+
+                  return AppSkeleton(
+                    enabled: isLoading,
+                    child: ListView(
                       physics: const BouncingScrollPhysics(),
                       padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
                       children: [
+                        if (isFromCache) ...[
+                          OfflineCachedBanner(
+                            message: l10n.offlineCachedDataMessage,
+                          ),
+                          const SizedBox(height: 16),
+                        ],
                         MedicalRecordTabBar(
-                          labels: const ['الحالية', 'المكتملة'],
+                          labels: [
+                            l10n.current,
+                            l10n.completed,
+                          ],
                           counts: [
                             activeTreatments.length,
                             completedTreatments.length,
@@ -81,20 +124,21 @@ class _TreatmentsScreenState extends State<TreatmentsScreen> {
                           },
                         ),
                         const SizedBox(height: 18),
-                        if (displayedTreatments.isEmpty)
-                          const MedicalRecordEmptyState(
-                            title: 'لا توجد عناصر هنا بعد',
-                            subtitle:
-                                'بمجرد بدء خطة علاجية جديدة، ستظهر في هذا القسم.',
+                        if (displayedTreatments.isEmpty && !isLoading)
+                          MedicalRecordEmptyState(
+                            title: l10n.noTreatmentsTitle,
+                            subtitle: l10n.noTreatmentsSubtitle,
                             icon: Icons.medical_services_outlined,
                           )
                         else
                           ...displayedTreatments.map(
-                            (treatment) => Padding(
+                                (treatment) => Padding(
                               padding: const EdgeInsets.only(bottom: 14),
                               child: TreatmentCard(
                                 treatment: treatment,
                                 onTap: () {
+                                  if (isLoading) return;
+
                                   context.push(
                                     AppRoutes.medicalRecordTreatmentDetails,
                                     extra: treatment.id,
@@ -105,6 +149,9 @@ class _TreatmentsScreenState extends State<TreatmentsScreen> {
                           ),
                       ],
                     ),
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -112,3 +159,5 @@ class _TreatmentsScreenState extends State<TreatmentsScreen> {
     );
   }
 }
+
+const List<TreatmentEntity> _fakeTreatments = [];
