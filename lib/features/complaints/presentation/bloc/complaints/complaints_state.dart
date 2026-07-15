@@ -12,12 +12,14 @@ class ComplaintsState {
   final ComplaintsStatus status;
   final List<ComplaintEntity> complaints;
   final ComplaintFilter selectedFilter;
+  final bool isFromCache;
   final String? errorMessage;
 
   const ComplaintsState({
     required this.status,
     required this.complaints,
     required this.selectedFilter,
+    required this.isFromCache,
     required this.errorMessage,
   });
 
@@ -25,22 +27,30 @@ class ComplaintsState {
       : status = ComplaintsStatus.initial,
         complaints = const [],
         selectedFilter = ComplaintFilter.all,
+        isFromCache = false,
         errorMessage = null;
 
   List<ComplaintEntity> get filteredComplaints {
-    if (selectedFilter == ComplaintFilter.all) {
-      return complaints;
-    }
-
     return complaints
-        .where((item) => item.status == selectedFilter.status)
-        .toList();
+        .where(selectedFilter.matches)
+        .toList(growable: false);
+  }
+
+  bool get isInitialLoading {
+    return status == ComplaintsStatus.loading && complaints.isEmpty;
+  }
+
+  bool get hasData => complaints.isNotEmpty;
+
+  bool get hasErrorWithoutData {
+    return status == ComplaintsStatus.failure && complaints.isEmpty;
   }
 
   ComplaintsState copyWith({
     ComplaintsStatus? status,
     List<ComplaintEntity>? complaints,
     ComplaintFilter? selectedFilter,
+    bool? isFromCache,
     String? errorMessage,
     bool clearErrorMessage = false,
   }) {
@@ -48,7 +58,10 @@ class ComplaintsState {
       status: status ?? this.status,
       complaints: complaints ?? this.complaints,
       selectedFilter: selectedFilter ?? this.selectedFilter,
-      errorMessage: clearErrorMessage ? null : errorMessage ?? this.errorMessage,
+      isFromCache: isFromCache ?? this.isFromCache,
+      errorMessage: clearErrorMessage
+          ? null
+          : errorMessage ?? this.errorMessage,
     );
   }
 }

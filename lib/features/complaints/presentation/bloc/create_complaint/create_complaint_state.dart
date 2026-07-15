@@ -9,30 +9,39 @@ enum CreateComplaintStatus {
 
 class CreateComplaintState {
   final CreateComplaintStatus status;
-  final ComplaintEntity? submittedComplaint;
+  final ComplaintEntity? createdComplaint;
   final String? errorMessage;
 
   const CreateComplaintState({
     required this.status,
-    required this.submittedComplaint,
+    required this.createdComplaint,
     required this.errorMessage,
   });
 
   const CreateComplaintState.initial()
       : status = CreateComplaintStatus.initial,
-        submittedComplaint = null,
+        createdComplaint = null,
         errorMessage = null;
+
+  bool get isSubmitting {
+    return status == CreateComplaintStatus.submitting;
+  }
 
   CreateComplaintState copyWith({
     CreateComplaintStatus? status,
-    ComplaintEntity? submittedComplaint,
+    ComplaintEntity? createdComplaint,
     String? errorMessage,
+    bool clearCreatedComplaint = false,
     bool clearErrorMessage = false,
   }) {
     return CreateComplaintState(
       status: status ?? this.status,
-      submittedComplaint: submittedComplaint ?? this.submittedComplaint,
-      errorMessage: clearErrorMessage ? null : errorMessage ?? this.errorMessage,
+      createdComplaint: clearCreatedComplaint
+          ? null
+          : createdComplaint ?? this.createdComplaint,
+      errorMessage: clearErrorMessage
+          ? null
+          : errorMessage ?? this.errorMessage,
     );
   }
 }

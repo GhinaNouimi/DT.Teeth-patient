@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/localization/app_localizations.dart';
+import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../../../core/widgets/feedback/error_bottom_sheet.dart';
 import '../../../../core/widgets/feedback/success_bottom_sheet.dart';
 import '../../../../core/widgets/navigation/app_top_bar.dart';
 import '../../complaints_di.dart';
+import '../../domain/entities/add_complaint_params.dart';
 import '../../domain/entities/complaint_entity.dart';
 import '../bloc/create_complaint/create_complaint_bloc.dart';
 import '../bloc/create_complaint/create_complaint_event.dart';
 import '../bloc/create_complaint/create_complaint_state.dart';
-import '../widgets/complaint_attachment_card.dart';
-import '../widgets/complaint_category_selector.dart';
 import '../widgets/complaint_form_field.dart';
 import '../widgets/complaint_form_section_card.dart';
 
@@ -23,7 +25,7 @@ class CreateComplaintScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => CreateComplaintBloc(
-        submitComplaintUseCase: ComplaintsDi.submitComplaintUseCase,
+        addComplaintUseCase: ComplaintsDi.addComplaintUseCase,
       ),
       child: const _CreateComplaintView(),
     );
@@ -34,7 +36,8 @@ class _CreateComplaintView extends StatefulWidget {
   const _CreateComplaintView();
 
   @override
-  State<_CreateComplaintView> createState() => _CreateComplaintViewState();
+  State<_CreateComplaintView> createState() =>
+      _CreateComplaintViewState();
 }
 
 class _CreateComplaintViewState extends State<_CreateComplaintView> {
@@ -42,100 +45,127 @@ class _CreateComplaintViewState extends State<_CreateComplaintView> {
 
   late final TextEditingController _titleController;
   late final TextEditingController _descriptionController;
-  late final TextEditingController _relatedReferenceController;
+  late final TextEditingController _phoneController;
 
-  ComplaintCategory _selectedCategory = ComplaintCategory.appointment;
+  ComplaintPriority _selectedPriority =
+      ComplaintPriority.medium;
 
   @override
   void initState() {
     super.initState();
+
     _titleController = TextEditingController();
     _descriptionController = TextEditingController();
-    _relatedReferenceController = TextEditingController();
+    _phoneController = TextEditingController();
   }
 
   @override
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
-    _relatedReferenceController.dispose();
+    _phoneController.dispose();
+
     super.dispose();
   }
 
+  String get _languageCode {
+    return Localizations.localeOf(context).languageCode;
+  }
+
   Future<void> _submit() async {
-    if (!_formKey.currentState!.validate()) return;
+    FocusScope.of(context).unfocus();
+
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    if (!isValid) {
+      return;
+    }
+
+    final l10n = context.l10n;
 
     final shouldSubmit = await showDialog<bool>(
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: const Text('تأكيد الإرسال'),
-          content: const Text(
-            'هل تريد إرسال هذه الشكوى الآن؟ يمكنك متابعة حالتها لاحقًا من قسم الشكاوى.',
+          title: Text(
+            l10n.complaintSubmitConfirmationTitle,
+          ),
+          content: Text(
+            l10n.complaintSubmitConfirmationMessage,
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: const Text('إلغاء'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop(false);
+              },
+              child: Text(
+                l10n.cancelComplaintSubmission,
+              ),
             ),
             ElevatedButton(
-              onPressed: () => Navigator.of(dialogContext).pop(true),
-              child: const Text('إرسال'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop(true);
+              },
+              child: Text(
+                l10n.confirmComplaintSubmission,
+              ),
             ),
           ],
         );
       },
     );
 
-    if (shouldSubmit != true || !mounted) return;
+    if (shouldSubmit != true || !mounted) {
+      return;
+    }
 
-    final complaint = ComplaintEntity(
-      id: 'C-${DateTime.now().millisecondsSinceEpoch}',
+    if (shouldSubmit != true || !mounted) {
+      return;
+    }
+
+    final params = AddComplaintParams(
       title: _titleController.text.trim(),
       description: _descriptionController.text.trim(),
-      category: _selectedCategory,
-
-      /// أول حالة بعد إنشاء الشكوى:
-      /// تعني أن الشكوى وصلت للنظام وتم تسجيلها.
-      status: ComplaintStatus.open,
-
-      createdAt: DateTime.now(),
-      relatedReference: _relatedReferenceController.text.trim().isEmpty
-          ? null
-          : _relatedReferenceController.text.trim(),
-      attachments: const [],
-      updates: const [],
+      phoneNumber: _phoneController.text.trim(),
+      priority: _selectedPriority,
     );
 
     context.read<CreateComplaintBloc>().add(
-      SubmitComplaintRequested(complaint),
+      SubmitComplaintRequested(
+        params: params,
+        languageCode: _languageCode,
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final l10n = context.l10n;
 
     return BlocListener<CreateComplaintBloc, CreateComplaintState>(
       listener: (context, state) async {
         if (state.status == CreateComplaintStatus.failure) {
           await showErrorBottomSheet(
             context,
-            title: 'تعذر إرسال الشكوى',
-            message: state.errorMessage ?? 'حدث خطأ غير متوقع',
-            buttonText: 'حسنًا',
+            title: l10n.complaintSubmitFailedTitle,
+            message:
+            state.errorMessage ?? l10n.unknownErrorMessage,
+            buttonText: l10n.ok,
           );
         }
 
-        if (state.status == CreateComplaintStatus.success) {
+        if (state.status == CreateComplaintStatus.success &&
+            state.createdComplaint != null) {
+          final createdComplaint = state.createdComplaint!;
+
           await showSuccessBottomSheet(
             context,
-            title: 'تم استلام الشكوى',
-            message:
-            'استلمنا شكواك بنجاح، ويمكنك متابعة حالتها من قسم الشكاوى.',
-            buttonText: 'العودة للشكاوى',
+            title: l10n.complaintSubmittedTitle,
+            message: l10n.complaintSubmittedSuccessfully,
+            buttonText: l10n.returnText,
             onPressed: () {
-              context.pop(true);
+              context.pop(createdComplaint);
             },
           );
         }
@@ -146,10 +176,15 @@ class _CreateComplaintViewState extends State<_CreateComplaintView> {
           bottom: false,
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  20,
+                  16,
+                  20,
+                  0,
+                ),
                 child: AppTopBar(
-                  title: 'تقديم شكوى',
+                  title: l10n.addComplaint,
                   showBackButton: true,
                 ),
               ),
@@ -157,71 +192,122 @@ class _CreateComplaintViewState extends State<_CreateComplaintView> {
                 child: Form(
                   key: _formKey,
                   child: ListView(
+                    keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
                     physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.fromLTRB(20, 18, 20, 28),
+                    padding: const EdgeInsets.fromLTRB(
+                      20,
+                      18,
+                      20,
+                      28,
+                    ),
                     children: [
                       ComplaintFormSectionCard(
-                        title: 'نوع الشكوى',
+                        title: l10n.complaintBasicInformation,
                         subtitle:
-                        'اختر القسم الأقرب لمشكلتك حتى تصل الشكوى للفريق المناسب.',
-                        child: ComplaintCategorySelector(
-                          selectedCategory: _selectedCategory,
-                          onChanged: (value) {
-                            setState(() => _selectedCategory = value);
-                          },
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      ComplaintFormSectionCard(
-                        title: 'تفاصيل الشكوى',
+                        l10n.complaintBasicInformationSubtitle,
                         child: Column(
                           children: [
                             ComplaintFormField(
-                              label: 'عنوان الشكوى',
-                              hint: 'مثال: تأخر في موعد المتابعة',
+                              label: l10n.complaintTitle,
+                              hint: l10n.complaintTitleHint,
                               controller: _titleController,
                               validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return 'الرجاء إدخال عنوان الشكوى';
+                                final normalized =
+                                    value?.trim() ?? '';
+
+                                if (normalized.isEmpty) {
+                                  return l10n
+                                      .complaintTitleRequired;
                                 }
-                                if (value.trim().length < 6) {
-                                  return 'عنوان الشكوى قصير جدًا';
+
+                                if (normalized.length < 3) {
+                                  return l10n
+                                      .complaintTitleTooShort;
                                 }
+
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 16),
+                            const SizedBox(
+                              height: AppSpacing.md,
+                            ),
                             ComplaintFormField(
-                              label: 'وصف الشكوى',
+                              label: l10n.complaintDescription,
                               hint:
-                              'اكتب وصفًا واضحًا للمشكلة أو الاستفسار...',
-                              controller: _descriptionController,
+                              l10n.complaintDescriptionHint,
+                              controller:
+                              _descriptionController,
                               maxLines: 5,
                               validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return 'الرجاء إدخال وصف الشكوى';
+                                final normalized =
+                                    value?.trim() ?? '';
+
+                                if (normalized.isEmpty) {
+                                  return l10n
+                                      .complaintDescriptionRequired;
                                 }
-                                if (value.trim().length < 12) {
-                                  return 'يرجى إضافة تفاصيل أكثر';
+
+                                if (normalized.length < 10) {
+                                  return l10n
+                                      .complaintDescriptionTooShort;
                                 }
+
                                 return null;
                               },
-                            ),
-                            const SizedBox(height: 16),
-                            ComplaintFormField(
-                              label: 'مرجع مرتبط (اختياري)',
-                              hint: 'رقم موعد أو علاج أو دفعة',
-                              controller: _relatedReferenceController,
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.md,
+                      ),
                       ComplaintFormSectionCard(
-                        title: 'مرفقات',
-                        subtitle: 'سيتم تفعيلها لاحقًا',
-                        child: ComplaintAttachmentCard(
-                          onTap: () {},
+                        title:
+                        l10n.complaintContactInformation,
+                        subtitle: l10n
+                            .complaintContactInformationSubtitle,
+                        child: ComplaintFormField(
+                          label: l10n.complaintContactPhone,
+                          hint: l10n.complaintPhoneHint,
+                          controller: _phoneController,
+                          validator: (value) {
+                            final normalized =
+                                value?.trim() ?? '';
+
+                            if (normalized.isEmpty) {
+                              return l10n
+                                  .complaintPhoneRequired;
+                            }
+
+                            final phoneExpression = RegExp(
+                              r'^[0-9+]{8,15}$',
+                            );
+
+                            if (!phoneExpression
+                                .hasMatch(normalized)) {
+                              return l10n.phoneInvalid;
+                            }
+
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: AppSpacing.md,
+                      ),
+                      ComplaintFormSectionCard(
+                        title: l10n.complaintPriority,
+                        subtitle: l10n
+                            .complaintPrioritySectionSubtitle,
+                        child: _ComplaintPrioritySelector(
+                          selectedPriority:
+                          _selectedPriority,
+                          onChanged: (priority) {
+                            setState(() {
+                              _selectedPriority = priority;
+                            });
+                          },
                         ),
                       ),
                     ],
@@ -232,22 +318,166 @@ class _CreateComplaintViewState extends State<_CreateComplaintView> {
           ),
         ),
         bottomNavigationBar: SafeArea(
-          minimum: const EdgeInsets.fromLTRB(20, 0, 20, 18),
-          child: BlocBuilder<CreateComplaintBloc, CreateComplaintState>(
+          minimum: const EdgeInsets.fromLTRB(
+            20,
+            8,
+            20,
+            18,
+          ),
+          child: BlocBuilder<
+              CreateComplaintBloc,
+              CreateComplaintState>(
             builder: (context, state) {
-              final isSubmitting =
-                  state.status == CreateComplaintStatus.submitting;
-
-              return ElevatedButton(
-                onPressed: isSubmitting ? null : _submit,
-                child: Text(
-                  isSubmitting ? 'جارٍ إرسال الشكوى...' : 'إرسال الشكوى',
+              return SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed:
+                  state.isSubmitting ? null : _submit,
+                  icon: state.isSubmitting
+                      ? const SizedBox.shrink()
+                      : const Icon(Icons.send_rounded),
+                  label: Text(
+                    state.isSubmitting
+                        ? l10n.submittingComplaint
+                        : l10n.submitComplaint,
+                  ),
                 ),
               );
             },
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ComplaintPrioritySelector extends StatelessWidget {
+  final ComplaintPriority selectedPriority;
+  final ValueChanged<ComplaintPriority> onChanged;
+
+  const _ComplaintPrioritySelector({
+    required this.selectedPriority,
+    required this.onChanged,
+  });
+
+  String _label(
+      BuildContext context,
+      ComplaintPriority priority,
+      ) {
+    final l10n = context.l10n;
+
+    switch (priority) {
+      case ComplaintPriority.low:
+        return l10n.complaintPriorityLow;
+
+      case ComplaintPriority.medium:
+        return l10n.complaintPriorityMedium;
+
+      case ComplaintPriority.high:
+        return l10n.complaintPriorityHigh;
+
+      case ComplaintPriority.unknown:
+        return l10n.complaintPriorityUnknown;
+    }
+  }
+
+  IconData _icon(ComplaintPriority priority) {
+    switch (priority) {
+      case ComplaintPriority.low:
+        return Icons.keyboard_arrow_down_rounded;
+
+      case ComplaintPriority.medium:
+        return Icons.remove_rounded;
+
+      case ComplaintPriority.high:
+        return Icons.keyboard_arrow_up_rounded;
+
+      case ComplaintPriority.unknown:
+        return Icons.help_outline_rounded;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    const availablePriorities = [
+      ComplaintPriority.low,
+      ComplaintPriority.medium,
+      ComplaintPriority.high,
+    ];
+
+    return Wrap(
+      spacing: AppSpacing.sm,
+      runSpacing: AppSpacing.sm,
+      children: availablePriorities.map((priority) {
+        final isSelected =
+            selectedPriority == priority;
+
+        return Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(
+            AppRadius.pill,
+          ),
+          child: InkWell(
+            onTap: () => onChanged(priority),
+            borderRadius: BorderRadius.circular(
+              AppRadius.pill,
+            ),
+            child: AnimatedContainer(
+              duration: const Duration(
+                milliseconds: 180,
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 10,
+              ),
+              decoration: BoxDecoration(
+                color: isSelected
+                    ? colors.navBarItem.withValues(
+                  alpha: 0.13,
+                )
+                    : colors.surfaceSecondary,
+                borderRadius: BorderRadius.circular(
+                  AppRadius.pill,
+                ),
+                border: Border.all(
+                  color: isSelected
+                      ? colors.navBarItem
+                      : colors.borderSoft,
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    _icon(priority),
+                    size: 18,
+                    color: isSelected
+                        ? colors.navBarItem
+                        : colors.textSecondary,
+                  ),
+                  const SizedBox(
+                    width: AppSpacing.xs,
+                  ),
+                  Text(
+                    _label(context, priority),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(
+                      color: isSelected
+                          ? colors.navBarItem
+                          : colors.textPrimary,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 }

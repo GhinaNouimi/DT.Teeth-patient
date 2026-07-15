@@ -34,4 +34,7 @@ class CacheKeys {
 
   static const treatmentDetailsPrefix = 'cached_treatment_details_';
 
+  // Complaints
+  static const complaints = 'cached_complaints';
+
 }

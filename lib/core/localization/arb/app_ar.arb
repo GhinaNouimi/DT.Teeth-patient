@@ -287,5 +287,71 @@
 
   "completedTreatments": "علاجات مكتملة",
   "view": "استعراض",
-  "comingSoon": "قريبًا"
+  "comingSoon": "قريبًا",
+  "myComplaints": "شكواي",
+  "newComplaint": "شكوى جديدة",
+  "addComplaint": "تقديم شكوى",
+  "complaintDetails": "تفاصيل الشكوى",
+  "complaintsSubtitle": "تابع الشكاوى التي أرسلتها وردود الإدارة من مكان واحد.",
+
+  "allComplaints": "الكل",
+  "activeComplaints": "قيد المتابعة",
+  "closedComplaints": "المغلقة",
+
+  "noComplaintsTitle": "لا توجد شكاوى بعد",
+  "noComplaintsSubtitle": "يمكنك تقديم شكوى عند مواجهة مشكلة، وستظهر هنا بعد إرسالها.",
+  "noFilteredComplaintsTitle": "لا توجد نتائج",
+  "noFilteredComplaintsSubtitle": "لا توجد شكاوى مطابقة للتصنيف المحدد.",
+
+  "complaintsLoadFailed": "تعذر تحميل الشكاوى",
+  "complaintsRefreshFailed": "تعذر تحديث الشكاوى",
+  "unknownErrorMessage": "حدث خطأ غير متوقع.",
+
+  "complaintTitle": "عنوان الشكوى",
+  "complaintTitleHint": "اكتب عنوانًا مختصرًا وواضحًا",
+  "complaintDescription": "تفاصيل الشكوى",
+  "complaintDescriptionHint": "اشرح المشكلة التي واجهتك بالتفصيل",
+  "complaintContactPhone": "رقم هاتف التواصل",
+  "complaintPhoneHint": "مثال: 0999999999",
+  "complaintPriority": "أولوية الشكوى",
+  "complaintStatus": "حالة الشكوى",
+  "complaintSubmissionDate": "تاريخ الإرسال",
+  "complaintNumber": "رقم الشكوى",
+  "complaintAdminResponse": "رد الإدارة",
+  "complaintNoAdminResponse": "لم تتم إضافة رد من الإدارة بعد.",
+
+  "complaintBasicInformation": "معلومات الشكوى",
+  "complaintBasicInformationSubtitle": "أدخل معلومات واضحة تساعد الإدارة على متابعة المشكلة.",
+  "complaintContactInformation": "معلومات التواصل",
+  "complaintContactInformationSubtitle": "سيُستخدم الرقم للتواصل معك عند الحاجة.",
+  "complaintPrioritySectionSubtitle": "اختر مستوى الأولوية المناسب للمشكلة.",
+
+  "complaintPriorityLow": "منخفضة",
+  "complaintPriorityMedium": "متوسطة",
+  "complaintPriorityHigh": "مرتفعة",
+  "complaintPriorityUnknown": "غير محددة",
+
+  "complaintStatusPending": "قيد الانتظار",
+  "complaintStatusInProgress": "قيد المعالجة",
+  "complaintStatusResolved": "تمت المعالجة",
+  "complaintStatusRejected": "مرفوضة",
+  "complaintStatusUnknown": "غير معروفة",
+
+  "submitComplaint": "إرسال الشكوى",
+  "submittingComplaint": "جارٍ إرسال الشكوى...",
+  "complaintSubmittedTitle": "تم إرسال الشكوى",
+  "complaintSubmittedSuccessfully": "تم إرسال شكواك بنجاح.",
+  "complaintSubmitFailedTitle": "تعذر إرسال الشكوى",
+
+  "complaintTitleRequired": "الرجاء إدخال عنوان الشكوى",
+  "complaintTitleTooShort": "يجب أن يتكون العنوان من 3 أحرف على الأقل",
+  "complaintDescriptionRequired": "الرجاء إدخال تفاصيل الشكوى",
+  "complaintDescriptionTooShort": "يرجى كتابة تفاصيل أوضح عن المشكلة",
+  "complaintPhoneRequired": "الرجاء إدخال رقم هاتف التواصل",
+  "complaintPriorityRequired": "الرجاء اختيار أولوية الشكوى",
+  "complaintSubmitConfirmationTitle": "تأكيد إرسال الشكوى",
+  "complaintSubmitConfirmationMessage": "هل أنت متأكد من رغبتك في إرسال هذه الشكوى؟ بعد الإرسال ستتمكن من متابعة حالتها والاطلاع على رد الإدارة من قسم الشكاوى.",
+  "confirmComplaintSubmission": "تأكيد الإرسال",
+  "cancelComplaintSubmission": "إلغاء"
+
 }

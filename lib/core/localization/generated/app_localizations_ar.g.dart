@@ -855,4 +855,181 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
 
   @override
   String get comingSoon => 'قريبًا';
+
+  @override
+  String get myComplaints => 'شكواي';
+
+  @override
+  String get newComplaint => 'شكوى جديدة';
+
+  @override
+  String get addComplaint => 'تقديم شكوى';
+
+  @override
+  String get complaintDetails => 'تفاصيل الشكوى';
+
+  @override
+  String get complaintsSubtitle =>
+      'تابع الشكاوى التي أرسلتها وردود الإدارة من مكان واحد.';
+
+  @override
+  String get allComplaints => 'الكل';
+
+  @override
+  String get activeComplaints => 'قيد المتابعة';
+
+  @override
+  String get closedComplaints => 'المغلقة';
+
+  @override
+  String get noComplaintsTitle => 'لا توجد شكاوى بعد';
+
+  @override
+  String get noComplaintsSubtitle =>
+      'يمكنك تقديم شكوى عند مواجهة مشكلة، وستظهر هنا بعد إرسالها.';
+
+  @override
+  String get noFilteredComplaintsTitle => 'لا توجد نتائج';
+
+  @override
+  String get noFilteredComplaintsSubtitle =>
+      'لا توجد شكاوى مطابقة للتصنيف المحدد.';
+
+  @override
+  String get complaintsLoadFailed => 'تعذر تحميل الشكاوى';
+
+  @override
+  String get complaintsRefreshFailed => 'تعذر تحديث الشكاوى';
+
+  @override
+  String get unknownErrorMessage => 'حدث خطأ غير متوقع.';
+
+  @override
+  String get complaintTitle => 'عنوان الشكوى';
+
+  @override
+  String get complaintTitleHint => 'اكتب عنوانًا مختصرًا وواضحًا';
+
+  @override
+  String get complaintDescription => 'تفاصيل الشكوى';
+
+  @override
+  String get complaintDescriptionHint => 'اشرح المشكلة التي واجهتك بالتفصيل';
+
+  @override
+  String get complaintContactPhone => 'رقم هاتف التواصل';
+
+  @override
+  String get complaintPhoneHint => 'مثال: 0999999999';
+
+  @override
+  String get complaintPriority => 'أولوية الشكوى';
+
+  @override
+  String get complaintStatus => 'حالة الشكوى';
+
+  @override
+  String get complaintSubmissionDate => 'تاريخ الإرسال';
+
+  @override
+  String get complaintNumber => 'رقم الشكوى';
+
+  @override
+  String get complaintAdminResponse => 'رد الإدارة';
+
+  @override
+  String get complaintNoAdminResponse => 'لم تتم إضافة رد من الإدارة بعد.';
+
+  @override
+  String get complaintBasicInformation => 'معلومات الشكوى';
+
+  @override
+  String get complaintBasicInformationSubtitle =>
+      'أدخل معلومات واضحة تساعد الإدارة على متابعة المشكلة.';
+
+  @override
+  String get complaintContactInformation => 'معلومات التواصل';
+
+  @override
+  String get complaintContactInformationSubtitle =>
+      'سيُستخدم الرقم للتواصل معك عند الحاجة.';
+
+  @override
+  String get complaintPrioritySectionSubtitle =>
+      'اختر مستوى الأولوية المناسب للمشكلة.';
+
+  @override
+  String get complaintPriorityLow => 'منخفضة';
+
+  @override
+  String get complaintPriorityMedium => 'متوسطة';
+
+  @override
+  String get complaintPriorityHigh => 'مرتفعة';
+
+  @override
+  String get complaintPriorityUnknown => 'غير محددة';
+
+  @override
+  String get complaintStatusPending => 'قيد الانتظار';
+
+  @override
+  String get complaintStatusInProgress => 'قيد المعالجة';
+
+  @override
+  String get complaintStatusResolved => 'تمت المعالجة';
+
+  @override
+  String get complaintStatusRejected => 'مرفوضة';
+
+  @override
+  String get complaintStatusUnknown => 'غير معروفة';
+
+  @override
+  String get submitComplaint => 'إرسال الشكوى';
+
+  @override
+  String get submittingComplaint => 'جارٍ إرسال الشكوى...';
+
+  @override
+  String get complaintSubmittedTitle => 'تم إرسال الشكوى';
+
+  @override
+  String get complaintSubmittedSuccessfully => 'تم إرسال شكواك بنجاح.';
+
+  @override
+  String get complaintSubmitFailedTitle => 'تعذر إرسال الشكوى';
+
+  @override
+  String get complaintTitleRequired => 'الرجاء إدخال عنوان الشكوى';
+
+  @override
+  String get complaintTitleTooShort =>
+      'يجب أن يتكون العنوان من 3 أحرف على الأقل';
+
+  @override
+  String get complaintDescriptionRequired => 'الرجاء إدخال تفاصيل الشكوى';
+
+  @override
+  String get complaintDescriptionTooShort =>
+      'يرجى كتابة تفاصيل أوضح عن المشكلة';
+
+  @override
+  String get complaintPhoneRequired => 'الرجاء إدخال رقم هاتف التواصل';
+
+  @override
+  String get complaintPriorityRequired => 'الرجاء اختيار أولوية الشكوى';
+
+  @override
+  String get complaintSubmitConfirmationTitle => 'تأكيد إرسال الشكوى';
+
+  @override
+  String get complaintSubmitConfirmationMessage =>
+      'هل أنت متأكد من رغبتك في إرسال هذه الشكوى؟ بعد الإرسال ستتمكن من متابعة حالتها والاطلاع على رد الإدارة من قسم الشكاوى.';
+
+  @override
+  String get confirmComplaintSubmission => 'تأكيد الإرسال';
+
+  @override
+  String get cancelComplaintSubmission => 'إلغاء';
 }

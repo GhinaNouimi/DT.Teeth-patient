@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../../../core/widgets/common/app_section_card.dart';
-import '../../../../core/widgets/common/app_status_chip.dart';
 import '../../domain/entities/complaint_entity.dart';
-import 'complaint_category_chip.dart';
 import 'complaint_info_row.dart';
-import 'complaint_status_progress.dart';
+import 'complaint_priority_chip.dart';
+import 'complaint_status_chip.dart';
 
 class ComplaintDetailsCard extends StatelessWidget {
   final ComplaintEntity complaint;
@@ -19,183 +19,276 @@ class ComplaintDetailsCard extends StatelessWidget {
     required this.complaint,
   });
 
-  String _formatDate(DateTime date) {
-    return DateFormat('dd/MM/yyyy').format(date);
-  }
+  String _formatDate(
+      BuildContext context,
+      DateTime date,
+      ) {
+    final languageCode =
+        Localizations.localeOf(context).languageCode;
 
-  String _statusLabel(ComplaintStatus status) {
-    switch (status) {
-      case ComplaintStatus.open:
-        return 'تم الاستلام';
-      case ComplaintStatus.inProgress:
-        return 'قيد المعالجة';
-      case ComplaintStatus.resolved:
-        return 'تم الحل';
-    }
-  }
-
-  AppStatusType _statusType(ComplaintStatus status) {
-    switch (status) {
-      case ComplaintStatus.open:
-        return AppStatusType.info;
-      case ComplaintStatus.inProgress:
-        return AppStatusType.warning;
-      case ComplaintStatus.resolved:
-        return AppStatusType.success;
-    }
+    return DateFormat(
+      'dd MMMM yyyy - HH:mm',
+      languageCode,
+    ).format(date);
   }
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final theme = Theme.of(context);
-
-    final hasCenterReply =
-        complaint.centerReply != null && complaint.centerReply!.trim().isNotEmpty;
+    final l10n = context.l10n;
 
     return Column(
       children: [
         AppSectionCard(
           radius: AppRadius.xl,
-          padding: const EdgeInsets.all(AppSpacing.lg),
+          padding: const EdgeInsets.all(
+            AppSpacing.lg,
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment:
+            CrossAxisAlignment.start,
             children: [
               Row(
+                crossAxisAlignment:
+                CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Text(
-                      complaint.title,
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        color: colors.textPrimary,
-                        fontWeight: FontWeight.w800,
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: colors.surfaceSecondary,
+                      borderRadius:
+                      BorderRadius.circular(
+                        AppRadius.lg,
                       ),
                     ),
+                    child: Icon(
+                      Icons.support_agent_rounded,
+                      color: colors.navBarItem,
+                      size: 24,
+                    ),
                   ),
-                  AppStatusChip(
-                    label: _statusLabel(complaint.status),
-                    type: _statusType(complaint.status),
-                    isCompact: true,
+                  const SizedBox(
+                    width: AppSpacing.md,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          complaint.title,
+                          style: theme
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(
+                            color: colors.textPrimary,
+                            fontWeight:
+                            FontWeight.w800,
+                            height: 1.35,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: AppSpacing.xs,
+                        ),
+                        Text(
+                          '${l10n.complaintNumber} #${complaint.id}',
+                          style: theme
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                            color:
+                            colors.textSecondary,
+                            fontWeight:
+                            FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.md),
-              Row(
+              const SizedBox(
+                height: AppSpacing.lg,
+              ),
+              Wrap(
+                spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.sm,
                 children: [
-                  ComplaintCategoryChip(category: complaint.category),
-                  const SizedBox(width: AppSpacing.sm),
-                  Text(
-                    complaint.id,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: colors.textSecondary,
-                      fontWeight: FontWeight.w700,
-                    ),
+                  ComplaintStatusChip(
+                    status: complaint.status,
+                  ),
+                  ComplaintPriorityChip(
+                    priority:
+                    complaint.priority,
                   ),
                 ],
               ),
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.lg),
-
-        ComplaintStatusProgress(status: complaint.status),
-        const SizedBox(height: AppSpacing.lg),
-
+        const SizedBox(
+          height: AppSpacing.lg,
+        ),
         AppSectionCard(
           radius: AppRadius.xl,
-          padding: const EdgeInsets.all(AppSpacing.lg),
+          padding: const EdgeInsets.all(
+            AppSpacing.lg,
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment:
+            CrossAxisAlignment.start,
             children: [
               Text(
-                'تفاصيل الشكوى',
-                style: theme.textTheme.titleMedium?.copyWith(
+                l10n.complaintBasicInformation,
+                style: theme
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(
                   color: colors.textPrimary,
                   fontWeight: FontWeight.w800,
                 ),
               ),
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(
+                height: AppSpacing.lg,
+              ),
               ComplaintInfoRow(
-                label: 'وصف الشكوى',
+                label:
+                l10n.complaintDescription,
                 value: complaint.description,
-                icon: Icons.description_outlined,
+                icon:
+                Icons.description_outlined,
               ),
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(
+                height: AppSpacing.lg,
+              ),
               ComplaintInfoRow(
-                label: 'تاريخ الإرسال',
-                value: _formatDate(complaint.createdAt),
-                icon: Icons.schedule_rounded,
-              ),
-              if (complaint.relatedReference != null &&
-                  complaint.relatedReference!.trim().isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.lg),
-                ComplaintInfoRow(
-                  label: 'مرجع مرتبط',
-                  value: complaint.relatedReference!,
-                  icon: Icons.link_rounded,
+                label:
+                l10n.complaintSubmissionDate,
+                value: _formatDate(
+                  context,
+                  complaint.createdAt,
                 ),
-              ],
+                icon:
+                Icons.calendar_today_outlined,
+              ),
+              const SizedBox(
+                height: AppSpacing.lg,
+              ),
+              ComplaintInfoRow(
+                label:
+                l10n.complaintContactPhone,
+                value: complaint.phoneNumber,
+                icon: Icons.phone_outlined,
+              ),
             ],
           ),
         ),
+        const SizedBox(
+          height: AppSpacing.lg,
+        ),
+        _AdminResponseCard(
+          response: complaint.adminResponse,
+        ),
+      ],
+    );
+  }
+}
 
-        if (complaint.status == ComplaintStatus.resolved && hasCenterReply) ...[
-          const SizedBox(height: AppSpacing.lg),
-          AppSectionCard(
-            radius: AppRadius.xl,
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 42,
-                      height: 42,
-                      decoration: BoxDecoration(
-                        color: colors.reservedState,
-                        borderRadius: BorderRadius.circular(AppRadius.lg),
-                      ),
-                      child: Icon(
-                        Icons.mark_chat_read_rounded,
-                        color: colors.success,
-                        size: 22,
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.md),
-                    Expanded(
-                      child: Text(
-                        'رد المركز',
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          color: colors.textPrimary,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.lg),
-                Text(
-                  complaint.centerReply!,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: colors.textSecondary,
-                    height: 1.6,
-                    fontWeight: FontWeight.w600,
+class _AdminResponseCard extends StatelessWidget {
+  final String? response;
+
+  const _AdminResponseCard({
+    required this.response,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+
+    final normalizedResponse =
+        response?.trim() ?? '';
+
+    final hasResponse =
+        normalizedResponse.isNotEmpty;
+
+    return AppSectionCard(
+      radius: AppRadius.xl,
+      padding: const EdgeInsets.all(
+        AppSpacing.lg,
+      ),
+      child: Column(
+        crossAxisAlignment:
+        CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(
+                  color: hasResponse
+                      ? colors.success.withValues(
+                    alpha: 0.12,
+                  )
+                      : colors.surfaceSecondary,
+                  borderRadius:
+                  BorderRadius.circular(
+                    AppRadius.lg,
                   ),
                 ),
-                if (complaint.resolvedAt != null) ...[
-                  const SizedBox(height: AppSpacing.lg),
-                  ComplaintInfoRow(
-                    label: 'تاريخ الحل',
-                    value: _formatDate(complaint.resolvedAt!),
-                    icon: Icons.verified_rounded,
+                child: Icon(
+                  hasResponse
+                      ? Icons.mark_chat_read_rounded
+                      : Icons.schedule_rounded,
+                  color: hasResponse
+                      ? colors.success
+                      : colors.textSecondary,
+                  size: 21,
+                ),
+              ),
+              const SizedBox(
+                width: AppSpacing.md,
+              ),
+              Expanded(
+                child: Text(
+                  l10n.complaintAdminResponse,
+                  style: theme
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(
+                    color: colors.textPrimary,
+                    fontWeight:
+                    FontWeight.w800,
                   ),
-                ],
-              ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: AppSpacing.lg,
+          ),
+          Text(
+            hasResponse
+                ? normalizedResponse
+                : l10n
+                .complaintNoAdminResponse,
+            style: theme
+                .textTheme
+                .bodyMedium
+                ?.copyWith(
+              color: hasResponse
+                  ? colors.textPrimary
+                  : colors.textSecondary,
+              height: 1.65,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
-      ],
+      ),
     );
   }
 }

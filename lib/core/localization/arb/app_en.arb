@@ -287,5 +287,70 @@
 
   "completedTreatments": "Completed Treatments",
   "view": "View",
-  "comingSoon": "Coming soon"
+  "comingSoon": "Coming soon",
+  "myComplaints": "My Complaints",
+  "newComplaint": "New Complaint",
+  "addComplaint": "Submit a Complaint",
+  "complaintDetails": "Complaint Details",
+  "complaintsSubtitle": "Track your submitted complaints and administration responses in one place.",
+
+  "allComplaints": "All",
+  "activeComplaints": "In Progress",
+  "closedComplaints": "Closed",
+
+  "noComplaintsTitle": "No complaints yet",
+  "noComplaintsSubtitle": "You can submit a complaint when you face an issue, and it will appear here.",
+  "noFilteredComplaintsTitle": "No results",
+  "noFilteredComplaintsSubtitle": "There are no complaints matching the selected filter.",
+
+  "complaintsLoadFailed": "Failed to load complaints",
+  "complaintsRefreshFailed": "Failed to refresh complaints",
+  "unknownErrorMessage": "An unexpected error occurred.",
+
+  "complaintTitle": "Complaint Title",
+  "complaintTitleHint": "Enter a short and clear title",
+  "complaintDescription": "Complaint Details",
+  "complaintDescriptionHint": "Describe the issue you experienced in detail",
+  "complaintContactPhone": "Contact Phone Number",
+  "complaintPhoneHint": "Example: 0999999999",
+  "complaintPriority": "Complaint Priority",
+  "complaintStatus": "Complaint Status",
+  "complaintSubmissionDate": "Submission Date",
+  "complaintNumber": "Complaint Number",
+  "complaintAdminResponse": "Administration Response",
+  "complaintNoAdminResponse": "No response has been added by the administration yet.",
+
+  "complaintBasicInformation": "Complaint Information",
+  "complaintBasicInformationSubtitle": "Provide clear information to help the administration review the issue.",
+  "complaintContactInformation": "Contact Information",
+  "complaintContactInformationSubtitle": "This number may be used to contact you when needed.",
+  "complaintPrioritySectionSubtitle": "Select the appropriate priority level for the issue.",
+
+  "complaintPriorityLow": "Low",
+  "complaintPriorityMedium": "Medium",
+  "complaintPriorityHigh": "High",
+  "complaintPriorityUnknown": "Not specified",
+
+  "complaintStatusPending": "Pending",
+  "complaintStatusInProgress": "In Progress",
+  "complaintStatusResolved": "Resolved",
+  "complaintStatusRejected": "Rejected",
+  "complaintStatusUnknown": "Unknown",
+
+  "submitComplaint": "Submit Complaint",
+  "submittingComplaint": "Submitting complaint...",
+  "complaintSubmittedTitle": "Complaint Submitted",
+  "complaintSubmittedSuccessfully": "Your complaint has been submitted successfully.",
+  "complaintSubmitFailedTitle": "Failed to Submit Complaint",
+
+  "complaintTitleRequired": "Please enter the complaint title",
+  "complaintTitleTooShort": "The title must contain at least 3 characters",
+  "complaintDescriptionRequired": "Please enter the complaint details",
+  "complaintDescriptionTooShort": "Please provide clearer details about the issue",
+  "complaintPhoneRequired": "Please enter a contact phone number",
+  "complaintPriorityRequired": "Please select the complaint priority",
+  "complaintSubmitConfirmationTitle": "Confirm Complaint Submission",
+  "complaintSubmitConfirmationMessage": "Are you sure you want to submit this complaint? After submission, you can track its status and view the administration's response from the complaints section.",
+  "confirmComplaintSubmission": "Confirm Submission",
+  "cancelComplaintSubmission": "Cancel"
 }

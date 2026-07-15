@@ -1,15 +1,21 @@
-import '../../../domain/entities/complaint_entity.dart';
+import '../../../domain/entities/add_complaint_params.dart';
 
-abstract class CreateComplaintEvent {
+sealed class CreateComplaintEvent {
   const CreateComplaintEvent();
 }
 
-class SubmitComplaintRequested extends CreateComplaintEvent {
-  final ComplaintEntity complaint;
+final class SubmitComplaintRequested
+    extends CreateComplaintEvent {
+  final AddComplaintParams params;
+  final String languageCode;
 
-  const SubmitComplaintRequested(this.complaint);
+  const SubmitComplaintRequested({
+    required this.params,
+    required this.languageCode,
+  });
 }
 
-class CreateComplaintStateResetRequested extends CreateComplaintEvent {
+final class CreateComplaintStateResetRequested
+    extends CreateComplaintEvent {
   const CreateComplaintStateResetRequested();
 }

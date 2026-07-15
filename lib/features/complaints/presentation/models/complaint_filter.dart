@@ -2,35 +2,21 @@ import '../../domain/entities/complaint_entity.dart';
 
 enum ComplaintFilter {
   all,
-  received,
-  inProgress,
-  resolved,
+  active,
+  closed,
 }
 
 extension ComplaintFilterX on ComplaintFilter {
-  String get label {
+  bool matches(ComplaintEntity complaint) {
     switch (this) {
       case ComplaintFilter.all:
-        return 'الكل';
-      case ComplaintFilter.received:
-        return 'تم الاستلام';
-      case ComplaintFilter.inProgress:
-        return 'قيد المعالجة';
-      case ComplaintFilter.resolved:
-        return 'تم الحل';
-    }
-  }
+        return true;
 
-  ComplaintStatus? get status {
-    switch (this) {
-      case ComplaintFilter.all:
-        return null;
-      case ComplaintFilter.received:
-        return ComplaintStatus.open;
-      case ComplaintFilter.inProgress:
-        return ComplaintStatus.inProgress;
-      case ComplaintFilter.resolved:
-        return ComplaintStatus.resolved;
+      case ComplaintFilter.active:
+        return complaint.isActive;
+
+      case ComplaintFilter.closed:
+        return complaint.isClosed;
     }
   }
 }

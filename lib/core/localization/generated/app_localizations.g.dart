@@ -1726,6 +1726,342 @@ abstract class GeneratedAppLocalizations {
   /// In ar, this message translates to:
   /// **'قريبًا'**
   String get comingSoon;
+
+  /// No description provided for @myComplaints.
+  ///
+  /// In ar, this message translates to:
+  /// **'شكواي'**
+  String get myComplaints;
+
+  /// No description provided for @newComplaint.
+  ///
+  /// In ar, this message translates to:
+  /// **'شكوى جديدة'**
+  String get newComplaint;
+
+  /// No description provided for @addComplaint.
+  ///
+  /// In ar, this message translates to:
+  /// **'تقديم شكوى'**
+  String get addComplaint;
+
+  /// No description provided for @complaintDetails.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل الشكوى'**
+  String get complaintDetails;
+
+  /// No description provided for @complaintsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تابع الشكاوى التي أرسلتها وردود الإدارة من مكان واحد.'**
+  String get complaintsSubtitle;
+
+  /// No description provided for @allComplaints.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكل'**
+  String get allComplaints;
+
+  /// No description provided for @activeComplaints.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيد المتابعة'**
+  String get activeComplaints;
+
+  /// No description provided for @closedComplaints.
+  ///
+  /// In ar, this message translates to:
+  /// **'المغلقة'**
+  String get closedComplaints;
+
+  /// No description provided for @noComplaintsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد شكاوى بعد'**
+  String get noComplaintsTitle;
+
+  /// No description provided for @noComplaintsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'يمكنك تقديم شكوى عند مواجهة مشكلة، وستظهر هنا بعد إرسالها.'**
+  String get noComplaintsSubtitle;
+
+  /// No description provided for @noFilteredComplaintsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد نتائج'**
+  String get noFilteredComplaintsTitle;
+
+  /// No description provided for @noFilteredComplaintsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد شكاوى مطابقة للتصنيف المحدد.'**
+  String get noFilteredComplaintsSubtitle;
+
+  /// No description provided for @complaintsLoadFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل الشكاوى'**
+  String get complaintsLoadFailed;
+
+  /// No description provided for @complaintsRefreshFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحديث الشكاوى'**
+  String get complaintsRefreshFailed;
+
+  /// No description provided for @unknownErrorMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدث خطأ غير متوقع.'**
+  String get unknownErrorMessage;
+
+  /// No description provided for @complaintTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'عنوان الشكوى'**
+  String get complaintTitle;
+
+  /// No description provided for @complaintTitleHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب عنوانًا مختصرًا وواضحًا'**
+  String get complaintTitleHint;
+
+  /// No description provided for @complaintDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل الشكوى'**
+  String get complaintDescription;
+
+  /// No description provided for @complaintDescriptionHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اشرح المشكلة التي واجهتك بالتفصيل'**
+  String get complaintDescriptionHint;
+
+  /// No description provided for @complaintContactPhone.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم هاتف التواصل'**
+  String get complaintContactPhone;
+
+  /// No description provided for @complaintPhoneHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثال: 0999999999'**
+  String get complaintPhoneHint;
+
+  /// No description provided for @complaintPriority.
+  ///
+  /// In ar, this message translates to:
+  /// **'أولوية الشكوى'**
+  String get complaintPriority;
+
+  /// No description provided for @complaintStatus.
+  ///
+  /// In ar, this message translates to:
+  /// **'حالة الشكوى'**
+  String get complaintStatus;
+
+  /// No description provided for @complaintSubmissionDate.
+  ///
+  /// In ar, this message translates to:
+  /// **'تاريخ الإرسال'**
+  String get complaintSubmissionDate;
+
+  /// No description provided for @complaintNumber.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم الشكوى'**
+  String get complaintNumber;
+
+  /// No description provided for @complaintAdminResponse.
+  ///
+  /// In ar, this message translates to:
+  /// **'رد الإدارة'**
+  String get complaintAdminResponse;
+
+  /// No description provided for @complaintNoAdminResponse.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تتم إضافة رد من الإدارة بعد.'**
+  String get complaintNoAdminResponse;
+
+  /// No description provided for @complaintBasicInformation.
+  ///
+  /// In ar, this message translates to:
+  /// **'معلومات الشكوى'**
+  String get complaintBasicInformation;
+
+  /// No description provided for @complaintBasicInformationSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدخل معلومات واضحة تساعد الإدارة على متابعة المشكلة.'**
+  String get complaintBasicInformationSubtitle;
+
+  /// No description provided for @complaintContactInformation.
+  ///
+  /// In ar, this message translates to:
+  /// **'معلومات التواصل'**
+  String get complaintContactInformation;
+
+  /// No description provided for @complaintContactInformationSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيُستخدم الرقم للتواصل معك عند الحاجة.'**
+  String get complaintContactInformationSubtitle;
+
+  /// No description provided for @complaintPrioritySectionSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر مستوى الأولوية المناسب للمشكلة.'**
+  String get complaintPrioritySectionSubtitle;
+
+  /// No description provided for @complaintPriorityLow.
+  ///
+  /// In ar, this message translates to:
+  /// **'منخفضة'**
+  String get complaintPriorityLow;
+
+  /// No description provided for @complaintPriorityMedium.
+  ///
+  /// In ar, this message translates to:
+  /// **'متوسطة'**
+  String get complaintPriorityMedium;
+
+  /// No description provided for @complaintPriorityHigh.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرتفعة'**
+  String get complaintPriorityHigh;
+
+  /// No description provided for @complaintPriorityUnknown.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير محددة'**
+  String get complaintPriorityUnknown;
+
+  /// No description provided for @complaintStatusPending.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيد الانتظار'**
+  String get complaintStatusPending;
+
+  /// No description provided for @complaintStatusInProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيد المعالجة'**
+  String get complaintStatusInProgress;
+
+  /// No description provided for @complaintStatusResolved.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمت المعالجة'**
+  String get complaintStatusResolved;
+
+  /// No description provided for @complaintStatusRejected.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرفوضة'**
+  String get complaintStatusRejected;
+
+  /// No description provided for @complaintStatusUnknown.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير معروفة'**
+  String get complaintStatusUnknown;
+
+  /// No description provided for @submitComplaint.
+  ///
+  /// In ar, this message translates to:
+  /// **'إرسال الشكوى'**
+  String get submitComplaint;
+
+  /// No description provided for @submittingComplaint.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ إرسال الشكوى...'**
+  String get submittingComplaint;
+
+  /// No description provided for @complaintSubmittedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إرسال الشكوى'**
+  String get complaintSubmittedTitle;
+
+  /// No description provided for @complaintSubmittedSuccessfully.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إرسال شكواك بنجاح.'**
+  String get complaintSubmittedSuccessfully;
+
+  /// No description provided for @complaintSubmitFailedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر إرسال الشكوى'**
+  String get complaintSubmitFailedTitle;
+
+  /// No description provided for @complaintTitleRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرجاء إدخال عنوان الشكوى'**
+  String get complaintTitleRequired;
+
+  /// No description provided for @complaintTitleTooShort.
+  ///
+  /// In ar, this message translates to:
+  /// **'يجب أن يتكون العنوان من 3 أحرف على الأقل'**
+  String get complaintTitleTooShort;
+
+  /// No description provided for @complaintDescriptionRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرجاء إدخال تفاصيل الشكوى'**
+  String get complaintDescriptionRequired;
+
+  /// No description provided for @complaintDescriptionTooShort.
+  ///
+  /// In ar, this message translates to:
+  /// **'يرجى كتابة تفاصيل أوضح عن المشكلة'**
+  String get complaintDescriptionTooShort;
+
+  /// No description provided for @complaintPhoneRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرجاء إدخال رقم هاتف التواصل'**
+  String get complaintPhoneRequired;
+
+  /// No description provided for @complaintPriorityRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرجاء اختيار أولوية الشكوى'**
+  String get complaintPriorityRequired;
+
+  /// No description provided for @complaintSubmitConfirmationTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكيد إرسال الشكوى'**
+  String get complaintSubmitConfirmationTitle;
+
+  /// No description provided for @complaintSubmitConfirmationMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل أنت متأكد من رغبتك في إرسال هذه الشكوى؟ بعد الإرسال ستتمكن من متابعة حالتها والاطلاع على رد الإدارة من قسم الشكاوى.'**
+  String get complaintSubmitConfirmationMessage;
+
+  /// No description provided for @confirmComplaintSubmission.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكيد الإرسال'**
+  String get confirmComplaintSubmission;
+
+  /// No description provided for @cancelComplaintSubmission.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء'**
+  String get cancelComplaintSubmission;
 }
 
 class _GeneratedAppLocalizationsDelegate

@@ -1,18 +1,20 @@
 import 'package:bloc/bloc.dart';
 
+import '../../../../../core/network/api_error_handler.dart';
 import '../../../domain/usecases/get_complaints_use_case.dart';
 import 'complaints_event.dart';
 import 'complaints_state.dart';
 
-class ComplaintsBloc extends Bloc<ComplaintsEvent, ComplaintsState> {
+class ComplaintsBloc
+    extends Bloc<ComplaintsEvent, ComplaintsState> {
   final GetComplaintsUseCase getComplaintsUseCase;
 
   ComplaintsBloc({
     required this.getComplaintsUseCase,
   }) : super(const ComplaintsState.initial()) {
     on<LoadComplaintsRequested>(_onLoadComplaintsRequested);
-    on<ComplaintFilterChanged>(_onComplaintFilterChanged);
     on<RefreshComplaintsRequested>(_onRefreshComplaintsRequested);
+    on<ComplaintFilterChanged>(_onComplaintFilterChanged);
   }
 
   Future<void> _onLoadComplaintsRequested(
@@ -26,24 +28,20 @@ class ComplaintsBloc extends Bloc<ComplaintsEvent, ComplaintsState> {
       ),
     );
 
-    try {
-      final complaints = await getComplaintsUseCase();
+    await _loadComplaints(
+      languageCode: event.languageCode,
+      emit: emit,
+    );
+  }
 
-      emit(
-        state.copyWith(
-          status: ComplaintsStatus.success,
-          complaints: complaints,
-          clearErrorMessage: true,
-        ),
-      );
-    } catch (_) {
-      emit(
-        state.copyWith(
-          status: ComplaintsStatus.failure,
-          errorMessage: 'تعذر تحميل الشكاوى حاليًا',
-        ),
-      );
-    }
+  Future<void> _onRefreshComplaintsRequested(
+      RefreshComplaintsRequested event,
+      Emitter<ComplaintsState> emit,
+      ) async {
+    await _loadComplaints(
+      languageCode: event.languageCode,
+      emit: emit,
+    );
   }
 
   void _onComplaintFilterChanged(
@@ -57,25 +55,31 @@ class ComplaintsBloc extends Bloc<ComplaintsEvent, ComplaintsState> {
     );
   }
 
-  Future<void> _onRefreshComplaintsRequested(
-      RefreshComplaintsRequested event,
-      Emitter<ComplaintsState> emit,
-      ) async {
+  Future<void> _loadComplaints({
+    required String languageCode,
+    required Emitter<ComplaintsState> emit,
+  }) async {
     try {
-      final complaints = await getComplaintsUseCase();
+      final result = await getComplaintsUseCase(
+        languageCode: languageCode,
+      );
 
       emit(
         state.copyWith(
           status: ComplaintsStatus.success,
-          complaints: complaints,
+          complaints: result.data,
+          isFromCache: result.isFromCache,
           clearErrorMessage: true,
         ),
       );
-    } catch (_) {
+    } catch (error) {
       emit(
         state.copyWith(
           status: ComplaintsStatus.failure,
-          errorMessage: 'تعذر تحديث الشكاوى',
+          errorMessage: ApiErrorHandler.handle(
+            error,
+            languageCode: languageCode,
+          ),
         ),
       );
     }

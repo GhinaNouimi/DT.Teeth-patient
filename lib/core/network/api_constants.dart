@@ -67,4 +67,11 @@ class ApiConstants {
 
   static String patientShowTreatmentDetails(int treatmentId) =>
       '/patient/showTreatmentdetails/$treatmentId';
+
+  // Complaints
+  static const String patientShowAllComplaints =
+      '/patient/showAllComplaints';
+
+  static const String patientAddComplaint =
+      '/patient/addComplaint';
 }

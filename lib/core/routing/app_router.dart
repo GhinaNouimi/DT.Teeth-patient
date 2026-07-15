@@ -32,6 +32,7 @@ import '../../features/auth/presentation/pages/on_boarding/splash_screen.dart';
 import '../../features/auth/presentation/pages/signup/patient_health_questions_screen.dart';
 import '../../features/auth/presentation/pages/signup/signup_screen.dart';
 import '../../features/auth/presentation/pages/verify_account/verify_screen.dart';
+import '../../features/complaints/domain/entities/complaint_entity.dart';
 import '../../features/complaints/presentation/pages/complaint_details_screen.dart';
 import '../../features/complaints/presentation/pages/complaints_list_screen.dart';
 import '../../features/complaints/presentation/pages/create_complaint_screen.dart';
@@ -405,8 +406,11 @@ class AppRouter {
         path: AppRoutes.complaintDetails,
         name: 'complaint-details',
         builder: (context, state) {
-          final complaintId = state.extra as String;
-          return ComplaintDetailsScreen(complaintId: complaintId);
+          final complaint = state.extra as ComplaintEntity;
+
+          return ComplaintDetailsScreen(
+            complaint: complaint,
+          );
         },
       ),
     ],

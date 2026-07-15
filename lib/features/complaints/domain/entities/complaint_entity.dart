@@ -1,83 +1,71 @@
 enum ComplaintStatus {
-  open,
+  pending,
   inProgress,
   resolved,
+  rejected,
+  unknown,
 }
 
-enum ComplaintCategory {
-  appointment,
-  treatment,
-  payment,
-  other,
+enum ComplaintPriority {
+  low,
+  medium,
+  high,
+  unknown,
 }
 
 class ComplaintEntity {
-  final String id;
+  final int id;
   final String title;
   final String description;
-  final ComplaintCategory category;
   final ComplaintStatus status;
+  final ComplaintPriority priority;
+  final String phoneNumber;
+  final String? adminResponse;
   final DateTime createdAt;
-  final String? relatedReference;
-  final List<String> attachments;
-  final List<ComplaintUpdateEntity> updates;
-
-  final String? centerReply;
-  final DateTime? resolvedAt;
 
   const ComplaintEntity({
     required this.id,
     required this.title,
     required this.description,
-    required this.category,
     required this.status,
+    required this.priority,
+    required this.phoneNumber,
+    required this.adminResponse,
     required this.createdAt,
-    required this.relatedReference,
-    required this.attachments,
-    required this.updates,
-    this.centerReply,
-    this.resolvedAt,
   });
 
+  bool get hasAdminResponse =>
+      adminResponse != null && adminResponse!.trim().isNotEmpty;
+
+  bool get isActive =>
+      status == ComplaintStatus.pending ||
+          status == ComplaintStatus.inProgress;
+
+  bool get isClosed =>
+      status == ComplaintStatus.resolved ||
+          status == ComplaintStatus.rejected;
+
   ComplaintEntity copyWith({
-    String? id,
+    int? id,
     String? title,
     String? description,
-    ComplaintCategory? category,
     ComplaintStatus? status,
+    ComplaintPriority? priority,
+    String? phoneNumber,
+    String? adminResponse,
+    bool clearAdminResponse = false,
     DateTime? createdAt,
-    String? relatedReference,
-    List<String>? attachments,
-    List<ComplaintUpdateEntity>? updates,
-    String? centerReply,
-    DateTime? resolvedAt,
   }) {
     return ComplaintEntity(
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
-      category: category ?? this.category,
       status: status ?? this.status,
+      priority: priority ?? this.priority,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      adminResponse:
+      clearAdminResponse ? null : adminResponse ?? this.adminResponse,
       createdAt: createdAt ?? this.createdAt,
-      relatedReference: relatedReference ?? this.relatedReference,
-      attachments: attachments ?? this.attachments,
-      updates: updates ?? this.updates,
-      centerReply: centerReply ?? this.centerReply,
-      resolvedAt: resolvedAt ?? this.resolvedAt,
     );
   }
-}
-
-class ComplaintUpdateEntity {
-  final String id;
-  final String message;
-  final DateTime createdAt;
-  final bool isFromClinic;
-
-  const ComplaintUpdateEntity({
-    required this.id,
-    required this.message,
-    required this.createdAt,
-    required this.isFromClinic,
-  });
 }

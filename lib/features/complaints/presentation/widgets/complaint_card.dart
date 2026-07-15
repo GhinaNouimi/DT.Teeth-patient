@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/theme_extensions.dart';
-import '../../../../core/widgets/common/app_section_card.dart';
-import '../../../../core/widgets/common/app_status_chip.dart';
 import '../../domain/entities/complaint_entity.dart';
+import 'complaint_priority_chip.dart';
+import 'complaint_status_chip.dart';
 
 class ComplaintCard extends StatelessWidget {
   final ComplaintEntity complaint;
@@ -18,188 +19,175 @@ class ComplaintCard extends StatelessWidget {
     required this.onTap,
   });
 
-  String _formatDate(DateTime date) {
-    return DateFormat('dd/MM/yyyy').format(date);
-  }
+  String _formatDate(
+      BuildContext context,
+      DateTime date,
+      ) {
+    final languageCode =
+        Localizations.localeOf(context).languageCode;
 
-  String _categoryLabel(ComplaintCategory category) {
-    switch (category) {
-      case ComplaintCategory.appointment:
-        return 'موعد';
-      case ComplaintCategory.treatment:
-        return 'علاج';
-      case ComplaintCategory.payment:
-        return 'دفعة';
-      case ComplaintCategory.other:
-        return 'أخرى';
-    }
-  }
-
-  IconData _categoryIcon(ComplaintCategory category) {
-    switch (category) {
-      case ComplaintCategory.appointment:
-        return Icons.calendar_month_outlined;
-      case ComplaintCategory.treatment:
-        return Icons.medical_services_outlined;
-      case ComplaintCategory.payment:
-        return Icons.receipt_long_outlined;
-      case ComplaintCategory.other:
-        return Icons.more_horiz_rounded;
-    }
-  }
-
-  String _statusLabel(ComplaintStatus status) {
-    switch (status) {
-      case ComplaintStatus.open:
-        return 'تم الاستلام';
-      case ComplaintStatus.inProgress:
-        return 'قيد المعالجة';
-      case ComplaintStatus.resolved:
-        return 'تم الحل';
-    }
-  }
-
-  AppStatusType _statusType(ComplaintStatus status) {
-    switch (status) {
-      case ComplaintStatus.open:
-        return AppStatusType.info;
-      case ComplaintStatus.inProgress:
-        return AppStatusType.warning;
-      case ComplaintStatus.resolved:
-        return AppStatusType.success;
-    }
+    return DateFormat(
+      'dd MMM yyyy',
+      languageCode,
+    ).format(date);
   }
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
-    return AppSectionCard(
-      padding: const EdgeInsets.all(18),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 58,
-            height: 58,
-            decoration: BoxDecoration(
-              color: colors.surfaceMuted,
-              borderRadius: BorderRadius.circular(AppRadius.lg),
-            ),
-            child: Icon(
-              _categoryIcon(complaint.category),
-              color: colors.navBarItem,
-              size: 28,
-            ),
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(AppRadius.xl),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.xl),
+        child: Ink(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          decoration: BoxDecoration(
+            color: colors.surfacePrimary,
+            borderRadius: BorderRadius.circular(AppRadius.xl),
+            border: Border.all(color: colors.borderSoft),
+            boxShadow: [
+              BoxShadow(
+                color: colors.shadow.withValues(alpha: 0.05),
+                blurRadius: 18,
+                offset: const Offset(0, 8),
+              ),
+            ],
           ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        complaint.title,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          color: colors.textPrimary,
-                          fontWeight: FontWeight.w800,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 46,
+                    height: 46,
+                    decoration: BoxDecoration(
+                      color: colors.surfaceMuted,
+                      borderRadius: BorderRadius.circular(
+                        AppRadius.lg,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.support_agent_rounded,
+                      color: colors.navBarItem,
+                      size: 23,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          complaint.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                          theme.textTheme.titleMedium?.copyWith(
+                            color: colors.textPrimary,
+                            fontWeight: FontWeight.w800,
+                            height: 1.35,
+                          ),
                         ),
-                      ),
+                        const SizedBox(height: AppSpacing.xs),
+                        Text(
+                          '${l10n.complaintNumber} #${complaint.id}',
+                          style:
+                          theme.textTheme.bodySmall?.copyWith(
+                            color: colors.textSecondary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
                     ),
-                    AppStatusChip(
-                      label: _statusLabel(complaint.status),
-                      type: _statusType(complaint.status),
-                      isCompact: true,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  complaint.description,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.bodyMedium?.copyWith(
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 16,
                     color: colors.textSecondary,
-                    height: 1.5,
-                    fontWeight: FontWeight.w600,
                   ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                complaint.description,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: colors.textSecondary,
+                  height: 1.6,
+                  fontWeight: FontWeight.w600,
                 ),
-                const SizedBox(height: AppSpacing.md),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.tag_rounded,
-                      size: 15,
-                      color: colors.textSecondary,
-                    ),
-                    const SizedBox(width: AppSpacing.xs),
-                    Text(
-                      _categoryLabel(complaint.category),
-                      style: theme.textTheme.bodySmall?.copyWith(
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              Wrap(
+                spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.sm,
+                children: [
+                  ComplaintStatusChip(
+                    status: complaint.status,
+                  ),
+                  ComplaintPriorityChip(
+                    priority: complaint.priority,
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              Divider(
+                height: 1,
+                color: colors.borderSoft,
+              ),
+              const SizedBox(height: AppSpacing.md),
+              Row(
+                children: [
+                  Icon(
+                    Icons.calendar_today_outlined,
+                    size: 16,
+                    color: colors.textSecondary,
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: Text(
+                      _formatDate(
+                        context,
+                        complaint.createdAt,
+                      ),
+                      style:
+                      theme.textTheme.bodySmall?.copyWith(
                         color: colors.textSecondary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.md),
+                  ),
+                  if (complaint.hasAdminResponse) ...[
                     Icon(
-                      Icons.schedule_rounded,
-                      size: 15,
-                      color: colors.textSecondary,
+                      Icons.mark_chat_read_outlined,
+                      size: 17,
+                      color: colors.success,
                     ),
                     const SizedBox(width: AppSpacing.xs),
                     Text(
-                      _formatDate(complaint.createdAt),
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: colors.textSecondary,
-                        fontWeight: FontWeight.w700,
+                      l10n.complaintAdminResponse,
+                      style:
+                      theme.textTheme.bodySmall?.copyWith(
+                        color: colors.success,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
                   ],
-                ),
-                const SizedBox(height: 14),
-                Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: InkWell(
-                    onTap: onTap,
-                    borderRadius: BorderRadius.circular(AppRadius.pill),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.lg,
-                        vertical: AppSpacing.sm,
-                      ),
-                      decoration: BoxDecoration(
-                        color: colors.surfaceMuted,
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
-                        border: Border.all(color: colors.borderSoft),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'عرض التفاصيل',
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: colors.textPrimary,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                          const SizedBox(width: AppSpacing.sm),
-                          Icon(
-                            Icons.arrow_forward_rounded,
-                            size: 18,
-                            color: colors.navBarItem,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

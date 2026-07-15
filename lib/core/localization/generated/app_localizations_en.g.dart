@@ -869,4 +869,186 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
 
   @override
   String get comingSoon => 'Coming soon';
+
+  @override
+  String get myComplaints => 'My Complaints';
+
+  @override
+  String get newComplaint => 'New Complaint';
+
+  @override
+  String get addComplaint => 'Submit a Complaint';
+
+  @override
+  String get complaintDetails => 'Complaint Details';
+
+  @override
+  String get complaintsSubtitle =>
+      'Track your submitted complaints and administration responses in one place.';
+
+  @override
+  String get allComplaints => 'All';
+
+  @override
+  String get activeComplaints => 'In Progress';
+
+  @override
+  String get closedComplaints => 'Closed';
+
+  @override
+  String get noComplaintsTitle => 'No complaints yet';
+
+  @override
+  String get noComplaintsSubtitle =>
+      'You can submit a complaint when you face an issue, and it will appear here.';
+
+  @override
+  String get noFilteredComplaintsTitle => 'No results';
+
+  @override
+  String get noFilteredComplaintsSubtitle =>
+      'There are no complaints matching the selected filter.';
+
+  @override
+  String get complaintsLoadFailed => 'Failed to load complaints';
+
+  @override
+  String get complaintsRefreshFailed => 'Failed to refresh complaints';
+
+  @override
+  String get unknownErrorMessage => 'An unexpected error occurred.';
+
+  @override
+  String get complaintTitle => 'Complaint Title';
+
+  @override
+  String get complaintTitleHint => 'Enter a short and clear title';
+
+  @override
+  String get complaintDescription => 'Complaint Details';
+
+  @override
+  String get complaintDescriptionHint =>
+      'Describe the issue you experienced in detail';
+
+  @override
+  String get complaintContactPhone => 'Contact Phone Number';
+
+  @override
+  String get complaintPhoneHint => 'Example: 0999999999';
+
+  @override
+  String get complaintPriority => 'Complaint Priority';
+
+  @override
+  String get complaintStatus => 'Complaint Status';
+
+  @override
+  String get complaintSubmissionDate => 'Submission Date';
+
+  @override
+  String get complaintNumber => 'Complaint Number';
+
+  @override
+  String get complaintAdminResponse => 'Administration Response';
+
+  @override
+  String get complaintNoAdminResponse =>
+      'No response has been added by the administration yet.';
+
+  @override
+  String get complaintBasicInformation => 'Complaint Information';
+
+  @override
+  String get complaintBasicInformationSubtitle =>
+      'Provide clear information to help the administration review the issue.';
+
+  @override
+  String get complaintContactInformation => 'Contact Information';
+
+  @override
+  String get complaintContactInformationSubtitle =>
+      'This number may be used to contact you when needed.';
+
+  @override
+  String get complaintPrioritySectionSubtitle =>
+      'Select the appropriate priority level for the issue.';
+
+  @override
+  String get complaintPriorityLow => 'Low';
+
+  @override
+  String get complaintPriorityMedium => 'Medium';
+
+  @override
+  String get complaintPriorityHigh => 'High';
+
+  @override
+  String get complaintPriorityUnknown => 'Not specified';
+
+  @override
+  String get complaintStatusPending => 'Pending';
+
+  @override
+  String get complaintStatusInProgress => 'In Progress';
+
+  @override
+  String get complaintStatusResolved => 'Resolved';
+
+  @override
+  String get complaintStatusRejected => 'Rejected';
+
+  @override
+  String get complaintStatusUnknown => 'Unknown';
+
+  @override
+  String get submitComplaint => 'Submit Complaint';
+
+  @override
+  String get submittingComplaint => 'Submitting complaint...';
+
+  @override
+  String get complaintSubmittedTitle => 'Complaint Submitted';
+
+  @override
+  String get complaintSubmittedSuccessfully =>
+      'Your complaint has been submitted successfully.';
+
+  @override
+  String get complaintSubmitFailedTitle => 'Failed to Submit Complaint';
+
+  @override
+  String get complaintTitleRequired => 'Please enter the complaint title';
+
+  @override
+  String get complaintTitleTooShort =>
+      'The title must contain at least 3 characters';
+
+  @override
+  String get complaintDescriptionRequired =>
+      'Please enter the complaint details';
+
+  @override
+  String get complaintDescriptionTooShort =>
+      'Please provide clearer details about the issue';
+
+  @override
+  String get complaintPhoneRequired => 'Please enter a contact phone number';
+
+  @override
+  String get complaintPriorityRequired =>
+      'Please select the complaint priority';
+
+  @override
+  String get complaintSubmitConfirmationTitle => 'Confirm Complaint Submission';
+
+  @override
+  String get complaintSubmitConfirmationMessage =>
+      'Are you sure you want to submit this complaint? After submission, you can track its status and view the administration\'s response from the complaints section.';
+
+  @override
+  String get confirmComplaintSubmission => 'Confirm Submission';
+
+  @override
+  String get cancelComplaintSubmission => 'Cancel';
 }

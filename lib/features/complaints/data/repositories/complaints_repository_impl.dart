@@ -1,30 +1,87 @@
+import '../../../../core/cache/cache_exception.dart';
+import '../../../../core/cache/cached_result.dart';
+import '../../../../core/network/network_error_messages.dart';
+import '../../../../core/network/network_info.dart';
+import '../../domain/entities/add_complaint_params.dart';
 import '../../domain/entities/complaint_entity.dart';
 import '../../domain/repositories/complaints_repository.dart';
-import '../models/complaint_model.dart';
-import '../sources/complaints_mock_data_source.dart';
+import '../datasources/local/complaints_local_data_source.dart';
+import '../datasources/remote/complaints_remote_data_source.dart';
+import '../models/add_complaint_request_model.dart';
 
 class ComplaintsRepositoryImpl implements ComplaintsRepository {
-  final ComplaintsMockDataSource mockDataSource;
+  final ComplaintsRemoteDataSource remoteDataSource;
+  final ComplaintsLocalDataSource localDataSource;
+  final NetworkInfo networkInfo;
 
-  const ComplaintsRepositoryImpl(this.mockDataSource);
+  const ComplaintsRepositoryImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+    required this.networkInfo,
+  });
 
   @override
-  Future<List<ComplaintEntity>> getComplaints() async {
-    final result = await mockDataSource.getComplaints();
-    return result.map((e) => e.toEntity()).toList();
+  Future<CachedResult<List<ComplaintEntity>>> showAllComplaints({
+    required String languageCode,
+  }) async {
+    final isConnected = await networkInfo.isConnected;
+
+    if (isConnected) {
+      final remoteComplaints =
+      await remoteDataSource.showAllComplaints();
+
+      await localDataSource.cacheComplaints(
+        remoteComplaints,
+      );
+
+      final complaints = remoteComplaints
+          .map((complaint) => complaint.toEntity())
+          .toList();
+
+      return CachedResult.remote(complaints);
+    }
+
+    final cachedComplaints =
+    await localDataSource.getCachedComplaints();
+
+    if (cachedComplaints.isEmpty) {
+      throw CacheException(
+        NetworkErrorMessages.noCachedData(languageCode),
+      );
+    }
+
+    final complaints = cachedComplaints
+        .map((complaint) => complaint.toEntity())
+        .toList();
+
+    return CachedResult.cache(complaints);
   }
 
   @override
-  Future<ComplaintEntity> getComplaintDetails(String complaintId) async {
-    final result = await mockDataSource.getComplaintDetails(complaintId);
-    return result.toEntity();
-  }
+  Future<ComplaintEntity> addComplaint({
+    required AddComplaintParams params,
+    required String languageCode,
+  }) async {
+    final isConnected = await networkInfo.isConnected;
 
-  @override
-  Future<ComplaintEntity> submitComplaint(ComplaintEntity complaint) async {
-    final result = await mockDataSource.submitComplaint(
-      ComplaintModel.fromEntity(complaint),
+    if (!isConnected) {
+      throw CacheException(
+        NetworkErrorMessages.offlineActionNotAllowed(
+          languageCode,
+        ),
+      );
+    }
+
+    final requestModel =
+    AddComplaintRequestModel.fromParams(params);
+
+    final createdComplaint =
+    await remoteDataSource.addComplaint(requestModel);
+
+    await localDataSource.addComplaintToCache(
+      createdComplaint,
     );
-    return result.toEntity();
+
+    return createdComplaint.toEntity();
   }
 }

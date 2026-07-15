@@ -1,19 +1,29 @@
 import '../../models/complaint_filter.dart';
 
-abstract class ComplaintsEvent {
+sealed class ComplaintsEvent {
   const ComplaintsEvent();
 }
 
-class LoadComplaintsRequested extends ComplaintsEvent {
-  const LoadComplaintsRequested();
+final class LoadComplaintsRequested extends ComplaintsEvent {
+  final String languageCode;
+
+  const LoadComplaintsRequested({
+    required this.languageCode,
+  });
 }
 
-class ComplaintFilterChanged extends ComplaintsEvent {
+final class RefreshComplaintsRequested extends ComplaintsEvent {
+  final String languageCode;
+
+  const RefreshComplaintsRequested({
+    required this.languageCode,
+  });
+}
+
+final class ComplaintFilterChanged extends ComplaintsEvent {
   final ComplaintFilter filter;
 
-  const ComplaintFilterChanged(this.filter);
-}
-
-class RefreshComplaintsRequested extends ComplaintsEvent {
-  const RefreshComplaintsRequested();
+  const ComplaintFilterChanged({
+    required this.filter,
+  });
 }
