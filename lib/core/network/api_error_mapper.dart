@@ -12,7 +12,8 @@ class ApiErrorMapper {
     final lowerMessage = message.toLowerCase();
 
     if (normalizedField == 'email') {
-      if (lowerMessage.contains('already') || lowerMessage.contains('taken')) {
+      if (lowerMessage.contains('already') ||
+          lowerMessage.contains('taken')) {
         return ApiErrorMessages.text(
           languageCode,
           ar: 'هذا البريد الإلكتروني مستخدم مسبقاً.',
@@ -28,7 +29,8 @@ class ApiErrorMapper {
     }
 
     if (normalizedField.contains('phone')) {
-      if (lowerMessage.contains('already') || lowerMessage.contains('taken')) {
+      if (lowerMessage.contains('already') ||
+          lowerMessage.contains('taken')) {
         return ApiErrorMessages.text(
           languageCode,
           ar: 'رقم الهاتف مستخدم مسبقاً.',
@@ -155,7 +157,8 @@ class ApiErrorMapper {
     required String message,
     required String languageCode,
   }) {
-    final lowerMessage = message.toLowerCase();
+    final normalizedMessage = message.trim();
+    final lowerMessage = normalizedMessage.toLowerCase();
 
     if (lowerMessage.contains('invalid credentials')) {
       return ApiErrorMessages.text(
@@ -189,7 +192,9 @@ class ApiErrorMapper {
       );
     }
 
-    if (lowerMessage.contains('invalid or expired verification code')) {
+    if (lowerMessage.contains(
+      'invalid or expired verification code',
+    )) {
       return ApiErrorMessages.text(
         languageCode,
         ar: 'رمز التحقق غير صحيح أو منتهي الصلاحية.',
@@ -214,18 +219,42 @@ class ApiErrorMapper {
       );
     }
 
-    if (lowerMessage.contains('profile') && lowerMessage.contains('updated')) {
+    if (lowerMessage.contains('profile') &&
+        lowerMessage.contains('updated')) {
       return ApiErrorMessages.text(
         languageCode,
         ar: 'تم تحديث البروفايل بنجاح.',
         en: 'Profile updated successfully.',
       );
     }
-    if (message.contains('يمكنك تقييم الطبيب فقط بعد إتمام موعد معه')) {
+
+    if (normalizedMessage.contains(
+      'يمكنك تقييم الطبيب فقط بعد إتمام موعد معه',
+    )) {
       return ApiErrorMessages.text(
         languageCode,
         ar: 'يمكنك تقييم طبيب الأسنان فقط بعد إتمام موعد معه.',
         en: 'You can rate the dentist only after completing an appointment with them.',
+      );
+    }
+
+    if (normalizedMessage.contains(
+      'لا يمكن إلغاء الموعد قبل أقل من 24 ساعة',
+    )) {
+      return ApiErrorMessages.text(
+        languageCode,
+        ar: 'لا يمكن إلغاء الموعد قبل أقل من 24 ساعة من موعده.',
+        en: 'The appointment cannot be cancelled less than 24 hours before its scheduled time.',
+      );
+    }
+
+    if (normalizedMessage.contains(
+      'لا يمكن إلغاء هذا الموعد في حالته الحالية',
+    )) {
+      return ApiErrorMessages.text(
+        languageCode,
+        ar: 'لا يمكن إلغاء هذا الموعد في حالته الحالية.',
+        en: 'This appointment cannot be cancelled in its current status.',
       );
     }
 

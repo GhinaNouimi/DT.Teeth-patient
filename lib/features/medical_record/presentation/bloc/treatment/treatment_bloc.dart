@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/network/api_error_handler.dart';
 import '../../../domain/usecases/treatment/get_all_treatments_use_case.dart';
 import '../../../domain/usecases/treatment/get_treatment_details_use_case.dart';
 import 'treatment_event.dart';
@@ -13,8 +14,13 @@ class TreatmentBloc extends Bloc<TreatmentEvent, TreatmentState> {
     required this.getAllTreatmentsUseCase,
     required this.getTreatmentDetailsUseCase,
   }) : super(const TreatmentInitial()) {
-    on<LoadTreatmentsRequested>(_onLoadTreatmentsRequested);
-    on<LoadTreatmentDetailsRequested>(_onLoadTreatmentDetailsRequested);
+    on<LoadTreatmentsRequested>(
+      _onLoadTreatmentsRequested,
+    );
+
+    on<LoadTreatmentDetailsRequested>(
+      _onLoadTreatmentDetailsRequested,
+    );
   }
 
   Future<void> _onLoadTreatmentsRequested(
@@ -37,7 +43,10 @@ class TreatmentBloc extends Bloc<TreatmentEvent, TreatmentState> {
     } catch (error) {
       emit(
         TreatmentFailure(
-          message: error.toString().replaceFirst('Exception: ', ''),
+          message: ApiErrorHandler.handle(
+            error,
+            languageCode: event.languageCode,
+          ),
         ),
       );
     }
@@ -64,7 +73,10 @@ class TreatmentBloc extends Bloc<TreatmentEvent, TreatmentState> {
     } catch (error) {
       emit(
         TreatmentFailure(
-          message: error.toString().replaceFirst('Exception: ', ''),
+          message: ApiErrorHandler.handle(
+            error,
+            languageCode: event.languageCode,
+          ),
         ),
       );
     }

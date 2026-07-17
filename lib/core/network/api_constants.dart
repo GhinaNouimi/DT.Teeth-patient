@@ -24,18 +24,23 @@ class ApiConstants {
   static const String patientShowProfile = '/patient/showProfile';
   static const String patientEditProfile = '/patient/editProfile';
 
-  // Appointments
+// Appointments
   static const String patientShowAppointments =
       '/patient/showAppointments';
 
   static const String patientShowPreviousAppointments =
       '/patient/showPreviousAppointments';
 
-  static const String patientShowAppointmentDetails =
-      '/patient/showAppointmentdetails';
+  static String patientShowAppointmentDetails(
+      int appointmentId,
+      ) =>
+      '/patient/showAppointmentdetails/$appointmentId';
 
-  static const String patientCancelAppointment =
-      '/patient/cancelAppointment';
+  static String patientCancelAppointment(
+      int appointmentId,
+      ) =>
+      '/patient/cancelAppointment/$appointmentId';
+
 
   // Prescriptions
   static const String patientShowAllPrescriptions =

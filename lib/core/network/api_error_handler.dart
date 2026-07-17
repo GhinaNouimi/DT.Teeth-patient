@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../cache/cache_exception.dart';
 import 'api_error_mapper.dart';
 import 'api_error_messages.dart';
 
@@ -10,8 +11,15 @@ class ApiErrorHandler {
       Object error, {
         required String languageCode,
       }) {
+    if (error is CacheException) {
+      return error.message;
+    }
+
     if (error is DioException) {
-      return _handleDioException(error, languageCode);
+      return _handleDioException(
+        error,
+        languageCode,
+      );
     }
 
     return ApiErrorMessages.text(
@@ -50,7 +58,10 @@ class ApiErrorHandler {
         );
 
       case DioExceptionType.badResponse:
-        return _handleBadResponse(error.response, languageCode);
+        return _handleBadResponse(
+          error.response,
+          languageCode,
+        );
 
       case DioExceptionType.cancel:
         return ApiErrorMessages.text(
@@ -83,7 +94,10 @@ class ApiErrorHandler {
     final data = response?.data;
 
     if (statusCode == 400) {
-      return _extractMessage(data, languageCode) ??
+      return _extractMessage(
+        data,
+        languageCode,
+      ) ??
           ApiErrorMessages.text(
             languageCode,
             ar: 'الطلب غير صحيح. يرجى التحقق من البيانات.',
@@ -116,11 +130,17 @@ class ApiErrorHandler {
     }
 
     if (statusCode == 422) {
-      return _handleValidationErrors(data, languageCode);
+      return _handleValidationErrors(
+        data,
+        languageCode,
+      );
     }
 
     if (statusCode == 429) {
-      return _extractMessage(data, languageCode) ??
+      return _extractMessage(
+        data,
+        languageCode,
+      ) ??
           ApiErrorMessages.text(
             languageCode,
             ar: 'تم إرسال عدد كبير من الطلبات. يرجى المحاولة بعد قليل.',
@@ -136,7 +156,10 @@ class ApiErrorHandler {
       );
     }
 
-    return _extractMessage(data, languageCode) ??
+    return _extractMessage(
+      data,
+      languageCode,
+    ) ??
         ApiErrorMessages.text(
           languageCode,
           ar: 'تعذر إكمال العملية. يرجى المحاولة مرة أخرى.',
@@ -151,11 +174,13 @@ class ApiErrorHandler {
     if (data is Map<String, dynamic>) {
       final errors = data['errors'];
 
-      if (errors is Map<String, dynamic> && errors.isNotEmpty) {
+      if (errors is Map<String, dynamic> &&
+          errors.isNotEmpty) {
         final firstField = errors.keys.first;
         final firstError = errors.values.first;
 
-        if (firstError is List && firstError.isNotEmpty) {
+        if (firstError is List &&
+            firstError.isNotEmpty) {
           return ApiErrorMapper.validation(
             field: firstField,
             message: firstError.first.toString(),
@@ -164,12 +189,15 @@ class ApiErrorHandler {
         }
       }
 
-      return _extractMessage(data, languageCode) ??
-          ApiErrorMessages.text(
-            languageCode,
-            ar: 'يرجى التأكد من صحة البيانات المدخلة.',
-            en: 'Please make sure the entered data is correct.',
-          );
+      final message = data['message'];
+
+      if (message is String &&
+          message.trim().isNotEmpty) {
+        return ApiErrorMapper.common(
+          message: message.trim(),
+          languageCode: languageCode,
+        );
+      }
     }
 
     return ApiErrorMessages.text(
@@ -186,7 +214,8 @@ class ApiErrorHandler {
     if (data is Map<String, dynamic>) {
       final message = data['message'];
 
-      if (message is String && message.trim().isNotEmpty) {
+      if (message is String &&
+          message.trim().isNotEmpty) {
         return ApiErrorMapper.common(
           message: message,
           languageCode: languageCode,

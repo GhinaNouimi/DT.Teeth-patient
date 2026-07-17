@@ -495,9 +495,6 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
   String get smartAssistant => 'AI Assistant';
 
   @override
-  String get appointmentTypeTitle => 'Appointment Type';
-
-  @override
   String get appointmentTypeEmergencyDescription =>
       'Emergency appointment - will be handled immediately';
 
@@ -522,12 +519,6 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
 
   @override
   String get noDoctorsAvailable => 'No doctors available for this service';
-
-  @override
-  String get selectDoctor => 'Select Doctor';
-
-  @override
-  String get selectServiceType => 'Select Service Type';
 
   @override
   String get emergency => 'Emergency';
@@ -1051,4 +1042,245 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
 
   @override
   String get cancelComplaintSubmission => 'Cancel';
+
+  @override
+  String get treatmentStatusOngoing => 'Ongoing';
+
+  @override
+  String get treatmentStatusCompleted => 'Completed';
+
+  @override
+  String get treatmentStatusCancelled => 'Cancelled';
+
+  @override
+  String get treatmentStatusUnknown => 'Unknown';
+
+  @override
+  String get treatmentHistory => 'Treatment History';
+
+  @override
+  String get noCurrentTreatmentsTitle => 'No Current Treatments';
+
+  @override
+  String get noCurrentTreatmentsSubtitle =>
+      'There are no treatment plans currently in progress.';
+
+  @override
+  String get noTreatmentHistoryTitle => 'No Treatment History';
+
+  @override
+  String get noTreatmentHistorySubtitle =>
+      'Completed or cancelled treatments will appear here.';
+
+  @override
+  String get treatmentCreatedAt => 'Treatment plan created';
+
+  @override
+  String get progressBeforeCancellation => 'Progress before cancellation';
+
+  @override
+  String get sessionStartTime => 'Session start time';
+
+  @override
+  String get sessionEndTime => 'Session end time';
+
+  @override
+  String get noTreatmentSessionsTitle => 'No Treatment Sessions';
+
+  @override
+  String get noTreatmentSessionsSubtitle =>
+      'Sessions for this treatment will appear here when added.';
+
+  @override
+  String get appointmentTypeTitle => 'Appointment type';
+
+  @override
+  String get emergencyAppointmentTitle => 'Emergency appointment';
+
+  @override
+  String get emergencyAppointmentDescription =>
+      'The case will be handled as soon as possible';
+
+  @override
+  String get regularAppointmentTitle => 'Regular appointment';
+
+  @override
+  String get regularAppointmentDescription =>
+      'Book a new treatment appointment';
+
+  @override
+  String get followUpAppointmentTitle => 'Follow-up appointment';
+
+  @override
+  String get followUpAppointmentDescription =>
+      'Continue a previous treatment or session';
+
+  @override
+  String get selectServiceType => 'Select service type';
+
+  @override
+  String get selectDoctor => 'Select doctor';
+
+  @override
+  String get noDoctorsAvailableForService =>
+      'No doctors are available for this service';
+
+  @override
+  String get emergencyLabel => 'Emergency';
+
+  @override
+  String get appointmentPending => 'Pending';
+
+  @override
+  String get appointmentPendingSecretary => 'Awaiting secretary approval';
+
+  @override
+  String get appointmentApproved => 'Confirmed';
+
+  @override
+  String get appointmentRejected => 'Rejected';
+
+  @override
+  String get appointmentCancelled => 'Cancelled';
+
+  @override
+  String get appointmentCompleted => 'Completed';
+
+  @override
+  String get appointmentPatientNoShow => 'Patient did not attend';
+
+  @override
+  String get unknownStatus => 'Unknown';
+
+  @override
+  String get appointmentNewTreatment => 'New treatment';
+
+  @override
+  String get appointmentContinueTreatment => 'Continue treatment';
+
+  @override
+  String get appointmentWalkIn => 'Walk-in';
+
+  @override
+  String get cancellingAppointment => 'Cancelling appointment';
+
+  @override
+  String get appointmentsCancellationSuccessTitle => 'Appointment cancelled';
+
+  @override
+  String get appointmentsOperationFailedTitle => 'Operation failed';
+
+  @override
+  String get appointmentsRefreshFailedTitle => 'Unable to refresh appointments';
+
+  @override
+  String get appointmentsOfflineCachedMessage =>
+      'You are offline. Previously saved appointments are being displayed.';
+
+  @override
+  String get appointmentDetailsTitle => 'Appointment Details';
+
+  @override
+  String get appointmentStatusTitle => 'Appointment Status';
+
+  @override
+  String get appointmentInformationTitle => 'Appointment Information';
+
+  @override
+  String get appointmentDateLabel => 'Date';
+
+  @override
+  String get appointmentTimeLabel => 'Time';
+
+  @override
+  String get appointmentTypeLabel => 'Appointment Type';
+
+  @override
+  String get dentistTitle => 'Dentist';
+
+  @override
+  String get treatmentInformationTitle => 'Treatment Information';
+
+  @override
+  String get treatmentStatusLabel => 'Treatment Status';
+
+  @override
+  String get completedSessionsLabel => 'Completed Sessions';
+
+  @override
+  String get appointmentNotesTitle => 'Appointment Notes';
+
+  @override
+  String get rejectionReasonTitle => 'Rejection Reason';
+
+  @override
+  String get cancelAppointmentButton => 'Cancel Appointment';
+
+  @override
+  String get cancellingAppointmentButton => 'Cancelling appointment...';
+
+  @override
+  String get cancelAppointmentDialogTitle => 'Cancel Appointment';
+
+  @override
+  String get cancelAppointmentDialogMessage =>
+      'Are you sure you want to cancel this appointment? This action cannot be undone.';
+
+  @override
+  String get keepAppointmentButton => 'Keep Appointment';
+
+  @override
+  String get confirmCancellationButton => 'Confirm Cancellation';
+
+  @override
+  String get appointmentCancelledTitle => 'Appointment Cancelled';
+
+  @override
+  String get appointmentCancellationFailedTitle =>
+      'Unable to Cancel Appointment';
+
+  @override
+  String get appointmentDetailsLoadFailedTitle =>
+      'Unable to Load Appointment Details';
+
+  @override
+  String get appointmentDetailsOfflineMessage =>
+      'You are offline. Previously saved appointment details are being displayed.';
+
+  @override
+  String get offlineCancellationUnavailableMessage =>
+      'The appointment cannot be cancelled while viewing saved offline data.';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
+  String get appointmentStatusPending => 'Pending';
+
+  @override
+  String get appointmentStatusPendingSecretary => 'Pending Secretary Approval';
+
+  @override
+  String get appointmentStatusApproved => 'Approved';
+
+  @override
+  String get appointmentStatusRejected => 'Rejected';
+
+  @override
+  String get appointmentStatusCancelled => 'Cancelled';
+
+  @override
+  String get appointmentStatusCompleted => 'Completed';
+
+  @override
+  String get appointmentStatusPatientNoShow => 'Patient Did Not Attend';
+
+  @override
+  String get appointmentStatusUnknown => 'Unknown Status';
+
+  @override
+  String get upcomingAppointments => 'Upcoming';
+
+  @override
+  String get pastAppointments => 'Past';
 }

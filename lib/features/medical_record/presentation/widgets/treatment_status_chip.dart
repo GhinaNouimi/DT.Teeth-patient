@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/theme/app_color_tokens.dart';
 import '../../../../core/theme/theme_extensions.dart';
 
@@ -11,18 +12,26 @@ class TreatmentStatusChip extends StatelessWidget {
     required this.status,
   });
 
+  String get _normalizedStatus => status.trim().toLowerCase();
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final style = Theme.of(context).textTheme.labelMedium;
     final label = _localizedLabel(context);
-    final (background, foreground) = _colors(colors);
+    final (background, foreground, border) = _colors(colors);
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 8,
+      ),
       decoration: BoxDecoration(
         color: background,
         borderRadius: BorderRadius.circular(99),
+        border: Border.all(
+          color: border,
+        ),
       ),
       child: Text(
         label,
@@ -35,35 +44,54 @@ class TreatmentStatusChip extends StatelessWidget {
   }
 
   String _localizedLabel(BuildContext context) {
-    final isArabic =
-    Localizations.localeOf(context).languageCode.toLowerCase().startsWith(
-      'ar',
-    );
+    final l10n = context.l10n;
 
-    switch (status) {
+    switch (_normalizedStatus) {
+      case 'ongoing':
+        return l10n.treatmentStatusOngoing;
+
       case 'completed':
-        return isArabic ? 'مكتمل' : 'Completed';
-      case 'pending':
-        return isArabic ? 'قيد الانتظار' : 'Pending';
-      case 'in_progress':
-        return isArabic ? 'قيد العلاج' : 'In progress';
+        return l10n.treatmentStatusCompleted;
+
       case 'cancelled':
-        return isArabic ? 'ملغى' : 'Cancelled';
+        return l10n.treatmentStatusCancelled;
+
       default:
-        return status;
+        return l10n.treatmentStatusUnknown;
     }
   }
 
-  (Color, Color) _colors(AppColorTokens colors) {
-    switch (status) {
+  (Color, Color, Color) _colors(
+      AppColorTokens colors,
+      ) {
+    switch (_normalizedStatus) {
+      case 'ongoing':
+        return (
+        colors.infoBackground,
+        colors.infoForeground,
+        colors.infoBorder,
+        );
+
       case 'completed':
-        return (colors.reservedState, colors.success);
-      case 'pending':
-        return (colors.warning, const Color(0xFF9A5C00));
-      case 'in_progress':
-        return (colors.surfaceMuted, Colors.indigo);
+        return (
+        colors.successBackground,
+        colors.successForeground,
+        colors.successBorder,
+        );
+
+      case 'cancelled':
+        return (
+        colors.dangerBackground,
+        colors.dangerForeground,
+        colors.dangerBorder,
+        );
+
       default:
-        return (colors.surfaceMuted, colors.navBarItem);
+        return (
+        colors.surfaceMuted,
+        colors.textSecondary,
+        colors.borderSoft,
+        );
     }
   }
 }

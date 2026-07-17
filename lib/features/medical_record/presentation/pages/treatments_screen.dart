@@ -18,7 +18,9 @@ import '../widgets/medical_record_tab_bar.dart';
 import '../widgets/treatment_card.dart';
 
 class TreatmentsScreen extends StatelessWidget {
-  const TreatmentsScreen({super.key});
+  const TreatmentsScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +28,14 @@ class TreatmentsScreen extends StatelessWidget {
 
     return BlocProvider(
       create: (_) => TreatmentBloc(
-        getAllTreatmentsUseCase: MedicalRecordDi.getAllTreatmentsUseCase,
-        getTreatmentDetailsUseCase: MedicalRecordDi.getTreatmentDetailsUseCase,
+        getAllTreatmentsUseCase:
+        MedicalRecordDi.getAllTreatmentsUseCase,
+        getTreatmentDetailsUseCase:
+        MedicalRecordDi.getTreatmentDetailsUseCase,
       )..add(
-        LoadTreatmentsRequested(languageCode: languageCode),
+        LoadTreatmentsRequested(
+          languageCode: languageCode,
+        ),
       ),
       child: const _TreatmentsView(),
     );
@@ -40,7 +46,8 @@ class _TreatmentsView extends StatefulWidget {
   const _TreatmentsView();
 
   @override
-  State<_TreatmentsView> createState() => _TreatmentsViewState();
+  State<_TreatmentsView> createState() =>
+      _TreatmentsViewState();
 }
 
 class _TreatmentsViewState extends State<_TreatmentsView> {
@@ -58,14 +65,22 @@ class _TreatmentsViewState extends State<_TreatmentsView> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-              child: AppTopBar(title: l10n.treatments),
+              padding: const EdgeInsets.fromLTRB(
+                20,
+                16,
+                20,
+                0,
+              ),
+              child: AppTopBar(
+                title: l10n.treatments,
+              ),
             ),
             Expanded(
               child: BlocBuilder<TreatmentBloc, TreatmentState>(
                 builder: (context, state) {
                   final isLoading =
-                      state is TreatmentInitial || state is TreatmentLoading;
+                      state is TreatmentInitial ||
+                          state is TreatmentLoading;
 
                   if (state is TreatmentFailure) {
                     return Padding(
@@ -83,38 +98,55 @@ class _TreatmentsViewState extends State<_TreatmentsView> {
                       : _fakeTreatments;
 
                   final isFromCache =
-                      state is TreatmentsLoaded && state.isFromCache;
+                      state is TreatmentsLoaded &&
+                          state.isFromCache;
 
-                  final activeTreatments =
-                  treatments.where((item) => item.isActive).toList();
+                  final ongoingTreatments = treatments
+                      .where(
+                        (treatment) => treatment.isOngoing,
+                  )
+                      .toList();
 
-                  final completedTreatments =
-                  treatments.where((item) => item.isCompleted).toList();
+                  final treatmentHistory = treatments
+                      .where(
+                        (treatment) =>
+                    treatment.isCompleted ||
+                        treatment.isCancelled,
+                  )
+                      .toList();
 
-                  final displayedTreatments = _currentTabIndex == 0
-                      ? activeTreatments
-                      : completedTreatments;
+                  final displayedTreatments =
+                  _currentTabIndex == 0
+                      ? ongoingTreatments
+                      : treatmentHistory;
 
                   return AppSkeleton(
                     enabled: isLoading,
                     child: ListView(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                      physics:
+                      const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(
+                        20,
+                        16,
+                        20,
+                        24,
+                      ),
                       children: [
                         if (isFromCache) ...[
                           OfflineCachedBanner(
-                            message: l10n.offlineCachedDataMessage,
+                            message:
+                            l10n.offlineCachedDataMessage,
                           ),
                           const SizedBox(height: 16),
                         ],
                         MedicalRecordTabBar(
                           labels: [
                             l10n.current,
-                            l10n.completed,
+                            l10n.treatmentHistory,
                           ],
                           counts: [
-                            activeTreatments.length,
-                            completedTreatments.length,
+                            ongoingTreatments.length,
+                            treatmentHistory.length,
                           ],
                           currentIndex: _currentTabIndex,
                           onChanged: (index) {
@@ -124,23 +156,37 @@ class _TreatmentsViewState extends State<_TreatmentsView> {
                           },
                         ),
                         const SizedBox(height: 18),
-                        if (displayedTreatments.isEmpty && !isLoading)
+                        if (displayedTreatments.isEmpty &&
+                            !isLoading)
                           MedicalRecordEmptyState(
-                            title: l10n.noTreatmentsTitle,
-                            subtitle: l10n.noTreatmentsSubtitle,
-                            icon: Icons.medical_services_outlined,
+                            title: _currentTabIndex == 0
+                                ? l10n.noCurrentTreatmentsTitle
+                                : l10n.noTreatmentHistoryTitle,
+                            subtitle: _currentTabIndex == 0
+                                ? l10n
+                                .noCurrentTreatmentsSubtitle
+                                : l10n
+                                .noTreatmentHistorySubtitle,
+                            icon:
+                            Icons.medical_services_outlined,
                           )
                         else
                           ...displayedTreatments.map(
                                 (treatment) => Padding(
-                              padding: const EdgeInsets.only(bottom: 14),
+                              padding:
+                              const EdgeInsets.only(
+                                bottom: 14,
+                              ),
                               child: TreatmentCard(
                                 treatment: treatment,
                                 onTap: () {
-                                  if (isLoading) return;
+                                  if (isLoading) {
+                                    return;
+                                  }
 
                                   context.push(
-                                    AppRoutes.medicalRecordTreatmentDetails,
+                                    AppRoutes
+                                        .medicalRecordTreatmentDetails,
                                     extra: treatment.id,
                                   );
                                 },

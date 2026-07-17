@@ -6,10 +6,10 @@ import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../../../generated/assets.dart';
-import '../models/appointment_ui_model.dart';
+import '../../domain/entities/appointment_entity.dart';
 
 class NextAppointmentSection extends StatelessWidget {
-  final AppointmentUiModel appointment;
+  final AppointmentEntity appointment;
 
   const NextAppointmentSection({
     super.key,
@@ -20,28 +20,34 @@ class NextAppointmentSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final l10n = context.l10n;
-    final localeCode = Localizations.localeOf(context).languageCode;
-    final dateLocale = localeCode == 'ar' ? 'ar_SA' : 'en_US';
+
+    final languageCode =
+        Localizations.localeOf(context).languageCode;
+
+    final dateLocale =
+    languageCode == 'ar' ? 'ar_SA' : 'en_US';
 
     final dayName = DateFormat(
-      localeCode == 'ar' ? 'EEEE' : 'EEE',
+      languageCode == 'ar' ? 'EEEE' : 'EEE',
       dateLocale,
-    ).format(
-      appointment.appointmentDate,
-    );
+    ).format(appointment.appointmentTime);
 
-    final dayNumber = DateFormat('d', dateLocale).format(
-      appointment.appointmentDate,
-    );
+    final dayNumber = DateFormat(
+      'd',
+      dateLocale,
+    ).format(appointment.appointmentTime);
 
-    final monthName = DateFormat('MMMM', dateLocale).format(
-      appointment.appointmentDate,
-    );
+    final monthName = DateFormat(
+      'MMMM',
+      dateLocale,
+    ).format(appointment.appointmentTime);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _SectionHeader(title: l10n.nextAppointment),
+        _SectionHeader(
+          title: l10n.nextAppointment,
+        ),
         const SizedBox(height: 14),
         Material(
           color: Colors.transparent,
@@ -49,14 +55,22 @@ class NextAppointmentSection extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(26),
             onTap: () {
-              context.push(AppRoutes.appointmentDetails, extra: appointment);
+              context.push(
+                AppRoutes.appointmentDetails,
+                extra: appointment.id,
+              );
             },
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 14,
+              ),
               decoration: BoxDecoration(
                 color: colors.surfacePrimary,
                 borderRadius: BorderRadius.circular(26),
-                border: Border.all(color: colors.borderSoft),
+                border: Border.all(
+                  color: colors.borderSoft,
+                ),
                 boxShadow: [
                   BoxShadow(
                     color: colors.shadow,
@@ -74,12 +88,16 @@ class NextAppointmentSection extends StatelessWidget {
                   ),
                   Container(
                     width: 1,
-                    height: 72,
-                    margin: const EdgeInsets.symmetric(horizontal: 14),
+                    height: 76,
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                    ),
                     color: colors.borderSoft,
                   ),
                   Expanded(
-                    child: _AppointmentInfo(appointment: appointment),
+                    child: _AppointmentInfo(
+                      appointment: appointment,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   SizedBox(
@@ -184,6 +202,8 @@ class _DateBlock extends StatelessWidget {
           Text(
             monthName,
             textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: theme.textTheme.bodySmall?.copyWith(
               color: colors.textPrimary,
               fontWeight: FontWeight.w700,
@@ -196,7 +216,7 @@ class _DateBlock extends StatelessWidget {
 }
 
 class _AppointmentInfo extends StatelessWidget {
-  final AppointmentUiModel appointment;
+  final AppointmentEntity appointment;
 
   const _AppointmentInfo({
     required this.appointment,
@@ -208,11 +228,27 @@ class _AppointmentInfo extends StatelessWidget {
     final colors = context.colors;
     final l10n = context.l10n;
 
+    final languageCode =
+        Localizations.localeOf(context).languageCode;
+
+    final dateLocale =
+    languageCode == 'ar' ? 'ar_SA' : 'en_US';
+
+    final formattedTime = DateFormat(
+      'hh:mm a',
+      dateLocale,
+    ).format(appointment.appointmentTime);
+
+    final appointmentType =
+    appointment.localizedAppointmentType(
+      languageCode,
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          appointment.service.displayName,
+          appointmentType,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: theme.textTheme.titleMedium?.copyWith(
@@ -221,15 +257,15 @@ class _AppointmentInfo extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        // Text(
-        //   appointment.doctor.name,
-        //   maxLines: 1,
-        //   overflow: TextOverflow.ellipsis,
-        //   style: theme.textTheme.bodyMedium?.copyWith(
-        //     color: colors.textPrimary,
-        //     fontWeight: FontWeight.w600,
-        //   ),
-        // ),
+        Text(
+          appointment.dentistName,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: colors.textSecondary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         const SizedBox(height: 8),
         Wrap(
           spacing: 8,
@@ -246,7 +282,7 @@ class _AppointmentInfo extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  appointment.appointmentTime,
+                  formattedTime,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: colors.textSecondary,
                     fontWeight: FontWeight.w800,
@@ -255,25 +291,23 @@ class _AppointmentInfo extends StatelessWidget {
               ],
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 7,
+              ),
               decoration: BoxDecoration(
                 color: colors.surfaceMuted,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: colors.borderSoft),
+                border: Border.all(
+                  color: colors.borderSoft,
+                ),
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    l10n.viewDetails,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: colors.textPrimary,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-
-                ],
+              child: Text(
+                l10n.viewDetails,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: colors.textPrimary,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
             ),
           ],

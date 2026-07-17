@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/theme/theme_extensions.dart';
 
 class AppointmentsTabSection extends StatelessWidget {
@@ -20,6 +21,7 @@ class AppointmentsTabSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     Widget buildTab({
       required String label,
@@ -34,18 +36,25 @@ class AppointmentsTabSection extends StatelessWidget {
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 220),
             curve: Curves.easeOut,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 14,
+            ),
             decoration: BoxDecoration(
-              color: selected ? colors.navBarItem : Colors.transparent,
+              color: selected
+                  ? colors.navBarItem
+                  : Colors.transparent,
               borderRadius: BorderRadius.circular(18),
               boxShadow: selected
                   ? [
-                      BoxShadow(
-                        color: colors.navBarItem.withValues(alpha: 0.16),
-                        blurRadius: 14,
-                        offset: const Offset(0, 6),
-                      ),
-                    ]
+                BoxShadow(
+                  color: colors.navBarItem.withValues(
+                    alpha: 0.16,
+                  ),
+                  blurRadius: 14,
+                  offset: const Offset(0, 6),
+                ),
+              ]
                   : null,
             ),
             child: Row(
@@ -64,7 +73,9 @@ class AppointmentsTabSection extends StatelessWidget {
                     child: Text(
                       '$count',
                       style: theme.textTheme.labelMedium?.copyWith(
-                        color: selected ? Colors.white : colors.navBarItem,
+                        color: selected
+                            ? Colors.white
+                            : colors.navBarItem,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -76,7 +87,9 @@ class AppointmentsTabSection extends StatelessWidget {
                     label,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.titleSmall?.copyWith(
-                      color: selected ? Colors.white : colors.navBarItem,
+                      color: selected
+                          ? Colors.white
+                          : colors.navBarItem,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -93,19 +106,21 @@ class AppointmentsTabSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.surfaceMuted,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: colors.borderSoft.withValues(alpha: 0.9)),
+        border: Border.all(
+          color: colors.borderSoft.withValues(alpha: 0.9),
+        ),
       ),
       child: Row(
         children: [
           buildTab(
-            label: 'القادمة',
+            label: l10n.upcomingAppointments,
             count: upcomingCount,
             selected: currentTabIndex == 0,
             onTap: () => onTabChanged(0),
           ),
           const SizedBox(width: 8),
           buildTab(
-            label: 'السابقة',
+            label: l10n.pastAppointments,
             count: pastCount,
             selected: currentTabIndex == 1,
             onTap: () => onTabChanged(1),

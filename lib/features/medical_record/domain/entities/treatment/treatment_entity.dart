@@ -25,7 +25,41 @@ class TreatmentEntity {
     required this.sessions,
   });
 
-  bool get isCompleted => status == 'completed';
+  String get normalizedStatus {
+    return status.trim().toLowerCase();
+  }
 
-  bool get isActive => status != 'completed';
+  bool get isOngoing {
+    return normalizedStatus == 'ongoing';
+  }
+
+  bool get isCompleted {
+    return normalizedStatus == 'completed';
+  }
+
+  bool get isCancelled {
+    return normalizedStatus == 'cancelled' ||
+        normalizedStatus == 'canceled';
+  }
+
+  bool get isActive {
+    return isOngoing;
+  }
+
+  bool get hasNotes {
+    return notes != null && notes!.trim().isNotEmpty;
+  }
+
+  double get progress {
+    if (totalSessionsNeeded <= 0) {
+      return 0;
+    }
+
+    return (sessionsCompleted / totalSessionsNeeded)
+        .clamp(0.0, 1.0);
+  }
+
+  int get progressPercent {
+    return (progress * 100).round();
+  }
 }

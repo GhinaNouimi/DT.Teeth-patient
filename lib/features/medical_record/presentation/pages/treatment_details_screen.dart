@@ -35,8 +35,10 @@ class TreatmentDetailsScreen extends StatelessWidget {
 
     return BlocProvider(
       create: (_) => TreatmentBloc(
-        getAllTreatmentsUseCase: MedicalRecordDi.getAllTreatmentsUseCase,
-        getTreatmentDetailsUseCase: MedicalRecordDi.getTreatmentDetailsUseCase,
+        getAllTreatmentsUseCase:
+        MedicalRecordDi.getAllTreatmentsUseCase,
+        getTreatmentDetailsUseCase:
+        MedicalRecordDi.getTreatmentDetailsUseCase,
       )..add(
         LoadTreatmentDetailsRequested(
           treatmentId: treatmentId,
@@ -63,7 +65,7 @@ class _TreatmentDetailsView extends StatelessWidget {
         id: 0,
         name: 'Doctor name',
       ),
-      status: 'completed',
+      status: 'ongoing',
       totalSessionsNeeded: 2,
       sessionsCompleted: 1,
       notes: 'Treatment notes',
@@ -108,14 +110,22 @@ class _TreatmentDetailsView extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-              child: AppTopBar(title: l10n.treatmentDetails),
+              padding: const EdgeInsets.fromLTRB(
+                20,
+                16,
+                20,
+                0,
+              ),
+              child: AppTopBar(
+                title: l10n.treatmentDetails,
+              ),
             ),
             Expanded(
               child: BlocBuilder<TreatmentBloc, TreatmentState>(
                 builder: (context, state) {
                   final isLoading =
-                      state is TreatmentInitial || state is TreatmentLoading;
+                      state is TreatmentInitial ||
+                          state is TreatmentLoading;
 
                   if (state is TreatmentFailure) {
                     return Padding(
@@ -133,7 +143,8 @@ class _TreatmentDetailsView extends StatelessWidget {
                       : _fakeTreatment();
 
                   final isFromCache =
-                      state is TreatmentDetailsLoaded && state.isFromCache;
+                      state is TreatmentDetailsLoaded &&
+                          state.isFromCache;
 
                   return AppSkeleton(
                     enabled: isLoading,
@@ -162,9 +173,13 @@ class _TreatmentDetailsBody extends StatelessWidget {
   });
 
   int get _progressPercent {
-    if (treatment.totalSessionsNeeded == 0) return 0;
+    if (treatment.totalSessionsNeeded == 0) {
+      return 0;
+    }
 
-    return ((treatment.sessionsCompleted / treatment.totalSessionsNeeded) * 100)
+    return ((treatment.sessionsCompleted /
+        treatment.totalSessionsNeeded) *
+        100)
         .round()
         .clamp(0, 100);
   }
@@ -173,15 +188,27 @@ class _TreatmentDetailsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = context.colors;
-    final accent = context.medicalAccent;
     final l10n = context.l10n;
-    final languageCode = Localizations.localeOf(context).languageCode;
+    final languageCode =
+        Localizations.localeOf(context).languageCode;
 
-    final treatmentName = treatment.treatmentType.localizedName(languageCode);
+    final treatmentName =
+    treatment.treatmentType.localizedName(
+      languageCode,
+    );
+
+    final progressLabel = treatment.isCancelled
+        ? l10n.progressBeforeCancellation
+        : l10n.currentProgress;
 
     return ListView(
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
+      padding: const EdgeInsets.fromLTRB(
+        20,
+        16,
+        20,
+        32,
+      ),
       children: [
         if (isFromCache) ...[
           OfflineCachedBanner(
@@ -194,17 +221,21 @@ class _TreatmentDetailsBody extends StatelessWidget {
           decoration: BoxDecoration(
             color: colors.surfaceMuted,
             borderRadius: BorderRadius.circular(30),
-            border: Border.all(color: colors.borderSoft),
+            border: Border.all(
+              color: colors.borderSoft,
+            ),
           ),
           child: Row(
             children: [
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment:
+                  CrossAxisAlignment.start,
                   children: [
                     Text(
                       treatmentName,
-                      style: theme.textTheme.headlineSmall?.copyWith(
+                      style:
+                      theme.textTheme.headlineSmall?.copyWith(
                         color: colors.textPrimary,
                         fontWeight: FontWeight.w800,
                       ),
@@ -212,17 +243,22 @@ class _TreatmentDetailsBody extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       treatment.dentist.name,
-                      style: theme.textTheme.titleMedium?.copyWith(
+                      style:
+                      theme.textTheme.titleMedium?.copyWith(
                         color: colors.textSecondary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 14),
-                    TreatmentStatusChip(status: treatment.status),
+                    TreatmentStatusChip(
+                      status: treatment.status,
+                    ),
                     const SizedBox(height: 14),
                     Text(
-                      '${l10n.startedTreatment}: ${treatment.createdAt}',
-                      style: theme.textTheme.bodyMedium?.copyWith(
+                      '${l10n.treatmentCreatedAt}: '
+                          '${treatment.createdAt}',
+                      style:
+                      theme.textTheme.bodyMedium?.copyWith(
                         color: colors.textSecondary,
                         fontWeight: FontWeight.w700,
                       ),
@@ -242,7 +278,7 @@ class _TreatmentDetailsBody extends StatelessWidget {
         _InfoCard(
           children: [
             _InfoRow(
-              label: l10n.currentProgress,
+              label: progressLabel,
               value: l10n.completedSessions(
                 treatment.sessionsCompleted,
                 treatment.totalSessionsNeeded,
@@ -250,7 +286,8 @@ class _TreatmentDetailsBody extends StatelessWidget {
             ),
             _InfoRow(
               label: l10n.notes,
-              value: (treatment.notes ?? '').trim().isEmpty
+              value:
+              (treatment.notes ?? '').trim().isEmpty
                   ? l10n.noNotes
                   : treatment.notes!,
             ),
@@ -265,12 +302,23 @@ class _TreatmentDetailsBody extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        ...treatment.sessions.map(
-              (session) => Padding(
-            padding: const EdgeInsets.only(bottom: 14),
-            child: _SessionCard(session: session),
+        if (treatment.sessions.isEmpty)
+          MedicalRecordEmptyState(
+            title: l10n.noTreatmentSessionsTitle,
+            subtitle: l10n.noTreatmentSessionsSubtitle,
+            icon: Icons.event_note_outlined,
+          )
+        else
+          ...treatment.sessions.map(
+                (session) => Padding(
+              padding: const EdgeInsets.only(
+                bottom: 14,
+              ),
+              child: _SessionCard(
+                session: session,
+              ),
+            ),
           ),
-        ),
       ],
     );
   }
@@ -294,7 +342,9 @@ class _SessionCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.surfacePrimary,
         borderRadius: BorderRadius.circular(26),
-        border: Border.all(color: colors.borderSoft),
+        border: Border.all(
+          color: colors.borderSoft,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -303,27 +353,34 @@ class _SessionCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  l10n.sessionNumber(session.sessionNumber),
-                  style: theme.textTheme.titleMedium?.copyWith(
+                  l10n.sessionNumber(
+                    session.sessionNumber,
+                  ),
+                  style:
+                  theme.textTheme.titleMedium?.copyWith(
                     color: colors.textPrimary,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
               ),
-              TreatmentStatusChip(status: session.status),
+              TreatmentStatusChip(
+                status: session.status,
+              ),
             ],
           ),
           const SizedBox(height: 14),
           _InfoCard(
             children: [
-              if (session.actualStartTime != null)
+              if (session.actualStartTime != null &&
+                  session.actualStartTime!.trim().isNotEmpty)
                 _InfoRow(
-                  label: l10n.startedTreatment,
+                  label: l10n.sessionStartTime,
                   value: session.actualStartTime!,
                 ),
-              if (session.actualEndTime != null)
+              if (session.actualEndTime != null &&
+                  session.actualEndTime!.trim().isNotEmpty)
                 _InfoRow(
-                  label: l10n.duration,
+                  label: l10n.sessionEndTime,
                   value: session.actualEndTime!,
                 ),
               _InfoRow(
@@ -332,7 +389,8 @@ class _SessionCard extends StatelessWidget {
               ),
               _InfoRow(
                 label: l10n.notes,
-                value: (session.notes ?? '').trim().isEmpty
+                value:
+                (session.notes ?? '').trim().isEmpty
                     ? l10n.noNotes
                     : session.notes!,
               ),
@@ -342,7 +400,8 @@ class _SessionCard extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               l10n.procedure,
-              style: theme.textTheme.titleSmall?.copyWith(
+              style:
+              theme.textTheme.titleSmall?.copyWith(
                 color: colors.textPrimary,
                 fontWeight: FontWeight.w800,
               ),
@@ -350,8 +409,12 @@ class _SessionCard extends StatelessWidget {
             const SizedBox(height: 10),
             ...session.toothTreatments.map(
                   (toothTreatment) => Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: _ToothTreatmentCard(toothTreatment: toothTreatment),
+                padding: const EdgeInsets.only(
+                  bottom: 10,
+                ),
+                child: _ToothTreatmentCard(
+                  toothTreatment: toothTreatment,
+                ),
               ),
             ),
           ],
@@ -374,23 +437,29 @@ class _ToothTreatmentCard extends StatelessWidget {
     final colors = context.colors;
     final accent = context.medicalAccent;
     final l10n = context.l10n;
-    final languageCode = Localizations.localeOf(context).languageCode;
+    final languageCode =
+        Localizations.localeOf(context).languageCode;
 
     final procedureName =
-    toothTreatment.procedure.localizedName(languageCode);
+    toothTreatment.procedure.localizedName(
+      languageCode,
+    );
 
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: colors.surfaceSecondary,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: colors.borderSoft),
+        border: Border.all(
+          color: colors.borderSoft,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${l10n.toothNumber}: ${toothTreatment.toothNumber}',
+            '${l10n.toothNumber}: '
+                '${toothTreatment.toothNumber}',
             style: theme.textTheme.bodyMedium?.copyWith(
               color: accent,
               fontWeight: FontWeight.w800,
@@ -412,7 +481,9 @@ class _ToothTreatmentCard extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          if ((toothTreatment.notes ?? '').trim().isNotEmpty) ...[
+          if ((toothTreatment.notes ?? '')
+              .trim()
+              .isNotEmpty) ...[
             const SizedBox(height: 8),
             Text(
               toothTreatment.notes!,
@@ -441,17 +512,29 @@ class _InfoCard extends StatelessWidget {
     final colors = context.colors;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 18,
+        vertical: 10,
+      ),
       decoration: BoxDecoration(
         color: colors.surfaceMuted,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: colors.borderSoft),
+        border: Border.all(
+          color: colors.borderSoft,
+        ),
       ),
       child: Column(
         children: [
-          for (int index = 0; index < children.length; index++) ...[
+          for (
+          int index = 0;
+          index < children.length;
+          index++
+          ) ...[
             children[index],
-            if (index != children.length - 1) const Divider(height: 1),
+            if (index != children.length - 1)
+              const Divider(
+                height: 1,
+              ),
           ],
         ],
       ),
@@ -474,7 +557,9 @@ class _InfoRow extends StatelessWidget {
     final colors = context.colors;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(
+        vertical: 12,
+      ),
       child: Row(
         children: [
           Expanded(

@@ -1019,12 +1019,6 @@ abstract class GeneratedAppLocalizations {
   /// **'المساعد الذكي'**
   String get smartAssistant;
 
-  /// No description provided for @appointmentTypeTitle.
-  ///
-  /// In ar, this message translates to:
-  /// **'نوع الموعد'**
-  String get appointmentTypeTitle;
-
   /// No description provided for @appointmentTypeEmergencyDescription.
   ///
   /// In ar, this message translates to:
@@ -1072,18 +1066,6 @@ abstract class GeneratedAppLocalizations {
   /// In ar, this message translates to:
   /// **'لا يوجد أطباء متاحون لهذه الخدمة'**
   String get noDoctorsAvailable;
-
-  /// No description provided for @selectDoctor.
-  ///
-  /// In ar, this message translates to:
-  /// **'اختر الطبيب'**
-  String get selectDoctor;
-
-  /// No description provided for @selectServiceType.
-  ///
-  /// In ar, this message translates to:
-  /// **'اختر نوع الخدمة'**
-  String get selectServiceType;
 
   /// No description provided for @emergency.
   ///
@@ -2062,6 +2044,462 @@ abstract class GeneratedAppLocalizations {
   /// In ar, this message translates to:
   /// **'إلغاء'**
   String get cancelComplaintSubmission;
+
+  /// No description provided for @treatmentStatusOngoing.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيد العلاج'**
+  String get treatmentStatusOngoing;
+
+  /// No description provided for @treatmentStatusCompleted.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكتمل'**
+  String get treatmentStatusCompleted;
+
+  /// No description provided for @treatmentStatusCancelled.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملغى'**
+  String get treatmentStatusCancelled;
+
+  /// No description provided for @treatmentStatusUnknown.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير معروف'**
+  String get treatmentStatusUnknown;
+
+  /// No description provided for @treatmentHistory.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجل العلاجات'**
+  String get treatmentHistory;
+
+  /// No description provided for @noCurrentTreatmentsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد علاجات حالية'**
+  String get noCurrentTreatmentsTitle;
+
+  /// No description provided for @noCurrentTreatmentsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد خطط علاجية قيد التنفيذ حالياً.'**
+  String get noCurrentTreatmentsSubtitle;
+
+  /// No description provided for @noTreatmentHistoryTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجل العلاجات فارغ'**
+  String get noTreatmentHistoryTitle;
+
+  /// No description provided for @noTreatmentHistorySubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ستظهر هنا العلاجات المكتملة أو الملغاة.'**
+  String get noTreatmentHistorySubtitle;
+
+  /// No description provided for @treatmentCreatedAt.
+  ///
+  /// In ar, this message translates to:
+  /// **'تاريخ إنشاء خطة العلاج'**
+  String get treatmentCreatedAt;
+
+  /// No description provided for @progressBeforeCancellation.
+  ///
+  /// In ar, this message translates to:
+  /// **'التقدم قبل الإلغاء'**
+  String get progressBeforeCancellation;
+
+  /// No description provided for @sessionStartTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت بدء الجلسة'**
+  String get sessionStartTime;
+
+  /// No description provided for @sessionEndTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت انتهاء الجلسة'**
+  String get sessionEndTime;
+
+  /// No description provided for @noTreatmentSessionsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد جلسات علاجية'**
+  String get noTreatmentSessionsTitle;
+
+  /// No description provided for @noTreatmentSessionsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ستظهر جلسات هذا العلاج هنا عند إضافتها.'**
+  String get noTreatmentSessionsSubtitle;
+
+  /// No description provided for @appointmentTypeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوع الموعد'**
+  String get appointmentTypeTitle;
+
+  /// No description provided for @emergencyAppointmentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'موعد طارئ'**
+  String get emergencyAppointmentTitle;
+
+  /// No description provided for @emergencyAppointmentDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم التعامل مع الحالة بأسرع وقت ممكن'**
+  String get emergencyAppointmentDescription;
+
+  /// No description provided for @regularAppointmentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'موعد عادي'**
+  String get regularAppointmentTitle;
+
+  /// No description provided for @regularAppointmentDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'حجز موعد جديد للعلاج'**
+  String get regularAppointmentDescription;
+
+  /// No description provided for @followUpAppointmentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'موعد متابعة'**
+  String get followUpAppointmentTitle;
+
+  /// No description provided for @followUpAppointmentDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة علاج أو جلسة سابقة'**
+  String get followUpAppointmentDescription;
+
+  /// No description provided for @selectServiceType.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر نوع الخدمة'**
+  String get selectServiceType;
+
+  /// No description provided for @selectDoctor.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر الطبيب'**
+  String get selectDoctor;
+
+  /// No description provided for @noDoctorsAvailableForService.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد أطباء متاحون لهذه الخدمة'**
+  String get noDoctorsAvailableForService;
+
+  /// No description provided for @emergencyLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'طارئ'**
+  String get emergencyLabel;
+
+  /// No description provided for @appointmentPending.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيد الانتظار'**
+  String get appointmentPending;
+
+  /// No description provided for @appointmentPendingSecretary.
+  ///
+  /// In ar, this message translates to:
+  /// **'بانتظار موافقة السكرتارية'**
+  String get appointmentPendingSecretary;
+
+  /// No description provided for @appointmentApproved.
+  ///
+  /// In ar, this message translates to:
+  /// **'مؤكد'**
+  String get appointmentApproved;
+
+  /// No description provided for @appointmentRejected.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرفوض'**
+  String get appointmentRejected;
+
+  /// No description provided for @appointmentCancelled.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملغى'**
+  String get appointmentCancelled;
+
+  /// No description provided for @appointmentCompleted.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكتمل'**
+  String get appointmentCompleted;
+
+  /// No description provided for @appointmentPatientNoShow.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يحضر المريض'**
+  String get appointmentPatientNoShow;
+
+  /// No description provided for @unknownStatus.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير معروف'**
+  String get unknownStatus;
+
+  /// No description provided for @appointmentNewTreatment.
+  ///
+  /// In ar, this message translates to:
+  /// **'علاج جديد'**
+  String get appointmentNewTreatment;
+
+  /// No description provided for @appointmentContinueTreatment.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة علاج'**
+  String get appointmentContinueTreatment;
+
+  /// No description provided for @appointmentWalkIn.
+  ///
+  /// In ar, this message translates to:
+  /// **'زيارة مباشرة'**
+  String get appointmentWalkIn;
+
+  /// No description provided for @cancellingAppointment.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ إلغاء الموعد'**
+  String get cancellingAppointment;
+
+  /// No description provided for @appointmentsCancellationSuccessTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إلغاء الموعد'**
+  String get appointmentsCancellationSuccessTitle;
+
+  /// No description provided for @appointmentsOperationFailedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تنفيذ العملية'**
+  String get appointmentsOperationFailedTitle;
+
+  /// No description provided for @appointmentsRefreshFailedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحديث المواعيد'**
+  String get appointmentsRefreshFailedTitle;
+
+  /// No description provided for @appointmentsOfflineCachedMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنت غير متصل بالإنترنت. يتم عرض المواعيد المحفوظة مسبقًا.'**
+  String get appointmentsOfflineCachedMessage;
+
+  /// No description provided for @appointmentDetailsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل الموعد'**
+  String get appointmentDetailsTitle;
+
+  /// No description provided for @appointmentStatusTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حالة الموعد'**
+  String get appointmentStatusTitle;
+
+  /// No description provided for @appointmentInformationTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'معلومات الموعد'**
+  String get appointmentInformationTitle;
+
+  /// No description provided for @appointmentDateLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'التاريخ'**
+  String get appointmentDateLabel;
+
+  /// No description provided for @appointmentTimeLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'الوقت'**
+  String get appointmentTimeLabel;
+
+  /// No description provided for @appointmentTypeLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوع الموعد'**
+  String get appointmentTypeLabel;
+
+  /// No description provided for @dentistTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطبيب'**
+  String get dentistTitle;
+
+  /// No description provided for @treatmentInformationTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'معلومات العلاج'**
+  String get treatmentInformationTitle;
+
+  /// No description provided for @treatmentStatusLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'حالة العلاج'**
+  String get treatmentStatusLabel;
+
+  /// No description provided for @completedSessionsLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجلسات المكتملة'**
+  String get completedSessionsLabel;
+
+  /// No description provided for @appointmentNotesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملاحظات الموعد'**
+  String get appointmentNotesTitle;
+
+  /// No description provided for @rejectionReasonTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سبب الرفض'**
+  String get rejectionReasonTitle;
+
+  /// No description provided for @cancelAppointmentButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء الموعد'**
+  String get cancelAppointmentButton;
+
+  /// No description provided for @cancellingAppointmentButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ إلغاء الموعد...'**
+  String get cancellingAppointmentButton;
+
+  /// No description provided for @cancelAppointmentDialogTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء الموعد'**
+  String get cancelAppointmentDialogTitle;
+
+  /// No description provided for @cancelAppointmentDialogMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل أنت متأكد من رغبتك في إلغاء هذا الموعد؟ لا يمكن التراجع عن هذه العملية.'**
+  String get cancelAppointmentDialogMessage;
+
+  /// No description provided for @keepAppointmentButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاحتفاظ بالموعد'**
+  String get keepAppointmentButton;
+
+  /// No description provided for @confirmCancellationButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكيد الإلغاء'**
+  String get confirmCancellationButton;
+
+  /// No description provided for @appointmentCancelledTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إلغاء الموعد'**
+  String get appointmentCancelledTitle;
+
+  /// No description provided for @appointmentCancellationFailedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر إلغاء الموعد'**
+  String get appointmentCancellationFailedTitle;
+
+  /// No description provided for @appointmentDetailsLoadFailedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل تفاصيل الموعد'**
+  String get appointmentDetailsLoadFailedTitle;
+
+  /// No description provided for @appointmentDetailsOfflineMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنت غير متصل بالإنترنت. يتم عرض تفاصيل الموعد المحفوظة مسبقًا.'**
+  String get appointmentDetailsOfflineMessage;
+
+  /// No description provided for @offlineCancellationUnavailableMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يمكن إلغاء الموعد أثناء عرض البيانات المحفوظة دون اتصال.'**
+  String get offlineCancellationUnavailableMessage;
+
+  /// No description provided for @retryButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة المحاولة'**
+  String get retryButton;
+
+  /// No description provided for @appointmentStatusPending.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيد الانتظار'**
+  String get appointmentStatusPending;
+
+  /// No description provided for @appointmentStatusPendingSecretary.
+  ///
+  /// In ar, this message translates to:
+  /// **'بانتظار موافقة السكرتارية'**
+  String get appointmentStatusPendingSecretary;
+
+  /// No description provided for @appointmentStatusApproved.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمت الموافقة'**
+  String get appointmentStatusApproved;
+
+  /// No description provided for @appointmentStatusRejected.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرفوض'**
+  String get appointmentStatusRejected;
+
+  /// No description provided for @appointmentStatusCancelled.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملغى'**
+  String get appointmentStatusCancelled;
+
+  /// No description provided for @appointmentStatusCompleted.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكتمل'**
+  String get appointmentStatusCompleted;
+
+  /// No description provided for @appointmentStatusPatientNoShow.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يحضر المريض'**
+  String get appointmentStatusPatientNoShow;
+
+  /// No description provided for @appointmentStatusUnknown.
+  ///
+  /// In ar, this message translates to:
+  /// **'حالة غير معروفة'**
+  String get appointmentStatusUnknown;
+
+  /// No description provided for @upcomingAppointments.
+  ///
+  /// In ar, this message translates to:
+  /// **'القادمة'**
+  String get upcomingAppointments;
+
+  /// No description provided for @pastAppointments.
+  ///
+  /// In ar, this message translates to:
+  /// **'السابقة'**
+  String get pastAppointments;
 }
 
 class _GeneratedAppLocalizationsDelegate

@@ -486,9 +486,6 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
   String get smartAssistant => 'المساعد الذكي';
 
   @override
-  String get appointmentTypeTitle => 'نوع الموعد';
-
-  @override
   String get appointmentTypeEmergencyDescription =>
       'موعد طارئ - سيتم معالجته فوراً';
 
@@ -512,12 +509,6 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
 
   @override
   String get noDoctorsAvailable => 'لا يوجد أطباء متاحون لهذه الخدمة';
-
-  @override
-  String get selectDoctor => 'اختر الطبيب';
-
-  @override
-  String get selectServiceType => 'اختر نوع الخدمة';
 
   @override
   String get emergency => 'طارئ';
@@ -1032,4 +1023,240 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
 
   @override
   String get cancelComplaintSubmission => 'إلغاء';
+
+  @override
+  String get treatmentStatusOngoing => 'قيد العلاج';
+
+  @override
+  String get treatmentStatusCompleted => 'مكتمل';
+
+  @override
+  String get treatmentStatusCancelled => 'ملغى';
+
+  @override
+  String get treatmentStatusUnknown => 'غير معروف';
+
+  @override
+  String get treatmentHistory => 'سجل العلاجات';
+
+  @override
+  String get noCurrentTreatmentsTitle => 'لا توجد علاجات حالية';
+
+  @override
+  String get noCurrentTreatmentsSubtitle =>
+      'لا توجد خطط علاجية قيد التنفيذ حالياً.';
+
+  @override
+  String get noTreatmentHistoryTitle => 'سجل العلاجات فارغ';
+
+  @override
+  String get noTreatmentHistorySubtitle =>
+      'ستظهر هنا العلاجات المكتملة أو الملغاة.';
+
+  @override
+  String get treatmentCreatedAt => 'تاريخ إنشاء خطة العلاج';
+
+  @override
+  String get progressBeforeCancellation => 'التقدم قبل الإلغاء';
+
+  @override
+  String get sessionStartTime => 'وقت بدء الجلسة';
+
+  @override
+  String get sessionEndTime => 'وقت انتهاء الجلسة';
+
+  @override
+  String get noTreatmentSessionsTitle => 'لا توجد جلسات علاجية';
+
+  @override
+  String get noTreatmentSessionsSubtitle =>
+      'ستظهر جلسات هذا العلاج هنا عند إضافتها.';
+
+  @override
+  String get appointmentTypeTitle => 'نوع الموعد';
+
+  @override
+  String get emergencyAppointmentTitle => 'موعد طارئ';
+
+  @override
+  String get emergencyAppointmentDescription =>
+      'سيتم التعامل مع الحالة بأسرع وقت ممكن';
+
+  @override
+  String get regularAppointmentTitle => 'موعد عادي';
+
+  @override
+  String get regularAppointmentDescription => 'حجز موعد جديد للعلاج';
+
+  @override
+  String get followUpAppointmentTitle => 'موعد متابعة';
+
+  @override
+  String get followUpAppointmentDescription => 'متابعة علاج أو جلسة سابقة';
+
+  @override
+  String get selectServiceType => 'اختر نوع الخدمة';
+
+  @override
+  String get selectDoctor => 'اختر الطبيب';
+
+  @override
+  String get noDoctorsAvailableForService => 'لا يوجد أطباء متاحون لهذه الخدمة';
+
+  @override
+  String get emergencyLabel => 'طارئ';
+
+  @override
+  String get appointmentPending => 'قيد الانتظار';
+
+  @override
+  String get appointmentPendingSecretary => 'بانتظار موافقة السكرتارية';
+
+  @override
+  String get appointmentApproved => 'مؤكد';
+
+  @override
+  String get appointmentRejected => 'مرفوض';
+
+  @override
+  String get appointmentCancelled => 'ملغى';
+
+  @override
+  String get appointmentCompleted => 'مكتمل';
+
+  @override
+  String get appointmentPatientNoShow => 'لم يحضر المريض';
+
+  @override
+  String get unknownStatus => 'غير معروف';
+
+  @override
+  String get appointmentNewTreatment => 'علاج جديد';
+
+  @override
+  String get appointmentContinueTreatment => 'متابعة علاج';
+
+  @override
+  String get appointmentWalkIn => 'زيارة مباشرة';
+
+  @override
+  String get cancellingAppointment => 'جارٍ إلغاء الموعد';
+
+  @override
+  String get appointmentsCancellationSuccessTitle => 'تم إلغاء الموعد';
+
+  @override
+  String get appointmentsOperationFailedTitle => 'تعذر تنفيذ العملية';
+
+  @override
+  String get appointmentsRefreshFailedTitle => 'تعذر تحديث المواعيد';
+
+  @override
+  String get appointmentsOfflineCachedMessage =>
+      'أنت غير متصل بالإنترنت. يتم عرض المواعيد المحفوظة مسبقًا.';
+
+  @override
+  String get appointmentDetailsTitle => 'تفاصيل الموعد';
+
+  @override
+  String get appointmentStatusTitle => 'حالة الموعد';
+
+  @override
+  String get appointmentInformationTitle => 'معلومات الموعد';
+
+  @override
+  String get appointmentDateLabel => 'التاريخ';
+
+  @override
+  String get appointmentTimeLabel => 'الوقت';
+
+  @override
+  String get appointmentTypeLabel => 'نوع الموعد';
+
+  @override
+  String get dentistTitle => 'الطبيب';
+
+  @override
+  String get treatmentInformationTitle => 'معلومات العلاج';
+
+  @override
+  String get treatmentStatusLabel => 'حالة العلاج';
+
+  @override
+  String get completedSessionsLabel => 'الجلسات المكتملة';
+
+  @override
+  String get appointmentNotesTitle => 'ملاحظات الموعد';
+
+  @override
+  String get rejectionReasonTitle => 'سبب الرفض';
+
+  @override
+  String get cancelAppointmentButton => 'إلغاء الموعد';
+
+  @override
+  String get cancellingAppointmentButton => 'جارٍ إلغاء الموعد...';
+
+  @override
+  String get cancelAppointmentDialogTitle => 'إلغاء الموعد';
+
+  @override
+  String get cancelAppointmentDialogMessage =>
+      'هل أنت متأكد من رغبتك في إلغاء هذا الموعد؟ لا يمكن التراجع عن هذه العملية.';
+
+  @override
+  String get keepAppointmentButton => 'الاحتفاظ بالموعد';
+
+  @override
+  String get confirmCancellationButton => 'تأكيد الإلغاء';
+
+  @override
+  String get appointmentCancelledTitle => 'تم إلغاء الموعد';
+
+  @override
+  String get appointmentCancellationFailedTitle => 'تعذر إلغاء الموعد';
+
+  @override
+  String get appointmentDetailsLoadFailedTitle => 'تعذر تحميل تفاصيل الموعد';
+
+  @override
+  String get appointmentDetailsOfflineMessage =>
+      'أنت غير متصل بالإنترنت. يتم عرض تفاصيل الموعد المحفوظة مسبقًا.';
+
+  @override
+  String get offlineCancellationUnavailableMessage =>
+      'لا يمكن إلغاء الموعد أثناء عرض البيانات المحفوظة دون اتصال.';
+
+  @override
+  String get retryButton => 'إعادة المحاولة';
+
+  @override
+  String get appointmentStatusPending => 'قيد الانتظار';
+
+  @override
+  String get appointmentStatusPendingSecretary => 'بانتظار موافقة السكرتارية';
+
+  @override
+  String get appointmentStatusApproved => 'تمت الموافقة';
+
+  @override
+  String get appointmentStatusRejected => 'مرفوض';
+
+  @override
+  String get appointmentStatusCancelled => 'ملغى';
+
+  @override
+  String get appointmentStatusCompleted => 'مكتمل';
+
+  @override
+  String get appointmentStatusPatientNoShow => 'لم يحضر المريض';
+
+  @override
+  String get appointmentStatusUnknown => 'حالة غير معروفة';
+
+  @override
+  String get upcomingAppointments => 'القادمة';
+
+  @override
+  String get pastAppointments => 'السابقة';
 }

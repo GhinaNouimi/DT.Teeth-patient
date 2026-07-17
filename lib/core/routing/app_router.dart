@@ -295,15 +295,20 @@ class AppRouter {
         path: AppRoutes.appointmentDetails,
         name: 'appointment-details',
         builder: (context, state) {
-          final appointment = state.extra as AppointmentUiModel;
-          return AppointmentDetailsScreen(appointment: appointment);
+          final appointmentId = state.extra as int;
+
+          return AppointmentDetailsScreen(
+            appointmentId: appointmentId,
+          );
         },
       ),
 
       GoRoute(
         path: AppRoutes.appointmentsManagement,
         name: 'appointments-management',
-        builder: (context, state) => const AppointmentsManagementScreen(),
+        builder: (context, state) {
+          return const AppointmentsManagementScreen();
+        },
       ),
 
       // GoRoute(

@@ -21,7 +21,9 @@ class TreatmentCard extends StatelessWidget {
   });
 
   int get _progressPercent {
-    if (treatment.totalSessionsNeeded == 0) return 0;
+    if (treatment.totalSessionsNeeded == 0) {
+      return 0;
+    }
 
     return ((treatment.sessionsCompleted / treatment.totalSessionsNeeded) * 100)
         .round()
@@ -37,7 +39,10 @@ class TreatmentCard extends StatelessWidget {
     final l10n = context.l10n;
     final languageCode = Localizations.localeOf(context).languageCode;
 
-    final treatmentName = treatment.treatmentType.localizedName(languageCode);
+    final treatmentName = treatment.treatmentType.localizedName(
+      languageCode,
+    );
+
     final progressLabel = l10n.completedSessions(
       treatment.sessionsCompleted,
       treatment.totalSessionsNeeded,
@@ -73,13 +78,18 @@ class TreatmentCard extends StatelessWidget {
                   ],
                 ),
               ),
-              TreatmentProgressRing(percent: _progressPercent),
+              const SizedBox(width: AppSpacing.md),
+              TreatmentProgressRing(
+                percent: _progressPercent,
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.lg),
           Row(
             children: [
-              TreatmentStatusChip(status: treatment.status),
+              TreatmentStatusChip(
+                status: treatment.status,
+              ),
               const Spacer(),
               Text(
                 progressLabel,
@@ -92,22 +102,31 @@ class TreatmentCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.lg),
           Container(
+            width: double.infinity,
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               color: pink.withValues(alpha: 0.35),
-              borderRadius: BorderRadius.circular(AppRadius.lg),
-              border: Border.all(color: pink.withValues(alpha: 0.55)),
+              borderRadius: BorderRadius.circular(
+                AppRadius.lg,
+              ),
+              border: Border.all(
+                color: pink.withValues(alpha: 0.55),
+              ),
             ),
             child: Row(
               children: [
-                Icon(Icons.event_available_rounded, color: accent, size: 20),
+                Icon(
+                  Icons.calendar_month_rounded,
+                  color: accent,
+                  size: 20,
+                ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        l10n.startedTreatment,
+                        l10n.treatmentCreatedAt,
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: colors.textSecondary,
                           fontWeight: FontWeight.w700,
@@ -145,8 +164,13 @@ class TreatmentCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.md),
                 TextButton.icon(
                   onPressed: onTap,
-                  icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 16),
-                  label: Text(l10n.details),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    size: 16,
+                  ),
+                  label: Text(
+                    l10n.details,
+                  ),
                 ),
               ],
             ),
@@ -156,8 +180,13 @@ class TreatmentCard extends StatelessWidget {
               alignment: AlignmentDirectional.centerEnd,
               child: TextButton.icon(
                 onPressed: onTap,
-                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 16),
-                label: Text(l10n.details),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  size: 16,
+                ),
+                label: Text(
+                  l10n.details,
+                ),
               ),
             ),
           ],
