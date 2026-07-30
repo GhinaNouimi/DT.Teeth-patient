@@ -31,6 +31,8 @@ class AppRoutes {
   static const medicalRecordPrescriptionDetails =
       '/medical-record-prescription-details';
   static const medicalRecordPayments = '/medical-record-payments';
-  static const medicalRecordPaymentPlanDetails =
-      '/medical-record-payment-plan-details';
+  // static const medicalRecordPaymentPlanDetails =
+  //     '/medical-record-payment-plan-details';
+  static const medicalRecordTreatmentInvoice =
+      '/medical-record-treatment-invoice';
 }

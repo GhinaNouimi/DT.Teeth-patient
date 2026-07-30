@@ -428,7 +428,65 @@
   "appointmentStatusPatientNoShow": "Patient Did Not Attend",
   "appointmentStatusUnknown": "Unknown Status",
   "upcomingAppointments": "Upcoming",
-  "pastAppointments": "Past"
+  "pastAppointments": "Past",
+  "financialPayments": "Financial Payments",
+  "financialSummary": "Financial Summary",
+  "invoiceSummaryLoadFailed": "Failed to load the financial summary",
 
+  "noFinancialDataTitle": "No financial data available",
+  "noFinancialDataSubtitle": "Treatment cost and payment summaries will appear here when available.",
+
+  "totalAmount": "Total Amount",
+  "paidAmount": "Paid Amount",
+  "remainingAmount": "Remaining Amount",
+  "paymentProgress": "Payment Progress",
+
+  "fullyPaid": "Fully Paid",
+  "paymentRemaining": "Payment Remaining",
+
+  "treatmentInvoice": "Treatment Invoice",
+  "viewTreatmentInvoice": "View Treatment Invoice",
+  "treatmentInvoiceSubtitle": "View the costs and payments associated with this treatment.",
+  "treatmentInvoiceDetails": "Treatment Invoice Details",
+  "treatmentInvoiceLoadFailed": "Failed to load the treatment invoice",
+
+  "invoiceStatus": "Invoice Status",
+  "invoiceStatusPaid": "Paid",
+  "invoiceStatusPartial": "Partially Paid",
+  "invoiceStatusUnpaid": "Unpaid",
+  "invoiceStatusUnknown": "Unknown",
+
+  "invoiceItems": "Invoice Items",
+  "invoiceItemDescription": "Description",
+  "unitPrice": "Unit Price",
+  "discountPercentage": "Discount",
+  "finalPrice": "Final Price",
+
+  "paymentHistory": "Payment History",
+  "paymentAmount": "Payment Amount",
+  "paymentMethod": "Payment Method",
+  "paymentMethodCash": "Cash",
+  "paymentMethodCard": "Card",
+  "paymentMethodUnknown": "Unknown",
+  "paymentDate": "Payment Date",
+
+  "noInvoiceItemsTitle": "No Invoice Items",
+  "noInvoiceItemsSubtitle": "No cost details have been added to this invoice.",
+
+  "noPaymentsTitle": "No Payments Yet",
+  "noPaymentsSubtitle": "Payments recorded for this invoice will appear here.",
+  "financialOverviewSubtitle": "A summary of all treatment costs and the amounts paid so far.",
+  "paymentDetailsHintTitle": "Where can I find invoice details?",
+  "paymentDetailsHintSubtitle": "Open the required treatment from My Treatments, then select Treatment Invoice to view its cost and payment details.",
+  "costDetails": "Cost details",
+  "totalTreatmentCost": "Total treatment cost",
+  "basePrice": "Base price",
+  "discount": "Discount",
+  "discountAmount": "Discount amount",
+  "paymentMethod": "Payment method",
+  "invoiceFullyPaidTitle": "Invoice fully paid",
+  "invoiceFullyPaidSubtitle": "There are no remaining amounts on this invoice.",
+  "sessionExpiredTitle": "Session expired",
+  "sessionExpiredMessage": "Your session has expired. Please sign in again."
 
 }

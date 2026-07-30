@@ -198,10 +198,14 @@ class _MedicalRecordHomeScreenState extends State<MedicalRecordHomeScreen> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: MedicalRecordCategoryCard(
-                      title: _t(context, 'الدفعات', 'Payments'),
-                      subtitle: _t(context, 'قريبًا', 'Coming soon'),
+                      title: l10n.payments,
+                      subtitle: l10n.financialSummary,
                       icon: Icons.wallet_rounded,
-                      isEnabled: false,
+                      onTap: () {
+                        context.push(
+                          AppRoutes.medicalRecordPayments,
+                        );
+                      },
                     ),
                   ),
                 ],

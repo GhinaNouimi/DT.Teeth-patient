@@ -13,9 +13,12 @@ class DioClient {
     final dio = Dio(
       BaseOptions(
         baseUrl: ApiConstants.baseUrl,
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 10),
-        sendTimeout: const Duration(seconds: 10),
+        connectTimeout:
+        const Duration(seconds: 10),
+        receiveTimeout:
+        const Duration(seconds: 10),
+        sendTimeout:
+        const Duration(seconds: 10),
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -23,7 +26,9 @@ class DioClient {
       ),
     );
 
-    dio.interceptors.add(AppInterceptor());
+    dio.interceptors.add(
+      AppInterceptor(),
+    );
 
     dio.interceptors.add(
       RetryInterceptor(
@@ -35,10 +40,14 @@ class DioClient {
           Duration(seconds: 3),
         ],
         retryEvaluator: (error, attempt) {
-          return error.type == DioExceptionType.connectionError ||
-              error.type == DioExceptionType.connectionTimeout ||
-              error.type == DioExceptionType.receiveTimeout ||
-              error.type == DioExceptionType.sendTimeout;
+          return error.type ==
+              DioExceptionType.connectionError ||
+              error.type ==
+                  DioExceptionType.connectionTimeout ||
+              error.type ==
+                  DioExceptionType.receiveTimeout ||
+              error.type ==
+                  DioExceptionType.sendTimeout;
         },
       ),
     );

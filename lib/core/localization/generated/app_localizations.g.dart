@@ -2500,6 +2500,300 @@ abstract class GeneratedAppLocalizations {
   /// In ar, this message translates to:
   /// **'السابقة'**
   String get pastAppointments;
+
+  /// No description provided for @financialPayments.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدفعات المالية'**
+  String get financialPayments;
+
+  /// No description provided for @financialSummary.
+  ///
+  /// In ar, this message translates to:
+  /// **'الملخص المالي'**
+  String get financialSummary;
+
+  /// No description provided for @invoiceSummaryLoadFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل الملخص المالي'**
+  String get invoiceSummaryLoadFailed;
+
+  /// No description provided for @noFinancialDataTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد بيانات مالية حاليًا'**
+  String get noFinancialDataTitle;
+
+  /// No description provided for @noFinancialDataSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ستظهر ملخصات تكاليف العلاجات والدفعات هنا عند توفرها.'**
+  String get noFinancialDataSubtitle;
+
+  /// No description provided for @totalAmount.
+  ///
+  /// In ar, this message translates to:
+  /// **'إجمالي التكلفة'**
+  String get totalAmount;
+
+  /// No description provided for @paidAmount.
+  ///
+  /// In ar, this message translates to:
+  /// **'المبلغ المدفوع'**
+  String get paidAmount;
+
+  /// No description provided for @remainingAmount.
+  ///
+  /// In ar, this message translates to:
+  /// **'المبلغ المتبقي'**
+  String get remainingAmount;
+
+  /// No description provided for @paymentProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسبة السداد'**
+  String get paymentProgress;
+
+  /// No description provided for @fullyPaid.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم السداد بالكامل'**
+  String get fullyPaid;
+
+  /// No description provided for @paymentRemaining.
+  ///
+  /// In ar, this message translates to:
+  /// **'يوجد مبلغ متبقٍ'**
+  String get paymentRemaining;
+
+  /// No description provided for @treatmentInvoice.
+  ///
+  /// In ar, this message translates to:
+  /// **'فاتورة العلاج'**
+  String get treatmentInvoice;
+
+  /// No description provided for @viewTreatmentInvoice.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض فاتورة العلاج'**
+  String get viewTreatmentInvoice;
+
+  /// No description provided for @treatmentInvoiceSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اطّلع على تفاصيل التكلفة والدفعات الخاصة بهذا العلاج.'**
+  String get treatmentInvoiceSubtitle;
+
+  /// No description provided for @treatmentInvoiceDetails.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل فاتورة العلاج'**
+  String get treatmentInvoiceDetails;
+
+  /// No description provided for @treatmentInvoiceLoadFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل فاتورة العلاج'**
+  String get treatmentInvoiceLoadFailed;
+
+  /// No description provided for @invoiceStatus.
+  ///
+  /// In ar, this message translates to:
+  /// **'حالة الفاتورة'**
+  String get invoiceStatus;
+
+  /// No description provided for @invoiceStatusPaid.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدفوعة'**
+  String get invoiceStatusPaid;
+
+  /// No description provided for @invoiceStatusPartial.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدفوعة جزئيًا'**
+  String get invoiceStatusPartial;
+
+  /// No description provided for @invoiceStatusUnpaid.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير مدفوعة'**
+  String get invoiceStatusUnpaid;
+
+  /// No description provided for @invoiceStatusUnknown.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير معروفة'**
+  String get invoiceStatusUnknown;
+
+  /// No description provided for @invoiceItems.
+  ///
+  /// In ar, this message translates to:
+  /// **'بنود الفاتورة'**
+  String get invoiceItems;
+
+  /// No description provided for @invoiceItemDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'البيان'**
+  String get invoiceItemDescription;
+
+  /// No description provided for @unitPrice.
+  ///
+  /// In ar, this message translates to:
+  /// **'السعر الأساسي'**
+  String get unitPrice;
+
+  /// No description provided for @discountPercentage.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسبة الخصم'**
+  String get discountPercentage;
+
+  /// No description provided for @finalPrice.
+  ///
+  /// In ar, this message translates to:
+  /// **'السعر النهائي'**
+  String get finalPrice;
+
+  /// No description provided for @paymentHistory.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجل الدفعات'**
+  String get paymentHistory;
+
+  /// No description provided for @paymentAmount.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيمة الدفعة'**
+  String get paymentAmount;
+
+  /// No description provided for @paymentMethod.
+  ///
+  /// In ar, this message translates to:
+  /// **'طريقة الدفع'**
+  String get paymentMethod;
+
+  /// No description provided for @paymentMethodCash.
+  ///
+  /// In ar, this message translates to:
+  /// **'نقدًا'**
+  String get paymentMethodCash;
+
+  /// No description provided for @paymentMethodCard.
+  ///
+  /// In ar, this message translates to:
+  /// **'بطاقة'**
+  String get paymentMethodCard;
+
+  /// No description provided for @paymentMethodUnknown.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير معروفة'**
+  String get paymentMethodUnknown;
+
+  /// No description provided for @paymentDate.
+  ///
+  /// In ar, this message translates to:
+  /// **'تاريخ الدفع'**
+  String get paymentDate;
+
+  /// No description provided for @noInvoiceItemsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد بنود في الفاتورة'**
+  String get noInvoiceItemsTitle;
+
+  /// No description provided for @noInvoiceItemsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تتم إضافة تفاصيل تكلفة لهذه الفاتورة.'**
+  String get noInvoiceItemsSubtitle;
+
+  /// No description provided for @noPaymentsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد دفعات بعد'**
+  String get noPaymentsTitle;
+
+  /// No description provided for @noPaymentsSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ستظهر الدفعات المسجلة لهذه الفاتورة هنا.'**
+  String get noPaymentsSubtitle;
+
+  /// No description provided for @financialOverviewSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملخص تكاليف جميع علاجاتك والمبالغ المسددة حتى الآن.'**
+  String get financialOverviewSubtitle;
+
+  /// No description provided for @paymentDetailsHintTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين أجد تفاصيل الفاتورة؟'**
+  String get paymentDetailsHintTitle;
+
+  /// No description provided for @paymentDetailsHintSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح العلاج المطلوب من قسم علاجاتي، ثم اختر فاتورة العلاج لعرض تفاصيل التكلفة والدفعات.'**
+  String get paymentDetailsHintSubtitle;
+
+  /// No description provided for @costDetails.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل التكلفة'**
+  String get costDetails;
+
+  /// No description provided for @totalTreatmentCost.
+  ///
+  /// In ar, this message translates to:
+  /// **'إجمالي تكلفة العلاج'**
+  String get totalTreatmentCost;
+
+  /// No description provided for @basePrice.
+  ///
+  /// In ar, this message translates to:
+  /// **'السعر الأساسي'**
+  String get basePrice;
+
+  /// No description provided for @discount.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخصم'**
+  String get discount;
+
+  /// No description provided for @discountAmount.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيمة الخصم'**
+  String get discountAmount;
+
+  /// No description provided for @invoiceFullyPaidTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم سداد الفاتورة بالكامل'**
+  String get invoiceFullyPaidTitle;
+
+  /// No description provided for @invoiceFullyPaidSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مبالغ متبقية على هذه الفاتورة.'**
+  String get invoiceFullyPaidSubtitle;
+
+  /// No description provided for @sessionExpiredTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت صلاحية الجلسة'**
+  String get sessionExpiredTitle;
+
+  /// No description provided for @sessionExpiredMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت صلاحية جلستك، يرجى تسجيل الدخول مجددًا.'**
+  String get sessionExpiredMessage;
 }
 
 class _GeneratedAppLocalizationsDelegate

@@ -1283,4 +1283,160 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
 
   @override
   String get pastAppointments => 'Past';
+
+  @override
+  String get financialPayments => 'Financial Payments';
+
+  @override
+  String get financialSummary => 'Financial Summary';
+
+  @override
+  String get invoiceSummaryLoadFailed => 'Failed to load the financial summary';
+
+  @override
+  String get noFinancialDataTitle => 'No financial data available';
+
+  @override
+  String get noFinancialDataSubtitle =>
+      'Treatment cost and payment summaries will appear here when available.';
+
+  @override
+  String get totalAmount => 'Total Amount';
+
+  @override
+  String get paidAmount => 'Paid Amount';
+
+  @override
+  String get remainingAmount => 'Remaining Amount';
+
+  @override
+  String get paymentProgress => 'Payment Progress';
+
+  @override
+  String get fullyPaid => 'Fully Paid';
+
+  @override
+  String get paymentRemaining => 'Payment Remaining';
+
+  @override
+  String get treatmentInvoice => 'Treatment Invoice';
+
+  @override
+  String get viewTreatmentInvoice => 'View Treatment Invoice';
+
+  @override
+  String get treatmentInvoiceSubtitle =>
+      'View the costs and payments associated with this treatment.';
+
+  @override
+  String get treatmentInvoiceDetails => 'Treatment Invoice Details';
+
+  @override
+  String get treatmentInvoiceLoadFailed =>
+      'Failed to load the treatment invoice';
+
+  @override
+  String get invoiceStatus => 'Invoice Status';
+
+  @override
+  String get invoiceStatusPaid => 'Paid';
+
+  @override
+  String get invoiceStatusPartial => 'Partially Paid';
+
+  @override
+  String get invoiceStatusUnpaid => 'Unpaid';
+
+  @override
+  String get invoiceStatusUnknown => 'Unknown';
+
+  @override
+  String get invoiceItems => 'Invoice Items';
+
+  @override
+  String get invoiceItemDescription => 'Description';
+
+  @override
+  String get unitPrice => 'Unit Price';
+
+  @override
+  String get discountPercentage => 'Discount';
+
+  @override
+  String get finalPrice => 'Final Price';
+
+  @override
+  String get paymentHistory => 'Payment History';
+
+  @override
+  String get paymentAmount => 'Payment Amount';
+
+  @override
+  String get paymentMethod => 'Payment method';
+
+  @override
+  String get paymentMethodCash => 'Cash';
+
+  @override
+  String get paymentMethodCard => 'Card';
+
+  @override
+  String get paymentMethodUnknown => 'Unknown';
+
+  @override
+  String get paymentDate => 'Payment Date';
+
+  @override
+  String get noInvoiceItemsTitle => 'No Invoice Items';
+
+  @override
+  String get noInvoiceItemsSubtitle =>
+      'No cost details have been added to this invoice.';
+
+  @override
+  String get noPaymentsTitle => 'No Payments Yet';
+
+  @override
+  String get noPaymentsSubtitle =>
+      'Payments recorded for this invoice will appear here.';
+
+  @override
+  String get financialOverviewSubtitle =>
+      'A summary of all treatment costs and the amounts paid so far.';
+
+  @override
+  String get paymentDetailsHintTitle => 'Where can I find invoice details?';
+
+  @override
+  String get paymentDetailsHintSubtitle =>
+      'Open the required treatment from My Treatments, then select Treatment Invoice to view its cost and payment details.';
+
+  @override
+  String get costDetails => 'Cost details';
+
+  @override
+  String get totalTreatmentCost => 'Total treatment cost';
+
+  @override
+  String get basePrice => 'Base price';
+
+  @override
+  String get discount => 'Discount';
+
+  @override
+  String get discountAmount => 'Discount amount';
+
+  @override
+  String get invoiceFullyPaidTitle => 'Invoice fully paid';
+
+  @override
+  String get invoiceFullyPaidSubtitle =>
+      'There are no remaining amounts on this invoice.';
+
+  @override
+  String get sessionExpiredTitle => 'Session expired';
+
+  @override
+  String get sessionExpiredMessage =>
+      'Your session has expired. Please sign in again.';
 }

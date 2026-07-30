@@ -17,10 +17,16 @@ import '../widgets/auth_shell.dart';
 import '../widgets/primary_app_button.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final bool sessionExpired;
+
+  const LoginScreen({
+    super.key,
+    this.sessionExpired = false,
+  });
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginScreen> createState() =>
+      _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -29,25 +35,66 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  bool _didShowSessionExpiredMessage = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _showSessionExpiredMessageIfNeeded();
+  }
+
+  void _showSessionExpiredMessageIfNeeded() {
+    if (!widget.sessionExpired ||
+        _didShowSessionExpiredMessage) {
+      return;
+    }
+
+    _didShowSessionExpiredMessage = true;
+
+    WidgetsBinding.instance.addPostFrameCallback(
+          (_) async {
+        if (!mounted) {
+          return;
+        }
+
+        final l10n = context.l10n;
+
+        await showErrorBottomSheet(
+          context,
+          title: l10n.sessionExpiredTitle,
+          message: l10n.sessionExpiredMessage,
+          buttonText: l10n.ok,
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+
     super.dispose();
   }
 
   void _submit() {
-    if (!_formKey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
 
     final request = LoginRequestModel(
       email: _emailController.text.trim(),
       password: _passwordController.text,
     );
 
-    context.read<LoginBloc>().add(LoginPatientSubmitted(
-      request: request,
-      languageCode: Localizations.localeOf(context).languageCode,
-    ));
+    context.read<LoginBloc>().add(
+      LoginPatientSubmitted(
+        request: request,
+        languageCode:
+        Localizations.localeOf(context).languageCode,
+      ),
+    );
   }
 
   @override
@@ -82,7 +129,9 @@ class _LoginScreenState extends State<LoginScreen> {
         subtitle: l10n.loginSubtitle,
         bottomText: l10n.doNotHaveAccount,
         bottomActionText: l10n.createAccount,
-        onBottomTap: () => context.go(AppRoutes.signup),
+        onBottomTap: () {
+          context.go(AppRoutes.signup);
+        },
         child: Form(
           key: _formKey,
           child: Column(
@@ -91,14 +140,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: _emailController,
                 label: l10n.email,
                 hint: l10n.emailHint,
-                prefixIcon: Icons.mail_outline_rounded,
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) => AppValidators.email(
-                  value,
-                  requiredMessage: l10n.emailRequired,
-                  invalidMessage: l10n.emailInvalid,
-                ),
-              ).animate().fadeIn(delay: 80.ms).slideX(begin: 0.08, end: 0),
+                prefixIcon:
+                Icons.mail_outline_rounded,
+                keyboardType:
+                TextInputType.emailAddress,
+                validator: (value) =>
+                    AppValidators.email(
+                      value,
+                      requiredMessage:
+                      l10n.emailRequired,
+                      invalidMessage:
+                      l10n.emailInvalid,
+                    ),
+              )
+                  .animate()
+                  .fadeIn(delay: 80.ms)
+                  .slideX(
+                begin: 0.08,
+                end: 0,
+              ),
 
               const SizedBox(height: 16),
 
@@ -106,26 +166,39 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: _passwordController,
                 label: l10n.password,
                 hint: '********',
-                prefixIcon: Icons.lock_outline_rounded,
+                prefixIcon:
+                Icons.lock_outline_rounded,
                 obscureText: true,
                 validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
+                  if (value == null ||
+                      value.trim().isEmpty) {
                     return l10n.passwordRequired;
                   }
 
                   return null;
                 },
-              ).animate().fadeIn(delay: 180.ms).slideX(begin: 0.08, end: 0),
+              )
+                  .animate()
+                  .fadeIn(delay: 180.ms)
+                  .slideX(
+                begin: 0.08,
+                end: 0,
+              ),
 
               const SizedBox(height: 10),
 
               Align(
-                alignment: AlignmentDirectional.centerEnd,
+                alignment:
+                AlignmentDirectional.centerEnd,
                 child: TextButton(
                   onPressed: () {
-                    context.push(AppRoutes.forgotPassword);
+                    context.push(
+                      AppRoutes.forgotPassword,
+                    );
                   },
-                  child: Text(l10n.forgotPasswordQuestion),
+                  child: Text(
+                    l10n.forgotPasswordQuestion,
+                  ),
                 ),
               ).animate().fadeIn(delay: 260.ms),
 
@@ -133,15 +206,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
               BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {
-                  final isLoading = state is LoginLoading;
+                  final isLoading =
+                  state is LoginLoading;
 
                   return PrimaryAppButton(
-                    text: isLoading ? l10n.loggingIn : l10n.loginButton,
-                    icon: Icons.arrow_forward_rounded,
-                    onPressed: isLoading ? null : _submit,
+                    text: isLoading
+                        ? l10n.loggingIn
+                        : l10n.loginButton,
+                    icon:
+                    Icons.arrow_forward_rounded,
+                    onPressed:
+                    isLoading ? null : _submit,
                   );
                 },
-              ).animate().fadeIn(delay: 320.ms).slideY(begin: 0.14, end: 0),
+              )
+                  .animate()
+                  .fadeIn(delay: 320.ms)
+                  .slideY(
+                begin: 0.14,
+                end: 0,
+              ),
             ],
           ),
         ),

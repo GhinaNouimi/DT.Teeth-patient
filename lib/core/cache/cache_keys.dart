@@ -37,4 +37,9 @@ class CacheKeys {
   // Complaints
   static const complaints = 'cached_complaints';
 
+  static const String invoiceSummary = 'cached_invoice_summary';
+
+  static String treatmentInvoice(int treatmentId) =>
+      'cached_treatment_invoice_$treatmentId';
+
 }

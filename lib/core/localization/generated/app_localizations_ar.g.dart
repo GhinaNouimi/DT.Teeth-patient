@@ -1259,4 +1259,158 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
 
   @override
   String get pastAppointments => 'السابقة';
+
+  @override
+  String get financialPayments => 'الدفعات المالية';
+
+  @override
+  String get financialSummary => 'الملخص المالي';
+
+  @override
+  String get invoiceSummaryLoadFailed => 'تعذر تحميل الملخص المالي';
+
+  @override
+  String get noFinancialDataTitle => 'لا توجد بيانات مالية حاليًا';
+
+  @override
+  String get noFinancialDataSubtitle =>
+      'ستظهر ملخصات تكاليف العلاجات والدفعات هنا عند توفرها.';
+
+  @override
+  String get totalAmount => 'إجمالي التكلفة';
+
+  @override
+  String get paidAmount => 'المبلغ المدفوع';
+
+  @override
+  String get remainingAmount => 'المبلغ المتبقي';
+
+  @override
+  String get paymentProgress => 'نسبة السداد';
+
+  @override
+  String get fullyPaid => 'تم السداد بالكامل';
+
+  @override
+  String get paymentRemaining => 'يوجد مبلغ متبقٍ';
+
+  @override
+  String get treatmentInvoice => 'فاتورة العلاج';
+
+  @override
+  String get viewTreatmentInvoice => 'عرض فاتورة العلاج';
+
+  @override
+  String get treatmentInvoiceSubtitle =>
+      'اطّلع على تفاصيل التكلفة والدفعات الخاصة بهذا العلاج.';
+
+  @override
+  String get treatmentInvoiceDetails => 'تفاصيل فاتورة العلاج';
+
+  @override
+  String get treatmentInvoiceLoadFailed => 'تعذر تحميل فاتورة العلاج';
+
+  @override
+  String get invoiceStatus => 'حالة الفاتورة';
+
+  @override
+  String get invoiceStatusPaid => 'مدفوعة';
+
+  @override
+  String get invoiceStatusPartial => 'مدفوعة جزئيًا';
+
+  @override
+  String get invoiceStatusUnpaid => 'غير مدفوعة';
+
+  @override
+  String get invoiceStatusUnknown => 'غير معروفة';
+
+  @override
+  String get invoiceItems => 'بنود الفاتورة';
+
+  @override
+  String get invoiceItemDescription => 'البيان';
+
+  @override
+  String get unitPrice => 'السعر الأساسي';
+
+  @override
+  String get discountPercentage => 'نسبة الخصم';
+
+  @override
+  String get finalPrice => 'السعر النهائي';
+
+  @override
+  String get paymentHistory => 'سجل الدفعات';
+
+  @override
+  String get paymentAmount => 'قيمة الدفعة';
+
+  @override
+  String get paymentMethod => 'طريقة الدفع';
+
+  @override
+  String get paymentMethodCash => 'نقدًا';
+
+  @override
+  String get paymentMethodCard => 'بطاقة';
+
+  @override
+  String get paymentMethodUnknown => 'غير معروفة';
+
+  @override
+  String get paymentDate => 'تاريخ الدفع';
+
+  @override
+  String get noInvoiceItemsTitle => 'لا توجد بنود في الفاتورة';
+
+  @override
+  String get noInvoiceItemsSubtitle =>
+      'لم تتم إضافة تفاصيل تكلفة لهذه الفاتورة.';
+
+  @override
+  String get noPaymentsTitle => 'لا توجد دفعات بعد';
+
+  @override
+  String get noPaymentsSubtitle => 'ستظهر الدفعات المسجلة لهذه الفاتورة هنا.';
+
+  @override
+  String get financialOverviewSubtitle =>
+      'ملخص تكاليف جميع علاجاتك والمبالغ المسددة حتى الآن.';
+
+  @override
+  String get paymentDetailsHintTitle => 'أين أجد تفاصيل الفاتورة؟';
+
+  @override
+  String get paymentDetailsHintSubtitle =>
+      'افتح العلاج المطلوب من قسم علاجاتي، ثم اختر فاتورة العلاج لعرض تفاصيل التكلفة والدفعات.';
+
+  @override
+  String get costDetails => 'تفاصيل التكلفة';
+
+  @override
+  String get totalTreatmentCost => 'إجمالي تكلفة العلاج';
+
+  @override
+  String get basePrice => 'السعر الأساسي';
+
+  @override
+  String get discount => 'الخصم';
+
+  @override
+  String get discountAmount => 'قيمة الخصم';
+
+  @override
+  String get invoiceFullyPaidTitle => 'تم سداد الفاتورة بالكامل';
+
+  @override
+  String get invoiceFullyPaidSubtitle =>
+      'لا توجد مبالغ متبقية على هذه الفاتورة.';
+
+  @override
+  String get sessionExpiredTitle => 'انتهت صلاحية الجلسة';
+
+  @override
+  String get sessionExpiredMessage =>
+      'انتهت صلاحية جلستك، يرجى تسجيل الدخول مجددًا.';
 }

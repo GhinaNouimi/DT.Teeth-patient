@@ -428,7 +428,65 @@
   "appointmentStatusPatientNoShow": "لم يحضر المريض",
   "appointmentStatusUnknown": "حالة غير معروفة",
   "upcomingAppointments": "القادمة",
-  "pastAppointments": "السابقة"
+  "pastAppointments": "السابقة",
+  "financialPayments": "الدفعات المالية",
+  "financialSummary": "الملخص المالي",
+  "invoiceSummaryLoadFailed": "تعذر تحميل الملخص المالي",
 
+  "noFinancialDataTitle": "لا توجد بيانات مالية حاليًا",
+  "noFinancialDataSubtitle": "ستظهر ملخصات تكاليف العلاجات والدفعات هنا عند توفرها.",
+
+  "totalAmount": "إجمالي التكلفة",
+  "paidAmount": "المبلغ المدفوع",
+  "remainingAmount": "المبلغ المتبقي",
+  "paymentProgress": "نسبة السداد",
+
+  "fullyPaid": "تم السداد بالكامل",
+  "paymentRemaining": "يوجد مبلغ متبقٍ",
+
+  "treatmentInvoice": "فاتورة العلاج",
+  "viewTreatmentInvoice": "عرض فاتورة العلاج",
+  "treatmentInvoiceSubtitle": "اطّلع على تفاصيل التكلفة والدفعات الخاصة بهذا العلاج.",
+  "treatmentInvoiceDetails": "تفاصيل فاتورة العلاج",
+  "treatmentInvoiceLoadFailed": "تعذر تحميل فاتورة العلاج",
+
+  "invoiceStatus": "حالة الفاتورة",
+  "invoiceStatusPaid": "مدفوعة",
+  "invoiceStatusPartial": "مدفوعة جزئيًا",
+  "invoiceStatusUnpaid": "غير مدفوعة",
+  "invoiceStatusUnknown": "غير معروفة",
+
+  "invoiceItems": "بنود الفاتورة",
+  "invoiceItemDescription": "البيان",
+  "unitPrice": "السعر الأساسي",
+  "discountPercentage": "نسبة الخصم",
+  "finalPrice": "السعر النهائي",
+
+  "paymentHistory": "سجل الدفعات",
+  "paymentAmount": "قيمة الدفعة",
+  "paymentMethod": "طريقة الدفع",
+  "paymentMethodCash": "نقدًا",
+  "paymentMethodCard": "بطاقة",
+  "paymentMethodUnknown": "غير معروفة",
+  "paymentDate": "تاريخ الدفع",
+
+  "noInvoiceItemsTitle": "لا توجد بنود في الفاتورة",
+  "noInvoiceItemsSubtitle": "لم تتم إضافة تفاصيل تكلفة لهذه الفاتورة.",
+
+  "noPaymentsTitle": "لا توجد دفعات بعد",
+  "noPaymentsSubtitle": "ستظهر الدفعات المسجلة لهذه الفاتورة هنا.",
+  "financialOverviewSubtitle": "ملخص تكاليف جميع علاجاتك والمبالغ المسددة حتى الآن.",
+  "paymentDetailsHintTitle": "أين أجد تفاصيل الفاتورة؟",
+  "paymentDetailsHintSubtitle": "افتح العلاج المطلوب من قسم علاجاتي، ثم اختر فاتورة العلاج لعرض تفاصيل التكلفة والدفعات.",
+  "costDetails": "تفاصيل التكلفة",
+  "totalTreatmentCost": "إجمالي تكلفة العلاج",
+  "basePrice": "السعر الأساسي",
+  "discount": "الخصم",
+  "discountAmount": "قيمة الخصم",
+  "paymentMethod": "طريقة الدفع",
+  "invoiceFullyPaidTitle": "تم سداد الفاتورة بالكامل",
+  "invoiceFullyPaidSubtitle": "لا توجد مبالغ متبقية على هذه الفاتورة.",
+  "sessionExpiredTitle": "انتهت صلاحية الجلسة",
+  "sessionExpiredMessage": "انتهت صلاحية جلستك، يرجى تسجيل الدخول مجددًا."
 
 }

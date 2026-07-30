@@ -15,5 +15,4 @@ abstract class MedicalRecordRepository {
 
   Future<PrescriptionEntity?> getPrescriptionById(String prescriptionId);
 
-  Future<PaymentPlanEntity?> getPaymentPlan();
 }

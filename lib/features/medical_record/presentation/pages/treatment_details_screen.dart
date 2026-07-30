@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/localization/app_localizations.dart';
+import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../../../core/widgets/feedback/offline_cached_banner.dart';
 import '../../../../core/widgets/loading/app_skeleton.dart';
@@ -31,7 +33,8 @@ class TreatmentDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final languageCode = Localizations.localeOf(context).languageCode;
+    final languageCode =
+        Localizations.localeOf(context).languageCode;
 
     return BlocProvider(
       create: (_) => TreatmentBloc(
@@ -131,14 +134,17 @@ class _TreatmentDetailsView extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.all(20),
                       child: MedicalRecordEmptyState(
-                        title: l10n.treatmentDetailsLoadFailed,
+                        title:
+                        l10n.treatmentDetailsLoadFailed,
                         subtitle: state.message,
-                        icon: Icons.medical_services_outlined,
+                        icon:
+                        Icons.medical_services_outlined,
                       ),
                     );
                   }
 
-                  final treatment = state is TreatmentDetailsLoaded
+                  final treatment =
+                  state is TreatmentDetailsLoaded
                       ? state.treatment
                       : _fakeTreatment();
 
@@ -189,6 +195,7 @@ class _TreatmentDetailsBody extends StatelessWidget {
     final theme = Theme.of(context);
     final colors = context.colors;
     final l10n = context.l10n;
+
     final languageCode =
         Localizations.localeOf(context).languageCode;
 
@@ -216,92 +223,46 @@ class _TreatmentDetailsBody extends StatelessWidget {
           ),
           const SizedBox(height: 16),
         ],
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: colors.surfaceMuted,
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(
-              color: colors.borderSoft,
-            ),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment:
-                  CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      treatmentName,
-                      style:
-                      theme.textTheme.headlineSmall?.copyWith(
-                        color: colors.textPrimary,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      treatment.dentist.name,
-                      style:
-                      theme.textTheme.titleMedium?.copyWith(
-                        color: colors.textSecondary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    TreatmentStatusChip(
-                      status: treatment.status,
-                    ),
-                    const SizedBox(height: 14),
-                    Text(
-                      '${l10n.treatmentCreatedAt}: '
-                          '${treatment.createdAt}',
-                      style:
-                      theme.textTheme.bodyMedium?.copyWith(
-                        color: colors.textSecondary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 14),
-              TreatmentProgressRing(
-                percent: _progressPercent,
-                size: 86,
-              ),
-            ],
-          ),
+
+        _TreatmentHeaderCard(
+          treatment: treatment,
+          treatmentName: treatmentName,
+          progressPercent: _progressPercent,
         ),
-        const SizedBox(height: 18),
-        _InfoCard(
-          children: [
-            _InfoRow(
-              label: progressLabel,
-              value: l10n.completedSessions(
-                treatment.sessionsCompleted,
-                treatment.totalSessionsNeeded,
-              ),
-            ),
-            _InfoRow(
-              label: l10n.notes,
-              value:
-              (treatment.notes ?? '').trim().isEmpty
-                  ? l10n.noNotes
-                  : treatment.notes!,
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        Text(
-          l10n.treatmentSessions,
-          style: theme.textTheme.titleLarge?.copyWith(
-            color: colors.textPrimary,
-            fontWeight: FontWeight.w800,
+
+        const SizedBox(height: 16),
+
+        _TreatmentOverviewCard(
+          progressLabel: progressLabel,
+          completedSessions: l10n.completedSessions(
+            treatment.sessionsCompleted,
+            treatment.totalSessionsNeeded,
           ),
+          notes: (treatment.notes ?? '').trim().isEmpty
+              ? l10n.noNotes
+              : treatment.notes!,
         ),
+
+        const SizedBox(height: 16),
+
+        _TreatmentInvoiceActionCard(
+          onTap: () {
+            context.push(
+              AppRoutes.medicalRecordTreatmentInvoice,
+              extra: treatment.id,
+            );
+          },
+        ),
+
+        const SizedBox(height: 26),
+
+        _SectionHeader(
+          title: l10n.treatmentSessions,
+          icon: Icons.event_note_rounded,
+        ),
+
         const SizedBox(height: 12),
+
         if (treatment.sessions.isEmpty)
           MedicalRecordEmptyState(
             title: l10n.noTreatmentSessionsTitle,
@@ -319,16 +280,163 @@ class _TreatmentDetailsBody extends StatelessWidget {
               ),
             ),
           ),
+
+        const SizedBox(height: 8),
+
+        Text(
+          '',
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: colors.textSecondary,
+          ),
+        ),
       ],
     );
   }
 }
 
-class _SessionCard extends StatelessWidget {
-  final TreatmentSessionEntity session;
+class _TreatmentHeaderCard extends StatelessWidget {
+  final TreatmentEntity treatment;
+  final String treatmentName;
+  final int progressPercent;
 
-  const _SessionCard({
-    required this.session,
+  const _TreatmentHeaderCard({
+    required this.treatment,
+    required this.treatmentName,
+    required this.progressPercent,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+    final l10n = context.l10n;
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: colors.surfaceMuted,
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(
+          color: colors.borderSoft,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment:
+                  CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      treatmentName,
+                      style: theme
+                          .textTheme.headlineSmall
+                          ?.copyWith(
+                        color: colors.textPrimary,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.person_outline_rounded,
+                          size: 19,
+                          color: colors.textSecondary,
+                        ),
+                        const SizedBox(width: 7),
+                        Expanded(
+                          child: Text(
+                            treatment.dentist.name,
+                            style: theme
+                                .textTheme.titleMedium
+                                ?.copyWith(
+                              color:
+                              colors.textSecondary,
+                              fontWeight:
+                              FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                    TreatmentStatusChip(
+                      status: treatment.status,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 16),
+              TreatmentProgressRing(
+                percent: progressPercent,
+                size: 88,
+              ),
+            ],
+          ),
+          const SizedBox(height: 18),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 12,
+            ),
+            decoration: BoxDecoration(
+              color: colors.surfacePrimary,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(
+                color: colors.borderSoft,
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.calendar_today_outlined,
+                  size: 18,
+                  color: context.medicalAccent,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    l10n.treatmentCreatedAt,
+                    style:
+                    theme.textTheme.bodyMedium?.copyWith(
+                      color: colors.textSecondary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  treatment.createdAt,
+                  style:
+                  theme.textTheme.bodyMedium?.copyWith(
+                    color: colors.textPrimary,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TreatmentOverviewCard extends StatelessWidget {
+  final String progressLabel;
+  final String completedSessions;
+  final String notes;
+
+  const _TreatmentOverviewCard({
+    required this.progressLabel,
+    required this.completedSessions,
+    required this.notes,
   });
 
   @override
@@ -349,8 +457,301 @@ class _SessionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          _OverviewItem(
+            icon: Icons.trending_up_rounded,
+            label: progressLabel,
+            value: completedSessions,
+          ),
+          const SizedBox(height: 14),
+          Divider(
+            height: 1,
+            color: colors.borderSoft,
+          ),
+          const SizedBox(height: 14),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: colors.surfaceMuted,
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                child: Icon(
+                  Icons.notes_rounded,
+                  size: 20,
+                  color: context.medicalAccent,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment:
+                  CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.notes,
+                      style: theme
+                          .textTheme.bodyMedium
+                          ?.copyWith(
+                        color: colors.textSecondary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      notes,
+                      style: theme
+                          .textTheme.bodyMedium
+                          ?.copyWith(
+                        color: colors.textPrimary,
+                        fontWeight: FontWeight.w700,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OverviewItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+
+  const _OverviewItem({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+
+    return Row(
+      children: [
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: colors.surfaceMuted,
+            borderRadius: BorderRadius.circular(13),
+          ),
+          child: Icon(
+            icon,
+            size: 21,
+            color: context.medicalAccent,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Text(
+            label,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: colors.textSecondary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Text(
+          value,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: colors.textPrimary,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TreatmentInvoiceActionCard extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const _TreatmentInvoiceActionCard({
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+    final l10n = context.l10n;
+
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(26),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(26),
+        child: Ink(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: colors.surfacePrimary,
+            borderRadius: BorderRadius.circular(26),
+            border: Border.all(
+              color: colors.borderSoft,
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 54,
+                height: 54,
+                decoration: BoxDecoration(
+                  color: colors.infoBackground,
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                child: Icon(
+                  Icons.receipt_long_rounded,
+                  size: 27,
+                  color: colors.infoForeground,
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment:
+                  CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.treatmentInvoice,
+                      style: theme
+                          .textTheme.titleMedium
+                          ?.copyWith(
+                        color: colors.textPrimary,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      l10n.treatmentInvoiceSubtitle,
+                      style:
+                      theme.textTheme.bodyMedium?.copyWith(
+                        color: colors.textSecondary,
+                        fontWeight: FontWeight.w600,
+                        height: 1.45,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 10),
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: colors.surfaceMuted,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 16,
+                  color: colors.infoForeground,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  final String title;
+  final IconData icon;
+
+  const _SectionHeader({
+    required this.title,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 24,
+          color: context.medicalAccent,
+        ),
+        const SizedBox(width: 9),
+        Text(
+          title,
+          style: theme.textTheme.titleLarge?.copyWith(
+            color: colors.textPrimary,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SessionCard extends StatelessWidget {
+  final TreatmentSessionEntity session;
+
+  const _SessionCard({
+    required this.session,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+    final l10n = context.l10n;
+
+    final hasStartTime =
+        (session.actualStartTime ?? '').trim().isNotEmpty;
+
+    final hasEndTime =
+        (session.actualEndTime ?? '').trim().isNotEmpty;
+
+    final hasNotes =
+        (session.notes ?? '').trim().isNotEmpty;
+
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: colors.surfacePrimary,
+        borderRadius: BorderRadius.circular(26),
+        border: Border.all(
+          color: colors.borderSoft,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Row(
             children: [
+              Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(
+                  color: colors.surfaceMuted,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Icon(
+                  Icons.event_available_rounded,
+                  size: 22,
+                  color: context.medicalAccent,
+                ),
+              ),
+              const SizedBox(width: 12),
               Expanded(
                 child: Text(
                   l10n.sessionNumber(
@@ -359,7 +760,7 @@ class _SessionCard extends StatelessWidget {
                   style:
                   theme.textTheme.titleMedium?.copyWith(
                     color: colors.textPrimary,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ),
@@ -368,43 +769,71 @@ class _SessionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
-          _InfoCard(
-            children: [
-              if (session.actualStartTime != null &&
-                  session.actualStartTime!.trim().isNotEmpty)
-                _InfoRow(
-                  label: l10n.sessionStartTime,
-                  value: session.actualStartTime!,
-                ),
-              if (session.actualEndTime != null &&
-                  session.actualEndTime!.trim().isNotEmpty)
-                _InfoRow(
-                  label: l10n.sessionEndTime,
-                  value: session.actualEndTime!,
-                ),
-              _InfoRow(
-                label: l10n.sessionCost,
-                value: session.sessionCost.toString(),
-              ),
-              _InfoRow(
-                label: l10n.notes,
-                value:
-                (session.notes ?? '').trim().isEmpty
-                    ? l10n.noNotes
-                    : session.notes!,
-              ),
-            ],
-          ),
-          if (session.toothTreatments.isNotEmpty) ...[
+
+          if (hasStartTime || hasEndTime) ...[
             const SizedBox(height: 16),
-            Text(
-              l10n.procedure,
-              style:
-              theme.textTheme.titleSmall?.copyWith(
-                color: colors.textPrimary,
-                fontWeight: FontWeight.w800,
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 4,
               ),
+              decoration: BoxDecoration(
+                color: colors.surfaceMuted,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: colors.borderSoft,
+                ),
+              ),
+              child: Column(
+                children: [
+                  if (hasStartTime)
+                    _SessionInfoRow(
+                      icon: Icons.play_circle_outline_rounded,
+                      label: l10n.sessionStartTime,
+                      value: session.actualStartTime!,
+                    ),
+                  if (hasStartTime && hasEndTime)
+                    Divider(
+                      height: 1,
+                      color: colors.borderSoft,
+                    ),
+                  if (hasEndTime)
+                    _SessionInfoRow(
+                      icon: Icons.stop_circle_outlined,
+                      label: l10n.sessionEndTime,
+                      value: session.actualEndTime!,
+                    ),
+                ],
+              ),
+            ),
+          ],
+
+          if (hasNotes) ...[
+            const SizedBox(height: 16),
+            _SessionNotes(
+              notes: session.notes!,
+            ),
+          ],
+
+          if (session.toothTreatments.isNotEmpty) ...[
+            const SizedBox(height: 18),
+            Row(
+              children: [
+                Icon(
+                  Icons.medical_information_outlined,
+                  size: 20,
+                  color: context.medicalAccent,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  l10n.procedure,
+                  style:
+                  theme.textTheme.titleSmall?.copyWith(
+                    color: colors.textPrimary,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 10),
             ...session.toothTreatments.map(
@@ -412,7 +841,7 @@ class _SessionCard extends StatelessWidget {
                 padding: const EdgeInsets.only(
                   bottom: 10,
                 ),
-                child: _ToothTreatmentCard(
+                child: _ProcedureCard(
                   toothTreatment: toothTreatment,
                 ),
               ),
@@ -424,129 +853,13 @@ class _SessionCard extends StatelessWidget {
   }
 }
 
-class _ToothTreatmentCard extends StatelessWidget {
-  final ToothTreatmentEntity toothTreatment;
-
-  const _ToothTreatmentCard({
-    required this.toothTreatment,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = context.colors;
-    final accent = context.medicalAccent;
-    final l10n = context.l10n;
-    final languageCode =
-        Localizations.localeOf(context).languageCode;
-
-    final procedureName =
-    toothTreatment.procedure.localizedName(
-      languageCode,
-    );
-
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: colors.surfaceSecondary,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: colors.borderSoft,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '${l10n.toothNumber}: '
-                '${toothTreatment.toothNumber}',
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: accent,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            procedureName,
-            style: theme.textTheme.titleSmall?.copyWith(
-              color: colors.textPrimary,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            toothTreatment.procedure.price,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: colors.textSecondary,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          if ((toothTreatment.notes ?? '')
-              .trim()
-              .isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(
-              toothTreatment.notes!,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: colors.textSecondary,
-                height: 1.5,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _InfoCard extends StatelessWidget {
-  final List<Widget> children;
-
-  const _InfoCard({
-    required this.children,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 18,
-        vertical: 10,
-      ),
-      decoration: BoxDecoration(
-        color: colors.surfaceMuted,
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(
-          color: colors.borderSoft,
-        ),
-      ),
-      child: Column(
-        children: [
-          for (
-          int index = 0;
-          index < children.length;
-          index++
-          ) ...[
-            children[index],
-            if (index != children.length - 1)
-              const Divider(
-                height: 1,
-              ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
+class _SessionInfoRow extends StatelessWidget {
+  final IconData icon;
   final String label;
   final String value;
 
-  const _InfoRow({
+  const _SessionInfoRow({
+    required this.icon,
     required this.label,
     required this.value,
   });
@@ -562,23 +875,188 @@ class _InfoRow extends StatelessWidget {
       ),
       child: Row(
         children: [
+          Icon(
+            icon,
+            size: 19,
+            color: context.medicalAccent,
+          ),
+          const SizedBox(width: 9),
           Expanded(
             child: Text(
               label,
-              style: theme.textTheme.bodyMedium?.copyWith(
+              style:
+              theme.textTheme.bodyMedium?.copyWith(
                 color: colors.textSecondary,
                 fontWeight: FontWeight.w700,
               ),
             ),
           ),
-          Expanded(
+          const SizedBox(width: 10),
+          Flexible(
             child: Text(
               value,
               textAlign: TextAlign.end,
-              style: theme.textTheme.bodyMedium?.copyWith(
+              style:
+              theme.textTheme.bodyMedium?.copyWith(
                 color: colors.textPrimary,
                 fontWeight: FontWeight.w800,
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SessionNotes extends StatelessWidget {
+  final String notes;
+
+  const _SessionNotes({
+    required this.notes,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+    final l10n = context.l10n;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: colors.surfaceSecondary,
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            Icons.notes_rounded,
+            size: 20,
+            color: context.medicalAccent,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment:
+              CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.notes,
+                  style:
+                  theme.textTheme.bodySmall?.copyWith(
+                    color: colors.textSecondary,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  notes,
+                  style:
+                  theme.textTheme.bodyMedium?.copyWith(
+                    color: colors.textPrimary,
+                    fontWeight: FontWeight.w700,
+                    height: 1.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProcedureCard extends StatelessWidget {
+  final ToothTreatmentEntity toothTreatment;
+
+  const _ProcedureCard({
+    required this.toothTreatment,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+    final l10n = context.l10n;
+
+    final languageCode =
+        Localizations.localeOf(context).languageCode;
+
+    final procedureName =
+    toothTreatment.procedure.localizedName(
+      languageCode,
+    );
+
+    final hasNotes =
+        (toothTreatment.notes ?? '').trim().isNotEmpty;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: colors.surfaceSecondary,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: colors.borderSoft,
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 38,
+            height: 38,
+            decoration: BoxDecoration(
+              color: colors.surfaceMuted,
+              borderRadius: BorderRadius.circular(13),
+            ),
+            child: Icon(
+              Icons.auto_awesome_rounded,
+              size: 19,
+              color: context.medicalAccent,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment:
+              CrossAxisAlignment.start,
+              children: [
+                Text(
+                  procedureName,
+                  style:
+                  theme.textTheme.titleSmall?.copyWith(
+                    color: colors.textPrimary,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  '${l10n.toothNumber}: '
+                      '${toothTreatment.toothNumber}',
+                  style:
+                  theme.textTheme.bodyMedium?.copyWith(
+                    color: colors.textSecondary,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                if (hasNotes) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    toothTreatment.notes!,
+                    style:
+                    theme.textTheme.bodyMedium?.copyWith(
+                      color: colors.textSecondary,
+                      fontWeight: FontWeight.w600,
+                      height: 1.45,
+                    ),
+                  ),
+                ],
+              ],
             ),
           ),
         ],

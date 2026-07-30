@@ -46,6 +46,7 @@ import '../../features/medical_record/presentation/pages/payments_screen.dart';
 import '../../features/medical_record/presentation/pages/prescription/prescription_details_screen.dart';
 import '../../features/medical_record/presentation/pages/prescription/prescriptions_screen.dart';
 import '../../features/medical_record/presentation/pages/treatment_details_screen.dart';
+import '../../features/medical_record/presentation/pages/treatment_invoice_details_screen.dart';
 import '../../features/medical_record/presentation/pages/treatments_screen.dart';
 import '../../features/profile/domain/entities/profile_entity.dart';
 import '../../features/profile/presentation/bloc/profile/profile_bloc.dart';
@@ -72,6 +73,9 @@ class AppRouter {
             remoteDataSource: AuthRemoteDataSourceImpl(),
           );
 
+          final reason =
+          state.uri.queryParameters['reason'];
+
           return BlocProvider(
             create: (_) => LoginBloc(
               loginPatientUseCase: LoginPatientUseCase(
@@ -81,11 +85,13 @@ class AppRouter {
                 connectivity: Connectivity(),
               ),
             ),
-            child: const LoginScreen(),
+            child: LoginScreen(
+              sessionExpired:
+              reason == 'sessionExpired',
+            ),
           );
         },
-      ),
-      GoRoute(
+      ),      GoRoute(
         path: AppRoutes.signup,
         name: 'signup',
         builder: (context, state) => const SignupScreen(),
@@ -386,16 +392,27 @@ class AppRouter {
           return PrescriptionDetailsScreen(prescriptionId: prescriptionId);
         },
       ),
-      // GoRoute(
-      //   path: AppRoutes.medicalRecordPayments,
-      //   name: 'medical-record-payments',
-      //   builder: (context, state) => const PaymentsScreen(),
-      // ),
+      GoRoute(
+        path: AppRoutes.medicalRecordPayments,
+        name: 'medical-record-payments',
+        builder: (context, state) => const PaymentsScreen(),
+      ),
       // GoRoute(
       //   path: AppRoutes.medicalRecordPaymentPlanDetails,
       //   name: 'medical-record-payment-plan-details',
       //   builder: (context, state) => const PaymentPlanDetailsScreen(),
       // ),
+      GoRoute(
+        path: AppRoutes.medicalRecordTreatmentInvoice,
+        name: 'medical-record-treatment-invoice',
+        builder: (context, state) {
+          final treatmentId = state.extra as int;
+
+          return TreatmentInvoiceDetailsScreen(
+            treatmentId: treatmentId,
+          );
+        },
+      ),
 
       GoRoute(
         path: AppRoutes.complaints,
