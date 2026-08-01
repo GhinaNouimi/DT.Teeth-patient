@@ -258,10 +258,23 @@ class ApiErrorMapper {
       );
     }
 
+    if (normalizedMessage.contains(
+      'تم استخدام عرض على هذا العلاج مسبقاً',
+    ) ||
+        normalizedMessage.contains(
+          'تم استخدام عرض على هذا العلاج مسبقًا',
+        )) {
+      return ApiErrorMessages.text(
+        languageCode,
+        ar: 'سبق تطبيق عرض على هذا العلاج، لذلك لا يمكن تطبيق عرض آخر عليه.',
+        en: 'An offer has already been applied to this treatment, so another offer cannot be applied.',
+      );
+    }
     return ApiErrorMessages.text(
       languageCode,
       ar: 'تعذر إكمال العملية. يرجى المحاولة مرة أخرى.',
       en: 'Could not complete the request. Please try again.',
     );
+
   }
 }

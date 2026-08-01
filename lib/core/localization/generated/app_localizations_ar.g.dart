@@ -1413,4 +1413,114 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
   @override
   String get sessionExpiredMessage =>
       'انتهت صلاحية جلستك، يرجى تسجيل الدخول مجددًا.';
+
+  @override
+  String get offersTitle => 'العروض';
+
+  @override
+  String get offersEmptyTitle => 'لا توجد عروض حاليًا';
+
+  @override
+  String get offersEmptyDescription =>
+      'ستظهر هنا العروض الجديدة التي يقدمها المركز.';
+
+  @override
+  String get offersLoadErrorTitle => 'تعذر تحميل العروض';
+
+  @override
+  String get offersLoadErrorDescription =>
+      'حدث خطأ أثناء تحميل العروض، يرجى المحاولة مجددًا.';
+
+  @override
+  String get retryOffers => 'إعادة المحاولة';
+
+  @override
+  String get refreshOffers => 'تحديث';
+
+  @override
+  String get viewOfferDetails => 'عرض التفاصيل';
+
+  @override
+  String get notAvailable => 'غير متوفر';
+
+  @override
+  String offerDiscountPercentage(String percentage) {
+    return 'خصم $percentage٪';
+  }
+
+  @override
+  String offerDateRange(String startDate, String endDate) {
+    return 'من $startDate إلى $endDate';
+  }
+
+  @override
+  String get cachedOffersMessage =>
+      'أنت غير متصل بالإنترنت، يتم عرض العروض المحفوظة مسبقًا.';
+
+  @override
+  String get offerDetailsTitle => 'تفاصيل العرض';
+
+  @override
+  String get offerDescriptionTitle => 'وصف العرض';
+
+  @override
+  String get offerPeriodTitle => 'مدة العرض';
+
+  @override
+  String get offerConditionsTitle => 'شروط العرض';
+
+  @override
+  String get applyToOfferTitle => 'الاستفادة من العرض';
+
+  @override
+  String get selectTreatmentTypeDescription =>
+      'اختر نوع العلاج ثم حدد العلاج الذي تريد تطبيق العرض عليه.';
+
+  @override
+  String get noApplicableTreatments => 'لا توجد علاجات مناسبة لهذا النوع.';
+
+  @override
+  String get applyToOfferButton => 'التقديم على العرض';
+
+  @override
+  String get offerApplicationSuccessTitle => 'تم التقديم بنجاح';
+
+  @override
+  String get offerApplicationSuccessMessage =>
+      'تم إرسال طلب الاستفادة من العرض بنجاح.';
+
+  @override
+  String get offerApplicationErrorTitle => 'تعذر التقديم';
+
+  @override
+  String get offerApplicationErrorMessage =>
+      'حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مجددًا.';
+
+  @override
+  String get done => 'تم';
+
+  @override
+  String treatmentSessionsProgress(int completed, int total) {
+    return '$completed من $total جلسات مكتملة';
+  }
+
+  @override
+  String get offlineOfferApplicationMessage =>
+      'أنت غير متصل بالإنترنت. يمكنك استعراض تفاصيل العرض، لكن لا يمكنك اختيار العلاج أو التقديم حتى يعود الاتصال.';
+
+  @override
+  String get includedTreatmentsTitle => 'العلاجات المشمولة';
+
+  @override
+  String get offerStartsOn => 'يبدأ في';
+
+  @override
+  String get offerEndsOn => 'ينتهي في';
+
+  @override
+  String get selectOfferTreatmentTypeStep => 'اختر نوع العلاج المشمول بالعرض';
+
+  @override
+  String get selectApplicableTreatmentStep =>
+      'اختر العلاج الذي تريد تطبيق العرض عليه';
 }

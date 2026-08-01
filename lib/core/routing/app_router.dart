@@ -48,6 +48,12 @@ import '../../features/medical_record/presentation/pages/prescription/prescripti
 import '../../features/medical_record/presentation/pages/treatment_details_screen.dart';
 import '../../features/medical_record/presentation/pages/treatment_invoice_details_screen.dart';
 import '../../features/medical_record/presentation/pages/treatments_screen.dart';
+import '../../features/offers/domain/entities/offer_entity.dart';
+import '../../features/offers/offers_di.dart';
+import '../../features/offers/presentation/bloc/offers_bloc.dart';
+import '../../features/offers/presentation/bloc/offers_event.dart';
+import '../../features/offers/presentation/pages/offer_details_screen.dart';
+import '../../features/offers/presentation/pages/offers_screen.dart';
 import '../../features/profile/domain/entities/profile_entity.dart';
 import '../../features/profile/presentation/bloc/profile/profile_bloc.dart';
 import '../../features/profile/presentation/bloc/profile/profile_event.dart';
@@ -235,6 +241,9 @@ class AppRouter {
             remoteDataSource: AuthRemoteDataSourceImpl(),
           );
 
+          final languageCode =
+              Localizations.localeOf(context).languageCode;
+
           return MultiBlocProvider(
             providers: [
               BlocProvider(
@@ -249,19 +258,36 @@ class AppRouter {
               ),
               BlocProvider(
                 create: (_) => ProfileBloc(
-                  getProfileUseCase: ProfileDi.getProfileUseCase,
-                  updateProfileUseCase: ProfileDi.updateProfileUseCase,
+                  getProfileUseCase:
+                  ProfileDi.getProfileUseCase,
+                  updateProfileUseCase:
+                  ProfileDi.updateProfileUseCase,
                 )..add(
                   LoadProfileRequested(
-                    languageCode: Localizations.localeOf(context).languageCode,
+                    languageCode: languageCode,
                   ),
                 ),
-              ),            ],
+              ),
+              BlocProvider(
+                create: (_) => OffersBloc(
+                  showOffersUseCase:
+                  OffersDi.showOffersUseCase,
+                  getTreatmentsByTypeUseCase:
+                  OffersDi
+                      .getTreatmentsByTypeUseCase,
+                  applyToOfferUseCase:
+                  OffersDi.applyToOfferUseCase,
+                )..add(
+                  LoadOffersRequested(
+                    languageCode: languageCode,
+                  ),
+                ),
+              ),
+            ],
             child: const PatientMainShellScreen(),
           );
         },
-      ),
-      GoRoute(
+      ),      GoRoute(
         path: AppRoutes.profile,
         name: 'profile',
         builder: (context, state) {
@@ -435,6 +461,52 @@ class AppRouter {
           );
         },
       ),
-    ],
+
+      GoRoute(
+        path: AppRoutes.offers,
+        name: 'offers',
+        builder: (context, state) {
+          return BlocProvider(
+            create: (_) => OffersBloc(
+              showOffersUseCase:
+              OffersDi.showOffersUseCase,
+              getTreatmentsByTypeUseCase:
+              OffersDi.getTreatmentsByTypeUseCase,
+              applyToOfferUseCase:
+              OffersDi.applyToOfferUseCase,
+            ),
+            child: OffersScreen(
+              onOfferPressed: (offer) {
+                context.push(
+                  AppRoutes.offerDetails,
+                  extra: offer,
+                );
+              },
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.offerDetails,
+        name: 'offer-details',
+        builder: (context, state) {
+          final offer = state.extra as OfferEntity;
+
+          return BlocProvider(
+            create: (_) => OffersBloc(
+              showOffersUseCase:
+              OffersDi.showOffersUseCase,
+              getTreatmentsByTypeUseCase:
+              OffersDi.getTreatmentsByTypeUseCase,
+              applyToOfferUseCase:
+              OffersDi.applyToOfferUseCase,
+            ),
+            child: OfferDetailsScreen(
+              offer: offer,
+            ),
+          );
+        },
+      ),    ],
   );
+
 }

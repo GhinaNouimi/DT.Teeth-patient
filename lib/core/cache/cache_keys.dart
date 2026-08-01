@@ -41,5 +41,7 @@ class CacheKeys {
 
   static String treatmentInvoice(int treatmentId) =>
       'cached_treatment_invoice_$treatmentId';
+  // Offers
+  static const offers = 'cached_offers';
 
 }

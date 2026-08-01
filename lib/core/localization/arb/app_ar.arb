@@ -483,10 +483,72 @@
   "basePrice": "السعر الأساسي",
   "discount": "الخصم",
   "discountAmount": "قيمة الخصم",
-  "paymentMethod": "طريقة الدفع",
   "invoiceFullyPaidTitle": "تم سداد الفاتورة بالكامل",
   "invoiceFullyPaidSubtitle": "لا توجد مبالغ متبقية على هذه الفاتورة.",
   "sessionExpiredTitle": "انتهت صلاحية الجلسة",
-  "sessionExpiredMessage": "انتهت صلاحية جلستك، يرجى تسجيل الدخول مجددًا."
+  "sessionExpiredMessage": "انتهت صلاحية جلستك، يرجى تسجيل الدخول مجددًا.",
+  "offersTitle": "العروض",
+  "offersEmptyTitle": "لا توجد عروض حاليًا",
+  "offersEmptyDescription": "ستظهر هنا العروض الجديدة التي يقدمها المركز.",
+  "offersLoadErrorTitle": "تعذر تحميل العروض",
+  "offersLoadErrorDescription": "حدث خطأ أثناء تحميل العروض، يرجى المحاولة مجددًا.",
+  "retryOffers": "إعادة المحاولة",
+  "refreshOffers": "تحديث",
+  "viewOfferDetails": "عرض التفاصيل",
+  "notAvailable": "غير متوفر",
+
+  "offerDiscountPercentage": "خصم {percentage}٪",
+  "@offerDiscountPercentage": {
+    "placeholders": {
+      "percentage": {
+        "type": "String"
+      }
+    }
+  },
+
+  "offerDateRange": "من {startDate} إلى {endDate}",
+  "@offerDateRange": {
+    "placeholders": {
+      "startDate": {
+        "type": "String"
+      },
+      "endDate": {
+        "type": "String"
+      }
+    }
+  },
+  "cachedOffersMessage": "أنت غير متصل بالإنترنت، يتم عرض العروض المحفوظة مسبقًا.",
+  "offerDetailsTitle": "تفاصيل العرض",
+  "offerDescriptionTitle": "وصف العرض",
+  "offerPeriodTitle": "مدة العرض",
+  "offerConditionsTitle": "شروط العرض",
+  "viewAll": "عرض الكل",
+  "applyToOfferTitle": "الاستفادة من العرض",
+  "selectTreatmentTypeDescription": "اختر نوع العلاج ثم حدد العلاج الذي تريد تطبيق العرض عليه.",
+  "noApplicableTreatments": "لا توجد علاجات مناسبة لهذا النوع.",
+  "applyToOfferButton": "التقديم على العرض",
+  "offerApplicationSuccessTitle": "تم التقديم بنجاح",
+  "offerApplicationSuccessMessage": "تم إرسال طلب الاستفادة من العرض بنجاح.",
+  "offerApplicationErrorTitle": "تعذر التقديم",
+  "offerApplicationErrorMessage": "حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مجددًا.",
+  "done": "تم",
+
+  "treatmentSessionsProgress": "{completed} من {total} جلسات مكتملة",
+  "@treatmentSessionsProgress": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "offlineOfferApplicationMessage": "أنت غير متصل بالإنترنت. يمكنك استعراض تفاصيل العرض، لكن لا يمكنك اختيار العلاج أو التقديم حتى يعود الاتصال.",
+  "includedTreatmentsTitle": "العلاجات المشمولة",
+  "offerStartsOn": "يبدأ في",
+  "offerEndsOn": "ينتهي في",
+  "selectOfferTreatmentTypeStep": "اختر نوع العلاج المشمول بالعرض",
+  "selectApplicableTreatmentStep": "اختر العلاج الذي تريد تطبيق العرض عليه"
 
 }

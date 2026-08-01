@@ -837,7 +837,7 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
   String get payments => 'Payments';
 
   @override
-  String get viewAll => 'View All';
+  String get viewAll => 'View all';
 
   @override
   String get noData => 'No data';
@@ -1372,7 +1372,7 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
   String get paymentAmount => 'Payment Amount';
 
   @override
-  String get paymentMethod => 'Payment method';
+  String get paymentMethod => 'Payment Method';
 
   @override
   String get paymentMethodCash => 'Cash';
@@ -1439,4 +1439,116 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
   @override
   String get sessionExpiredMessage =>
       'Your session has expired. Please sign in again.';
+
+  @override
+  String get offersTitle => 'Offers';
+
+  @override
+  String get offersEmptyTitle => 'No offers available';
+
+  @override
+  String get offersEmptyDescription =>
+      'New offers from the dental center will appear here.';
+
+  @override
+  String get offersLoadErrorTitle => 'Unable to load offers';
+
+  @override
+  String get offersLoadErrorDescription =>
+      'An error occurred while loading offers. Please try again.';
+
+  @override
+  String get retryOffers => 'Try again';
+
+  @override
+  String get refreshOffers => 'Refresh';
+
+  @override
+  String get viewOfferDetails => 'View details';
+
+  @override
+  String get notAvailable => 'Not available';
+
+  @override
+  String offerDiscountPercentage(String percentage) {
+    return '$percentage% off';
+  }
+
+  @override
+  String offerDateRange(String startDate, String endDate) {
+    return 'From $startDate to $endDate';
+  }
+
+  @override
+  String get cachedOffersMessage =>
+      'You are offline. Previously saved offers are being displayed.';
+
+  @override
+  String get offerDetailsTitle => 'Offer details';
+
+  @override
+  String get offerDescriptionTitle => 'Offer description';
+
+  @override
+  String get offerPeriodTitle => 'Offer period';
+
+  @override
+  String get offerConditionsTitle => 'Offer conditions';
+
+  @override
+  String get applyToOfferTitle => 'Apply to offer';
+
+  @override
+  String get selectTreatmentTypeDescription =>
+      'Select a treatment type, then choose the treatment you want this offer applied to.';
+
+  @override
+  String get noApplicableTreatments =>
+      'There are no applicable treatments for this type.';
+
+  @override
+  String get applyToOfferButton => 'Apply to offer';
+
+  @override
+  String get offerApplicationSuccessTitle => 'Application submitted';
+
+  @override
+  String get offerApplicationSuccessMessage =>
+      'Your offer application was submitted successfully.';
+
+  @override
+  String get offerApplicationErrorTitle => 'Unable to apply';
+
+  @override
+  String get offerApplicationErrorMessage =>
+      'An error occurred while submitting your request. Please try again.';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String treatmentSessionsProgress(int completed, int total) {
+    return '$completed of $total sessions completed';
+  }
+
+  @override
+  String get offlineOfferApplicationMessage =>
+      'You are offline. You can view the offer details, but you cannot select a treatment or apply until the connection is restored.';
+
+  @override
+  String get includedTreatmentsTitle => 'Included treatments';
+
+  @override
+  String get offerStartsOn => 'Starts on';
+
+  @override
+  String get offerEndsOn => 'Ends on';
+
+  @override
+  String get selectOfferTreatmentTypeStep =>
+      'Select an included treatment type';
+
+  @override
+  String get selectApplicableTreatmentStep =>
+      'Select the treatment you want to apply the offer to';
 }

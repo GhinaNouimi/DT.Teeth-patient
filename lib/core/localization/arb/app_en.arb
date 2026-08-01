@@ -483,10 +483,71 @@
   "basePrice": "Base price",
   "discount": "Discount",
   "discountAmount": "Discount amount",
-  "paymentMethod": "Payment method",
   "invoiceFullyPaidTitle": "Invoice fully paid",
   "invoiceFullyPaidSubtitle": "There are no remaining amounts on this invoice.",
   "sessionExpiredTitle": "Session expired",
-  "sessionExpiredMessage": "Your session has expired. Please sign in again."
+  "sessionExpiredMessage": "Your session has expired. Please sign in again.",
+  "offersTitle": "Offers",
+  "offersEmptyTitle": "No offers available",
+  "offersEmptyDescription": "New offers from the dental center will appear here.",
+  "offersLoadErrorTitle": "Unable to load offers",
+  "offersLoadErrorDescription": "An error occurred while loading offers. Please try again.",
+  "retryOffers": "Try again",
+  "refreshOffers": "Refresh",
+  "viewOfferDetails": "View details",
+  "notAvailable": "Not available",
 
+  "offerDiscountPercentage": "{percentage}% off",
+  "@offerDiscountPercentage": {
+    "placeholders": {
+      "percentage": {
+        "type": "String"
+      }
+    }
+  },
+
+  "offerDateRange": "From {startDate} to {endDate}",
+  "@offerDateRange": {
+    "placeholders": {
+      "startDate": {
+        "type": "String"
+      },
+      "endDate": {
+        "type": "String"
+      }
+    }
+  },
+  "cachedOffersMessage": "You are offline. Previously saved offers are being displayed.",
+  "offerDetailsTitle": "Offer details",
+  "offerDescriptionTitle": "Offer description",
+  "offerPeriodTitle": "Offer period",
+  "offerConditionsTitle": "Offer conditions",
+  "viewAll": "View all",
+  "applyToOfferTitle": "Apply to offer",
+  "selectTreatmentTypeDescription": "Select a treatment type, then choose the treatment you want this offer applied to.",
+  "noApplicableTreatments": "There are no applicable treatments for this type.",
+  "applyToOfferButton": "Apply to offer",
+  "offerApplicationSuccessTitle": "Application submitted",
+  "offerApplicationSuccessMessage": "Your offer application was submitted successfully.",
+  "offerApplicationErrorTitle": "Unable to apply",
+  "offerApplicationErrorMessage": "An error occurred while submitting your request. Please try again.",
+  "done": "Done",
+
+  "treatmentSessionsProgress": "{completed} of {total} sessions completed",
+  "@treatmentSessionsProgress": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "offlineOfferApplicationMessage": "You are offline. You can view the offer details, but you cannot select a treatment or apply until the connection is restored.",
+  "includedTreatmentsTitle": "Included treatments",
+  "offerStartsOn": "Starts on",
+  "offerEndsOn": "Ends on",
+  "selectOfferTreatmentTypeStep": "Select an included treatment type",
+  "selectApplicableTreatmentStep": "Select the treatment you want to apply the offer to"
 }

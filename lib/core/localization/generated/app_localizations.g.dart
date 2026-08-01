@@ -2794,6 +2794,198 @@ abstract class GeneratedAppLocalizations {
   /// In ar, this message translates to:
   /// **'انتهت صلاحية جلستك، يرجى تسجيل الدخول مجددًا.'**
   String get sessionExpiredMessage;
+
+  /// No description provided for @offersTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'العروض'**
+  String get offersTitle;
+
+  /// No description provided for @offersEmptyTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد عروض حاليًا'**
+  String get offersEmptyTitle;
+
+  /// No description provided for @offersEmptyDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'ستظهر هنا العروض الجديدة التي يقدمها المركز.'**
+  String get offersEmptyDescription;
+
+  /// No description provided for @offersLoadErrorTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تحميل العروض'**
+  String get offersLoadErrorTitle;
+
+  /// No description provided for @offersLoadErrorDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدث خطأ أثناء تحميل العروض، يرجى المحاولة مجددًا.'**
+  String get offersLoadErrorDescription;
+
+  /// No description provided for @retryOffers.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة المحاولة'**
+  String get retryOffers;
+
+  /// No description provided for @refreshOffers.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحديث'**
+  String get refreshOffers;
+
+  /// No description provided for @viewOfferDetails.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض التفاصيل'**
+  String get viewOfferDetails;
+
+  /// No description provided for @notAvailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متوفر'**
+  String get notAvailable;
+
+  /// No description provided for @offerDiscountPercentage.
+  ///
+  /// In ar, this message translates to:
+  /// **'خصم {percentage}٪'**
+  String offerDiscountPercentage(String percentage);
+
+  /// No description provided for @offerDateRange.
+  ///
+  /// In ar, this message translates to:
+  /// **'من {startDate} إلى {endDate}'**
+  String offerDateRange(String startDate, String endDate);
+
+  /// No description provided for @cachedOffersMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنت غير متصل بالإنترنت، يتم عرض العروض المحفوظة مسبقًا.'**
+  String get cachedOffersMessage;
+
+  /// No description provided for @offerDetailsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل العرض'**
+  String get offerDetailsTitle;
+
+  /// No description provided for @offerDescriptionTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'وصف العرض'**
+  String get offerDescriptionTitle;
+
+  /// No description provided for @offerPeriodTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدة العرض'**
+  String get offerPeriodTitle;
+
+  /// No description provided for @offerConditionsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'شروط العرض'**
+  String get offerConditionsTitle;
+
+  /// No description provided for @applyToOfferTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاستفادة من العرض'**
+  String get applyToOfferTitle;
+
+  /// No description provided for @selectTreatmentTypeDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر نوع العلاج ثم حدد العلاج الذي تريد تطبيق العرض عليه.'**
+  String get selectTreatmentTypeDescription;
+
+  /// No description provided for @noApplicableTreatments.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد علاجات مناسبة لهذا النوع.'**
+  String get noApplicableTreatments;
+
+  /// No description provided for @applyToOfferButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'التقديم على العرض'**
+  String get applyToOfferButton;
+
+  /// No description provided for @offerApplicationSuccessTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم التقديم بنجاح'**
+  String get offerApplicationSuccessTitle;
+
+  /// No description provided for @offerApplicationSuccessMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إرسال طلب الاستفادة من العرض بنجاح.'**
+  String get offerApplicationSuccessMessage;
+
+  /// No description provided for @offerApplicationErrorTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر التقديم'**
+  String get offerApplicationErrorTitle;
+
+  /// No description provided for @offerApplicationErrorMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مجددًا.'**
+  String get offerApplicationErrorMessage;
+
+  /// No description provided for @done.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم'**
+  String get done;
+
+  /// No description provided for @treatmentSessionsProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'{completed} من {total} جلسات مكتملة'**
+  String treatmentSessionsProgress(int completed, int total);
+
+  /// No description provided for @offlineOfferApplicationMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنت غير متصل بالإنترنت. يمكنك استعراض تفاصيل العرض، لكن لا يمكنك اختيار العلاج أو التقديم حتى يعود الاتصال.'**
+  String get offlineOfferApplicationMessage;
+
+  /// No description provided for @includedTreatmentsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'العلاجات المشمولة'**
+  String get includedTreatmentsTitle;
+
+  /// No description provided for @offerStartsOn.
+  ///
+  /// In ar, this message translates to:
+  /// **'يبدأ في'**
+  String get offerStartsOn;
+
+  /// No description provided for @offerEndsOn.
+  ///
+  /// In ar, this message translates to:
+  /// **'ينتهي في'**
+  String get offerEndsOn;
+
+  /// No description provided for @selectOfferTreatmentTypeStep.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر نوع العلاج المشمول بالعرض'**
+  String get selectOfferTreatmentTypeStep;
+
+  /// No description provided for @selectApplicableTreatmentStep.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر العلاج الذي تريد تطبيق العرض عليه'**
+  String get selectApplicableTreatmentStep;
 }
 
 class _GeneratedAppLocalizationsDelegate

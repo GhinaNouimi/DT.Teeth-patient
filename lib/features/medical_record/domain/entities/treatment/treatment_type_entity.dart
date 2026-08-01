@@ -10,6 +10,10 @@ class TreatmentTypeEntity {
   });
 
   String localizedName(String languageCode) {
-    return languageCode.toLowerCase().startsWith('ar') ? name : nameEn;
+    return languageCode
+        .toLowerCase()
+        .startsWith('ar')
+        ? name
+        : nameEn;
   }
 }
