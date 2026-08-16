@@ -19,7 +19,10 @@ enum AppointmentBookingType {
 
 class AppointmentEntity {
   final int id;
+
+  final int dentistId;
   final String dentistName;
+  final String? dentistPhoto;
 
   final String appointmentTypeName;
   final String appointmentTypeNameEn;
@@ -36,7 +39,9 @@ class AppointmentEntity {
 
   const AppointmentEntity({
     required this.id,
+    required this.dentistId,
     required this.dentistName,
+    this.dentistPhoto,
     required this.appointmentTypeName,
     required this.appointmentTypeNameEn,
     required this.type,
@@ -64,7 +69,14 @@ class AppointmentEntity {
         : appointmentTypeName;
   }
 
-  bool get hasTreatment => treatment != null;
+  bool get hasDentistPhoto {
+    return dentistPhoto != null &&
+        dentistPhoto!.trim().isNotEmpty;
+  }
+
+  bool get hasTreatment {
+    return treatment != null;
+  }
 
   bool get hasNotes {
     return notes != null &&
@@ -102,7 +114,8 @@ class AppointmentEntity {
   }
 
   bool get isPatientNoShow {
-    return status == AppointmentStatus.patientNoShow;
+    return status ==
+        AppointmentStatus.patientNoShow;
   }
 
   bool get isUnknown {
@@ -128,9 +141,18 @@ class AppointmentEntity {
         isApproved;
   }
 
+  bool get canAttemptReschedule {
+    return isPending ||
+        isPendingSecretary ||
+        isApproved;
+  }
+
+
   AppointmentEntity copyWith({
     int? id,
+    int? dentistId,
     String? dentistName,
+    String? dentistPhoto,
     String? appointmentTypeName,
     String? appointmentTypeNameEn,
     AppointmentBookingType? type,
@@ -142,8 +164,12 @@ class AppointmentEntity {
   }) {
     return AppointmentEntity(
       id: id ?? this.id,
+      dentistId:
+      dentistId ?? this.dentistId,
       dentistName:
       dentistName ?? this.dentistName,
+      dentistPhoto:
+      dentistPhoto ?? this.dentistPhoto,
       appointmentTypeName:
       appointmentTypeName ??
           this.appointmentTypeName,
@@ -158,8 +184,10 @@ class AppointmentEntity {
       rejectionReason:
       rejectionReason ??
           this.rejectionReason,
-      notes: notes ?? this.notes,
-      treatment: treatment ?? this.treatment,
+      notes:
+      notes ?? this.notes,
+      treatment:
+      treatment ?? this.treatment,
     );
   }
 }
@@ -218,8 +246,11 @@ class AppointmentTreatmentEntity {
   }
 
   bool get isCancelled {
-    return status.trim().toLowerCase() ==
-        'cancelled';
+    final normalized =
+    status.trim().toLowerCase();
+
+    return normalized == 'cancelled' ||
+        normalized == 'canceled';
   }
 
   double get progress {
@@ -227,8 +258,12 @@ class AppointmentTreatmentEntity {
       return 0;
     }
 
-    return (sessionsCompleted /
-        totalSessionsNeeded)
-        .clamp(0.0, 1.0);
+    return (
+        sessionsCompleted /
+            totalSessionsNeeded
+    ).clamp(
+      0.0,
+      1.0,
+    );
   }
 }

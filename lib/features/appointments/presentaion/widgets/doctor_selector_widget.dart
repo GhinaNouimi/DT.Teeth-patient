@@ -1,178 +1,492 @@
-// // lib/features/appointments/presentation/widgets/doctor_selector_widget.dart
-//
-// import 'package:flutter/material.dart';
-// import '../../../../core/theme/theme_extensions.dart';
-// import '../../../doctors/presentation/models/doctor_ui_model.dart';
-//
-// class DoctorSelectorWidget extends StatelessWidget {
-//   final List<DoctorUiModel> doctors;
-//   final DoctorUiModel? selectedDoctor;
-//   final Function(DoctorUiModel) onDoctorSelected;
-//
-//   const DoctorSelectorWidget({
-//     super.key,
-//     required this.doctors,
-//     required this.selectedDoctor,
-//     required this.onDoctorSelected,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final theme = Theme.of(context);
-//     final colors = context.colors;
-//
-//     if (doctors.isEmpty) {
-//       return Center(
-//         child: Text(
-//           'لا يوجد أطباء متاحين لهذه الخدمة',
-//           style: theme.textTheme.bodyMedium?.copyWith(
-//             color: colors.textSecondary,
-//           ),
-//         ),
-//       );
-//     }
-//
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           'اختر الطبيب',
-//           style: theme.textTheme.titleMedium?.copyWith(
-//             fontWeight: FontWeight.w800,
-//             color: colors.textPrimary,
-//           ),
-//         ),
-//         const SizedBox(height: 12),
-//         Column(
-//           children: doctors.map((doctor) {
-//             final isSelected = selectedDoctor?.id == doctor.id;
-//             return Padding(
-//               padding: const EdgeInsets.only(bottom: 12),
-//               child: _DoctorCard(
-//                 doctor: doctor,
-//                 isSelected: isSelected,
-//                 onTap: () => onDoctorSelected(doctor),
-//                 colors: colors,
-//                 theme: theme,
-//               ),
-//             );
-//           }).toList(),
-//         ),
-//       ],
-//     );
-//   }
-// }
-//
-// class _DoctorCard extends StatelessWidget {
-//   final DoctorUiModel doctor;
-//   final bool isSelected;
-//   final VoidCallback onTap;
-//   final dynamic colors;
-//   final ThemeData theme;
-//
-//   const _DoctorCard({
-//     required this.doctor,
-//     required this.isSelected,
-//     required this.onTap,
-//     required this.colors,
-//     required this.theme,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: onTap,
-//       child: AnimatedContainer(
-//         duration: const Duration(milliseconds: 200),
-//         padding: const EdgeInsets.all(14),
-//         decoration: BoxDecoration(
-//           color: isSelected
-//               ? colors.buttonPrimary.withValues(alpha: 0.1)
-//               : colors.surfacePrimary,
-//           borderRadius: BorderRadius.circular(16),
-//           border: Border.all(
-//             color: isSelected ? colors.buttonPrimary : colors.borderSoft,
-//             width: isSelected ? 2 : 1,
-//           ),
-//           boxShadow: isSelected
-//               ? [
-//                   BoxShadow(
-//                     color: colors.buttonPrimary.withValues(alpha: 0.2),
-//                     blurRadius: 12,
-//                     offset: const Offset(0, 6),
-//                   ),
-//                 ]
-//               : null,
-//         ),
-//         child: Row(
-//           children: [
-//             // صورة الطبيب
-//             CircleAvatar(
-//               radius: 28,
-//               backgroundColor: colors.surfaceMuted,
-//               child: Text(
-//                 doctor.imageUrl,
-//                 style: const TextStyle(fontSize: 32),
-//               ),
-//             ),
-//             const SizedBox(width: 12),
-//             // معلومات الطبيب
-//             Expanded(
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Text(
-//                     doctor.name,
-//                     style: theme.textTheme.titleSmall?.copyWith(
-//                       fontWeight: FontWeight.w800,
-//                       color: colors.textPrimary,
-//                     ),
-//                   ),
-//                   const SizedBox(height: 4),
-//                   Text(
-//                     doctor.specialty,
-//                     style: theme.textTheme.bodySmall?.copyWith(
-//                       color: colors.textSecondary,
-//                     ),
-//                   ),
-//                   const SizedBox(height: 6),
-//                   // التقييم
-//                   Row(
-//                     children: [
-//                       ...List.generate(5, (index) {
-//                         final isFilled = index < doctor.rating.toInt();
-//                         return Icon(
-//                           isFilled
-//                               ? Icons.star_rounded
-//                               : Icons.star_outline_rounded,
-//                           color: isFilled
-//                               ? const Color(0xFFFFC107)
-//                               : colors.borderSoft,
-//                           size: 12,
-//                         );
-//                       }),
-//                       const SizedBox(width: 4),
-//                       Text(
-//                         '${doctor.rating}',
-//                         style: theme.textTheme.bodySmall?.copyWith(
-//                           fontWeight: FontWeight.w700,
-//                           color: colors.textPrimary,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             if (isSelected)
-//               Icon(
-//                 Icons.check_circle_rounded,
-//                 color: colors.buttonPrimary,
-//                 size: 24,
-//               ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+
+import '../../../../core/localization/app_localizations.dart';
+import '../../../../core/theme/theme_extensions.dart';
+import '../../domain/entities/appointment_booking_dentist_entity.dart';
+
+class DoctorSelectorWidget extends StatelessWidget {
+  final List<AppointmentBookingDentistEntity> dentists;
+  final AppointmentBookingDentistEntity? selectedDentist;
+  final ValueChanged<AppointmentBookingDentistEntity>
+  onDoctorSelected;
+  final String languageCode;
+  final bool isLoading;
+  final String? errorMessage;
+  final VoidCallback? onRetry;
+
+  const DoctorSelectorWidget({
+    super.key,
+    required this.dentists,
+    required this.selectedDentist,
+    required this.onDoctorSelected,
+    required this.languageCode,
+    this.isLoading = false,
+    this.errorMessage,
+    this.onRetry,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+    final l10n = context.l10n;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          l10n.selectDentistTitle,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w800,
+            color: colors.textPrimary,
+          ),
+        ),
+        const SizedBox(height: 12),
+        if (isLoading)
+          const _DoctorsLoadingView()
+        else if (_hasError)
+          _DoctorsErrorView(
+            message: errorMessage!,
+            onRetry: onRetry,
+          )
+        else if (dentists.isEmpty)
+            _DoctorsEmptyView(
+              message: l10n.noDentistsAvailableForAppointmentType,
+            )
+          else
+            Column(
+              children: dentists.map((dentist) {
+                final isSelected =
+                    selectedDentist?.id == dentist.id;
+
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: _DoctorCard(
+                    dentist: dentist,
+                    languageCode: languageCode,
+                    isSelected: isSelected,
+                    onTap: () => onDoctorSelected(dentist),
+                  ),
+                );
+              }).toList(),
+            ),
+      ],
+    );
+  }
+
+  bool get _hasError {
+    return errorMessage != null &&
+        errorMessage!.trim().isNotEmpty;
+  }
+}
+
+class _DoctorCard extends StatelessWidget {
+  final AppointmentBookingDentistEntity dentist;
+  final String languageCode;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _DoctorCard({
+    required this.dentist,
+    required this.languageCode,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+    final l10n = context.l10n;
+
+    final specialization =
+    dentist.localizedSpecialization(
+      languageCode,
+    );
+
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(18),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(
+            milliseconds: 200,
+          ),
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? colors.buttonPrimary.withValues(
+              alpha: 0.08,
+            )
+                : colors.surfacePrimary,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(
+              color: isSelected
+                  ? colors.buttonPrimary
+                  : colors.borderSoft,
+              width: isSelected ? 2 : 1,
+            ),
+            boxShadow: isSelected
+                ? [
+              BoxShadow(
+                color: colors.buttonPrimary
+                    .withValues(alpha: 0.16),
+                blurRadius: 12,
+                offset: const Offset(0, 6),
+              ),
+            ]
+                : null,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _DoctorAvatar(
+                imageUrl: dentist.profilePicture,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment:
+                  CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      dentist.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.titleSmall
+                          ?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        color: colors.textPrimary,
+                      ),
+                    ),
+                    if (specialization.isNotEmpty) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        specialization,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodySmall
+                            ?.copyWith(
+                          color: colors.textSecondary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 12,
+                      runSpacing: 6,
+                      children: [
+                        _DoctorMetaItem(
+                          icon: Icons.star_rounded,
+                          value: dentist.averageRating
+                              .toStringAsFixed(1),
+                        ),
+                        _DoctorMetaItem(
+                          icon: Icons.workspace_premium_outlined,
+                          value: l10n.dentistYearsOfExperience(
+                            dentist.yearsOfExperience,
+                          ),
+                        ),
+                      ],
+                    ),
+                    if (dentist.hasBio) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        dentist.bio!,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodySmall
+                            ?.copyWith(
+                          color: colors.textSecondary,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              const SizedBox(width: 10),
+              AnimatedSwitcher(
+                duration: const Duration(
+                  milliseconds: 180,
+                ),
+                child: isSelected
+                    ? Icon(
+                  Icons.check_circle_rounded,
+                  key: const ValueKey(
+                    'selected_dentist',
+                  ),
+                  color: colors.buttonPrimary,
+                  size: 25,
+                )
+                    : Icon(
+                  Icons.radio_button_unchecked_rounded,
+                  key: const ValueKey(
+                    'unselected_dentist',
+                  ),
+                  color: colors.borderSoft,
+                  size: 24,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DoctorAvatar extends StatelessWidget {
+  final String? imageUrl;
+
+  const _DoctorAvatar({
+    required this.imageUrl,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final normalizedImageUrl = imageUrl?.trim();
+
+    final hasImage = normalizedImageUrl != null &&
+        normalizedImageUrl.isNotEmpty;
+
+    return CircleAvatar(
+      radius: 29,
+      backgroundColor: colors.surfaceMuted,
+      child: ClipOval(
+        child: hasImage
+            ? CachedNetworkImage(
+          imageUrl: normalizedImageUrl,
+          width: 58,
+          height: 58,
+          fit: BoxFit.cover,
+          placeholder: (
+              context,
+              imageUrl,
+              ) {
+            return SizedBox(
+              width: 58,
+              height: 58,
+              child: Center(
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: colors.buttonPrimary,
+                ),
+              ),
+            );
+          },
+          errorWidget: (
+              context,
+              imageUrl,
+              error,
+              ) {
+            return _FallbackDoctorAvatar(
+              color: colors.buttonPrimary,
+            );
+          },
+        )
+            : _FallbackDoctorAvatar(
+          color: colors.buttonPrimary,
+        ),
+      ),
+    );
+  }
+}
+
+class _FallbackDoctorAvatar extends StatelessWidget {
+  final Color color;
+
+  const _FallbackDoctorAvatar({
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 58,
+      height: 58,
+      child: Icon(
+        Icons.person_rounded,
+        color: color,
+        size: 30,
+      ),
+    );
+  }
+}
+
+class _DoctorMetaItem extends StatelessWidget {
+  final IconData icon;
+  final String value;
+
+  const _DoctorMetaItem({
+    required this.icon,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final theme = Theme.of(context);
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          icon,
+          size: 15,
+          color: icon == Icons.star_rounded
+              ? const Color(0xFFFFC107)
+              : colors.buttonPrimary,
+        ),
+        const SizedBox(width: 4),
+        Text(
+          value,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: colors.textPrimary,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _DoctorsLoadingView extends StatelessWidget {
+  const _DoctorsLoadingView();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    return Column(
+      children: List.generate(
+        3,
+            (index) => Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: Container(
+            height: 98,
+            decoration: BoxDecoration(
+              color: colors.surfaceMuted,
+              borderRadius: BorderRadius.circular(18),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DoctorsEmptyView extends StatelessWidget {
+  final String message;
+
+  const _DoctorsEmptyView({
+    required this.message,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: colors.surfaceSecondary,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: colors.borderSoft,
+        ),
+      ),
+      child: Column(
+        children: [
+          Icon(
+            Icons.person_search_outlined,
+            size: 36,
+            color: colors.textSecondary,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: colors.textSecondary,
+              height: 1.5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DoctorsErrorView extends StatelessWidget {
+  final String message;
+  final VoidCallback? onRetry;
+
+  const _DoctorsErrorView({
+    required this.message,
+    required this.onRetry,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = context.colors;
+    final l10n = context.l10n;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: Theme.of(context)
+            .colorScheme
+            .error
+            .withValues(alpha: 0.07),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Theme.of(context)
+              .colorScheme
+              .error
+              .withValues(alpha: 0.18),
+        ),
+      ),
+      child: Column(
+        children: [
+          Icon(
+            Icons.error_outline_rounded,
+            size: 34,
+            color: Theme.of(context).colorScheme.error,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: colors.textPrimary,
+              height: 1.5,
+            ),
+          ),
+          if (onRetry != null) ...[
+            const SizedBox(height: 14),
+            OutlinedButton.icon(
+              onPressed: onRetry,
+              icon: const Icon(
+                Icons.refresh_rounded,
+              ),
+              label: Text(
+                l10n.retryButton,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}

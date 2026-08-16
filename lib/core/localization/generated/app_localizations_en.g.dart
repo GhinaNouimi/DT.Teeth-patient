@@ -1551,4 +1551,217 @@ class GeneratedAppLocalizationsEn extends GeneratedAppLocalizations {
   @override
   String get selectApplicableTreatmentStep =>
       'Select the treatment you want to apply the offer to';
+
+  @override
+  String get noAppointmentTypesAvailable =>
+      'No appointment types are currently available';
+
+  @override
+  String get selectDentistTitle => 'Choose a dentist';
+
+  @override
+  String get noDentistsAvailableForAppointmentType =>
+      'No dentists are currently available for the selected appointment type';
+
+  @override
+  String dentistYearsOfExperience(int years) {
+    return '$years years of experience';
+  }
+
+  @override
+  String get selectAppointmentTimeTitle => 'Choose an available appointment';
+
+  @override
+  String get noAvailableAppointmentSlots =>
+      'There are currently no available appointments for this dentist';
+
+  @override
+  String get bookAppointmentTitle => 'Book a New Appointment';
+
+  @override
+  String appointmentBookingStep(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get appointmentNotesHint =>
+      'Add an optional note or a brief description of your condition';
+
+  @override
+  String get continueButton => 'Continue';
+
+  @override
+  String get confirmAppointmentButton => 'Confirm Appointment';
+
+  @override
+  String get appointmentBookingSuccessTitle => 'Booking Request Sent';
+
+  @override
+  String get appointmentBookingFailedTitle => 'Unable to Book Appointment';
+
+  @override
+  String get appointmentBookingOfflineMessage =>
+      'Previously saved data is being displayed. Connect to the internet to get the latest available appointments.';
+
+  @override
+  String get offlineBookingUnavailableMessage =>
+      'The appointment cannot be confirmed while offline.';
+
+  @override
+  String get selectBookingTypeTitle => 'What type of booking do you need?';
+
+  @override
+  String get selectBookingTypeDescription =>
+      'Choose the reason for your appointment to continue with the appropriate details.';
+
+  @override
+  String get newTreatmentBookingTitle => 'New Treatment';
+
+  @override
+  String get newTreatmentBookingDescription =>
+      'Book a consultation or start a new treatment plan.';
+
+  @override
+  String get continueTreatmentBookingTitle => 'Continue Treatment';
+
+  @override
+  String get continueTreatmentBookingDescription =>
+      'Book another session for an existing treatment.';
+
+  @override
+  String get emergencyBookingTitle => 'Emergency';
+
+  @override
+  String get emergencyBookingDescription =>
+      'Book an appointment for a condition that needs prompt assessment.';
+
+  @override
+  String get continueTreatmentUnavailableMessage =>
+      'This option will be available after your treatments are loaded.';
+
+  @override
+  String get selectTreatmentTitle => 'Select the treatment to continue';
+
+  @override
+  String get selectTreatmentDescription =>
+      'Your active treatments available for follow-up are shown here.';
+
+  @override
+  String get noOngoingTreatmentsAvailable =>
+      'There are no active treatments available for follow-up.';
+
+  @override
+  String remainingTreatmentSessions(int count) {
+    return 'Remaining sessions: $count';
+  }
+
+  @override
+  String get appointmentBookingSuccessMessage =>
+      'Your appointment request was submitted successfully and is now awaiting the dentist\'s approval.';
+
+  @override
+  String get reviewAppointmentRequestTitle => 'Review booking request';
+
+  @override
+  String get reviewAppointmentRequestDescription =>
+      'Please verify all your selections before submitting the appointment request.';
+
+  @override
+  String get bookingTypeReviewLabel => 'Booking type';
+
+  @override
+  String get treatmentReviewLabel => 'Treatment';
+
+  @override
+  String get notesReviewLabel => 'Your note';
+
+  @override
+  String get appointmentTypeReviewLabel => 'Appointment type';
+
+  @override
+  String get dentistReviewLabel => 'Dentist';
+
+  @override
+  String get appointmentDateReviewLabel => 'Date and time';
+
+  @override
+  String get noAppointmentNotes => 'No notes were added.';
+
+  @override
+  String get appointmentRequestPendingNotice =>
+      'After submission, the appointment request will be awaiting the dentist\'s approval.';
+
+  @override
+  String get reviewAppointmentButton => 'Review request';
+
+  @override
+  String get sendAppointmentRequestButton => 'Submit booking request';
+
+  @override
+  String get walkInBookingTitle => 'Walk-in booking';
+
+  @override
+  String get editButton => 'Edit';
+
+  @override
+  String get selectAppointmentTimeDescription =>
+      'Choose a suitable day, then select an available time.';
+
+  @override
+  String availableSlotsCount(int count) {
+    return '$count available slots';
+  }
+
+  @override
+  String get selectedAppointmentTitle => 'Selected appointment';
+
+  @override
+  String get availableTimesTitle => 'Available times';
+
+  @override
+  String get editAppointmentTitle => 'Edit appointment';
+
+  @override
+  String get currentAppointmentTitle => 'Current appointment';
+
+  @override
+  String get newAppointmentTitle => 'New appointment';
+
+  @override
+  String get selectNewAppointmentTitle => 'Choose a new appointment';
+
+  @override
+  String get selectNewAppointmentDescription =>
+      'Choose a new available date and time with your dentist.';
+
+  @override
+  String get reviewAppointmentEditTitle => 'Review appointment change';
+
+  @override
+  String get reviewAppointmentEditDescription =>
+      'Please verify the new appointment before submitting your change request.';
+
+  @override
+  String get reviewAppointmentEditButton => 'Review changes';
+
+  @override
+  String get sendAppointmentEditRequest => 'Submit change request';
+
+  @override
+  String get appointmentEditPendingNotice =>
+      'Your appointment change request will be reviewed, and you will be notified once it is approved.';
+
+  @override
+  String get appointmentEditSuccessTitle => 'Change request submitted';
+
+  @override
+  String get appointmentEditSuccessMessage =>
+      'Your appointment change request was submitted successfully and is awaiting approval.';
+
+  @override
+  String get appointmentEditFailedTitle => 'Unable to update appointment';
+
+  @override
+  String get offlineAppointmentEditUnavailable =>
+      'Saved data is being displayed. An internet connection is required to submit an appointment change.';
 }

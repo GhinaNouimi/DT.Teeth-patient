@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -14,7 +15,12 @@ class AppointmentDetailsContent extends StatelessWidget {
 
   final VoidCallback onCloseOfflineBanner;
   final Future<void> Function() onRefresh;
-  final ValueChanged<AppointmentEntity> onCancelAppointment;
+
+  final ValueChanged<AppointmentEntity>
+  onRescheduleAppointment;
+
+  final ValueChanged<AppointmentEntity>
+  onCancelAppointment;
 
   const AppointmentDetailsContent({
     super.key,
@@ -24,6 +30,7 @@ class AppointmentDetailsContent extends StatelessWidget {
     required this.showOfflineBanner,
     required this.onCloseOfflineBanner,
     required this.onRefresh,
+    required this.onRescheduleAppointment,
     required this.onCancelAppointment,
   });
 
@@ -40,12 +47,16 @@ class AppointmentDetailsContent extends StatelessWidget {
     final formattedDate = intl.DateFormat(
       'EEEE، d MMMM y',
       localeName,
-    ).format(appointment.appointmentTime);
+    ).format(
+      appointment.appointmentTime,
+    );
 
     final formattedTime = intl.DateFormat(
       'hh:mm a',
       localeName,
-    ).format(appointment.appointmentTime);
+    ).format(
+      appointment.appointmentTime,
+    );
 
     return RefreshIndicator(
       onRefresh: onRefresh,
@@ -60,10 +71,12 @@ class AppointmentDetailsContent extends StatelessWidget {
           32,
         ),
         children: [
-          if (isFromCache && showOfflineBanner) ...[
+          if (isFromCache &&
+              showOfflineBanner) ...[
             OfflineCachedBanner(
               message: context
-                  .l10n.appointmentDetailsOfflineMessage,
+                  .l10n
+                  .appointmentDetailsOfflineMessage,
               onClose: onCloseOfflineBanner,
             ),
             const SizedBox(height: 20),
@@ -74,22 +87,22 @@ class AppointmentDetailsContent extends StatelessWidget {
           ),
 
           const SizedBox(height: 22),
-
           const _SectionDivider(),
-
           const SizedBox(height: 22),
 
           _SectionTitle(
-            title:
-            context.l10n.appointmentInformationTitle,
+            title: context
+                .l10n
+                .appointmentInformationTitle,
           ),
 
           const SizedBox(height: 16),
 
           _InfoRow(
             icon: Icons.calendar_today_rounded,
-            title:
-            context.l10n.appointmentDateLabel,
+            title: context
+                .l10n
+                .appointmentDateLabel,
             value: formattedDate,
           ),
 
@@ -97,8 +110,9 @@ class AppointmentDetailsContent extends StatelessWidget {
 
           _InfoRow(
             icon: Icons.access_time_rounded,
-            title:
-            context.l10n.appointmentTimeLabel,
+            title: context
+                .l10n
+                .appointmentTimeLabel,
             value: formattedTime,
           ),
 
@@ -106,18 +120,18 @@ class AppointmentDetailsContent extends StatelessWidget {
 
           _InfoRow(
             icon: Icons.medical_services_outlined,
-            title:
-            context.l10n.appointmentTypeLabel,
+            title: context
+                .l10n
+                .appointmentTypeLabel,
             value:
-            appointment.localizedAppointmentType(
+            appointment
+                .localizedAppointmentType(
               languageCode,
             ),
           ),
 
           const SizedBox(height: 22),
-
           const _SectionDivider(),
-
           const SizedBox(height: 22),
 
           _SectionTitle(
@@ -127,58 +141,74 @@ class AppointmentDetailsContent extends StatelessWidget {
           const SizedBox(height: 14),
 
           _DentistCard(
-            dentistName: appointment.dentistName,
+            dentistName:
+            appointment.dentistName,
+            dentistPhoto:
+            appointment.dentistPhoto,
           ),
 
           if (appointment.hasTreatment) ...[
             const SizedBox(height: 22),
-
             const _SectionDivider(),
-
             const SizedBox(height: 22),
 
             _TreatmentSection(
-              treatment: appointment.treatment!,
-              languageCode: languageCode,
+              treatment:
+              appointment.treatment!,
+              languageCode:
+              languageCode,
             ),
           ],
 
           if (appointment.hasNotes) ...[
             const SizedBox(height: 22),
-
             const _SectionDivider(),
-
             const SizedBox(height: 22),
 
             _NotesSection(
-              title:
-              context.l10n.appointmentNotesTitle,
-              notes: appointment.notes!,
-            ),
-          ],
-
-          if (appointment.hasRejectionReason) ...[
-            const SizedBox(height: 22),
-
-            const _SectionDivider(),
-
-            const SizedBox(height: 22),
-
-            _RejectionReasonSection(
-              reason:
-              appointment.rejectionReason!,
+              title: context
+                  .l10n
+                  .appointmentNotesTitle,
+              notes:
+              appointment.notes!,
             ),
           ],
 
           if (appointment
-              .canAttemptCancellation) ...[
+              .hasRejectionReason) ...[
+            const SizedBox(height: 22),
+            const _SectionDivider(),
+            const SizedBox(height: 22),
+
+            _RejectionReasonSection(
+              reason:
+              appointment
+                  .rejectionReason!,
+            ),
+          ],
+
+          if (appointment
+              .canAttemptReschedule ||
+              appointment
+                  .canAttemptCancellation) ...[
             const SizedBox(height: 28),
 
-            _CancellationButton(
-              isCancelling: isCancelling,
-              isFromCache: isFromCache,
-              onPressed: () {
-                onCancelAppointment(appointment);
+            _AppointmentActions(
+              appointment:
+              appointment,
+              isFromCache:
+              isFromCache,
+              isCancelling:
+              isCancelling,
+              onReschedule: () {
+                onRescheduleAppointment(
+                  appointment,
+                );
+              },
+              onCancel: () {
+                onCancelAppointment(
+                  appointment,
+                );
               },
             ),
           ],
@@ -188,7 +218,8 @@ class AppointmentDetailsContent extends StatelessWidget {
   }
 }
 
-class _StatusSection extends StatelessWidget {
+class _StatusSection
+    extends StatelessWidget {
   final AppointmentStatus status;
 
   const _StatusSection({
@@ -209,23 +240,32 @@ class _StatusSection extends StatelessWidget {
       children: [
         _SectionTitle(
           title:
-          context.l10n.appointmentStatusTitle,
+          context
+              .l10n
+              .appointmentStatusTitle,
         ),
         const SizedBox(height: 12),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(
+          padding:
+          const EdgeInsets.symmetric(
             horizontal: 14,
             vertical: 13,
           ),
           decoration: BoxDecoration(
-            color: statusPresentation.color
-                .withValues(alpha: 0.12),
+            color:
+            statusPresentation.color
+                .withValues(
+              alpha: 0.12,
+            ),
             borderRadius:
             BorderRadius.circular(16),
             border: Border.all(
-              color: statusPresentation.color
-                  .withValues(alpha: 0.25),
+              color:
+              statusPresentation.color
+                  .withValues(
+                alpha: 0.25,
+              ),
             ),
           ),
           child: Row(
@@ -240,12 +280,14 @@ class _StatusSection extends StatelessWidget {
               Expanded(
                 child: Text(
                   statusPresentation.label,
-                  style: Theme.of(context)
+                  style:
+                  Theme.of(context)
                       .textTheme
                       .titleSmall
                       ?.copyWith(
                     color:
-                    statusPresentation.color,
+                    statusPresentation
+                        .color,
                     fontWeight:
                     FontWeight.w800,
                   ),
@@ -259,26 +301,41 @@ class _StatusSection extends StatelessWidget {
   }
 }
 
-class _DentistCard extends StatelessWidget {
+class _DentistCard
+    extends StatelessWidget {
   final String dentistName;
+  final String? dentistPhoto;
 
   const _DentistCard({
     required this.dentistName,
+    this.dentistPhoto,
   });
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    final theme = Theme.of(context);
+    final colors =
+        context.colors;
+    final theme =
+    Theme.of(context);
+
+    final normalizedPhoto =
+    dentistPhoto?.trim();
+
+    final hasPhoto =
+        normalizedPhoto != null &&
+            normalizedPhoto.isNotEmpty;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding:
+      const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: colors.surfaceMuted,
+        color:
+        colors.surfaceMuted,
         borderRadius:
         BorderRadius.circular(20),
         border: Border.all(
-          color: colors.borderSoft,
+          color:
+          colors.borderSoft,
         ),
       ),
       child: Row(
@@ -287,10 +344,64 @@ class _DentistCard extends StatelessWidget {
             radius: 27,
             backgroundColor:
             colors.surfaceSecondary,
-            child: Icon(
-              Icons.person_rounded,
-              color: colors.buttonPrimary,
-              size: 28,
+            child: ClipOval(
+              child: hasPhoto
+                  ? CachedNetworkImage(
+                imageUrl:
+                normalizedPhoto,
+                width: 54,
+                height: 54,
+                fit: BoxFit.cover,
+                placeholder: (
+                    context,
+                    imageUrl,
+                    ) {
+                  return SizedBox(
+                    width: 54,
+                    height: 54,
+                    child: Center(
+                      child:
+                      CircularProgressIndicator(
+                        strokeWidth:
+                        2,
+                        color:
+                        colors
+                            .buttonPrimary,
+                      ),
+                    ),
+                  );
+                },
+                errorWidget: (
+                    context,
+                    imageUrl,
+                    error,
+                    ) {
+                  return SizedBox(
+                    width: 54,
+                    height: 54,
+                    child: Icon(
+                      Icons
+                          .person_rounded,
+                      color:
+                      colors
+                          .buttonPrimary,
+                      size: 28,
+                    ),
+                  );
+                },
+              )
+                  : SizedBox(
+                width: 54,
+                height: 54,
+                child: Icon(
+                  Icons
+                      .person_rounded,
+                  color:
+                  colors
+                      .buttonPrimary,
+                  size: 28,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: 14),
@@ -298,9 +409,15 @@ class _DentistCard extends StatelessWidget {
             child: Text(
               dentistName,
               style:
-              theme.textTheme.bodyLarge?.copyWith(
-                color: colors.textPrimary,
-                fontWeight: FontWeight.w800,
+              theme
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(
+                color:
+                colors
+                    .textPrimary,
+                fontWeight:
+                FontWeight.w800,
               ),
             ),
           ),
@@ -312,7 +429,9 @@ class _DentistCard extends StatelessWidget {
 
 class _TreatmentSection
     extends StatelessWidget {
-  final AppointmentTreatmentEntity treatment;
+  final AppointmentTreatmentEntity
+  treatment;
+
   final String languageCode;
 
   const _TreatmentSection({
@@ -322,9 +441,12 @@ class _TreatmentSection
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final colors = context.colors;
-    final theme = Theme.of(context);
+    final l10n =
+        context.l10n;
+    final colors =
+        context.colors;
+    final theme =
+    Theme.of(context);
 
     return Column(
       crossAxisAlignment:
@@ -332,18 +454,23 @@ class _TreatmentSection
       children: [
         _SectionTitle(
           title:
-          l10n.treatmentInformationTitle,
+          l10n
+              .treatmentInformationTitle,
         ),
         const SizedBox(height: 14),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(18),
+          padding:
+          const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            color: colors.surfaceSecondary,
+            color:
+            colors
+                .surfaceSecondary,
             borderRadius:
             BorderRadius.circular(20),
             border: Border.all(
-              color: colors.borderSoft,
+              color:
+              colors.borderSoft,
             ),
           ),
           child: Column(
@@ -355,57 +482,75 @@ class _TreatmentSection
                     .localizedTreatmentType(
                   languageCode,
                 ),
-                style: theme
-                    .textTheme.titleMedium
+                style:
+                theme
+                    .textTheme
+                    .titleMedium
                     ?.copyWith(
-                  color: colors.textPrimary,
+                  color:
+                  colors
+                      .textPrimary,
                   fontWeight:
                   FontWeight.w800,
                 ),
               ),
               const SizedBox(height: 16),
+
               _TreatmentDataRow(
                 title:
-                l10n.treatmentStatusLabel,
+                l10n
+                    .treatmentStatusLabel,
                 value:
                 _localizedTreatmentStatus(
                   context,
                   treatment.status,
                 ),
               ),
+
               const SizedBox(height: 10),
+
               _TreatmentDataRow(
                 title:
-                l10n.completedSessionsLabel,
+                l10n
+                    .completedSessionsLabel,
                 value:
                 '${treatment.sessionsCompleted} / '
                     '${treatment.totalSessionsNeeded}',
               ),
+
               if (treatment
                   .totalSessionsNeeded >
                   0) ...[
                 const SizedBox(height: 16),
                 ClipRRect(
                   borderRadius:
-                  BorderRadius.circular(12),
+                  BorderRadius.circular(
+                    12,
+                  ),
                   child:
                   LinearProgressIndicator(
-                    value: treatment.progress,
+                    value:
+                    treatment.progress,
                     minHeight: 9,
                     backgroundColor:
-                    colors.surfaceMuted,
+                    colors
+                        .surfaceMuted,
                   ),
                 ),
               ],
+
               if (treatment.hasNotes) ...[
                 const SizedBox(height: 16),
                 Text(
                   treatment.notes!,
-                  style: theme
-                      .textTheme.bodyMedium
+                  style:
+                  theme
+                      .textTheme
+                      .bodyMedium
                       ?.copyWith(
                     color:
-                    colors.textSecondary,
+                    colors
+                        .textSecondary,
                     height: 1.6,
                   ),
                 ),
@@ -430,8 +575,10 @@ class _TreatmentDataRow
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    final theme = Theme.of(context);
+    final colors =
+        context.colors;
+    final theme =
+    Theme.of(context);
 
     return Row(
       children: [
@@ -439,9 +586,15 @@ class _TreatmentDataRow
           child: Text(
             title,
             style:
-            theme.textTheme.bodyMedium?.copyWith(
-              color: colors.textSecondary,
-              fontWeight: FontWeight.w600,
+            theme
+                .textTheme
+                .bodyMedium
+                ?.copyWith(
+              color:
+              colors
+                  .textSecondary,
+              fontWeight:
+              FontWeight.w600,
             ),
           ),
         ),
@@ -449,9 +602,15 @@ class _TreatmentDataRow
         Text(
           value,
           style:
-          theme.textTheme.bodyMedium?.copyWith(
-            color: colors.textPrimary,
-            fontWeight: FontWeight.w800,
+          theme
+              .textTheme
+              .bodyMedium
+              ?.copyWith(
+            color:
+            colors
+                .textPrimary,
+            fontWeight:
+            FontWeight.w800,
           ),
         ),
       ],
@@ -459,7 +618,8 @@ class _TreatmentDataRow
   }
 }
 
-class _NotesSection extends StatelessWidget {
+class _NotesSection
+    extends StatelessWidget {
   final String title;
   final String notes;
 
@@ -470,8 +630,10 @@ class _NotesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    final theme = Theme.of(context);
+    final colors =
+        context.colors;
+    final theme =
+    Theme.of(context);
 
     return Column(
       crossAxisAlignment:
@@ -483,19 +645,28 @@ class _NotesSection extends StatelessWidget {
         const SizedBox(height: 14),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(18),
+          padding:
+          const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            color: colors.surfaceSecondary,
+            color:
+            colors
+                .surfaceSecondary,
             borderRadius:
             BorderRadius.circular(20),
           ),
           child: Text(
             notes,
             style:
-            theme.textTheme.bodyMedium?.copyWith(
-              color: colors.textPrimary,
+            theme
+                .textTheme
+                .bodyMedium
+                ?.copyWith(
+              color:
+              colors
+                  .textPrimary,
               height: 1.7,
-              fontWeight: FontWeight.w600,
+              fontWeight:
+              FontWeight.w600,
             ),
           ),
         ),
@@ -514,7 +685,8 @@ class _RejectionReasonSection
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme =
+    Theme.of(context);
 
     return Column(
       crossAxisAlignment:
@@ -522,29 +694,49 @@ class _RejectionReasonSection
       children: [
         _SectionTitle(
           title:
-          context.l10n.rejectionReasonTitle,
+          context
+              .l10n
+              .rejectionReasonTitle,
         ),
         const SizedBox(height: 14),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(18),
+          padding:
+          const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            color: theme.colorScheme.error
-                .withValues(alpha: 0.08),
+            color:
+            theme
+                .colorScheme
+                .error
+                .withValues(
+              alpha: 0.08,
+            ),
             borderRadius:
             BorderRadius.circular(20),
             border: Border.all(
-              color: theme.colorScheme.error
-                  .withValues(alpha: 0.20),
+              color:
+              theme
+                  .colorScheme
+                  .error
+                  .withValues(
+                alpha: 0.20,
+              ),
             ),
           ),
           child: Text(
             reason,
             style:
-            theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.error,
+            theme
+                .textTheme
+                .bodyMedium
+                ?.copyWith(
+              color:
+              theme
+                  .colorScheme
+                  .error,
               height: 1.7,
-              fontWeight: FontWeight.w700,
+              fontWeight:
+              FontWeight.w700,
             ),
           ),
         ),
@@ -553,85 +745,176 @@ class _RejectionReasonSection
   }
 }
 
-class _CancellationButton
+class _AppointmentActions
     extends StatelessWidget {
-  final bool isCancelling;
+  final AppointmentEntity appointment;
   final bool isFromCache;
-  final VoidCallback onPressed;
+  final bool isCancelling;
 
-  const _CancellationButton({
-    required this.isCancelling,
+  final VoidCallback onReschedule;
+  final VoidCallback onCancel;
+
+  const _AppointmentActions({
+    required this.appointment,
     required this.isFromCache,
-    required this.onPressed,
+    required this.isCancelling,
+    required this.onReschedule,
+    required this.onCancel,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = context.colors;
+    final theme =
+    Theme.of(context);
+    final colors =
+        context.colors;
 
     return Column(
       children: [
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton.icon(
-            onPressed:
-            isCancelling || isFromCache
-                ? null
-                : onPressed,
-            style: ElevatedButton.styleFrom(
-              backgroundColor:
-              theme.colorScheme.error,
-              foregroundColor:
-              theme.colorScheme.onError,
-              disabledBackgroundColor:
-              theme.colorScheme.error
-                  .withValues(alpha: 0.35),
-              disabledForegroundColor:
-              theme.colorScheme.onError
-                  .withValues(alpha: 0.75),
-              elevation: 0,
-              padding:
-              const EdgeInsets.symmetric(
-                vertical: 15,
+        Row(
+          children: [
+            if (appointment
+                .canAttemptReschedule)
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed:
+                  isFromCache
+                      ? null
+                      : onReschedule,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                    colors.buttonPrimary,
+                    foregroundColor:
+                    colors.textPrimary,
+                    disabledBackgroundColor:
+                    colors.buttonPrimary.withValues(
+                      alpha: 0.35,
+                    ),
+                    disabledForegroundColor:
+                    Colors.white.withValues(
+                      alpha: 0.80,
+                    ),
+                    elevation: 0,
+                    padding:
+                    const EdgeInsets.symmetric(
+                      vertical: 15,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                      BorderRadius.circular(16),
+                    ),
+                  ),
+                  icon: const Icon(
+                    Icons.edit_calendar_rounded,
+                    size: 19,
+                  ),
+                  label: Text(
+                    context.l10n.editAppointmentTitle,
+                  ),
+                ),
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                BorderRadius.circular(16),
+
+            if (appointment
+                .canAttemptReschedule &&
+                appointment
+                    .canAttemptCancellation)
+              const SizedBox(width: 12),
+
+            if (appointment
+                .canAttemptCancellation)
+              Expanded(
+                child:
+                ElevatedButton.icon(
+                  onPressed:
+                  isCancelling ||
+                      isFromCache
+                      ? null
+                      : onCancel,
+                  style:
+                  ElevatedButton
+                      .styleFrom(
+                    backgroundColor:
+                    theme
+                        .colorScheme
+                        .error,
+                    foregroundColor:
+                    theme
+                        .colorScheme
+                        .onError,
+                    disabledBackgroundColor:
+                    theme
+                        .colorScheme
+                        .error
+                        .withValues(
+                      alpha: 0.35,
+                    ),
+                    disabledForegroundColor:
+                    theme
+                        .colorScheme
+                        .onError
+                        .withValues(
+                      alpha: 0.75,
+                    ),
+                    elevation: 0,
+                    padding:
+                    const EdgeInsets
+                        .symmetric(
+                      vertical: 15,
+                    ),
+                    shape:
+                    RoundedRectangleBorder(
+                      borderRadius:
+                      BorderRadius.circular(
+                        16,
+                      ),
+                    ),
+                  ),
+                  icon: isCancelling
+                      ? const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child:
+                    CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color:
+                      Colors.white,
+                    ),
+                  )
+                      : const Icon(
+                    Icons
+                        .close_rounded,
+                    size: 19,
+                  ),
+                  label: Text(
+                    isCancelling
+                        ? context
+                        .l10n
+                        .cancellingAppointmentButton
+                        : context
+                        .l10n
+                        .cancelAppointmentButton,
+                  ),
+                ),
               ),
-            ),
-            icon: isCancelling
-                ? const SizedBox(
-              width: 18,
-              height: 18,
-              child:
-              CircularProgressIndicator(
-                strokeWidth: 2,
-                color: Colors.white,
-              ),
-            )
-                : const Icon(
-              Icons.close_rounded,
-              size: 19,
-            ),
-            label: Text(
-              isCancelling
-                  ? context.l10n
-                  .cancellingAppointmentButton
-                  : context.l10n
-                  .cancelAppointmentButton,
-            ),
-          ),
+          ],
         ),
+
         if (isFromCache) ...[
           const SizedBox(height: 10),
           Text(
-            context.l10n
+            context
+                .l10n
                 .offlineCancellationUnavailableMessage,
-            textAlign: TextAlign.center,
+            textAlign:
+            TextAlign.center,
             style:
-            theme.textTheme.bodySmall?.copyWith(
-              color: colors.textSecondary,
+            theme
+                .textTheme
+                .bodySmall
+                ?.copyWith(
+              color:
+              colors
+                  .textSecondary,
               height: 1.4,
             ),
           ),
@@ -641,7 +924,8 @@ class _CancellationButton
   }
 }
 
-class _InfoRow extends StatelessWidget {
+class _InfoRow
+    extends StatelessWidget {
   final IconData icon;
   final String title;
   final String value;
@@ -654,8 +938,10 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = context.colors;
+    final theme =
+    Theme.of(context);
+    final colors =
+        context.colors;
 
     return Row(
       crossAxisAlignment:
@@ -665,14 +951,18 @@ class _InfoRow extends StatelessWidget {
           width: 42,
           height: 42,
           decoration: BoxDecoration(
-            color: colors.surfaceMuted,
+            color:
+            colors
+                .surfaceMuted,
             borderRadius:
             BorderRadius.circular(14),
           ),
           child: Icon(
             icon,
             size: 20,
-            color: colors.buttonPrimary,
+            color:
+            colors
+                .buttonPrimary,
           ),
         ),
         const SizedBox(width: 12),
@@ -683,11 +973,14 @@ class _InfoRow extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: theme
-                    .textTheme.bodyMedium
+                style:
+                theme
+                    .textTheme
+                    .bodyMedium
                     ?.copyWith(
                   color:
-                  colors.textSecondary,
+                  colors
+                      .textSecondary,
                   fontWeight:
                   FontWeight.w600,
                 ),
@@ -695,11 +988,14 @@ class _InfoRow extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 value,
-                style: theme
-                    .textTheme.bodyLarge
+                style:
+                theme
+                    .textTheme
+                    .bodyLarge
                     ?.copyWith(
                   color:
-                  colors.textPrimary,
+                  colors
+                      .textPrimary,
                   fontWeight:
                   FontWeight.w700,
                   height: 1.4,
@@ -713,7 +1009,8 @@ class _InfoRow extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
+class _SectionTitle
+    extends StatelessWidget {
   final String title;
 
   const _SectionTitle({
@@ -722,15 +1019,23 @@ class _SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = context.colors;
+    final theme =
+    Theme.of(context);
+    final colors =
+        context.colors;
 
     return Text(
       title,
       style:
-      theme.textTheme.titleMedium?.copyWith(
-        color: colors.textPrimary,
-        fontWeight: FontWeight.w800,
+      theme
+          .textTheme
+          .titleMedium
+          ?.copyWith(
+        color:
+        colors
+            .textPrimary,
+        fontWeight:
+        FontWeight.w800,
       ),
     );
   }
@@ -743,7 +1048,10 @@ class _SectionDivider
   @override
   Widget build(BuildContext context) {
     return Divider(
-      color: context.colors.borderSoft,
+      color:
+      context
+          .colors
+          .borderSoft,
       height: 1,
     );
   }
@@ -766,76 +1074,108 @@ _appointmentStatusPresentation(
     BuildContext context,
     AppointmentStatus status,
     ) {
-  final l10n = context.l10n;
-  final theme = Theme.of(context);
+  final l10n =
+      context.l10n;
+  final theme =
+  Theme.of(context);
 
   switch (status) {
     case AppointmentStatus.pending:
       return _StatusPresentation(
         label:
-        l10n.appointmentStatusPending,
-        color: Colors.orange,
-        icon: Icons.schedule_rounded,
+        l10n
+            .appointmentStatusPending,
+        color:
+        Colors.orange,
+        icon:
+        Icons.schedule_rounded,
       );
 
-    case AppointmentStatus.pendingSecretary:
+    case AppointmentStatus
+        .pendingSecretary:
       return _StatusPresentation(
-        label: l10n
+        label:
+        l10n
             .appointmentStatusPendingSecretary,
-        color: Colors.orange,
+        color:
+        Colors.orange,
         icon:
-        Icons.hourglass_top_rounded,
+        Icons
+            .hourglass_top_rounded,
       );
 
     case AppointmentStatus.approved:
       return _StatusPresentation(
         label:
-        l10n.appointmentStatusApproved,
-        color: Colors.green,
+        l10n
+            .appointmentStatusApproved,
+        color:
+        Colors.green,
         icon:
-        Icons.check_circle_outline_rounded,
+        Icons
+            .check_circle_outline_rounded,
       );
 
     case AppointmentStatus.rejected:
       return _StatusPresentation(
         label:
-        l10n.appointmentStatusRejected,
-        color: theme.colorScheme.error,
-        icon: Icons.cancel_outlined,
+        l10n
+            .appointmentStatusRejected,
+        color:
+        theme
+            .colorScheme
+            .error,
+        icon:
+        Icons.cancel_outlined,
       );
 
     case AppointmentStatus.cancelled:
       return _StatusPresentation(
         label:
-        l10n.appointmentStatusCancelled,
-        color: theme.colorScheme.error,
-        icon: Icons.event_busy_rounded,
+        l10n
+            .appointmentStatusCancelled,
+        color:
+        theme
+            .colorScheme
+            .error,
+        icon:
+        Icons.event_busy_rounded,
       );
 
     case AppointmentStatus.completed:
       return _StatusPresentation(
         label:
-        l10n.appointmentStatusCompleted,
-        color: Colors.blue,
-        icon: Icons.task_alt_rounded,
+        l10n
+            .appointmentStatusCompleted,
+        color:
+        Colors.blue,
+        icon:
+        Icons.task_alt_rounded,
       );
 
-    case AppointmentStatus.patientNoShow:
+    case AppointmentStatus
+        .patientNoShow:
       return _StatusPresentation(
-        label: l10n
+        label:
+        l10n
             .appointmentStatusPatientNoShow,
-        color: Colors.deepOrange,
+        color:
+        Colors.deepOrange,
         icon:
-        Icons.person_off_outlined,
+        Icons
+            .person_off_outlined,
       );
 
     case AppointmentStatus.unknown:
       return _StatusPresentation(
         label:
-        l10n.appointmentStatusUnknown,
-        color: Colors.grey,
+        l10n
+            .appointmentStatusUnknown,
+        color:
+        Colors.grey,
         icon:
-        Icons.help_outline_rounded,
+        Icons
+            .help_outline_rounded,
       );
   }
 }
@@ -844,18 +1184,22 @@ String _localizedTreatmentStatus(
     BuildContext context,
     String status,
     ) {
-  switch (status.trim().toLowerCase()) {
+  switch (
+  status.trim().toLowerCase()) {
     case 'ongoing':
       return context
-          .l10n.treatmentStatusOngoing;
+          .l10n
+          .treatmentStatusOngoing;
 
     case 'completed':
       return context
-          .l10n.treatmentStatusCompleted;
+          .l10n
+          .treatmentStatusCompleted;
 
     case 'cancelled':
       return context
-          .l10n.treatmentStatusCancelled;
+          .l10n
+          .treatmentStatusCancelled;
 
     default:
       return status;

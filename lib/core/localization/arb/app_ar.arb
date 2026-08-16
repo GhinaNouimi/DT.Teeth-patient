@@ -549,6 +549,99 @@
   "offerStartsOn": "يبدأ في",
   "offerEndsOn": "ينتهي في",
   "selectOfferTreatmentTypeStep": "اختر نوع العلاج المشمول بالعرض",
-  "selectApplicableTreatmentStep": "اختر العلاج الذي تريد تطبيق العرض عليه"
+  "selectApplicableTreatmentStep": "اختر العلاج الذي تريد تطبيق العرض عليه",
+  "noAppointmentTypesAvailable": "لا توجد أنواع مواعيد متاحة حاليًا",
+  "selectDentistTitle": "اختر الطبيب",
+  "noDentistsAvailableForAppointmentType": "لا يوجد أطباء متاحون لنوع الموعد المحدد حاليًا",
+  "dentistYearsOfExperience": "{years} سنوات خبرة",
+  "@dentistYearsOfExperience": {
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "selectAppointmentTimeTitle": "اختر الموعد المتاح",
+  "noAvailableAppointmentSlots": "لا توجد مواعيد متاحة لهذا الطبيب حاليًا",
+  "bookAppointmentTitle": "حجز موعد جديد",
+  "appointmentBookingStep": "الخطوة {current} من {total}",
+  "@appointmentBookingStep": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "appointmentNotesHint": "اكتب أي ملاحظة أو وصف مختصر للحالة",
+  "continueButton": "المتابعة",
+  "confirmAppointmentButton": "تأكيد الموعد",
+  "appointmentBookingSuccessTitle": "تم إرسال طلب الحجز",
+  "appointmentBookingFailedTitle": "تعذر حجز الموعد",
+  "appointmentBookingOfflineMessage": "يتم عرض بيانات محفوظة مسبقًا. تحقق من اتصالك للحصول على أحدث المواعيد المتاحة.",
+  "offlineBookingUnavailableMessage": "لا يمكن تأكيد الحجز أثناء عدم توفر الإنترنت.",
+  "selectBookingTypeTitle": "ما نوع الحجز الذي تريده؟",
+  "selectBookingTypeDescription": "اختر سبب حجز الموعد للمتابعة بالبيانات المناسبة.",
+  "newTreatmentBookingTitle": "علاج جديد",
+  "newTreatmentBookingDescription": "احجز استشارة أو ابدأ خطة علاج جديدة.",
+  "continueTreatmentBookingTitle": "متابعة علاج",
+  "continueTreatmentBookingDescription": "احجز جلسة جديدة لعلاج قائم لديك.",
+  "emergencyBookingTitle": "حالة طارئة",
+  "emergencyBookingDescription": "احجز موعدًا لحالة تحتاج إلى تقييم سريع.",
+  "continueTreatmentUnavailableMessage": "سيتم تفعيل هذا الخيار بعد تحميل علاجاتك.",
+  "selectTreatmentTitle": "اختر العلاج الذي تريد متابعته",
+  "selectTreatmentDescription": "تظهر هنا العلاجات الحالية التي ما زالت قيد المتابعة.",
+  "noOngoingTreatmentsAvailable": "لا توجد علاجات حالية متاحة للمتابعة.",
+  "remainingTreatmentSessions": "الجلسات المتبقية: {count}",
+  "@remainingTreatmentSessions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "appointmentBookingSuccessMessage": "تم إرسال طلب الحجز بنجاح، وهو الآن بانتظار موافقة الطبيب.",
+  "reviewAppointmentRequestTitle": "راجع طلب الحجز",
+  "reviewAppointmentRequestDescription": "تأكد من صحة جميع الخيارات قبل إرسال طلب الحجز.",
+  "bookingTypeReviewLabel": "نوع الحجز",
+  "treatmentReviewLabel": "العلاج",
+  "notesReviewLabel": "ملاحظتك",
+  "appointmentTypeReviewLabel": "نوع الموعد",
+  "dentistReviewLabel": "طبيب الأسنان",
+  "appointmentDateReviewLabel": "التاريخ والوقت",
+  "noAppointmentNotes": "لم تتم إضافة ملاحظات.",
+  "appointmentRequestPendingNotice": "بعد إرسال الطلب سيكون الموعد بانتظار موافقة طبيب الأسنان.",
+  "reviewAppointmentButton": "مراجعة الطلب",
+  "sendAppointmentRequestButton": "إرسال طلب الحجز",
+  "walkInBookingTitle": "حجز مباشر",
+  "editButton": "تعديل",
+  "selectAppointmentTimeDescription": "اختر اليوم المناسب، ثم حدد الوقت المتاح.",
+  "availableSlotsCount": "{count} أوقات متاحة",
+  "@availableSlotsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "selectedAppointmentTitle": "الموعد المختار",
+  "availableTimesTitle": "الأوقات المتاحة",
+  "editAppointmentTitle": "تعديل الموعد",
+  "currentAppointmentTitle": "الموعد الحالي",
+  "newAppointmentTitle": "الموعد الجديد",
+  "selectNewAppointmentTitle": "اختر موعدًا جديدًا",
+  "selectNewAppointmentDescription": "اختر يومًا ووقتًا جديدًا من المواعيد المتاحة لدى طبيب الأسنان.",
+  "reviewAppointmentEditTitle": "مراجعة تعديل الموعد",
+  "reviewAppointmentEditDescription": "تأكد من الموعد الجديد قبل إرسال طلب التعديل.",
+  "reviewAppointmentEditButton": "مراجعة التعديل",
+  "sendAppointmentEditRequest": "إرسال طلب التعديل",
+  "appointmentEditPendingNotice": "سيتم إرسال طلب تعديل الموعد للمراجعة، وستتلقى إشعارًا بعد الموافقة عليه.",
+  "appointmentEditSuccessTitle": "تم إرسال طلب التعديل",
+  "appointmentEditSuccessMessage": "تم إرسال طلب تعديل الموعد بنجاح وهو الآن بانتظار الموافقة.",
+  "appointmentEditFailedTitle": "تعذر تعديل الموعد",
+  "offlineAppointmentEditUnavailable": "يتم عرض بيانات محفوظة. يجب الاتصال بالإنترنت لإرسال طلب تعديل الموعد.",
+  "appointmentTimeLabel": "الوقت"
 
 }

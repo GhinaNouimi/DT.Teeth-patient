@@ -2986,6 +2986,372 @@ abstract class GeneratedAppLocalizations {
   /// In ar, this message translates to:
   /// **'اختر العلاج الذي تريد تطبيق العرض عليه'**
   String get selectApplicableTreatmentStep;
+
+  /// No description provided for @noAppointmentTypesAvailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد أنواع مواعيد متاحة حاليًا'**
+  String get noAppointmentTypesAvailable;
+
+  /// No description provided for @selectDentistTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر الطبيب'**
+  String get selectDentistTitle;
+
+  /// No description provided for @noDentistsAvailableForAppointmentType.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد أطباء متاحون لنوع الموعد المحدد حاليًا'**
+  String get noDentistsAvailableForAppointmentType;
+
+  /// No description provided for @dentistYearsOfExperience.
+  ///
+  /// In ar, this message translates to:
+  /// **'{years} سنوات خبرة'**
+  String dentistYearsOfExperience(int years);
+
+  /// No description provided for @selectAppointmentTimeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر الموعد المتاح'**
+  String get selectAppointmentTimeTitle;
+
+  /// No description provided for @noAvailableAppointmentSlots.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مواعيد متاحة لهذا الطبيب حاليًا'**
+  String get noAvailableAppointmentSlots;
+
+  /// No description provided for @bookAppointmentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حجز موعد جديد'**
+  String get bookAppointmentTitle;
+
+  /// No description provided for @appointmentBookingStep.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخطوة {current} من {total}'**
+  String appointmentBookingStep(int current, int total);
+
+  /// No description provided for @appointmentNotesHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب أي ملاحظة أو وصف مختصر للحالة'**
+  String get appointmentNotesHint;
+
+  /// No description provided for @continueButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'المتابعة'**
+  String get continueButton;
+
+  /// No description provided for @confirmAppointmentButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكيد الموعد'**
+  String get confirmAppointmentButton;
+
+  /// No description provided for @appointmentBookingSuccessTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إرسال طلب الحجز'**
+  String get appointmentBookingSuccessTitle;
+
+  /// No description provided for @appointmentBookingFailedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر حجز الموعد'**
+  String get appointmentBookingFailedTitle;
+
+  /// No description provided for @appointmentBookingOfflineMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'يتم عرض بيانات محفوظة مسبقًا. تحقق من اتصالك للحصول على أحدث المواعيد المتاحة.'**
+  String get appointmentBookingOfflineMessage;
+
+  /// No description provided for @offlineBookingUnavailableMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يمكن تأكيد الحجز أثناء عدم توفر الإنترنت.'**
+  String get offlineBookingUnavailableMessage;
+
+  /// No description provided for @selectBookingTypeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما نوع الحجز الذي تريده؟'**
+  String get selectBookingTypeTitle;
+
+  /// No description provided for @selectBookingTypeDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر سبب حجز الموعد للمتابعة بالبيانات المناسبة.'**
+  String get selectBookingTypeDescription;
+
+  /// No description provided for @newTreatmentBookingTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'علاج جديد'**
+  String get newTreatmentBookingTitle;
+
+  /// No description provided for @newTreatmentBookingDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'احجز استشارة أو ابدأ خطة علاج جديدة.'**
+  String get newTreatmentBookingDescription;
+
+  /// No description provided for @continueTreatmentBookingTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة علاج'**
+  String get continueTreatmentBookingTitle;
+
+  /// No description provided for @continueTreatmentBookingDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'احجز جلسة جديدة لعلاج قائم لديك.'**
+  String get continueTreatmentBookingDescription;
+
+  /// No description provided for @emergencyBookingTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حالة طارئة'**
+  String get emergencyBookingTitle;
+
+  /// No description provided for @emergencyBookingDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'احجز موعدًا لحالة تحتاج إلى تقييم سريع.'**
+  String get emergencyBookingDescription;
+
+  /// No description provided for @continueTreatmentUnavailableMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم تفعيل هذا الخيار بعد تحميل علاجاتك.'**
+  String get continueTreatmentUnavailableMessage;
+
+  /// No description provided for @selectTreatmentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر العلاج الذي تريد متابعته'**
+  String get selectTreatmentTitle;
+
+  /// No description provided for @selectTreatmentDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'تظهر هنا العلاجات الحالية التي ما زالت قيد المتابعة.'**
+  String get selectTreatmentDescription;
+
+  /// No description provided for @noOngoingTreatmentsAvailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد علاجات حالية متاحة للمتابعة.'**
+  String get noOngoingTreatmentsAvailable;
+
+  /// No description provided for @remainingTreatmentSessions.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجلسات المتبقية: {count}'**
+  String remainingTreatmentSessions(int count);
+
+  /// No description provided for @appointmentBookingSuccessMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إرسال طلب الحجز بنجاح، وهو الآن بانتظار موافقة الطبيب.'**
+  String get appointmentBookingSuccessMessage;
+
+  /// No description provided for @reviewAppointmentRequestTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'راجع طلب الحجز'**
+  String get reviewAppointmentRequestTitle;
+
+  /// No description provided for @reviewAppointmentRequestDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكد من صحة جميع الخيارات قبل إرسال طلب الحجز.'**
+  String get reviewAppointmentRequestDescription;
+
+  /// No description provided for @bookingTypeReviewLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوع الحجز'**
+  String get bookingTypeReviewLabel;
+
+  /// No description provided for @treatmentReviewLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'العلاج'**
+  String get treatmentReviewLabel;
+
+  /// No description provided for @notesReviewLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملاحظتك'**
+  String get notesReviewLabel;
+
+  /// No description provided for @appointmentTypeReviewLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوع الموعد'**
+  String get appointmentTypeReviewLabel;
+
+  /// No description provided for @dentistReviewLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'طبيب الأسنان'**
+  String get dentistReviewLabel;
+
+  /// No description provided for @appointmentDateReviewLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'التاريخ والوقت'**
+  String get appointmentDateReviewLabel;
+
+  /// No description provided for @noAppointmentNotes.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تتم إضافة ملاحظات.'**
+  String get noAppointmentNotes;
+
+  /// No description provided for @appointmentRequestPendingNotice.
+  ///
+  /// In ar, this message translates to:
+  /// **'بعد إرسال الطلب سيكون الموعد بانتظار موافقة طبيب الأسنان.'**
+  String get appointmentRequestPendingNotice;
+
+  /// No description provided for @reviewAppointmentButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'مراجعة الطلب'**
+  String get reviewAppointmentButton;
+
+  /// No description provided for @sendAppointmentRequestButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'إرسال طلب الحجز'**
+  String get sendAppointmentRequestButton;
+
+  /// No description provided for @walkInBookingTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حجز مباشر'**
+  String get walkInBookingTitle;
+
+  /// No description provided for @editButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل'**
+  String get editButton;
+
+  /// No description provided for @selectAppointmentTimeDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر اليوم المناسب، ثم حدد الوقت المتاح.'**
+  String get selectAppointmentTimeDescription;
+
+  /// No description provided for @availableSlotsCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} أوقات متاحة'**
+  String availableSlotsCount(int count);
+
+  /// No description provided for @selectedAppointmentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموعد المختار'**
+  String get selectedAppointmentTitle;
+
+  /// No description provided for @availableTimesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأوقات المتاحة'**
+  String get availableTimesTitle;
+
+  /// No description provided for @editAppointmentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل الموعد'**
+  String get editAppointmentTitle;
+
+  /// No description provided for @currentAppointmentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموعد الحالي'**
+  String get currentAppointmentTitle;
+
+  /// No description provided for @newAppointmentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموعد الجديد'**
+  String get newAppointmentTitle;
+
+  /// No description provided for @selectNewAppointmentTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر موعدًا جديدًا'**
+  String get selectNewAppointmentTitle;
+
+  /// No description provided for @selectNewAppointmentDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر يومًا ووقتًا جديدًا من المواعيد المتاحة لدى طبيب الأسنان.'**
+  String get selectNewAppointmentDescription;
+
+  /// No description provided for @reviewAppointmentEditTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مراجعة تعديل الموعد'**
+  String get reviewAppointmentEditTitle;
+
+  /// No description provided for @reviewAppointmentEditDescription.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكد من الموعد الجديد قبل إرسال طلب التعديل.'**
+  String get reviewAppointmentEditDescription;
+
+  /// No description provided for @reviewAppointmentEditButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'مراجعة التعديل'**
+  String get reviewAppointmentEditButton;
+
+  /// No description provided for @sendAppointmentEditRequest.
+  ///
+  /// In ar, this message translates to:
+  /// **'إرسال طلب التعديل'**
+  String get sendAppointmentEditRequest;
+
+  /// No description provided for @appointmentEditPendingNotice.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم إرسال طلب تعديل الموعد للمراجعة، وستتلقى إشعارًا بعد الموافقة عليه.'**
+  String get appointmentEditPendingNotice;
+
+  /// No description provided for @appointmentEditSuccessTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إرسال طلب التعديل'**
+  String get appointmentEditSuccessTitle;
+
+  /// No description provided for @appointmentEditSuccessMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم إرسال طلب تعديل الموعد بنجاح وهو الآن بانتظار الموافقة.'**
+  String get appointmentEditSuccessMessage;
+
+  /// No description provided for @appointmentEditFailedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر تعديل الموعد'**
+  String get appointmentEditFailedTitle;
+
+  /// No description provided for @offlineAppointmentEditUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'يتم عرض بيانات محفوظة. يجب الاتصال بالإنترنت لإرسال طلب تعديل الموعد.'**
+  String get offlineAppointmentEditUnavailable;
 }
 
 class _GeneratedAppLocalizationsDelegate

@@ -22,6 +22,12 @@ class CacheKeys {
 
   static const appointmentDetailsPrefix =
       'cached_appointment_details_';
+  static const appointmentTypes =
+      'cached_appointment_types';
+  static const dentistSchedulePrefix =
+      'cached_dentist_schedule_';
+  static const dentistsByAppointmentTypePrefix =
+      'cached_dentists_by_appointment_type_';
 
   // Prescriptions
   static const prescriptions =
@@ -43,5 +49,6 @@ class CacheKeys {
       'cached_treatment_invoice_$treatmentId';
   // Offers
   static const offers = 'cached_offers';
+
 
 }

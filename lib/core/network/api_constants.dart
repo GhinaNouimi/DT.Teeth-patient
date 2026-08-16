@@ -6,7 +6,8 @@ class ApiConstants {
   // Authentication
   static const String patientRegister = '/patient/register';
   static const String patientVerifyEmail = '/patient/verifyEmail';
-  static const String patientSendVerification = '/patient/sendVerification';
+  static const String patientSendVerification =
+      '/patient/sendVerification';
   static const String patientLogin = '/patient/login';
 
   // Forgot Password
@@ -24,7 +25,9 @@ class ApiConstants {
   static const String patientShowProfile = '/patient/showProfile';
   static const String patientEditProfile = '/patient/editProfile';
 
-// Appointments
+  // Appointments
+  static const String appointmentTypes = '/appointmentTypes';
+
   static const String patientShowAppointments =
       '/patient/showAppointments';
 
@@ -41,6 +44,23 @@ class ApiConstants {
       ) =>
       '/patient/cancelAppointment/$appointmentId';
 
+  static String patientDentistsByAppointmentType(
+      int appointmentTypeId,
+      ) =>
+      '/patient/dentistsByAppointmentType/$appointmentTypeId';
+
+  static String patientShowDentistSchedule(
+      int dentistId,
+      ) =>
+      '/patient/showDentistSchedule/$dentistId';
+
+  static const String patientAddAppointment =
+      '/patient/addAppointment';
+
+  static String patientUpdateAppointment(
+      int appointmentId,
+      ) =>
+      '/patient/updateAppointments/$appointmentId';
 
   // Prescriptions
   static const String patientShowAllPrescriptions =
@@ -55,22 +75,33 @@ class ApiConstants {
   static const String patientShowAllDentists =
       '/showAllDentists';
 
-  static String patientShowDentistDetails(int dentistId) =>
+  static String patientShowDentistDetails(
+      int dentistId,
+      ) =>
       '/patient/showDentistDetails/$dentistId';
 
-  static String patientShowDentistRate(int dentistId) =>
+  static String patientShowDentistRate(
+      int dentistId,
+      ) =>
       '/patient/showDentistRate/$dentistId';
 
-  static String patientShowDentistsBySpecialization(int specializationId) =>
+  static String patientShowDentistsBySpecialization(
+      int specializationId,
+      ) =>
       '/patient/showDentistsBySpecialization/$specializationId';
 
-  static String patientAddDentistRate(int dentistId) =>
+  static String patientAddDentistRate(
+      int dentistId,
+      ) =>
       '/patient/addDentistRate/$dentistId';
+
   // Treatments
   static const String patientShowAllTreatments =
       '/patient/showAllTreatments';
 
-  static String patientShowTreatmentDetails(int treatmentId) =>
+  static String patientShowTreatmentDetails(
+      int treatmentId,
+      ) =>
       '/patient/showTreatmentdetails/$treatmentId';
 
   // Complaints
@@ -79,11 +110,14 @@ class ApiConstants {
 
   static const String patientAddComplaint =
       '/patient/addComplaint';
+
   // Invoices
   static const String showAllInvoices =
       '/patient/showAllInvoices';
 
-  static String invoiceForTreatment(int treatmentId) =>
+  static String invoiceForTreatment(
+      int treatmentId,
+      ) =>
       '/patient/invoiceForTreatment/$treatmentId';
 
   // Offers

@@ -1523,4 +1523,215 @@ class GeneratedAppLocalizationsAr extends GeneratedAppLocalizations {
   @override
   String get selectApplicableTreatmentStep =>
       'اختر العلاج الذي تريد تطبيق العرض عليه';
+
+  @override
+  String get noAppointmentTypesAvailable => 'لا توجد أنواع مواعيد متاحة حاليًا';
+
+  @override
+  String get selectDentistTitle => 'اختر الطبيب';
+
+  @override
+  String get noDentistsAvailableForAppointmentType =>
+      'لا يوجد أطباء متاحون لنوع الموعد المحدد حاليًا';
+
+  @override
+  String dentistYearsOfExperience(int years) {
+    return '$years سنوات خبرة';
+  }
+
+  @override
+  String get selectAppointmentTimeTitle => 'اختر الموعد المتاح';
+
+  @override
+  String get noAvailableAppointmentSlots =>
+      'لا توجد مواعيد متاحة لهذا الطبيب حاليًا';
+
+  @override
+  String get bookAppointmentTitle => 'حجز موعد جديد';
+
+  @override
+  String appointmentBookingStep(int current, int total) {
+    return 'الخطوة $current من $total';
+  }
+
+  @override
+  String get appointmentNotesHint => 'اكتب أي ملاحظة أو وصف مختصر للحالة';
+
+  @override
+  String get continueButton => 'المتابعة';
+
+  @override
+  String get confirmAppointmentButton => 'تأكيد الموعد';
+
+  @override
+  String get appointmentBookingSuccessTitle => 'تم إرسال طلب الحجز';
+
+  @override
+  String get appointmentBookingFailedTitle => 'تعذر حجز الموعد';
+
+  @override
+  String get appointmentBookingOfflineMessage =>
+      'يتم عرض بيانات محفوظة مسبقًا. تحقق من اتصالك للحصول على أحدث المواعيد المتاحة.';
+
+  @override
+  String get offlineBookingUnavailableMessage =>
+      'لا يمكن تأكيد الحجز أثناء عدم توفر الإنترنت.';
+
+  @override
+  String get selectBookingTypeTitle => 'ما نوع الحجز الذي تريده؟';
+
+  @override
+  String get selectBookingTypeDescription =>
+      'اختر سبب حجز الموعد للمتابعة بالبيانات المناسبة.';
+
+  @override
+  String get newTreatmentBookingTitle => 'علاج جديد';
+
+  @override
+  String get newTreatmentBookingDescription =>
+      'احجز استشارة أو ابدأ خطة علاج جديدة.';
+
+  @override
+  String get continueTreatmentBookingTitle => 'متابعة علاج';
+
+  @override
+  String get continueTreatmentBookingDescription =>
+      'احجز جلسة جديدة لعلاج قائم لديك.';
+
+  @override
+  String get emergencyBookingTitle => 'حالة طارئة';
+
+  @override
+  String get emergencyBookingDescription =>
+      'احجز موعدًا لحالة تحتاج إلى تقييم سريع.';
+
+  @override
+  String get continueTreatmentUnavailableMessage =>
+      'سيتم تفعيل هذا الخيار بعد تحميل علاجاتك.';
+
+  @override
+  String get selectTreatmentTitle => 'اختر العلاج الذي تريد متابعته';
+
+  @override
+  String get selectTreatmentDescription =>
+      'تظهر هنا العلاجات الحالية التي ما زالت قيد المتابعة.';
+
+  @override
+  String get noOngoingTreatmentsAvailable =>
+      'لا توجد علاجات حالية متاحة للمتابعة.';
+
+  @override
+  String remainingTreatmentSessions(int count) {
+    return 'الجلسات المتبقية: $count';
+  }
+
+  @override
+  String get appointmentBookingSuccessMessage =>
+      'تم إرسال طلب الحجز بنجاح، وهو الآن بانتظار موافقة الطبيب.';
+
+  @override
+  String get reviewAppointmentRequestTitle => 'راجع طلب الحجز';
+
+  @override
+  String get reviewAppointmentRequestDescription =>
+      'تأكد من صحة جميع الخيارات قبل إرسال طلب الحجز.';
+
+  @override
+  String get bookingTypeReviewLabel => 'نوع الحجز';
+
+  @override
+  String get treatmentReviewLabel => 'العلاج';
+
+  @override
+  String get notesReviewLabel => 'ملاحظتك';
+
+  @override
+  String get appointmentTypeReviewLabel => 'نوع الموعد';
+
+  @override
+  String get dentistReviewLabel => 'طبيب الأسنان';
+
+  @override
+  String get appointmentDateReviewLabel => 'التاريخ والوقت';
+
+  @override
+  String get noAppointmentNotes => 'لم تتم إضافة ملاحظات.';
+
+  @override
+  String get appointmentRequestPendingNotice =>
+      'بعد إرسال الطلب سيكون الموعد بانتظار موافقة طبيب الأسنان.';
+
+  @override
+  String get reviewAppointmentButton => 'مراجعة الطلب';
+
+  @override
+  String get sendAppointmentRequestButton => 'إرسال طلب الحجز';
+
+  @override
+  String get walkInBookingTitle => 'حجز مباشر';
+
+  @override
+  String get editButton => 'تعديل';
+
+  @override
+  String get selectAppointmentTimeDescription =>
+      'اختر اليوم المناسب، ثم حدد الوقت المتاح.';
+
+  @override
+  String availableSlotsCount(int count) {
+    return '$count أوقات متاحة';
+  }
+
+  @override
+  String get selectedAppointmentTitle => 'الموعد المختار';
+
+  @override
+  String get availableTimesTitle => 'الأوقات المتاحة';
+
+  @override
+  String get editAppointmentTitle => 'تعديل الموعد';
+
+  @override
+  String get currentAppointmentTitle => 'الموعد الحالي';
+
+  @override
+  String get newAppointmentTitle => 'الموعد الجديد';
+
+  @override
+  String get selectNewAppointmentTitle => 'اختر موعدًا جديدًا';
+
+  @override
+  String get selectNewAppointmentDescription =>
+      'اختر يومًا ووقتًا جديدًا من المواعيد المتاحة لدى طبيب الأسنان.';
+
+  @override
+  String get reviewAppointmentEditTitle => 'مراجعة تعديل الموعد';
+
+  @override
+  String get reviewAppointmentEditDescription =>
+      'تأكد من الموعد الجديد قبل إرسال طلب التعديل.';
+
+  @override
+  String get reviewAppointmentEditButton => 'مراجعة التعديل';
+
+  @override
+  String get sendAppointmentEditRequest => 'إرسال طلب التعديل';
+
+  @override
+  String get appointmentEditPendingNotice =>
+      'سيتم إرسال طلب تعديل الموعد للمراجعة، وستتلقى إشعارًا بعد الموافقة عليه.';
+
+  @override
+  String get appointmentEditSuccessTitle => 'تم إرسال طلب التعديل';
+
+  @override
+  String get appointmentEditSuccessMessage =>
+      'تم إرسال طلب تعديل الموعد بنجاح وهو الآن بانتظار الموافقة.';
+
+  @override
+  String get appointmentEditFailedTitle => 'تعذر تعديل الموعد';
+
+  @override
+  String get offlineAppointmentEditUnavailable =>
+      'يتم عرض بيانات محفوظة. يجب الاتصال بالإنترنت لإرسال طلب تعديل الموعد.';
 }

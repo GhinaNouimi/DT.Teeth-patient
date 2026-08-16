@@ -549,5 +549,98 @@
   "offerStartsOn": "Starts on",
   "offerEndsOn": "Ends on",
   "selectOfferTreatmentTypeStep": "Select an included treatment type",
-  "selectApplicableTreatmentStep": "Select the treatment you want to apply the offer to"
+  "selectApplicableTreatmentStep": "Select the treatment you want to apply the offer to",
+  "noAppointmentTypesAvailable": "No appointment types are currently available",
+  "selectDentistTitle": "Choose a dentist",
+  "noDentistsAvailableForAppointmentType": "No dentists are currently available for the selected appointment type",
+  "dentistYearsOfExperience": "{years} years of experience",
+  "@dentistYearsOfExperience": {
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "selectAppointmentTimeTitle": "Choose an available appointment",
+  "noAvailableAppointmentSlots": "There are currently no available appointments for this dentist",
+  "bookAppointmentTitle": "Book a New Appointment",
+  "appointmentBookingStep": "Step {current} of {total}",
+  "@appointmentBookingStep": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "appointmentNotesHint": "Add an optional note or a brief description of your condition",
+  "continueButton": "Continue",
+  "confirmAppointmentButton": "Confirm Appointment",
+  "appointmentBookingSuccessTitle": "Booking Request Sent",
+  "appointmentBookingFailedTitle": "Unable to Book Appointment",
+  "appointmentBookingOfflineMessage": "Previously saved data is being displayed. Connect to the internet to get the latest available appointments.",
+  "offlineBookingUnavailableMessage": "The appointment cannot be confirmed while offline.",
+  "selectBookingTypeTitle": "What type of booking do you need?",
+  "selectBookingTypeDescription": "Choose the reason for your appointment to continue with the appropriate details.",
+  "newTreatmentBookingTitle": "New Treatment",
+  "newTreatmentBookingDescription": "Book a consultation or start a new treatment plan.",
+  "continueTreatmentBookingTitle": "Continue Treatment",
+  "continueTreatmentBookingDescription": "Book another session for an existing treatment.",
+  "emergencyBookingTitle": "Emergency",
+  "emergencyBookingDescription": "Book an appointment for a condition that needs prompt assessment.",
+  "continueTreatmentUnavailableMessage": "This option will be available after your treatments are loaded.",
+  "selectTreatmentTitle": "Select the treatment to continue",
+  "selectTreatmentDescription": "Your active treatments available for follow-up are shown here.",
+  "noOngoingTreatmentsAvailable": "There are no active treatments available for follow-up.",
+  "remainingTreatmentSessions": "Remaining sessions: {count}",
+  "@remainingTreatmentSessions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "appointmentBookingSuccessMessage": "Your appointment request was submitted successfully and is now awaiting the dentist's approval.",
+  "reviewAppointmentRequestTitle": "Review booking request",
+  "reviewAppointmentRequestDescription": "Please verify all your selections before submitting the appointment request.",
+  "bookingTypeReviewLabel": "Booking type",
+  "treatmentReviewLabel": "Treatment",
+  "notesReviewLabel": "Your note",
+  "appointmentTypeReviewLabel": "Appointment type",
+  "dentistReviewLabel": "Dentist",
+  "appointmentDateReviewLabel": "Date and time",
+  "noAppointmentNotes": "No notes were added.",
+  "appointmentRequestPendingNotice": "After submission, the appointment request will be awaiting the dentist's approval.",
+  "reviewAppointmentButton": "Review request",
+  "sendAppointmentRequestButton": "Submit booking request",
+  "walkInBookingTitle": "Walk-in booking",
+  "editButton": "Edit",
+  "selectAppointmentTimeDescription": "Choose a suitable day, then select an available time.",
+  "availableSlotsCount": "{count} available slots",
+  "@availableSlotsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "selectedAppointmentTitle": "Selected appointment",
+  "availableTimesTitle": "Available times",
+  "editAppointmentTitle": "Edit appointment",
+  "currentAppointmentTitle": "Current appointment",
+  "newAppointmentTitle": "New appointment",
+  "selectNewAppointmentTitle": "Choose a new appointment",
+  "selectNewAppointmentDescription": "Choose a new available date and time with your dentist.",
+  "reviewAppointmentEditTitle": "Review appointment change",
+  "reviewAppointmentEditDescription": "Please verify the new appointment before submitting your change request.",
+  "reviewAppointmentEditButton": "Review changes",
+  "sendAppointmentEditRequest": "Submit change request",
+  "appointmentEditPendingNotice": "Your appointment change request will be reviewed, and you will be notified once it is approved.",
+  "appointmentEditSuccessTitle": "Change request submitted",
+  "appointmentEditSuccessMessage": "Your appointment change request was submitted successfully and is awaiting approval.",
+  "appointmentEditFailedTitle": "Unable to update appointment",
+  "offlineAppointmentEditUnavailable": "Saved data is being displayed. An internet connection is required to submit an appointment change.",
+  "appointmentTimeLabel": "Time"
 }

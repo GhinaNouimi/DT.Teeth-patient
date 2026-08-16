@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/theme_extensions.dart';
 
 enum QuickActionCircleType {
-  emergency,
+  booking,
   contact,
   ai,
 }
@@ -27,65 +27,81 @@ class QuickActionCircleTile extends StatelessWidget {
     final theme = Theme.of(context);
     final colors = context.colors;
 
-    final actionColors = _resolveColors(colors);
+    final actionColors = _resolveColors(
+      colors,
+    );
 
     return Expanded(
       child: Material(
         color: Colors.transparent,
-        shape: const CircleBorder(),
+        borderRadius: BorderRadius.circular(22),
+        clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onTap,
-          customBorder: const CircleBorder(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 72,
-                height: 72,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: actionColors.background,
-                  border: Border.all(color: actionColors.border),
-                  boxShadow: [
-                    BoxShadow(
-                      color: actionColors.glow,
-                      blurRadius: 18,
-                      offset: const Offset(0, 8),
+          borderRadius: BorderRadius.circular(22),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 4,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 72,
+                  height: 72,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: actionColors.background,
+                    border: Border.all(
+                      color: actionColors.border,
                     ),
-                  ],
+                    boxShadow: [
+                      BoxShadow(
+                        color: actionColors.glow,
+                        blurRadius: 18,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    icon,
+                    color: actionColors.icon,
+                    size: 30,
+                  ),
                 ),
-                child: Icon(
-                  icon,
-                  color: actionColors.icon,
-                  size: 30,
+                const SizedBox(height: 10),
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(
+                    color: colors.textPrimary,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: colors.textPrimary,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  _QuickActionVisualColors _resolveColors(dynamic colors) {
+  _QuickActionVisualColors _resolveColors(
+      dynamic colors,
+      ) {
     switch (type) {
-      case QuickActionCircleType.emergency:
+      case QuickActionCircleType.booking:
         return _QuickActionVisualColors(
-          background: colors.danger.withValues(alpha: 0.12),
-          border: colors.danger.withValues(alpha: 0.28),
-          icon: colors.danger,
-          glow: colors.danger.withValues(alpha: 0.16),
+          background: colors.buttonPrimary
+              .withValues(alpha: 0.12),
+          border: colors.buttonPrimary
+              .withValues(alpha: 0.26),
+          icon: colors.buttonPrimary,
+          glow: colors.buttonPrimary
+              .withValues(alpha: 0.14),
         );
 
       case QuickActionCircleType.contact:
@@ -98,10 +114,13 @@ class QuickActionCircleTile extends StatelessWidget {
 
       case QuickActionCircleType.ai:
         return _QuickActionVisualColors(
-          background: colors.reservedState.withValues(alpha: 0.75),
-          border: colors.success.withValues(alpha: 0.22),
+          background: colors.reservedState
+              .withValues(alpha: 0.75),
+          border: colors.success
+              .withValues(alpha: 0.22),
           icon: colors.success,
-          glow: colors.success.withValues(alpha: 0.12),
+          glow: colors.success
+              .withValues(alpha: 0.12),
         );
     }
   }

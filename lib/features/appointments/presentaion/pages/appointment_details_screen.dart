@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/localization/app_localizations.dart';
+import '../../../../core/routing/app_routes.dart';
 import '../../../../core/theme/theme_extensions.dart';
 import '../../../../core/widgets/feedback/error_bottom_sheet.dart';
 import '../../../../core/widgets/feedback/success_bottom_sheet.dart';
@@ -110,7 +111,20 @@ class _AppointmentDetailsViewState
       ),
     );
   }
+  Future<void> _openRescheduleAppointment(
+      AppointmentEntity appointment,
+      ) async {
+    final updated = await context.push<bool>(
+      AppRoutes.rescheduleAppointment,
+      extra: appointment.id,
+    );
 
+    if (updated != true || !mounted) {
+      return;
+    }
+
+    _reloadAppointment();
+  }
   Future<void> _handleStateListener(
       BuildContext context,
       AppointmentDetailsState state,
@@ -214,11 +228,13 @@ class _AppointmentDetailsViewState
                           _showOfflineBanner = false;
                         });
                       },
-                      onRefresh: _refreshAppointment,
+                      onRefresh:
+                      _refreshAppointment,
+                      onRescheduleAppointment:
+                      _openRescheduleAppointment,
                       onCancelAppointment:
                       _confirmCancellation,
-                    );
-                  }
+                    );                  }
 
                   if (state
                   is AppointmentDetailsError) {

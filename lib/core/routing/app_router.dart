@@ -1,13 +1,11 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dt_teeth/core/routing/app_routes.dart';
-import 'package:dt_teeth/features/appointments/presentaion/pages/emergency_appointment_screen.dart';
 import 'package:dt_teeth/features/auth/domain/usecases/logout_patient_usecase.dart';
 import 'package:dt_teeth/features/auth/presentation/bloc/logout/logout_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/appointments/presentaion/models/appointment_ui_model.dart';
 import '../../features/appointments/presentaion/pages/appointment_details_screen.dart';
 import '../../features/appointments/presentaion/pages/appointments_management_screen.dart';
 import '../../features/appointments/presentaion/pages/new_appointment_screen.dart';
@@ -343,26 +341,26 @@ class AppRouter {
         },
       ),
 
-      // GoRoute(
-      //   path: AppRoutes.newAppointment,
-      //   name: 'new-appointment',
-      //   builder: (context, state) => const NewAppointmentScreen(),
-      // ),
-
       GoRoute(
-        path: AppRoutes.emergencyAppointment,
-        name: 'emergency_appointment',
-        builder: (context, state) => const EmergencyAppointmentScreen(),
+        path: AppRoutes.newAppointment,
+        name: 'new-appointment',
+        builder: (context, state) => const NewAppointmentScreen(),
       ),
+
+
 
       GoRoute(
         path: AppRoutes.rescheduleAppointment,
         name: 'reschedule-appointment',
         builder: (context, state) {
-          final appointment = state.extra as AppointmentUiModel;
-          return RescheduleAppointmentScreen(appointment: appointment);
+          final appointmentId = state.extra as int;
+
+          return RescheduleAppointmentScreen(
+            appointmentId: appointmentId,
+          );
         },
       ),
+
       GoRoute(
         path: AppRoutes.doctorDetails,
         name: 'doctor-details',
@@ -372,14 +370,6 @@ class AppRouter {
         },
       ),
 
-      // GoRoute(
-      //   path: AppRoutes.booking,
-      //   name: 'booking',
-      //   builder: (context, state) {
-      //     final doctor = state.extra as DoctorUiModel;
-      //     return BookingScreen(doctor: doctor);
-      //   },
-      // ),
 
       GoRoute(
         path: AppRoutes.medicalRecordTreatments,
@@ -397,14 +387,7 @@ class AppRouter {
           );
         },
       ),
-      // GoRoute(
-      //   path: AppRoutes.medicalRecordAttachments,
-      //   name: 'medical-record-attachments',
-      //   builder: (context, state) {
-      //     final treatmentId = state.extra as String;
-      //     return AttachmentsScreen(treatmentId: treatmentId);
-      //   },
-      // ),
+
       GoRoute(
         path: AppRoutes.medicalRecordPrescriptions,
         name: 'medical-record-prescriptions',
@@ -423,11 +406,7 @@ class AppRouter {
         name: 'medical-record-payments',
         builder: (context, state) => const PaymentsScreen(),
       ),
-      // GoRoute(
-      //   path: AppRoutes.medicalRecordPaymentPlanDetails,
-      //   name: 'medical-record-payment-plan-details',
-      //   builder: (context, state) => const PaymentPlanDetailsScreen(),
-      // ),
+
       GoRoute(
         path: AppRoutes.medicalRecordTreatmentInvoice,
         name: 'medical-record-treatment-invoice',

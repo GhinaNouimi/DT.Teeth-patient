@@ -270,6 +270,26 @@ class ApiErrorMapper {
         en: 'An offer has already been applied to this treatment, so another offer cannot be applied.',
       );
     }
+
+    if ((normalizedMessage.contains('3 موعد') ||
+        normalizedMessage.contains('3 مواعيد')) &&
+        normalizedMessage.contains('قيد الانتظار')) {
+      return ApiErrorMessages.text(
+        languageCode,
+        ar: 'لديك بالفعل 3 مواعيد قيد الانتظار. يرجى انتظار الرد عليها قبل حجز موعد جديد.',
+        en: 'You already have 3 pending appointment requests. Please wait for a response before booking another appointment.',
+      );
+    }
+
+    if (normalizedMessage.contains(
+      'لا يمكن تعديل الموعد قبل أقل من 24 ساعة',
+    )) {
+      return ApiErrorMessages.text(
+        languageCode,
+        ar: 'لا يمكن تعديل الموعد قبل أقل من 24 ساعة من موعده.',
+        en: 'The appointment cannot be rescheduled less than 24 hours before its scheduled time.',
+      );
+    }
     return ApiErrorMessages.text(
       languageCode,
       ar: 'تعذر إكمال العملية. يرجى المحاولة مرة أخرى.',

@@ -3,7 +3,9 @@ import '../../domain/entities/appointment_entity.dart';
 class AppointmentModel extends AppointmentEntity {
   const AppointmentModel({
     required super.id,
+    required super.dentistId,
     required super.dentistName,
+    super.dentistPhoto,
     required super.appointmentTypeName,
     required super.appointmentTypeNameEn,
     required super.type,
@@ -17,75 +19,182 @@ class AppointmentModel extends AppointmentEntity {
   factory AppointmentModel.fromJson(
       Map<String, dynamic> json,
       ) {
-    final appointmentType =
-    _parseMap(json['appointment_type']);
+    final dentist = _parseMap(
+      json['dentist'],
+    );
+
+    final appointmentType = _parseMap(
+      json['appointment_type'],
+    );
 
     final treatmentJson =
-    _parseNullableMap(json['treatment']);
+    _parseNullableMap(
+      json['treatment'],
+    );
+
+    final nestedDentistName =
+        dentist['name']
+            ?.toString()
+            .trim() ??
+            '';
+
+    final legacyDentistName =
+        json['dentist_name']
+            ?.toString()
+            .trim() ??
+            '';
 
     return AppointmentModel(
-      id: _parseInt(json['id']),
+      id: _parseInt(
+        json['id'],
+      ),
+
+      // الشكل الجديد:
+      // dentist: { id, name, photo }
+      //
+      // مع دعم الشكل القديم:
+      // dentist_id
+      dentistId: _parseInt(
+        dentist['id'] ??
+            json['dentist_id'],
+      ),
+
+      // الشكل الجديد:
+      // dentist: { id, name, photo }
+      //
+      // مع دعم الشكل القديم:
+      // dentist_name
       dentistName:
-      json['dentist_name']?.toString().trim() ?? '',
+      nestedDentistName.isNotEmpty
+          ? nestedDentistName
+          : legacyDentistName,
+
+      dentistPhoto:
+      _parseNullableString(
+        dentist['photo'] ??
+            json['dentist_photo'],
+      ),
+
       appointmentTypeName:
-      appointmentType['ar']?.toString().trim() ?? '',
+      appointmentType['ar']
+          ?.toString()
+          .trim() ??
+          '',
+
       appointmentTypeNameEn:
-      appointmentType['en']?.toString().trim() ?? '',
+      appointmentType['en']
+          ?.toString()
+          .trim() ??
+          '',
+
       type: _mapBookingType(
-        json['type']?.toString() ?? '',
+        json['type']?.toString() ??
+            '',
       ),
+
       status: _mapStatus(
-        json['status']?.toString() ?? '',
+        json['status']?.toString() ??
+            '',
       ),
-      appointmentTime: _parseDateTime(
+
+      appointmentTime:
+      _parseDateTime(
         json['appointment_time'],
       ),
-      rejectionReason: _parseNullableString(
+
+      rejectionReason:
+      _parseNullableString(
         json['rejection_reason'],
       ),
-      notes: _parseNullableString(
+
+      notes:
+      _parseNullableString(
         json['notes'],
       ),
-      treatment: treatmentJson == null
+
+      treatment:
+      treatmentJson == null
           ? null
-          : AppointmentTreatmentModel.fromJson(
+          : AppointmentTreatmentModel
+          .fromJson(
         treatmentJson,
       ),
     );
   }
 
   Map<String, dynamic> toJson() {
-    final treatmentValue = treatment;
+    final treatmentValue =
+        treatment;
 
     return {
       'id': id,
+
+      // دعم الشكل القديم ضمن الكاش.
+      'dentist_id': dentistId,
       'dentist_name': dentistName,
+
+      // تخزين الشكل الجديد أيضًا.
+      'dentist': {
+        'id': dentistId,
+        'name': dentistName,
+        'photo': dentistPhoto,
+      },
+
       'appointment_type': {
         'ar': appointmentTypeName,
         'en': appointmentTypeNameEn,
       },
-      'type': _bookingTypeToJson(type),
-      'status': _statusToJson(status),
+
+      'type':
+      _bookingTypeToJson(
+        type,
+      ),
+
+      'status':
+      _statusToJson(
+        status,
+      ),
+
       'appointment_time':
-      _formatDateTimeForCache(appointmentTime),
-      'rejection_reason': rejectionReason,
+      _formatDateTimeForCache(
+        appointmentTime,
+      ),
+
+      'rejection_reason':
+      rejectionReason,
+
       'notes': notes,
-      'treatment': treatmentValue == null
+
+      'treatment':
+      treatmentValue == null
           ? null
-          : treatmentValue is AppointmentTreatmentModel
-          ? treatmentValue.toJson()
+          : treatmentValue
+      is AppointmentTreatmentModel
+          ? treatmentValue
+          .toJson()
           : {
-        'id': treatmentValue.id,
+        'id':
+        treatmentValue.id,
         'treatment_type': {
-          'ar': treatmentValue.treatmentTypeName,
-          'en': treatmentValue.treatmentTypeNameEn,
+          'ar':
+          treatmentValue
+              .treatmentTypeName,
+          'en':
+          treatmentValue
+              .treatmentTypeNameEn,
         },
-        'status': treatmentValue.status,
+        'status':
+        treatmentValue
+            .status,
         'total_sessions_needed':
-        treatmentValue.totalSessionsNeeded,
+        treatmentValue
+            .totalSessionsNeeded,
         'sessions_completed':
-        treatmentValue.sessionsCompleted,
-        'notes': treatmentValue.notes,
+        treatmentValue
+            .sessionsCompleted,
+        'notes':
+        treatmentValue
+            .notes,
       },
     };
   }
@@ -98,49 +207,62 @@ class AppointmentModel extends AppointmentEntity {
         return AppointmentStatus.pending;
 
       case 'pending_secretary':
-        return AppointmentStatus.pendingSecretary;
+        return AppointmentStatus
+            .pendingSecretary;
 
       case 'approved':
       case 'confirmed':
-        return AppointmentStatus.approved;
+        return AppointmentStatus
+            .approved;
 
       case 'rejected':
-        return AppointmentStatus.rejected;
+        return AppointmentStatus
+            .rejected;
 
       case 'cancelled':
       case 'canceled':
-        return AppointmentStatus.cancelled;
+        return AppointmentStatus
+            .cancelled;
 
       case 'completed':
-        return AppointmentStatus.completed;
+        return AppointmentStatus
+            .completed;
 
       case 'patient_no_show':
-        return AppointmentStatus.patientNoShow;
+        return AppointmentStatus
+            .patientNoShow;
 
       default:
-        return AppointmentStatus.unknown;
+        return AppointmentStatus
+            .unknown;
     }
   }
 
-  static AppointmentBookingType _mapBookingType(
+  static AppointmentBookingType
+  _mapBookingType(
       String value,
       ) {
     switch (_normalize(value)) {
       case 'emergency':
-        return AppointmentBookingType.emergency;
+        return AppointmentBookingType
+            .emergency;
 
       case 'new_treatment':
-        return AppointmentBookingType.newTreatment;
+        return AppointmentBookingType
+            .newTreatment;
 
       case 'continue_treatment':
-        return AppointmentBookingType.continueTreatment;
+        return AppointmentBookingType
+            .continueTreatment;
 
       case 'walk_in':
       case 'walkin':
-        return AppointmentBookingType.walkIn;
+        return AppointmentBookingType
+            .walkIn;
 
       default:
-        return AppointmentBookingType.unknown;
+        return AppointmentBookingType
+            .unknown;
     }
   }
 
@@ -151,7 +273,8 @@ class AppointmentModel extends AppointmentEntity {
       case AppointmentStatus.pending:
         return 'pending';
 
-      case AppointmentStatus.pendingSecretary:
+      case AppointmentStatus
+          .pendingSecretary:
         return 'pending_secretary';
 
       case AppointmentStatus.approved:
@@ -166,7 +289,8 @@ class AppointmentModel extends AppointmentEntity {
       case AppointmentStatus.completed:
         return 'completed';
 
-      case AppointmentStatus.patientNoShow:
+      case AppointmentStatus
+          .patientNoShow:
         return 'patient_no_show';
 
       case AppointmentStatus.unknown:
@@ -178,19 +302,24 @@ class AppointmentModel extends AppointmentEntity {
       AppointmentBookingType type,
       ) {
     switch (type) {
-      case AppointmentBookingType.emergency:
+      case AppointmentBookingType
+          .emergency:
         return 'emergency';
 
-      case AppointmentBookingType.newTreatment:
+      case AppointmentBookingType
+          .newTreatment:
         return 'new_treatment';
 
-      case AppointmentBookingType.continueTreatment:
+      case AppointmentBookingType
+          .continueTreatment:
         return 'continue_treatment';
 
-      case AppointmentBookingType.walkIn:
+      case AppointmentBookingType
+          .walkIn:
         return 'walk_in';
 
-      case AppointmentBookingType.unknown:
+      case AppointmentBookingType
+          .unknown:
         return 'unknown';
     }
   }
@@ -199,86 +328,118 @@ class AppointmentModel extends AppointmentEntity {
       dynamic value,
       ) {
     final rawValue =
-        value?.toString().trim() ?? '';
+        value?.toString().trim() ??
+            '';
 
     if (rawValue.isEmpty) {
-      return DateTime.fromMillisecondsSinceEpoch(0);
+      return DateTime
+          .fromMillisecondsSinceEpoch(
+        0,
+      );
     }
 
-    return DateTime.tryParse(rawValue) ??
+    return DateTime.tryParse(
+      rawValue,
+    ) ??
         DateTime.tryParse(
-          rawValue.replaceFirst(' ', 'T'),
+          rawValue.replaceFirst(
+            ' ',
+            'T',
+          ),
         ) ??
-        DateTime.fromMillisecondsSinceEpoch(0);
+        DateTime
+            .fromMillisecondsSinceEpoch(
+          0,
+        );
   }
 
-  static String _formatDateTimeForCache(
+  static String
+  _formatDateTimeForCache(
       DateTime value,
       ) {
     return value.toIso8601String();
   }
 
-  static int _parseInt(dynamic value) {
+  static int _parseInt(
+      dynamic value,
+      ) {
     if (value is int) {
       return value;
     }
 
     return int.tryParse(
-      value?.toString() ?? '',
+      value?.toString() ??
+          '',
     ) ??
         0;
   }
 
-  static Map<String, dynamic> _parseMap(
+  static Map<String, dynamic>
+  _parseMap(
       dynamic value,
       ) {
-    if (value is Map<String, dynamic>) {
+    if (value
+    is Map<String, dynamic>) {
       return value;
     }
 
     if (value is Map) {
-      return Map<String, dynamic>.from(value);
+      return Map<String, dynamic>
+          .from(
+        value,
+      );
     }
 
     return const {};
   }
 
-  static Map<String, dynamic>? _parseNullableMap(
+  static Map<String, dynamic>?
+  _parseNullableMap(
       dynamic value,
       ) {
     if (value == null) {
       return null;
     }
 
-    if (value is Map<String, dynamic>) {
+    if (value
+    is Map<String, dynamic>) {
       return value;
     }
 
     if (value is Map) {
-      return Map<String, dynamic>.from(value);
+      return Map<String, dynamic>
+          .from(
+        value,
+      );
     }
 
     return null;
   }
 
-  static String? _parseNullableString(
+  static String?
+  _parseNullableString(
       dynamic value,
       ) {
     if (value == null) {
       return null;
     }
 
-    final normalized = value.toString().trim();
+    final normalized =
+    value.toString().trim();
 
     if (normalized.isEmpty ||
-        normalized.toLowerCase() == 'null') {
+        normalized
+            .toLowerCase() ==
+            'null') {
       return null;
     }
 
     return normalized;
   }
 
-  static String _normalize(String value) {
+  static String _normalize(
+      String value,
+      ) {
     return value
         .trim()
         .toLowerCase()
@@ -308,25 +469,44 @@ class AppointmentTreatmentModel
     );
 
     return AppointmentTreatmentModel(
-      id: AppointmentModel._parseInt(
+      id: AppointmentModel
+          ._parseInt(
         json['id'],
       ),
+
       treatmentTypeName:
-      treatmentType['ar']?.toString().trim() ?? '',
+      treatmentType['ar']
+          ?.toString()
+          .trim() ??
+          '',
+
       treatmentTypeNameEn:
-      treatmentType['en']?.toString().trim() ?? '',
+      treatmentType['en']
+          ?.toString()
+          .trim() ??
+          '',
+
       status:
-      json['status']?.toString().trim() ?? '',
+      json['status']
+          ?.toString()
+          .trim() ??
+          '',
+
       totalSessionsNeeded:
-      AppointmentModel._parseInt(
+      AppointmentModel
+          ._parseInt(
         json['total_sessions_needed'],
       ),
+
       sessionsCompleted:
-      AppointmentModel._parseInt(
+      AppointmentModel
+          ._parseInt(
         json['sessions_completed'],
       ),
+
       notes:
-      AppointmentModel._parseNullableString(
+      AppointmentModel
+          ._parseNullableString(
         json['notes'],
       ),
     );
